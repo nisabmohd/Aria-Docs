@@ -9,7 +9,7 @@ export default async function DocsPage({
   const { content: html, frontmatter } = await getMarkdown(folders);
   if (!frontmatter) return <>Not found</>;
   return (
-    <div className="w-[45%] mx-auto prose dark:prose-invert">
+    <div className="prose dark:prose-invert">
       <h1>{frontmatter.title}</h1>
       <p>{frontmatter.description}</p>
       {html}

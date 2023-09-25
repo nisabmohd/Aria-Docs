@@ -25,3 +25,5 @@ export async function getMarkdown(pathname: string[]) {
     };
   }
 }
+
+export function search(query: string) {}
