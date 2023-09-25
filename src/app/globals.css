@@ -6,3 +6,7 @@
 .prose {
     max-width: unset !important;
 }
+
+.dark {
+    color-scheme: dark;
+}
