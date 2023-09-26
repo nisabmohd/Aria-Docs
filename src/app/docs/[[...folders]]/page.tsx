@@ -3,12 +3,28 @@ import React from "react";
 import { notFound } from "next/navigation";
 import Leftbar from "@/components/leftbar";
 
+async function getMarkDownData(folders: string[]) {
+  return await getMarkdown(folders);
+}
+
+export async function generateMetadata({
+  params: { folders },
+}: {
+  params: { folders: string[] };
+}) {
+  const { frontmatter } = await getMarkDownData(folders);
+  return {
+    title: frontmatter?.title,
+    description: frontmatter?.description,
+  };
+}
+
 export default async function DocsPage({
   params: { folders },
 }: {
   params: { folders: string[] };
 }) {
-  const { content: html, frontmatter } = await getMarkdown(folders);
+  const { content: html, frontmatter } = await getMarkDownData(folders);
   if (!frontmatter) return notFound();
   return (
     <div className="flex flex-row items-start gap-12 pt-5 ">

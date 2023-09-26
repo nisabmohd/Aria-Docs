@@ -1,9 +1,7 @@
-import * as React from "react";
 import Link from "next/link";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Mail } from "lucide-react";
-import Anchor from "./anchor";
+import Search from "./search";
 
 export function Navbar() {
   return (
@@ -29,7 +27,7 @@ export function Navbar() {
           </div>
         </div>
         <div className="flex flex-row items-center gap-2">
-          <Input placeholder="Search documentation..." />
+          <Search />
           <Button variant="secondary">
             <Mail className="mr-2 h-4 w-4" />
             Mail
