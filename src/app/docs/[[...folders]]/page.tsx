@@ -1,5 +1,6 @@
 import { getMarkdown } from "@/lib/docs";
 import React from "react";
+import Balancer from "react-wrap-balancer";
 
 export default async function DocsPage({
   params: { folders },
