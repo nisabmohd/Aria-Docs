@@ -11,7 +11,7 @@ export default async function DocsPage({
   const { content: html, frontmatter } = await getMarkdown(folders);
   if (!frontmatter) return notFound();
   return (
-    <div className="flex flex-row items-start gap-8 pt-5 ">
+    <div className="flex flex-row items-start gap-12 pt-5 ">
       <div className="flex-[1] sticky top-28 max-[800px]:hidden">
         <Leftbar />
       </div>
