@@ -27,8 +27,13 @@ pre>code {
     padding: 0.75px 8px;
 }
 
-.highlight-line {
+.dark .highlight-line {
     background-color: #373737;
+    border-left: 3px solid #3b82f6;
+}
+
+.highlight-line {
+    background-color: #e6e6e6;
     border-left: 3px solid #3b82f6;
 }
 
@@ -42,13 +47,22 @@ pre>code {
     text-align: right;
 }
 
-.keyword {
+.dark .keyword {
     color: #ec5a5a;
 }
 
-.function {
+.keyword {
+    color: #e72020;
+}
+
+.dark .function {
     color: #c99cff;
 }
+
+.function {
+    color: #963fff;
+}
+
 
 .punctuation {
     color: gray;
@@ -58,7 +72,7 @@ pre>code {
     color: gray;
 }
 
-.string,
+.dark .string,
 .constant,
 .annotation,
 .boolean,
@@ -66,17 +80,33 @@ pre>code {
     color: #86b4ff;
 }
 
-.tag {
+.string,
+.constant,
+.annotation,
+.boolean,
+.number {
+    color: #226feb;
+}
+
+
+.dark .tag {
     color: #72cb72
+}
+
+.tag {
+    color: #069506
 }
 
 .attr-name {
     color: gray;
 }
 
-.attr-value {
+.dark .attr-value {
     color: #86b4ff;
+}
 
+.attr-value {
+    color: #1a5dc8;
 }
 
 .anchor {

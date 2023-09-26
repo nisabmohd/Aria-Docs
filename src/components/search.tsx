@@ -1,18 +1,8 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { File } from "lucide-react";
 
 export default function Search() {
@@ -22,7 +12,7 @@ export default function Search() {
       <Input placeholder="Search Documentation" onFocus={() => setOpen(true)} />
       <Dialog open={open} onOpenChange={(val) => setOpen(val)}>
         <DialogContent className="sm:max-w-[475px] px-0">
-          <div className="grid gap-4 border-b-2 border-zinc-800 -mt-6 px-4">
+          <div className="grid gap-4 border-b-2 dark:border-zinc-800 border-zinc-200  -mt-6 px-4">
             <input
               className="col-span-3 border-none h-11 text-sm bg-transparent outline-none"
               placeholder="Search Documentation"

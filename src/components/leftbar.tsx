@@ -7,7 +7,7 @@ export default function Leftbar() {
       {docs.map((item) => {
         return (
           <div key={item.id}>
-            <p className="mb-3 font-semibold text-zinc-100 text-sm">
+            <p className="mb-3 font-semibold dark:text-zinc-100 text-zinc-700 text-sm">
               {item.title}
             </p>
             <div className="flex flex-col gap-2 mb-5">

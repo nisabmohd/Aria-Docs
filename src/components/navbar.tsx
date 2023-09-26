@@ -5,7 +5,7 @@ import Search from "./search";
 
 export function Navbar() {
   return (
-    <nav className="h-14 border-b-2 border-zinc-800 flex flex-row items-center sticky top-0 bg-inherit z-50 pl-4">
+    <nav className="h-14 border-b-2 dark:border-zinc-800 border-zinc-200 flex flex-row items-center sticky top-0 bg-inherit z-50 pl-4 dark:bg-zinc-950 bg-white">
       <div className="flex flex-row items-center justify-between w-[70%] max-[1350px]:w-[94%]  mx-auto">
         <div className="flex flex-row items-center gap-8 ">
           <Link

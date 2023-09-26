@@ -32,7 +32,7 @@ export default async function DocsPage({
         <Leftbar />
       </div>
       <div className="flex-[3]">
-        <div className="prose dark:prose-invert prose-code:bg-zinc-900 dark:prose-code:text-zinc-50">
+        <div className="prose dark:prose-zinc dark:prose-invert dark:prose-code:bg-zinc-900 prose-code:bg-zinc-100 prose-code:text-zinc-800 dark:prose-code:text-zinc-50">
           <h1>{frontmatter.title}</h1>
           <p>{frontmatter.description}</p>
           {html}
@@ -46,7 +46,7 @@ export default async function DocsPage({
           <li> App Router vs Pages Router</li>
           <li> Pre-Requisite Knowledge</li>
           <li>Accessibility Join our Community</li>
-          <span className="border-t-2 border-zinc-800 my-2"></span>
+          <span className="border-t-2 dark:border-zinc-800 border-zinc-200 my-2"></span>
           <li>Edit this page on GitHub</li>
           <li>Scroll to top</li>
         </ol>

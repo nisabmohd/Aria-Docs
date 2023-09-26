@@ -20,6 +20,7 @@
     "lucide-react": "^0.279.0",
     "next": "latest",
     "next-mdx-remote": "^4.4.1",
+    "next-themes": "^0.2.1",
     "react": "latest",
     "react-dom": "latest",
     "react-wrap-balancer": "^1.1.0",
