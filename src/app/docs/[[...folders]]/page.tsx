@@ -46,7 +46,7 @@ export default async function DocsPage({
           <li> App Router vs Pages Router</li>
           <li> Pre-Requisite Knowledge</li>
           <li>Accessibility Join our Community</li>
-          <span></span>
+          <span className="border-t-2 border-zinc-800 my-2"></span>
           <li>Edit this page on GitHub</li>
           <li>Scroll to top</li>
         </ol>
