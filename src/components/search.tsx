@@ -24,7 +24,6 @@ export default function Search() {
         <DialogContent className="sm:max-w-[475px] px-0">
           <div className="grid gap-4 border-b-2 border-zinc-800 -mt-6 px-4">
             <input
-              id="name"
               className="col-span-3 border-none h-11 text-sm bg-transparent outline-none"
               placeholder="Search Documentation"
             />
