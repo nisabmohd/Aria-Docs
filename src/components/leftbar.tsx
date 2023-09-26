@@ -1,5 +1,5 @@
 import { docs } from "@/config/docs";
-import Link from "next/link";
+import Anchor from "./anchor";
 
 export default function Leftbar() {
   return (
@@ -12,13 +12,13 @@ export default function Leftbar() {
             </p>
             <div className="flex flex-col gap-2 mb-5">
               {item.items.map((path) => (
-                <Link
+                <Anchor
                   href={`/docs${path.href}`}
                   className="text-muted text-sm dark:text-zinc-400"
                   key={path.title + path.href}
                 >
                   {path.title}
-                </Link>
+                </Anchor>
               ))}
             </div>
           </div>

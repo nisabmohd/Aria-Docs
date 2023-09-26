@@ -17,6 +17,7 @@ import remarkGfm from "remark-gfm";
 import rehypePrism from "rehype-prism-plus";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
+import Anchor from "@/components/md/anchor";
 
 type MDXFrontmatter = {
   title: string;
@@ -35,6 +36,7 @@ const components = {
   TableHead,
   TableHeader,
   TableRow,
+  a: Anchor,
 };
 
 export async function getMarkdown(pathname: string[]) {
@@ -52,7 +54,6 @@ export async function getMarkdown(pathname: string[]) {
           remarkPlugins: [remarkGfm],
         },
       },
-
       components,
     });
   } catch (err) {
