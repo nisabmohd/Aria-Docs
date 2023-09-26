@@ -21,7 +21,9 @@ export default function RootLayout({
         className={`${inter.className} dark:text-neutral-200 dark:bg-zinc-950`}
       >
         <Navbar />
-        <main className="w-[60%] mx-auto py-8">{children}</main>
+        <main className="w-[60%] mx-auto py-8 max-[1200px]:w-[90%] max-[800px]:w-[92%]">
+          {children}
+        </main>
       </body>
     </html>
   );

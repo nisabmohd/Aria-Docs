@@ -15,6 +15,8 @@ import {
 import { Terminal } from "lucide-react";
 import remarkGfm from "remark-gfm";
 import rehypePrism from "rehype-prism-plus";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeSlug from "rehype-slug";
 
 type MDXFrontmatter = {
   title: string;
@@ -46,7 +48,7 @@ export async function getMarkdown(pathname: string[]) {
       options: {
         parseFrontmatter: true,
         mdxOptions: {
-          rehypePlugins: [rehypePrism],
+          rehypePlugins: [rehypePrism, rehypeSlug, rehypeAutolinkHeadings],
           remarkPlugins: [remarkGfm],
         },
       },
