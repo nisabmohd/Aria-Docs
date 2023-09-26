@@ -8,13 +8,9 @@ type AnchorProps = ComponentProps<typeof Link>;
 
 export default function Anchor({ className = "", ...props }: AnchorProps) {
   const path = usePathname();
-  console.log(path, props.href);
-
   return (
     <Link
-      className={`${className} ${
-        path == props.href ? "dark:text-[#3b82f6]" : ""
-      }`}
+      className={`${className} ${path === props.href ? "anchor" : ""}`}
       {...props}
     />
   );

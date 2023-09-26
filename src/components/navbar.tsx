@@ -8,8 +8,8 @@ import Anchor from "./anchor";
 export function Navbar() {
   return (
     <nav className="h-14 border-b-2 border-zinc-800 flex flex-row items-center sticky top-0 bg-inherit z-50">
-      <div className="flex flex-row items-center justify-between w-[66%] max-[1250px]:w-[90%]  mx-auto">
-        <div className="flex flex-row items-center gap-8">
+      <div className="flex flex-row items-center justify-between w-[66%] max-[1350px]:w-[94%]  mx-auto">
+        <div className="flex flex-row items-center gap-8 ">
           <Link href="/" className="text-lg font-bold whitespace-nowrap">
             NEXT.JS 13
           </Link>

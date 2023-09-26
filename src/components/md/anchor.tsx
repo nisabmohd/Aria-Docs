@@ -6,7 +6,10 @@ export default function anchor({
   ...props
 }: HTMLProps<HTMLAnchorElement>) {
   return (
-    <a {...props} className={`${className} text-[#3b82f6]`}>
+    <a
+      {...props}
+      className={`${className} text-[#3b82f6] font-semibold text-sm`}
+    >
       {children}
     </a>
   );
