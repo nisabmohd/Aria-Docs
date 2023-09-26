@@ -15,8 +15,6 @@ export default function ThemeMode() {
 
   if (!mounted) return null;
 
-  console.log(theme);
-
   return (
     <div className="flex flex-row gap-1 items-center">
       <Button

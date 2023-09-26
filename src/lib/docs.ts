@@ -18,6 +18,8 @@ import rehypePrism from "rehype-prism-plus";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import Anchor from "@/components/md/anchor";
+import Highlight from "@/components/md/hightlight";
+import Tag from "@/components/md/tag";
 
 type MDXFrontmatter = {
   title: string;
@@ -37,6 +39,9 @@ const components = {
   TableHeader,
   TableRow,
   a: Anchor,
+  Link: Anchor,
+  Highlight,
+  Tag,
 };
 
 export async function getMarkdown(pathname: string[]) {
@@ -57,11 +62,10 @@ export async function getMarkdown(pathname: string[]) {
       components,
     });
   } catch (err) {
+    console.log(err);
     return {
       content: null,
       frontmatter: null,
     };
   }
 }
-
-export function search(query: string) {}
