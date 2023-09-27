@@ -23,7 +23,7 @@ export default function ThemeMode() {
         className="rounded-full"
         variant={theme == "light" ? "secondary" : "ghost"}
       >
-        <Sun className="w-5 h-5" />
+        <Sun className={`w-5 h-5  ${theme == "light" ? "anchor" : ""}`} />
       </Button>
       <Button
         onClick={() => setTheme("system")}
@@ -31,7 +31,7 @@ export default function ThemeMode() {
         className="rounded-full"
         variant={theme == "system" ? "secondary" : "ghost"}
       >
-        <Laptop2 className="w-5 h-5" />
+        <Laptop2 className={`w-5 h-5  ${theme == "system" ? "anchor" : ""}`} />
       </Button>
       <Button
         onClick={() => setTheme("dark")}
@@ -39,7 +39,7 @@ export default function ThemeMode() {
         className="rounded-full"
         variant={theme == "dark" ? "secondary" : "ghost"}
       >
-        <Moon className="w-5 h-5" />
+        <Moon className={`w-5 h-5  ${theme == "dark" ? "anchor" : ""}`} />
       </Button>
     </div>
   );
