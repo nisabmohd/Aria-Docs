@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+    scroll-behavior: smooth;
+}
 
 .prose {
     max-width: unset !important;

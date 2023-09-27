@@ -26,20 +26,20 @@ export default function ThemeMode() {
         <Sun className="w-5 h-5" />
       </Button>
       <Button
-        onClick={() => setTheme("dark")}
-        size={"icon"}
-        className="rounded-full"
-        variant={theme == "dark" ? "secondary" : "ghost"}
-      >
-        <Moon className="w-5 h-5" />
-      </Button>
-      <Button
         onClick={() => setTheme("system")}
         size={"icon"}
         className="rounded-full"
         variant={theme == "system" ? "secondary" : "ghost"}
       >
         <Laptop2 className="w-5 h-5" />
+      </Button>
+      <Button
+        onClick={() => setTheme("dark")}
+        size={"icon"}
+        className="rounded-full"
+        variant={theme == "dark" ? "secondary" : "ghost"}
+      >
+        <Moon className="w-5 h-5" />
       </Button>
     </div>
   );

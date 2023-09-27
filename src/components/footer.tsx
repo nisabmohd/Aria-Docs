@@ -3,13 +3,13 @@ import ThemeMode from "./theme-mode";
 
 export default function Footer() {
   return (
-    <footer className="h-16 border-t-2 dark:border-zinc-800 border-zinc-200 flex flex-row items-center justify-between bg-inherit z-50 text-sm text-center mt-2">
+    <footer className="h-16 border-t-2 dark:border-zinc-800 border-zinc-200 flex flex-row items-center justify-between bg-inherit z-50 text-sm text-center mt-5">
       <div className="flex flex-row items-center justify-between w-[62%] max-[1250px]:w-[90%]  mx-auto">
         <div>
           Built by{" "}
           <Link
             className="font-semibold underline"
-            href="https://github.com/nisabmohd"
+            href={process.env.GITHUB_USER_URL ?? ""}
           >
             nisabmohd
           </Link>
@@ -20,7 +20,7 @@ export default function Footer() {
           .The source code is available on{" "}
           <Link
             className="font-semibold underline"
-            href="https://github.com/nisabmohd/docs-stater-template"
+            href={process.env.GITHUB_PROJECT_URL ?? ""}
           >
             GitHub
           </Link>

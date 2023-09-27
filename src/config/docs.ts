@@ -5,15 +5,15 @@ export const docs = [
     items: [
       {
         title: "Introduction",
-        href: "/introduction",
+        href: "/docs/introduction",
       },
       {
         title: "Installation",
-        href: "/installation",
+        href: "/docs/installation",
       },
       {
         title: "Project Structure",
-        href: "/project-structure",
+        href: "/docs/project-structure",
       },
     ],
   },
@@ -23,27 +23,27 @@ export const docs = [
     items: [
       {
         title: "Routing",
-        href: "/building-application/routing",
+        href: "/docs/building-application/routing",
       },
       {
         title: "Caching",
-        href: "/building-application/caching",
+        href: "/docs/building-application/caching",
       },
       {
         title: "Rendering",
-        href: "/building-application/rendering",
+        href: "/docs/building-application/rendering",
       },
       {
         title: "Data fetching",
-        href: "/building-application/data-fetching",
+        href: "/docs/building-application/data-fetching",
       },
       {
         title: "Optimizing",
-        href: "/building-application/optimize",
+        href: "/docs/building-application/optimize",
       },
       {
         title: "Deploying",
-        href: "/building-application/deploy",
+        href: "/docs/building-application/deploy",
       },
     ],
   },

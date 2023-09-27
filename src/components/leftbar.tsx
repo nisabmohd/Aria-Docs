@@ -13,7 +13,7 @@ export default function Leftbar() {
             <div className="flex flex-col gap-2 mb-5">
               {item.items.map((path) => (
                 <Anchor
-                  href={`/docs${path.href}`}
+                  href={path.href}
                   className="text-muted text-sm dark:text-zinc-400"
                   key={path.title + path.href}
                 >
