@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { FileText, Mail } from "lucide-react";
+import { Command, FileText, Mail, Triangle } from "lucide-react";
 import Search from "./search";
 
 //TODO: Highlight active nav itemw
@@ -13,31 +13,33 @@ export function Navbar() {
             href="/"
             className="text-lg font-bold whitespace-nowrap flex flex-row gap-2"
           >
-            <FileText />
-            <span>NEXT.JS 13</span>
+            <Command />
+            <span>Docs/template</span>
           </Link>
-          <div className="flex flex-row items-center gap-4">
+          <div className="flex flex-row items-center gap-4 text-zinc-400">
             <Link className="text-muted text-sm" href="#">
               Pricing
+            </Link>
+            <Link className="text-muted text-sm" href="#">
+              Blog
             </Link>
             <Link className="text-muted text-sm" href="/docs/introduction">
               Documentation
             </Link>
             <Link className="text-muted text-sm" href="#">
-              Blog
+              Templates
             </Link>
             <Link className="text-muted text-sm" href="#">
-              Enterprise
+              Help
             </Link>
           </div>
         </div>
         <div className="flex flex-row items-center gap-2">
           <Search />
           <Button variant="secondary">
-            <Mail className="mr-2 h-4 w-4" />
-            Mail
+            <Triangle className="mr-2 h-4 w-4" />
+            Deploy
           </Button>
-          <Button variant="default">Learn</Button>
         </div>
       </div>
     </nav>

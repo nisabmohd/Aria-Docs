@@ -13,7 +13,6 @@ export function search(query: string) {
 export function getPreviousAndNext(url: string) {
   const flattedAll = docs.map((item) => item.items).flat();
   const index = flattedAll.findIndex((item) => item.href == "/docs/" + url);
-  console.log(index);
   if (index == -1)
     return {
       previous: null,

@@ -35,7 +35,7 @@ export default async function DocsPage({
         <Leftbar />
       </div>
       <div className="flex-[3]">
-        <div className="prose dark:prose-zinc dark:prose-invert dark:prose-code:bg-zinc-900 prose-code:bg-zinc-100 prose-code:text-zinc-800 dark:prose-code:text-zinc-50">
+        <div className="prose dark:prose-zinc dark:prose-invert dark:prose-code:bg-zinc-900 prose-code:bg-zinc-100 prose-code:text-zinc-800 dark:prose-code:text-zinc-50 prose-img:rounded-md ">
           <h1>{frontmatter.title}</h1>
           <p>{frontmatter.description}</p>
           {html}

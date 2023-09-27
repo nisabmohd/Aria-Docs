@@ -7,7 +7,6 @@ type PaginationProps = {
 };
 export default function Pagination({ currentUrl }: PaginationProps) {
   const { previous, next } = getPreviousAndNext(currentUrl);
-
   return (
     <div className="border-t-2 dark:border-zinc-800 border-zinc-200 mt-12 pt-8 flex flex-row items-center justify-between">
       <div>

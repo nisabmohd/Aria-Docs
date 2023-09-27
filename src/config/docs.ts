@@ -22,7 +22,7 @@ export const docs = [
     id: "building-application",
     items: [
       {
-        title: "Routing",
+        title: "Routing Groups",
         href: "/docs/building-application/routing",
       },
       {
