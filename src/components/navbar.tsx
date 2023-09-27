@@ -23,7 +23,10 @@ export function Navbar() {
             <Link className="text-muted text-sm" href="#">
               Blog
             </Link>
-            <Link className="text-muted text-sm" href="/docs/introduction">
+            <Link
+              className=" text-sm anchor font-semibold "
+              href="/docs/introduction"
+            >
               Documentation
             </Link>
             <Link className="text-muted text-sm" href="#">

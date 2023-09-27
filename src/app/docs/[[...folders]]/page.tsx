@@ -59,7 +59,7 @@ export default async function DocsPage({
               folders.join("/") +
               ".mdx"
             }
-            className="hover:underline"
+            className="hover:underline underline-offset-2"
           >
             Edit this page on GitHub
           </Link>

@@ -8,18 +8,21 @@ export default function Footer() {
         <div>
           Built by{" "}
           <Link
-            className="font-semibold underline"
+            className="font-semibold  underline-offset-2"
             href={process.env.GITHUB_USER_URL ?? ""}
           >
             nisabmohd
           </Link>
           . Hosted on{" "}
-          <Link className="font-semibold underline" href="https://vercel.com/">
+          <Link
+            className="font-semibold underline underline-offset-2"
+            href="https://vercel.com/"
+          >
             Vercel
           </Link>
           .The source code is available on{" "}
           <Link
-            className="font-semibold underline"
+            className="font-semibold underline underline-offset-2"
             href={process.env.GITHUB_PROJECT_URL ?? ""}
           >
             GitHub

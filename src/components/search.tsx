@@ -22,7 +22,11 @@ export default function Search() {
 
   return (
     <div>
-      <Input placeholder="Search Documentation" onFocus={() => setOpen(true)} />
+      <Input
+        className="text-[13.25px]"
+        placeholder="Search documentation..."
+        onFocus={() => setOpen(true)}
+      />
       <Dialog open={open} onOpenChange={(val) => setOpen(val)}>
         <DialogContent className="sm:max-w-[475px] max-h-[400px] px-0 ">
           <div className="grid gap-4 border-b-2 dark:border-zinc-800 border-zinc-200  -mt-6 px-4">
@@ -30,7 +34,7 @@ export default function Search() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="col-span-3 border-none h-11 text-sm bg-transparent outline-none"
-              placeholder="Search Documentation"
+              placeholder="Search documentation"
             />
           </div>
           <div>
