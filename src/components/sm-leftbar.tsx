@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ChevronRight } from "lucide-react";
 import Leftbar from "./leftbar";
 import { ScrollArea } from "./ui/scroll-area";

@@ -21,10 +21,10 @@ export function Navbar() {
             className="text-lg font-bold whitespace-nowrap flex flex-row gap-2"
           >
             <Command />
-            <span>Docs/template</span>
+            <span className="max-[800px]:hidden">Docs/template</span>
           </Link>
-          <div className="flex flex-row items-center gap-4 text-zinc-400 max-[800px]:hidden">
-            <Link className="text-muted text-sm" href="#">
+          <div className="flex flex-row items-center gap-4 text-zinc-400">
+            <Link className="text-muted text-sm max-[800px]:hidden" href="#">
               Pricing
             </Link>
             <Link className="text-muted text-sm" href="#">
@@ -33,10 +33,10 @@ export function Navbar() {
             <Anchor absolute className="text-sm" href="/docs/introduction">
               Documentation
             </Anchor>
-            <Link className="text-muted text-sm" href="#">
+            <Link className="text-muted text-sm max-[800px]:hidden" href="#">
               Templates
             </Link>
-            <Link className="text-muted text-sm" href="#">
+            <Link className="text-muted text-sm max-[800px]:hidden" href="#">
               Help
             </Link>
           </div>
