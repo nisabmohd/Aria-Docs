@@ -6,6 +6,7 @@ import Pagination from "@/components/pagination";
 import ScrollTop from "@/components/scroll-top";
 import Link from "next/link";
 import Toc from "@/components/toc";
+import SheetLeftbar from "@/components/sm-leftbar";
 
 async function getMarkDownData(folders: string[]) {
   return await getMarkdown(folders);
@@ -40,11 +41,13 @@ export default async function DocsPage({
       <div className="flex-[1] sticky top-28 max-[800px]:hidden">
         <Leftbar />
       </div>
-      <div className="flex-[3]">
-        <div className="prose dark:prose-zinc dark:prose-invert dark:prose-code:bg-zinc-900 prose-code:bg-zinc-100 prose-code:text-zinc-800 dark:prose-code:text-zinc-50 prose-img:rounded-md prose-headings:scroll-m-20">
+      <div className="flex-[3] max-[800px]:w-[92vw]">
+        <SheetLeftbar />
+        <div className="prose dark:prose-zinc dark:prose-invert dark:prose-pre:bg-zinc-900 prose-pre:bg-zinc-100 dark:prose-code:bg-zinc-900 prose-code:bg-zinc-100 prose-code:text-zinc-800 dark:prose-code:text-zinc-50 prose-img:rounded-md prose-headings:scroll-m-20">
           <h1 id={createSlug(frontmatter.title)}>{frontmatter.title}</h1>
           <p>{frontmatter.description}</p>
           {html}
+          sS
         </div>
         <Pagination currentUrl={folders.join("/")} />
       </div>

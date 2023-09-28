@@ -4,14 +4,14 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24 pt-8 text-center">
+    <main className="flex min-h-screen flex-col items-center justify-center min-[800px]:p-24 pt-8 text-center max-[800px]:px-7">
       <p className="mb-12 text-xl -mt-40">
         What is in Next.js? All the tools you need to make the Web. Faster.
       </p>
-      <h1 className="text-7xl font-bold mb-8">
+      <h1 className="text-5xl font-bold mb-8 sm:text-7xl">
         The React Framework for the Web
       </h1>
-      <p className="mb-8 text-xl">
+      <p className="mb-8 text-xl ">
         Used by some of the worlds largest companies, Next.js enables you to
         create full-stack Web applications by extending the latest React
         features, and integrating powerful Rust-based JavaScript tooling for the

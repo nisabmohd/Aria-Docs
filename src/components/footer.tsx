@@ -4,7 +4,7 @@ import ThemeMode from "./theme-mode";
 export default function Footer() {
   return (
     <footer className="h-16 border-t-2 dark:border-zinc-800 border-zinc-200 flex flex-row items-center justify-between bg-inherit z-50 text-sm text-center mt-5">
-      <div className="flex flex-row items-center justify-between w-[62%] max-[1250px]:w-[90%]  mx-auto">
+      <div className="flex flex-row items-center justify-between w-[62%] max-[1250px]:w-[90%] max-[800px]:flex-col max-[800px]:gap-3 max-[800px]:pt-12 max-[800px]:pb-4  mx-auto">
         <div>
           Built by{" "}
           <Link

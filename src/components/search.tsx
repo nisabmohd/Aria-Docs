@@ -3,10 +3,11 @@
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useEffect, useState } from "react";
-import { File } from "lucide-react";
+import { File, SearchIcon } from "lucide-react";
 import { search } from "@/lib/search";
 import Link from "next/link";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button } from "./ui/button";
 
 export default function Search() {
   const [open, setOpen] = useState(false);
@@ -22,13 +23,21 @@ export default function Search() {
 
   return (
     <div>
+      <Button
+        onClick={() => setOpen(true)}
+        className="min-[800px]:hidden"
+        variant="ghost"
+        size="icon"
+      >
+        <SearchIcon className=" w-4 h-4" />
+      </Button>
       <Input
-        className="text-[13.25px]"
+        className="text-[13.25px] max-[800px]:hidden"
         placeholder="Search documentation..."
         onFocus={() => setOpen(true)}
       />
       <Dialog open={open} onOpenChange={(val) => setOpen(val)}>
-        <DialogContent className="sm:max-w-[475px] max-h-[400px] px-0 ">
+        <DialogContent className="sm:max-w-[475px] max-h-[400px] max-[500px]:w-[300px] px-0 ">
           <div className="grid gap-4 border-b-2 dark:border-zinc-800 border-zinc-200  -mt-6 px-4">
             <input
               value={searchQuery}

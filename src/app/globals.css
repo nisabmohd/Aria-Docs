@@ -16,6 +16,7 @@ body {
 
 pre {
     padding: 0 !important;
+    width: inherit;
 }
 
 pre>code {
@@ -51,19 +52,19 @@ pre>code {
 }
 
 .dark .keyword {
-    color: #ec5a5a;
+    color: #3b82f6;
 }
 
 .keyword {
-    color: #e72020;
+    color: #3b82f6;
 }
 
 .dark .function {
-    color: #c99cff;
+    color: #ee6b6b;
 }
 
 .function {
-    color: #963fff;
+    color: #f32e2e;
 }
 
 
@@ -93,11 +94,11 @@ pre>code {
 
 
 .dark .tag {
-    color: #72cb72
+    color: #e1871d
 }
 
 .tag {
-    color: #069506
+    color: #cd6f00
 }
 
 .attr-name {
@@ -109,7 +110,7 @@ pre>code {
 }
 
 .attr-value {
-    color: #1a5dc8;
+    color: #3b82f6;
 }
 
 .anchor {
