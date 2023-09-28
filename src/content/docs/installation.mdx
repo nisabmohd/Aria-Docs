@@ -36,7 +36,7 @@ npm install next@latest react@latest react-dom@latest
 
 Open your **package.json file** and add the following **scripts**:
 
-```json showLineNumbers
+```json:package.json showLineNumbers
 {
   "scripts": {
     "dev": "next dev",
@@ -58,7 +58,7 @@ Create an app/ folder, then add a layout.tsx and page.tsx file. These will be re
 
 Create a root layout inside <Highlight>app/layout.tsx</Highlight> with the required <Tag>html</Tag> and <Tag>body</Tag> tags:
 
-```tsx:lib/mdx.ts showLineNumbers
+```tsx:src/app/layout.tsx showLineNumbers
 export default function RootLayout({
   children,
 }: {

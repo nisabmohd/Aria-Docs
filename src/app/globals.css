@@ -119,12 +119,15 @@ pre>code {
 .rehype-code-title {
     @apply dark:bg-zinc-900;
     @apply bg-zinc-100;
-    @apply px-2;
+    @apply px-3;
     @apply -mb-9;
     @apply rounded-md;
     @apply w-fit;
-    @apply text-sm;
+    @apply text-xs;
     @apply text-zinc-400;
-    @apply py-1;
+    @apply pt-2;
     @apply pb-4;
+    @apply anchor;
+    @apply font-normal;
+    @apply tracking-wider;
 }
