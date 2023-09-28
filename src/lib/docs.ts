@@ -21,6 +21,7 @@ import rehypeCodeTitles from "rehype-code-titles";
 import Anchor from "@/components/md/anchor";
 import Highlight from "@/components/md/hightlight";
 import Tag from "@/components/md/tag";
+import rehypeToc from "@jsdevtools/rehype-toc";
 
 type MDXFrontmatter = {
   title: string;
@@ -50,8 +51,13 @@ export async function getMarkdown(pathname: string[]) {
     const paths = pathname.join("/");
     const contentPath = path.join(process.cwd(), "src/content/docs/" + paths);
     const data = await fs.readFile(contentPath + ".mdx", "utf8");
-
-    return await compileMDX<MDXFrontmatter>({
+    const headings = [];
+    const headingRegex = /^#+\s+(.*)/gm;
+    let match;
+    while ((match = headingRegex.exec(data)) !== null) {
+      headings.push(match[1]);
+    }
+    const res = await compileMDX<MDXFrontmatter>({
       source: data,
       options: {
         parseFrontmatter: true,
@@ -67,11 +73,26 @@ export async function getMarkdown(pathname: string[]) {
       },
       components,
     });
+    return {
+      ...res,
+      headings,
+    };
   } catch (err) {
     console.log(err);
     return {
       content: null,
       frontmatter: null,
+      headings: [],
     };
   }
 }
+
+function arrayToMarkdownList(arr: string[]) {
+  if (!Array.isArray(arr)) {
+    return "";
+  }
+  const listItems = arr.map((item) => `${item}`).join("\n");
+  return listItems;
+}
+
+export async function getToc(headings: string[]) {}
