@@ -44,7 +44,7 @@ export default function Search() {
                   return (
                     <Link
                       onClick={() => setOpen(false)}
-                      href={"/docs" + item.href}
+                      href={item.href}
                       key={item.href + item.title}
                       className="flex flex-row items-center gap-2 hover:dark:bg-zinc-800 hover:bg-zinc-100 px-2 py-2 rounded-md"
                     >
