@@ -3,8 +3,6 @@
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ChevronRight } from "lucide-react";
 import Leftbar from "./leftbar";
-import { ScrollArea } from "./ui/scroll-area";
-
 export default function SheetLeftbar() {
   return (
     <div className=" border-b-2 dark:border-zinc-800 border-zinc-200 mb-6 min-[800px]:hidden">
@@ -16,11 +14,11 @@ export default function SheetLeftbar() {
         </SheetTrigger>
         <SheetContent
           side="left"
-          className="flex justify-center w-[260px] dark:border-zinc-800 border-zinc-200 pt-8"
+          className="flex justify-center w-[260px] dark:border-zinc-800 border-zinc-200 pt-8 no-scroll-bar"
         >
-          <ScrollArea className="overflow-auto pt-6 pb-2 no-scroll-bar ">
+          <div className="overflow-auto pt-6 pb-2 no-scroll-bar ">
             <Leftbar />
-          </ScrollArea>
+          </div>
         </SheetContent>
       </Sheet>
     </div>

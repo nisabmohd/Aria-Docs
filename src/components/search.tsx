@@ -38,7 +38,7 @@ export default function Search() {
       />
       <Dialog open={open} onOpenChange={(val) => setOpen(val)}>
         <DialogContent className="sm:max-w-[475px] max-h-[400px] max-[500px]:w-[300px] px-0 ">
-          <div className="grid gap-4 border-b-2 dark:border-zinc-800 border-zinc-200  -mt-6 px-4">
+          <div className="grid gap-4 border-b-2 dark:border-zinc-800 border-zinc-200 -mt-6 px-4">
             <input
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}

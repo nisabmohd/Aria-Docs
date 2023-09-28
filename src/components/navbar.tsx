@@ -1,13 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import {
-  Command,
-  FileText,
-  Mail,
-  MenuIcon,
-  SearchIcon,
-  Triangle,
-} from "lucide-react";
+import { Command, MenuIcon, Triangle } from "lucide-react";
 import Search from "./search";
 import Anchor from "./anchor";
 
