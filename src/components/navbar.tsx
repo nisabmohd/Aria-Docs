@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Command, FileText, Mail, Triangle } from "lucide-react";
 import Search from "./search";
+import Anchor from "./anchor";
 
 //TODO: Highlight active nav itemw
 export function Navbar() {
@@ -23,12 +24,9 @@ export function Navbar() {
             <Link className="text-muted text-sm" href="#">
               Blog
             </Link>
-            <Link
-              className=" text-sm anchor font-semibold "
-              href="/docs/introduction"
-            >
+            <Anchor absolute className="text-sm" href="/docs/introduction">
               Documentation
-            </Link>
+            </Anchor>
             <Link className="text-muted text-sm" href="#">
               Templates
             </Link>

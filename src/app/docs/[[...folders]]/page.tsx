@@ -50,14 +50,14 @@ export default async function DocsPage({
       </div>
       <div className="flex-[1] sticky top-28 max-[1100px]:hidden">
         <Toc headings={headings} />
-        <div className="flex flex-col gap-2 mt-3 text-sm dark:text-zinc-400 border-t-2 dark:border-zinc-800 border-zinc-200 ">
+        <div className="flex flex-col gap-2 mt-3 text-sm dark:text-zinc-400 border-t-2 dark:border-zinc-800 border-zinc-200 pl-1">
           <Link
             href={
               process.env.GITHUB_PROJECT_CONTENT_URL +
               folders.join("/") +
               ".mdx"
             }
-            className="hover:underline underline-offset-2  mt-2"
+            className="mt-2"
           >
             Edit this page on GitHub
           </Link>
