@@ -1,9 +1,13 @@
 ## Docs Stater Template
 
+(
+This open-source project invites you to fork it and integrate it into your own projects, making documentation creation a breeze.)
+
 The "docs-starter-template" is a documentation starter kit that combines stunning design with powerful functionality, making it the perfect choice for creating polished and feature-rich project documentation. Key features include:
 
 - **Stunning Shadcn UI**: Impress your users with a visually appealing and modern design.
 - **Table of Contents**: Effortlessly navigate through your documentation with a built-in table of contents.
+
 - **Syntax Highlighting**: Enhance code clarity and readability with syntax highlighting.
 - **Line Highlighting**: Emphasize important code sections with line highlighting.
 - **Code File Names**: Display code file names seamlessly within your documentation.
@@ -18,7 +22,8 @@ The "docs-starter-template" is a documentation starter kit that combines stunnin
 
 Create documentation that not only informs but also captivates your audience with the "docs-starter-template."
 
+### Screeshots of UI
+
 <img src="images/intro_dark.png" alt="" />
 <img src="images/installation_dark.png" alt="" />
 <img src="images/code_dark.png" alt="" />
-<img src="images/pagination.png" alt="" />
