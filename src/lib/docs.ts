@@ -21,7 +21,6 @@ import rehypeCodeTitles from "rehype-code-titles";
 import Anchor from "@/components/md/anchor";
 import Highlight from "@/components/md/hightlight";
 import Tag from "@/components/md/tag";
-import rehypeToc from "@jsdevtools/rehype-toc";
 
 type MDXFrontmatter = {
   title: string;
