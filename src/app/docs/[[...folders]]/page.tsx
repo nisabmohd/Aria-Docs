@@ -47,7 +47,6 @@ export default async function DocsPage({
           <h1 id={createSlug(frontmatter.title)}>{frontmatter.title}</h1>
           <p>{frontmatter.description}</p>
           {html}
-          sS
         </div>
         <Pagination currentUrl={folders.join("/")} />
       </div>
