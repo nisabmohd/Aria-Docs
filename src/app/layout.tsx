@@ -24,7 +24,7 @@ export default function RootLayout({
       >
         <ThemeContextProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="system"
           enableSystem
         >
           <Navbar />
