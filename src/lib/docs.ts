@@ -87,12 +87,7 @@ export async function getMarkdown(pathname: string[]) {
   }
 }
 
-function arrayToMarkdownList(arr: string[]) {
-  if (!Array.isArray(arr)) {
-    return "";
-  }
-  const listItems = arr.map((item) => `${item}`).join("\n");
-  return listItems;
+export function createSlug(text: string) {
+  const slug = text.toLowerCase().replace(/\s+/g, "-");
+  return slug.replace(/[^a-z0-9-]/g, "");
 }
-
-export async function getToc(headings: string[]) {}

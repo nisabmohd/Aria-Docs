@@ -1,4 +1,4 @@
-import { getMarkdown, getToc } from "@/lib/docs";
+import { createSlug, getMarkdown } from "@/lib/docs";
 import React from "react";
 import { notFound } from "next/navigation";
 import Leftbar from "@/components/leftbar";
@@ -34,8 +34,6 @@ export default async function DocsPage({
     headings,
   } = await getMarkDownData(folders);
   if (!frontmatter) return notFound();
-  const toc = await getToc(headings);
-  console.log(toc);
 
   return (
     <div className="flex flex-row items-start gap-12 pt-5 ">
@@ -43,8 +41,8 @@ export default async function DocsPage({
         <Leftbar />
       </div>
       <div className="flex-[3]">
-        <div className="prose dark:prose-zinc dark:prose-invert dark:prose-code:bg-zinc-900 prose-code:bg-zinc-100 prose-code:text-zinc-800 dark:prose-code:text-zinc-50 prose-img:rounded-md ">
-          <h1>{frontmatter.title}</h1>
+        <div className="prose dark:prose-zinc dark:prose-invert dark:prose-code:bg-zinc-900 prose-code:bg-zinc-100 prose-code:text-zinc-800 dark:prose-code:text-zinc-50 prose-img:rounded-md prose-headings:scroll-m-20">
+          <h1 id={createSlug(frontmatter.title)}>{frontmatter.title}</h1>
           <p>{frontmatter.description}</p>
           {html}
         </div>
