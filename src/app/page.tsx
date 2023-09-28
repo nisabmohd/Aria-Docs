@@ -4,8 +4,8 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center min-[800px]:p-24 pt-8 text-center max-[800px]:px-7">
-      <p className="mb-12 text-xl -mt-40">
+    <main className="flex min-h-[80vh] flex-col items-center justify-center min-[800px]:p-24 pt-8 text-center max-[800px]:px-7">
+      <p className="mb-12 text-xl -mt-32">
         What is in Next.js? All the tools you need to make the Web. Faster.
       </p>
       <h1 className="text-5xl font-bold mb-8 sm:text-7xl">
