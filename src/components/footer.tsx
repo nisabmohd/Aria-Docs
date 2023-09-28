@@ -8,7 +8,7 @@ export default function Footer() {
         <div>
           Built by{" "}
           <Link
-            className="font-semibold  underline-offset-2"
+            className="font-semibold underline  underline-offset-2"
             href={process.env.GITHUB_USER_URL ?? ""}
           >
             nisabmohd
