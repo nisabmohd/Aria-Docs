@@ -124,10 +124,8 @@ pre>code {
     @apply rounded-md;
     @apply w-fit;
     @apply text-xs;
-    @apply text-zinc-400;
     @apply pt-2;
     @apply pb-4;
-    @apply anchor;
     @apply font-normal;
     @apply tracking-wider;
 }
