@@ -25,7 +25,7 @@ export default function SheetLeftbar() {
           side="left"
           className="flex justify-center w-[260px] dark:border-zinc-800 border-zinc-200 pt-8"
         >
-          <ScrollArea className="overflow-auto pt-6 pb-2">
+          <ScrollArea className="overflow-auto pt-6 pb-2 no-scroll-bar ">
             <Leftbar />
           </ScrollArea>
         </SheetContent>

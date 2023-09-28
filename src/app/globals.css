@@ -130,3 +130,17 @@ pre>code {
     @apply font-normal;
     @apply tracking-wider;
 }
+
+
+.no-scroll-bar {
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* Internet Explorer 10+ */
+}
+
+.no-scroll-bar ::-webkit-scrollbar {
+    /* WebKit */
+    width: 0;
+    height: 0;
+}
