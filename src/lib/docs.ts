@@ -17,6 +17,7 @@ import remarkGfm from "remark-gfm";
 import rehypePrism from "rehype-prism-plus";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
+import rehypeCodeTitles from "rehype-code-titles";
 import Anchor from "@/components/md/anchor";
 import Highlight from "@/components/md/hightlight";
 import Tag from "@/components/md/tag";
@@ -55,7 +56,12 @@ export async function getMarkdown(pathname: string[]) {
       options: {
         parseFrontmatter: true,
         mdxOptions: {
-          rehypePlugins: [rehypePrism, rehypeSlug, rehypeAutolinkHeadings],
+          rehypePlugins: [
+            rehypeCodeTitles,
+            rehypePrism,
+            rehypeSlug,
+            rehypeAutolinkHeadings,
+          ],
           remarkPlugins: [remarkGfm],
         },
       },

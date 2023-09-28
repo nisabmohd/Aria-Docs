@@ -115,3 +115,16 @@ pre>code {
 .anchor {
     color: #3b82f6 !important;
 }
+
+.rehype-code-title {
+    @apply dark:bg-zinc-900;
+    @apply bg-zinc-100;
+    @apply px-2;
+    @apply -mb-9;
+    @apply rounded-md;
+    @apply w-fit;
+    @apply text-sm;
+    @apply text-zinc-400;
+    @apply py-1;
+    @apply pb-3
+}
