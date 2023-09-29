@@ -22,10 +22,10 @@ export default function Search() {
   }, [searchQuery]);
 
   return (
-    <div>
+    <div className="flex flex-row items-center gap-2">
       <Button
         onClick={() => setOpen(true)}
-        className="min-[800px]:hidden"
+        className="md:hidden"
         variant="ghost"
         size="icon"
       >

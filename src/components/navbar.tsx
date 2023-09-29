@@ -36,7 +36,7 @@ export function Navbar() {
         </div>
         <div className="flex flex-row items-center gap-2">
           <Search />
-          <Button className="min-[800px]:hidden" variant="ghost" size="icon">
+          <Button className="md:hidden" variant="ghost" size="icon">
             <MenuIcon className="w-4 h-4" />
           </Button>
           <Button variant="secondary" className="max-[890px]:hidden">
