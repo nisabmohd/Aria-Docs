@@ -5,7 +5,7 @@ import { ChevronRight } from "lucide-react";
 import Leftbar from "./leftbar";
 export default function SheetLeftbar() {
   return (
-    <div className=" border-b-2 dark:border-zinc-800 border-zinc-200 mb-6 min-[800px]:hidden">
+    <div className=" border-b-2 dark:border-zinc-800 border-zinc-200 mb-6 md:hidden">
       <Sheet>
         <SheetTrigger>
           <span className="flex flex-row gap-2 items-center mb-3">
