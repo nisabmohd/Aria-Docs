@@ -7,9 +7,17 @@ import ScrollTop from "@/components/scroll-top";
 import Link from "next/link";
 import Toc from "@/components/toc";
 import SheetLeftbar from "@/components/sm-leftbar";
+import { getAllSlugsParams } from "@/lib/search";
 
 async function getMarkDownData(folders: string[]) {
   return await getMarkdown(folders);
+}
+
+export function generateStaticParams() {
+  const data = getAllSlugsParams();
+  return data.map((param) => ({
+    folders: param.split("/").slice(2),
+  }));
 }
 
 export async function generateMetadata({

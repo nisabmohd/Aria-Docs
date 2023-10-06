@@ -1,5 +1,12 @@
 import { docs } from "@/config/docs";
 
+export function getAllSlugsParams() {
+  return docs
+    .map((item) => item.items.map((param) => param.href))
+    .flat()
+    .filter((item) => item != "#");
+}
+
 export function search(query: string) {
   return docs
     .map((item) =>

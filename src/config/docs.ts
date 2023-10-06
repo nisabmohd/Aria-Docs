@@ -27,23 +27,23 @@ export const docs = [
       },
       {
         title: "Caching",
-        href: "/docs/building-application/caching",
+        href: "#",
       },
       {
         title: "Rendering",
-        href: "/docs/building-application/rendering",
+        href: "#",
       },
       {
         title: "Data fetching",
-        href: "/docs/building-application/data-fetching",
+        href: "#",
       },
       {
         title: "Optimizing",
-        href: "/docs/building-application/optimize",
+        href: "#",
       },
       {
         title: "Deploying",
-        href: "/docs/building-application/deploy",
+        href: "#",
       },
     ],
   },
