@@ -8,17 +8,17 @@ import Anchor from "./anchor";
 export default function Navbar() {
   return (
     <nav className="border-b-2 w-full h-14 sticky top-0 bg-inherit z-50">
-      <div className="max-w-[1400px] mx-auto h-full flex items-center justify-between">
+      <div className="max-w-[1370px] mx-auto h-full flex items-center justify-between">
         <div className="flex items-center gap-6">
           <Link href="/" className="flex items-center gap-2">
-            <AppWindowMacIcon className="w-6 h-6 text-muted-foreground" />
+            <AppWindowMacIcon className="w-7 h-7 text-muted-foreground" />
             <h2 className="text-md font-bold">template/docs</h2>
           </Link>
           <div className="flex items-center gap-5 text-sm font-medium text-muted-foreground">
             <Anchor
               activeClassName="text-black dark:text-white font-semibold"
               absolute
-              href="/docs"
+              href="/docs/getting-started/introduction"
             >
               Docs
             </Anchor>

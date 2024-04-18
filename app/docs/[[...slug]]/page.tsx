@@ -12,7 +12,7 @@ export default async function DocsPage({
   if (!res) notFound();
   return (
     <div className="flex items-start gap-9">
-      <div className="flex-[3] py-8 prose prose-slate dark:prose-invert max-w-full prose-code:font-code prose-code:bg-slate-800 prose-pre:bg-slate-800">
+      <div className="flex-[3] py-8 prose prose-slate dark:prose-invert max-w-full prose-code:font-code prose-code:bg-slate-800 prose-pre:bg-slate-800 prose-headings:scroll-m-20">
         <h1>{res.frontmatter.title}</h1>
         <p className="-mt-5 text-muted-foreground text-lg mb-4">
           {res.frontmatter.description}
