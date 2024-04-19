@@ -1,3 +1,4 @@
+import DocsBreadcrumb from "@/components/docs-breadcrumb";
 import Pagination from "@/components/pagination";
 import Toc from "@/components/toc";
 import { getMarkdownForSlug } from "@/lib/markdown";
@@ -23,14 +24,18 @@ export default async function DocsPage({
   if (!res) notFound();
   return (
     <div className="flex items-start gap-12 ">
-      <div className="flex-[3] py-10 prose prose-zinc dark:prose-invert prose-code:font-code prose-code:bg-zinc-900 prose-pre:bg-zinc-900 prose-headings:scroll-m-20">
-        <h1>{res.frontmatter.title}</h1>
-        <p className="-mt-5 text-muted-foreground text-lg mb-4">
-          {res.frontmatter.description}
-        </p>
-        {res.content}
-        <Pagination pathname={pathName} />
+      <div className="flex-[3] py-10 ">
+        <DocsBreadcrumb paths={slug} />
+        <div className="prose prose-zinc dark:prose-invert prose-code:font-code prose-code:bg-zinc-900 prose-pre:bg-zinc-900 prose-headings:scroll-m-20">
+          <h1>{res.frontmatter.title}</h1>
+          <p className="-mt-5 text-muted-foreground text-lg mb-4">
+            {res.frontmatter.description}
+          </p>
+          {res.content}
+          <Pagination pathname={pathName} />
+        </div>
       </div>
+
       <Toc path={pathName} />
     </div>
   );
