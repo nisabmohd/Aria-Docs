@@ -13,6 +13,7 @@ import { FLATTEND_ROUTES } from "@/lib/routes-config";
 import Link from "next/link";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useState } from "react";
+import Anchor from "./anchor";
 
 export default function Search() {
   const [searchedInput, setSearchedInput] = useState("");
@@ -46,12 +47,13 @@ export default function Search() {
             <div className="flex flex-col items-start overflow-y-auto px-3 pb-4 gap-0.5">
               {filteredResults.map((item) => (
                 <DialogClose key={item.href} asChild>
-                  <Link
+                  <Anchor
                     className="hover:bg-neutral-800 w-full p-2.5 px-3 text-sm rounded-sm flex items-center gap-2"
-                    href={item.disabled ? "#" : `/docs/${item.href}`}
+                    href={`/docs/${item.href}`}
+                    disabled={item.disabled}
                   >
                     <FileIcon className="h-[1.1rem] w-[1.1rem]" /> {item.title}
-                  </Link>
+                  </Anchor>
                 </DialogClose>
               ))}
             </div>

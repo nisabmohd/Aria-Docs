@@ -1,7 +1,7 @@
 import { getPreviousNext } from "@/lib/markdown";
-import Link from "next/link";
 import { buttonVariants } from "./ui/button";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import Anchor from "./anchor";
 
 export default function Pagination({ pathname }: { pathname: string }) {
   const res = getPreviousNext(pathname);
@@ -10,24 +10,26 @@ export default function Pagination({ pathname }: { pathname: string }) {
     <div className="flex items-center justify-between py-5">
       <div>
         {res.prev && (
-          <Link
+          <Anchor
             className={buttonVariants({ variant: "link" })}
-            href={res.prev.disabled ? "#" : `/docs/${res.prev.href}`}
+            href={`/docs/${res.prev.href}`}
+            disabled={res.prev.disabled}
           >
             <ChevronLeftIcon className="w-4 h-4" />
             <p>{res.prev.title}</p>
-          </Link>
+          </Anchor>
         )}
       </div>
       <div>
         {res.next && (
-          <Link
+          <Anchor
             className={buttonVariants({ variant: "link" })}
-            href={res.next.disabled ? "#" : `/docs/${res.next.href}`}
+            href={`/docs/${res.next.href}`}
+            disabled={res.next.disabled}
           >
             <p>{res.next.title}</p>
             <ChevronRightIcon className="w-4 h-4" />
-          </Link>
+          </Anchor>
         )}
       </div>
     </div>

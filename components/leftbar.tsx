@@ -16,8 +16,9 @@ export default function Leftbar() {
                   return (
                     <Anchor
                       activeClassName="font-medium dark:text-white text-black"
-                      href={subItem.disabled ? "#" : key}
+                      href={key}
                       key={key}
+                      disabled={subItem.disabled}
                     >
                       {subItem.title}
                     </Anchor>
