@@ -14,6 +14,10 @@ export const ROUTES = [
         href: "/installation",
       },
       {
+        title: "components.json",
+        href: "/components-json",
+      },
+      {
         title: "Project Structure",
         href: "/project-structure",
         disabled: true,

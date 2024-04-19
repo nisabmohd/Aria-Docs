@@ -8,8 +8,6 @@ import {
 } from "@/components/ui/breadcrumb";
 
 export default function DocsBreadcrumb({ paths }: { paths: string[] }) {
-  console.log(paths);
-
   return (
     <div className="pb-5">
       <Breadcrumb>

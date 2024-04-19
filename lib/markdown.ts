@@ -8,13 +8,26 @@ import rehypeSlug from "rehype-slug";
 import rehypeCodeTitles from "rehype-code-titles";
 import { FLATTEND_ROUTES } from "./routes-config";
 
+// custom components imports
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
 type MdxFrontmatter = {
   title: string;
   description: string;
 };
 
-//TODO: add custom components
-const components = {};
+// add custom components
+const components = {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+};
 
 function getContentPath(slug: string) {
   return path.join(process.cwd(), "/contents/docs/", `${slug}.mdx`);
