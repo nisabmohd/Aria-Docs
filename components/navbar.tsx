@@ -7,7 +7,7 @@ import Anchor from "./anchor";
 
 export default function Navbar() {
   return (
-    <nav className="border-b-2 w-full h-14 sticky top-0 bg-inherit z-50">
+    <nav className="border-b-2 w-full h-16 sticky top-0 bg-inherit z-50">
       <div className="p-2 max-w-[1480px] mx-auto h-full flex items-center justify-between">
         <div className="flex items-center gap-6">
           <Link href="/" className="sm:flex hidden items-center gap-2">
@@ -34,7 +34,7 @@ export default function Navbar() {
             <Search />
             <div className="-space-x-2">
               <Link
-                href="#"
+                href="https://github.com/nisabmohd/Docs-Stater-Template"
                 className={buttonVariants({ variant: "ghost", size: "icon" })}
               >
                 <GithubIcon className="h-[1.1rem] w-[1.1rem]" />

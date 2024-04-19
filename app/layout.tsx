@@ -3,6 +3,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/navbar";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
+import Footer from "@/components/footer";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -30,6 +31,7 @@ export default function RootLayout({
         >
           <Navbar />
           <main className="container h-auto">{children}</main>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
