@@ -1,43 +1,38 @@
 import { buttonVariants } from "@/components/ui/button";
-import { Triangle } from "lucide-react";
+import { TerminalIcon } from "lucide-react";
 import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex min-h-[80vh] flex-col items-center justify-center min-[800px]:p-24 pt-8 text-center max-[800px]:px-7 py-8">
-      <p className="mb-12 text-xl min-[800]:-mt-32">
-        What is in Next.js? All the tools you need to make the Web. Faster.
-      </p>
-      <h1 className="text-5xl font-bold mb-8 sm:text-7xl">
-        The React Framework for the Web
+    <div className="flex min-h-[99vh] flex-col items-center lg:pt-60 pt-20 text-center px-2 py-8">
+      <p className="mb-5 text-xl">Follow along on Twitter</p>
+      <h1 className="text-5xl font-bold mb-4 sm:text-7xl">
+        An example app built using Next.js and server components.
       </h1>
-      <p className="mb-8 text-xl ">
-        Used by some of the worlds largest companies, Next.js enables you to
-        create full-stack Web applications by extending the latest React
-        features, and integrating powerful Rust-based JavaScript tooling for the
-        fastest builds.
+      <p className="mb-8 text-xl max-w-[800px] text-muted-foreground">
+        Used by some of the worlds largest companies, This unknown lib enables
+        you to create high-quality web applications with the power of web
+        components.
       </p>
       <div className="flex flex-row items-center gap-5">
         <Link
           href="/docs/getting-started/introduction"
-          className={buttonVariants({
-            size: "lg",
-          })}
+          className={buttonVariants({ className: "px-6" })}
         >
           Get Stared
         </Link>
         <Link
           href="#"
           className={buttonVariants({
-            size: "lg",
             variant: "outline",
+            className: "px-6",
           })}
         >
-          Learn Next.js
+          Customize
         </Link>
       </div>
-      <span className="flex flex-row items-center gap-2 text-zinc-400 text-md mt-5 -mb-12 max-[800px]:mb-12">
-        <Triangle className="w-4 h-4" /> ~ npx create-next-app@latest
+      <span className="flex flex-row items-center gap-2 text-zinc-400 text-md mt-7 -mb-12 max-[800px]:mb-12">
+        <TerminalIcon className="w-4 h-4" /> ~ npx this-library-name@latest
       </span>
     </div>
   );

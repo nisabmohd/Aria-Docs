@@ -6,13 +6,14 @@ import rehypePrism from "rehype-prism-plus";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import rehypeCodeTitles from "rehype-code-titles";
+import { FLATTEND_ROUTES } from "./routes-config";
 
 type MdxFrontmatter = {
   title: string;
   description: string;
 };
 
-//TODO: add components
+//TODO: add custom components
 const components = {};
 
 function getContentPath(slug: string) {
@@ -59,8 +60,13 @@ export async function getToc(slug: string) {
   return extractedHeadings;
 }
 
-//TODO:
-export function getPreviousNext(path: string) {}
+export function getPreviousNext(path: string) {
+  const index = FLATTEND_ROUTES.findIndex(({ href }) => href == path);
+  return {
+    prev: FLATTEND_ROUTES[index - 1],
+    next: FLATTEND_ROUTES[index + 1],
+  };
+}
 
 export function sluggify(text: string) {
   const slug = text.toLowerCase().replace(/\s+/g, "-");
