@@ -32,7 +32,7 @@ export default function Navbar() {
         <div className="flex items-center gap-3">
           <div className="flex gap-2">
             <Search />
-            <div className="-space-x-2">
+            <div className="-space-x-1.5">
               <Link
                 href="https://github.com/nisabmohd/Docs-Stater-Template"
                 className={buttonVariants({ variant: "ghost", size: "icon" })}
