@@ -1,5 +1,5 @@
 import { ModeToggle } from "@/components/theme-toggle";
-import { AppWindowMacIcon, GithubIcon, TwitterIcon } from "lucide-react";
+import { GithubIcon, TwitterIcon, CommandIcon } from "lucide-react";
 import Link from "next/link";
 import { buttonVariants } from "./ui/button";
 import Search from "./search";
@@ -11,7 +11,7 @@ export default function Navbar() {
       <div className="p-2 max-w-[1480px] mx-auto h-full flex items-center justify-between">
         <div className="flex items-center gap-6">
           <Link href="/" className="sm:flex hidden items-center gap-2">
-            <AppWindowMacIcon className="w-7 h-7 text-muted-foreground" />
+            <CommandIcon className="w-6 h-6 text-muted-foreground" />
             <h2 className="text-md font-bold">template/docs</h2>
           </Link>
           <div className="md:flex hidden items-center gap-5 text-sm font-medium text-muted-foreground">
