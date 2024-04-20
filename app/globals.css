@@ -78,7 +78,8 @@
 
 pre {
   padding: 0 !important;
-  width: inherit;
+  width: inherit !important;
+  overflow-x: auto;
 }
 
 pre>code {
