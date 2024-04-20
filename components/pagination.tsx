@@ -11,7 +11,7 @@ export default function Pagination({ pathname }: { pathname: string }) {
       <div>
         {res.prev && (
           <Anchor
-            className={buttonVariants({ variant: "link" })}
+            className={buttonVariants({ variant: "link", className: "px-0" })}
             href={`/docs/${res.prev.href}`}
             disabled={res.prev.disabled}
           >
@@ -23,7 +23,7 @@ export default function Pagination({ pathname }: { pathname: string }) {
       <div>
         {res.next && (
           <Anchor
-            className={buttonVariants({ variant: "link" })}
+            className={buttonVariants({ variant: "link", className: "px-0" })}
             href={`/docs/${res.next.href}`}
             disabled={res.next.disabled}
           >

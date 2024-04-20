@@ -4,35 +4,60 @@ import Link from "next/link";
 import { buttonVariants } from "./ui/button";
 import Search from "./search";
 import Anchor from "./anchor";
+import { SheetLeftbar } from "./leftbar";
+import { FLATTEND_ROUTES } from "@/lib/routes-config";
 
-export default function Navbar() {
+export const NAVLINKS = [
+  {
+    title: "Documentation",
+    href: `/docs/${FLATTEND_ROUTES[0].href}`,
+  },
+  {
+    title: "Examples",
+    href: "#",
+  },
+  {
+    title: "Guides",
+    href: "#",
+  },
+  {
+    title: "Themes",
+    href: "#",
+  },
+  {
+    title: "Blog",
+    href: "#",
+  },
+];
+
+export function Navbar() {
   return (
-    <nav className="border-b-2 w-full h-16 sticky top-0 bg-inherit z-50">
-      <div className="p-2 max-w-[1480px] mx-auto h-full flex items-center justify-between">
+    <nav className="border-b-[1px] border-gray-200 dark:border-gray-800 w-full h-16 sticky top-0 bg-inherit z-50 lg:px-2 px-3">
+      <div className="p-2 max-w-[1480px] mx-auto h-full flex items-center justify-between gap-2">
+        <SheetLeftbar />
         <div className="flex items-center gap-6">
-          <Link href="/" className="sm:flex hidden items-center gap-2">
-            <CommandIcon className="w-6 h-6 text-muted-foreground" />
-            <h2 className="text-md font-bold">template/docs</h2>
-          </Link>
-          <div className="md:flex hidden items-center gap-5 text-sm font-medium text-muted-foreground">
-            <Anchor
-              activeClassName="text-black dark:text-white font-semibold"
-              absolute
-              href="/docs/getting-started/introduction"
-            >
-              Docs
-            </Anchor>
-            <Link href="#">Examples</Link>
-            <Link href="#">Guides</Link>
-            <Link href="#">Examples</Link>
-            <Link href="#">Blog</Link>
+          <div className="md:flex hidden">
+            <Logo />
+          </div>
+          <div className="lg:flex hidden items-center gap-5 text-sm font-medium text-muted-foreground">
+            {NAVLINKS.map((item) => {
+              return (
+                <Anchor
+                  key={item.title + item.href}
+                  activeClassName="text-black dark:text-white font-semibold"
+                  absolute
+                  href={item.href}
+                >
+                  {item.title}
+                </Anchor>
+              );
+            })}
           </div>
         </div>
-
         <div className="flex items-center gap-3">
           <div className="flex gap-2">
             <Search />
-            <div className="-space-x-1.5">
+            <div className="flex -space-x-1.5">
               <Link
                 href="https://github.com/nisabmohd/Docs-Stater-Template"
                 className={buttonVariants({ variant: "ghost", size: "icon" })}
@@ -54,5 +79,14 @@ export default function Navbar() {
         </div>
       </div>
     </nav>
+  );
+}
+
+export function Logo() {
+  return (
+    <Link href="/" className="flex items-center gap-2">
+      <CommandIcon className="w-6 h-6 text-muted-foreground" />
+      <h2 className="text-md font-bold">template/docs</h2>
+    </Link>
   );
 }

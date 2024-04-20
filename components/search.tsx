@@ -10,7 +10,6 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import { FLATTEND_ROUTES } from "@/lib/routes-config";
-import Link from "next/link";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useState } from "react";
 import Anchor from "./anchor";
@@ -48,7 +47,7 @@ export default function Search() {
               {filteredResults.map((item) => (
                 <DialogClose key={item.href} asChild>
                   <Anchor
-                    className="hover:bg-neutral-800 w-full p-2.5 px-3 text-sm rounded-sm flex items-center gap-2"
+                    className="dark:hover:bg-neutral-800 hover:bg-neutral-100 w-full p-2.5 px-3 text-sm rounded-sm flex items-center gap-2"
                     href={`/docs/${item.href}`}
                     disabled={item.disabled}
                   >
