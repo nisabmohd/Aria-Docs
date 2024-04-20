@@ -5,12 +5,12 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex min-h-[99vh] flex-col items-center lg:pt-60 pt-20 text-center px-2 py-8">
-      <p className="mb-5 text-xl">Follow along on Twitter</p>
-      <h1 className="text-5xl font-bold mb-4 sm:text-7xl">
+    <div className="flex min-h-[99vh] flex-col items-center lg:pt-60 sm:pt-20 pt-24 text-center px-2 py-8">
+      <p className="mb-5 sm:text-xl">Follow along on Twitter</p>
+      <h1 className="text-3xl font-bold mb-4 sm:text-7xl">
         An example app built using Next.js and server components.
       </h1>
-      <p className="mb-8 text-xl max-w-[800px] text-muted-foreground">
+      <p className="mb-8 sm:text-xl max-w-[800px] text-muted-foreground">
         Used by some of the worlds largest companies, This unknown lib enables
         you to create high-quality web applications with the power of web
         components.
