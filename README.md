@@ -34,3 +34,22 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Features & screenshots
+
+- MDX supported
+- Syntax highlighting
+- Table of contents
+- Paginatiopn
+- Search
+- Code line highlight & code title
+- Static site generation
+- Custom components
+- Light mode & dark mode
+
+<br/>
+
+<img src="./public/toc.png" />
+<img src="./public/pagination.png" />
+<img src="./public/syntax-highlight.png" />
+<img src="./public/search.png" />

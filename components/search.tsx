@@ -32,7 +32,7 @@ export default function Search() {
             />
           </div>
         </DialogTrigger>
-        <DialogContent className="p-0">
+        <DialogContent className="p-0 max-w-[550px]">
           <DialogHeader>
             <input
               value={searchedInput}
@@ -42,7 +42,12 @@ export default function Search() {
               className="h-12 px-4 bg-transparent border-b text-sm outline-none"
             />
           </DialogHeader>
-          <ScrollArea className="max-h-[300px]">
+          {filteredResults.length == 0 && (
+            <p className="text-muted-foreground mx-auto mt-1">
+              No results found.
+            </p>
+          )}
+          <ScrollArea className="max-h-[350px]">
             <div className="flex flex-col items-start overflow-y-auto px-3 pb-4 gap-0.5">
               {filteredResults.map((item) => (
                 <DialogClose key={item.href} asChild>
