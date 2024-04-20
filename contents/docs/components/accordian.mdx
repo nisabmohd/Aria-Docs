@@ -3,6 +3,67 @@ title: Accordian
 description: A vertically stacked set of interactive headings that each reveal a section of content.
 ---
 
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+## Accordian Intro
+
+An accordion, in the context of web development or user interface design, is a graphical control element that allows users to expand and collapse sections of content. It typically consists of a list of headers or titles, each associated with a content panel that can be expanded or collapsed independently.
+
+When a header is clicked or activated, its associated content panel expands to reveal its contents, and when another header is clicked, the previously expanded panel collapses and the new one expands.
+
+This interaction pattern is often used to organize and present large amounts of content in a compact and structured way, allowing users to focus on specific sections of interest while hiding the rest. Accordions are commonly used in websites for FAQs (Frequently Asked Questions), product descriptions, or any content where a hierarchical structure is beneficial.
+
+## Custom Component
+
+Here a table component from shadcn ui is used.
+
+<Table>
+  <TableCaption>When to use Server and Client Components?</TableCaption>
+  <TableHeader>
+    <TableRow>
+      <TableHead className="w-[100px]">What do you need to do?</TableHead>
+      <TableHead> Server Component</TableHead>
+      <TableHead>Client Component</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell className="font-medium">Fetch data</TableCell>
+      <TableCell>✓</TableCell>
+      <TableCell>✗</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">Access backend resources directly</TableCell>
+      <TableCell>✓</TableCell>
+      <TableCell>✗</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+        Keep sensitive information on the server
+      </TableCell>
+      <TableCell>✓</TableCell>
+      <TableCell>✗</TableCell>
+    </TableRow>
+
+    <TableRow>
+      <TableCell className="font-medium">
+        Reduce client-side JavaScript or Heavy dependencies on server
+      </TableCell>
+      <TableCell>✓</TableCell>
+      <TableCell>✗</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">
+       Add interactivity and event listeners
+      </TableCell>
+      <TableCell>✗</TableCell>
+      <TableCell>✓</TableCell>
+    </TableRow>
+     <TableRow>
+      <TableCell className="font-medium">
+       Usage of default or custom hooks
+      </TableCell>
+      <TableCell>✗</TableCell>
+      <TableCell>✓</TableCell>
+    </TableRow>
+
+  </TableBody>
+</Table>

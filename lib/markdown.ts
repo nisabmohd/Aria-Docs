@@ -15,6 +15,15 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 type MdxFrontmatter = {
   title: string;
@@ -27,6 +36,13 @@ const components = {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 };
 
 function getContentPath(slug: string) {
