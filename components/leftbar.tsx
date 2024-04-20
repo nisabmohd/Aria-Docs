@@ -64,7 +64,7 @@ export function SheetLeftbar() {
               return (
                 <SheetClose asChild key={item.title + item.href}>
                   <Anchor
-                    activeClassName="text-black dark:text-white font-semibold"
+                    activeClassName="text-black dark:text-white font-medium"
                     absolute
                     href={item.href}
                   >
