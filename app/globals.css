@@ -76,7 +76,9 @@
   }
 }
 
-
+.prose {
+  margin: 0 !important;
+}
 
 pre {
   padding: 0 !important;
