@@ -83,6 +83,7 @@ pre {
 
 pre>code {
   display: grid;
+  max-width: inherit !important;
   padding: 18px 0 !important;
 }
 

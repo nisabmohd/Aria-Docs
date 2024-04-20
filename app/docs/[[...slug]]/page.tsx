@@ -26,7 +26,7 @@ export default async function DocsPage({
     <div className="flex items-start gap-12 ">
       <div className="flex-[3] py-10 ">
         <DocsBreadcrumb paths={slug} />
-        <div className="prose prose-zinc dark:prose-invert prose-code:font-code prose-code:bg-zinc-900 prose-pre:bg-zinc-900 prose-headings:scroll-m-20">
+        <div className="prose prose-zinc dark:prose-invert prose-code:font-code prose-code:bg-zinc-900 prose-pre:bg-zinc-900 prose-headings:scroll-m-20 prose-code:whitespace-pre-wrap">
           <h1>{res.frontmatter.title}</h1>
           <p className="-mt-5 text-muted-foreground text-lg mb-4">
             {res.frontmatter.description}
