@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex min-h-[99vh] flex-col items-center lg:pt-60 sm:pt-20 pt-24 text-center px-2 py-8">
+    <div className="flex min-h-[90vh] flex-col items-center justify-center text-center px-2 py-8">
       <p className="mb-5 sm:text-xl">Follow along on Twitter</p>
       <h1 className="text-3xl font-bold mb-4 sm:text-7xl">
         An example app built using Next.js and server components.
