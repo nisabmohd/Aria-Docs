@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex min-h-[90vh] flex-col items-center justify-center text-center px-2 py-8">
+    <div className="flex min-h-[88vh] flex-col items-center justify-center text-center px-2 py-8">
       <p className="mb-5 sm:text-xl">Follow along on Twitter</p>
       <h1 className="text-3xl font-bold mb-4 sm:text-7xl">
         An example app built using Next.js and server components.
@@ -18,7 +18,7 @@ export default function Home() {
       <div className="flex flex-row items-center gap-5">
         <Link
           href={`/docs/${FLATTEND_ROUTES[0].href}`}
-          className={buttonVariants({ className: "px-6" })}
+          className={buttonVariants({ className: "px-6", size: "lg" })}
         >
           Get Stared
         </Link>
@@ -27,6 +27,7 @@ export default function Home() {
           className={buttonVariants({
             variant: "outline",
             className: "px-6",
+            size: "lg",
           })}
         >
           Customize

@@ -1,5 +1,5 @@
 import { ModeToggle } from "@/components/theme-toggle";
-import { GithubIcon, TwitterIcon, CommandIcon } from "lucide-react";
+import { GithubIcon, TwitterIcon, ParenthesesIcon } from "lucide-react";
 import Link from "next/link";
 import { buttonVariants } from "./ui/button";
 import Search from "./search";
@@ -57,7 +57,7 @@ export function Navbar() {
         <div className="flex items-center gap-3">
           <div className="flex gap-2">
             <Search />
-            <div className="flex -space-x-1.5">
+            <div className="flex -space-x-1">
               <Link
                 href="https://github.com/nisabmohd/Docs-Stater-Template"
                 className={buttonVariants({ variant: "ghost", size: "icon" })}
@@ -84,8 +84,8 @@ export function Navbar() {
 
 export function Logo() {
   return (
-    <Link href="/" className="flex items-center gap-2">
-      <CommandIcon className="w-6 h-6 text-muted-foreground" />
+    <Link href="/" className="flex items-center gap-2.5">
+      <ParenthesesIcon className="w-6 h-6 text-muted-foreground" />
       <h2 className="text-md font-bold">template/docs</h2>
     </Link>
   );

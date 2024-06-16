@@ -52,7 +52,7 @@ export default function Search() {
               {filteredResults.map((item) => (
                 <DialogClose key={item.href} asChild>
                   <Anchor
-                    className="dark:hover:bg-neutral-800 hover:bg-neutral-100 w-full p-2.5 px-3 text-sm rounded-sm flex items-center gap-2"
+                    className="dark:hover:bg-gray-800 hover:bg-gray-100 w-full p-2.5 px-3 text-sm rounded-sm flex items-center gap-2"
                     href={`/docs/${item.href}`}
                     disabled={item.disabled}
                   >
