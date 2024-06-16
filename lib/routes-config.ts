@@ -1,4 +1,4 @@
-// remove disabled
+// remove disabled for now its added because there are no pages for that route
 
 export const ROUTES = [
   {
