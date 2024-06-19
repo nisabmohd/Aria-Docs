@@ -18,54 +18,47 @@ This interaction pattern is often used to organize and present large amounts of 
 Here a table component from shadcn ui is used.
 
 <Table>
-  <TableCaption>When to use Server and Client Components?</TableCaption>
+  <TableCaption>A list of your recent invoices.</TableCaption>
   <TableHeader>
     <TableRow>
-      <TableHead className="w-[100px]">What do you need to do?</TableHead>
-      <TableHead> Server Component</TableHead>
-      <TableHead>Client Component</TableHead>
+      <TableHead className="w-[100px]">Invoice</TableHead>
+      <TableHead>Method</TableHead>
+      <TableHead >Amount</TableHead>
     </TableRow>
   </TableHeader>
   <TableBody>
     <TableRow>
-      <TableCell className="font-medium">Fetch data</TableCell>
-      <TableCell>✓</TableCell>
-      <TableCell>✗</TableCell>
+      <TableCell className="font-medium">INV001</TableCell>
+      <TableCell>Credit Card</TableCell>
+      <TableCell>$250.00</TableCell>
     </TableRow>
     <TableRow>
-      <TableCell className="font-medium">Access backend resources directly</TableCell>
-      <TableCell>✓</TableCell>
-      <TableCell>✗</TableCell>
-    </TableRow>
-    <TableRow>
-      <TableCell className="font-medium">
-        Keep sensitive information on the server
-      </TableCell>
-      <TableCell>✓</TableCell>
-      <TableCell>✗</TableCell>
+      <TableCell className="font-medium">INV002</TableCell>
+      <TableCell>Bank Transfer</TableCell>
+      <TableCell>$500.00</TableCell>
     </TableRow>
 
-    <TableRow>
-      <TableCell className="font-medium">
-        Reduce client-side JavaScript or Heavy dependencies on server
-      </TableCell>
-      <TableCell>✓</TableCell>
-      <TableCell>✗</TableCell>
-    </TableRow>
-    <TableRow>
-      <TableCell className="font-medium">
-       Add interactivity and event listeners
-      </TableCell>
-      <TableCell>✗</TableCell>
-      <TableCell>✓</TableCell>
-    </TableRow>
-     <TableRow>
-      <TableCell className="font-medium">
-       Usage of default or custom hooks
-      </TableCell>
-      <TableCell>✗</TableCell>
-      <TableCell>✓</TableCell>
-    </TableRow>
+<TableRow>
+  <TableCell className="font-medium">INV003</TableCell>
+  <TableCell>PayPal</TableCell>
+  <TableCell>$150.00</TableCell>
+</TableRow>
 
+<TableRow>
+  <TableCell className="font-medium">INV004</TableCell>
+  <TableCell>Cash</TableCell>
+  <TableCell>$100.00</TableCell>
+</TableRow>
+<TableRow>
+  <TableCell className="font-medium">INV005</TableCell>
+  <TableCell>Credit Card</TableCell>
+  <TableCell>$300.00</TableCell>
+</TableRow>
+
+<TableRow>
+      <TableCell className="font-medium">INV006</TableCell>
+      <TableCell>Bank Transfer</TableCell>
+      <TableCell >$450.00</TableCell>
+    </TableRow>
   </TableBody>
 </Table>

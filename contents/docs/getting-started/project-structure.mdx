@@ -1,0 +1,49 @@
+---
+title: Project Structure
+description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+---
+
+## Pages and Layouts
+
+The special files layout.js, page.js, and template.js allow you to create UI for a route. This page will guide you through how and when to use these special files.
+
+<Tabs defaultValue="js" className="py-5">
+  <TabsList className="">
+    <TabsTrigger value="js">layout.jsx</TabsTrigger>
+    <TabsTrigger value="ts">layout.tsx</TabsTrigger>
+  </TabsList>
+  <TabsContent value="js">
+  ```jsx {7} showLineNumbers
+import ThemeProvider from './theme-provider'
+ 
+export default function RootLayout({ children }) {
+  return (
+    <html>
+      <body>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
+    </html>
+  )
+}
+````
+  </TabsContent>
+  <TabsContent value="ts">
+```tsx {11} showLineNumbers
+import ThemeProvider from './theme-provider'
+ 
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html>
+      <body>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
+    </html>
+  )
+}
+```
+  </TabsContent>
+</Tabs>

@@ -20,7 +20,6 @@ export const ROUTES = [
       {
         title: "Project Structure",
         href: "/project-structure",
-        disabled: true,
       },
       {
         title: "Theming",

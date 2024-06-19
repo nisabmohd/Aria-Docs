@@ -46,7 +46,7 @@ export default async function DocsPage({
         <DocsBreadcrumb paths={slug} />
         <div className="prose prose-gray dark:prose-invert prose-code:font-code prose-code:bg-gray-900 prose-pre:bg-gray-900 prose-headings:scroll-m-20 w-[85vw] sm:w-full sm:mx-auto prose-code:text-sm prose-code:leading-6 prose-code:text-white prose-code:p-1 prose-code:rounded-md prose-pre:border">
           <h1 className="break-all">{res.frontmatter.title}</h1>
-          <p className="-mt-5 text-muted-foreground text-lg mb-2">
+          <p className="-mt-5 text-muted-foreground text-lg mb-3">
             {res.frontmatter.description}
           </p>
           {res.content}

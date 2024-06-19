@@ -17,12 +17,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      className={`${GeistSans.variable} ${GeistMono.variable}`}
-      lang="en"
-      suppressHydrationWarning
-    >
-      <body className="font-regular">
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={`${GeistSans.variable} ${GeistMono.variable} font-regular`}
+        suppressHydrationWarning
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

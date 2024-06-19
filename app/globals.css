@@ -93,7 +93,7 @@ pre>code {
 
 
 .highlight-line {
-  @apply bg-zinc-800/45;
+  @apply bg-gray-800/90;
 }
 
 
