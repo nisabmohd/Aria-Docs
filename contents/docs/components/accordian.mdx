@@ -29,12 +29,11 @@ import ThemeProvider from './theme-provider'
 export default function RootLayout({ children }) {
   return (
     <html>
-      <body>
+      <body className="container">
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
-  )
-}
+  )}
 ````
   </TabsContent>
   <TabsContent value="ts">
@@ -48,7 +47,7 @@ export default function RootLayout({
 }) {
   return (
     <html>
-      <body>
+      <body className="container">
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>

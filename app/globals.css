@@ -93,9 +93,9 @@ pre>code {
 
 
 .highlight-line {
-  @apply bg-gray-800/90;
+  @apply dark:bg-gray-800/90;
+  @apply bg-gray-200/90;
 }
-
 
 .punctuation {
   color: gray;
@@ -118,6 +118,14 @@ pre>code {
 .annotation,
 .boolean,
 .number {
+  color: hsl(0, 0%, 29%)
+}
+
+.dark .string,
+.dark .constant,
+.dark .annotation,
+.dark .boolean,
+.dark.number {
   color: hsl(0, 0%, 71%)
 }
 
@@ -130,7 +138,12 @@ pre>code {
 }
 
 .attr-name {
+  color: #414141;
+}
+
+.dark .attr-name {
   color: #cacaca;
+
 }
 
 .rehype-code-title {
