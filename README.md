@@ -38,7 +38,7 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 - MDX supported
 - Syntax highlighting
 - Table of contents
-- Paginatipn
+- Pagination
 - Search
 - Code line highlight & code title
 - Static site generation
