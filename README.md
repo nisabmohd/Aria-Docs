@@ -1,7 +1,5 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nisabmohd/Documentation-Template)
-
 ## Getting Started
 
 First, run the development server:
@@ -33,9 +31,7 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nisabmohd/Documentation-Template)
 
 ## Features & screenshots
 
@@ -49,9 +45,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 - Custom components
 - Light mode & dark mode
 
-<br/>
+## Screenshots
 
-<img src="./public/toc.png" />
-<img src="./public/pagination.png" />
-<img src="./public/syntax-highlight.png" />
-<img src="./public/search.png" />
+<img src="./public/screely-1718792918006.png" />
+<img src="./public/screely-1718792933459.png" />
+<img src="./public/screely-1718792945435.png" />
