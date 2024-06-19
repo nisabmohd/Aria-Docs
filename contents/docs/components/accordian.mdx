@@ -15,50 +15,45 @@ This interaction pattern is often used to organize and present large amounts of 
 
 ## Custom Component
 
-Here a table component from shadcn ui is used.
+Here a tab component from shadcn ui is used.
 
-<Table>
-  <TableCaption>A list of your recent invoices.</TableCaption>
-  <TableHeader>
-    <TableRow>
-      <TableHead className="w-[100px]">Invoice</TableHead>
-      <TableHead>Method</TableHead>
-      <TableHead >Amount</TableHead>
-    </TableRow>
-  </TableHeader>
-  <TableBody>
-    <TableRow>
-      <TableCell className="font-medium">INV001</TableCell>
-      <TableCell>Credit Card</TableCell>
-      <TableCell>$250.00</TableCell>
-    </TableRow>
-    <TableRow>
-      <TableCell className="font-medium">INV002</TableCell>
-      <TableCell>Bank Transfer</TableCell>
-      <TableCell>$500.00</TableCell>
-    </TableRow>
-
-<TableRow>
-  <TableCell className="font-medium">INV003</TableCell>
-  <TableCell>PayPal</TableCell>
-  <TableCell>$150.00</TableCell>
-</TableRow>
-
-<TableRow>
-  <TableCell className="font-medium">INV004</TableCell>
-  <TableCell>Cash</TableCell>
-  <TableCell>$100.00</TableCell>
-</TableRow>
-<TableRow>
-  <TableCell className="font-medium">INV005</TableCell>
-  <TableCell>Credit Card</TableCell>
-  <TableCell>$300.00</TableCell>
-</TableRow>
-
-<TableRow>
-      <TableCell className="font-medium">INV006</TableCell>
-      <TableCell>Bank Transfer</TableCell>
-      <TableCell >$450.00</TableCell>
-    </TableRow>
-  </TableBody>
-</Table>
+<Tabs defaultValue="js" className="py-5">
+  <TabsList className="">
+    <TabsTrigger value="js">layout.jsx</TabsTrigger>
+    <TabsTrigger value="ts">layout.tsx</TabsTrigger>
+  </TabsList>
+  <TabsContent value="js">
+  ```jsx {7} showLineNumbers
+import ThemeProvider from './theme-provider'
+ 
+export default function RootLayout({ children }) {
+  return (
+    <html>
+      <body>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
+    </html>
+  )
+}
+````
+  </TabsContent>
+  <TabsContent value="ts">
+```tsx {11} showLineNumbers
+import ThemeProvider from './theme-provider'
+ 
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html>
+      <body>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
+    </html>
+  )
+}
+```
+  </TabsContent>
+</Tabs>
