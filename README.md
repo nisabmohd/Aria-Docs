@@ -43,7 +43,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nisabmohd/Documentation-Template)
 
-## Features 
+## Features
 
 - MDX supported
 - Syntax highlighting
@@ -56,6 +56,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 - Light mode & dark mode
 - Code Switcher
 
-<img src="./public/screely-1718792918006.png" />
-<img src="./public/screely-1718792933459.png" />
-<img src="./public/screely-1718792945435.png" />
+<img src="./public/screely-1719313562121.png" />
+<img src="./public/screely-1719313578041.png" />
+<img src="./public/screely-1719313622174.png" />
+<img src="./public/screely-1719313611520.png" />
+<img src="./public/screely-1719313597608.png" />
