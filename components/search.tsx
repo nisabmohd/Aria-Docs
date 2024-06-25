@@ -1,6 +1,6 @@
 "use client";
 
-import { FileTextIcon, SearchIcon } from "lucide-react";
+import { CommandIcon, FileTextIcon, SearchIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
   Dialog,
@@ -11,12 +11,26 @@ import {
 } from "@/components/ui/dialog";
 import { page_routes } from "@/lib/routes-config";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Anchor from "./anchor";
 
 export default function Search() {
   const [searchedInput, setSearchedInput] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.ctrlKey && event.key === "k") {
+        event.preventDefault();
+        setIsOpen(true);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
   const filteredResults = useMemo(
     () =>
@@ -36,13 +50,17 @@ export default function Search() {
         }}
       >
         <DialogTrigger asChild>
-          <div className="relative flex-1 max-w-md">
+          <div className="relative flex-1 max-w-md cursor-pointer">
             <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-500 dark:text-neutral-400" />
             <Input
               className="w-full rounded-md border py-2 pl-10 pr-4 text-sm shadow-sm "
               placeholder="Search documentation..."
               type="search"
             />
+            <div className="sm:flex hidden absolute top-1/2 -translate-y-1/2 right-2 text-xs text-muted-foreground items-center gap-0.5 bg-muted p-1 rounded-md">
+              <CommandIcon className="w-3 h-3" />
+              <span>k</span>
+            </div>
           </div>
         </DialogTrigger>
         <DialogContent className="p-0 max-w-[650px] sm:top-[38%] top-[45%]">
