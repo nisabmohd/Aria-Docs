@@ -28,7 +28,6 @@ export function Leftbar() {
                       activeClassName="font-medium dark:text-white text-black"
                       href={key}
                       key={key}
-                      disabled={subItem.disabled}
                     >
                       {subItem.title}
                     </Anchor>
@@ -87,7 +86,6 @@ export function SheetLeftbar() {
                           <Anchor
                             activeClassName="font-medium dark:text-white text-black"
                             href={key}
-                            disabled={subItem.disabled}
                           >
                             {subItem.title}
                           </Anchor>

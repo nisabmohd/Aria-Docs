@@ -6,7 +6,7 @@ import rehypePrism from "rehype-prism-plus";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import rehypeCodeTitles from "rehype-code-titles";
-import { FLATTEND_ROUTES } from "./routes-config";
+import { page_routes } from "./routes-config";
 
 // custom components imports
 import {
@@ -95,10 +95,10 @@ export async function getToc(slug: string) {
 }
 
 export function getPreviousNext(path: string) {
-  const index = FLATTEND_ROUTES.findIndex(({ href }) => href == path);
+  const index = page_routes.findIndex(({ href }) => href == path);
   return {
-    prev: FLATTEND_ROUTES[index - 1],
-    next: FLATTEND_ROUTES[index + 1],
+    prev: page_routes[index - 1],
+    next: page_routes[index + 1],
   };
 }
 

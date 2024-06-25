@@ -1,40 +1,79 @@
 ---
 title: Introduction
-description: Beautifully designed components that you can copy and paste into your apps. Accessible. Customizable. Open Source.
+description: Introduction to our application.
 ---
 
-## About
+Hello and welcome to the Documentation Template project! This platform serves as a comprehensive tool for creating structured and organized documentation. Whether you're documenting a software project, an API, or a new process, this template provides the framework you need.
 
-This is NOT a component library. It's a collection of re-usable components that you can copy and paste into your apps.
+## Overview
 
-What do you mean by not a component library?
+The Documentation Template is designed to streamline the process of creating clear and accessible documentation. It utilizes markdown, a lightweight markup language, to simplify formatting and enhance readability. Here’s what you can expect:
 
-I mean you do not install it as a dependency. It is not available or distributed via npm.
+- **Structured Layout**: Sections and headings are pre-defined for easy navigation.
+- **Markdown Support**: Write content with markdown syntax for quick formatting.
+- **Customizable**: Tailor the template to fit your specific documentation needs.
 
-Pick the components you need. Copy and paste the code into your project and customize to your needs. The code is yours.
+### Getting Started
 
-Use this as a reference to build your own component libraries.
+To begin using the Documentation Template, follow these simple steps:
 
-## FAQ
+1. **Clone the Repository**: Start by cloning the repository to your local machine.
+2. **Install Dependencies**: If any dependencies are required, follow the installation instructions provided.
+3. **Customize**: Replace placeholder content with your actual documentation.
+4. **Publish**: Once customized, publish your documentation for others to access.
 
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate odio veniam delectus molestiae ratione.
-Doloremque aliquam molestiae dolores, voluptatem laboriosam odit.
+## Blockquotes
 
-Lorem ipsum dolor sit amet consectetur adipisicing elit.
+Blockquotes are useful for emphasizing key points or quoting external sources:
 
-## RSC
+> "Documentation is a love letter that you write to your future self." - Damian Conway
 
-```jsx:app/page.tsx {5} showLineNumbers
-import { CustomMDX } from "../components/mdx-remote";
+Feel free to use blockquotes to highlight important information or quotes relevant to your documentation.
 
-export default function Home() {
+## Code Examples with switch
+
+Here a custom tab component from shadcn ui is used.
+
+<Tabs defaultValue="js" className="pt-5 pb-1">
+  <TabsList className="">
+    <TabsTrigger value="js">layout.jsx</TabsTrigger>
+    <TabsTrigger value="ts">layout.tsx</TabsTrigger>
+  </TabsList>
+  <TabsContent value="js">
+  ```jsx {7} showLineNumbers
+import ThemeProvider from './theme-provider'
+ 
+export default function RootLayout({ children }) {
   return (
-    <CustomMDX
-      // h1 now renders with `large-text` className
-      source={`# Hello World
-      This is from Server Components!
-    `}
-    />
-  );
+    <html>
+      <body className="container">
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
+    </html>
+  )}
+````
+  </TabsContent>
+  <TabsContent value="ts">
+```tsx {11} showLineNumbers
+import ThemeProvider from './theme-provider'
+ 
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html>
+      <body className="container">
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
+    </html>
+  )
 }
 ```
+  </TabsContent>
+</Tabs>
+
+## Conclusion
+
+Thank you for choosing the Documentation Template for your project. Whether you're documenting software, APIs, or processes, we're here to support you in creating clear and effective documentation. Happy documenting!

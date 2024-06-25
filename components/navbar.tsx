@@ -5,12 +5,12 @@ import { buttonVariants } from "./ui/button";
 import Search from "./search";
 import Anchor from "./anchor";
 import { SheetLeftbar } from "./leftbar";
-import { FLATTEND_ROUTES } from "@/lib/routes-config";
+import { page_routes } from "@/lib/routes-config";
 
 export const NAVLINKS = [
   {
     title: "Documentation",
-    href: `/docs/${FLATTEND_ROUTES[0].href}`,
+    href: `/docs/${page_routes[0].href}`,
   },
   {
     title: "Examples",
@@ -21,7 +21,7 @@ export const NAVLINKS = [
     href: "#",
   },
   {
-    title: "Themes",
+    title: "Community",
     href: "#",
   },
   {

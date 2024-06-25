@@ -9,7 +9,7 @@ import {
   DialogTrigger,
   DialogClose,
 } from "@/components/ui/dialog";
-import { FLATTEND_ROUTES } from "@/lib/routes-config";
+import { page_routes } from "@/lib/routes-config";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useDeferredValue, useMemo, useState } from "react";
 import Anchor from "./anchor";
@@ -20,7 +20,7 @@ export default function Search() {
 
   const filteredResults = useMemo(
     () =>
-      FLATTEND_ROUTES.filter((item) =>
+      page_routes.filter((item) =>
         item.title.toLowerCase().includes(searchedInput.toLowerCase())
       ),
     [searchedInput]
@@ -72,7 +72,7 @@ export default function Search() {
                   <Anchor
                     className="dark:hover:bg-neutral-900 hover:bg-neutral-100 w-full p-2.5 px-3 rounded-sm text-[15px] flex items-center gap-2.5"
                     href={`/docs/${item.href}`}
-                    disabled={item.disabled}
+                    activeClassName="dark:bg-neutral-900 bg-neutral-100"
                   >
                     <FileTextIcon className="h-[1.1rem] w-[1.1rem]" />{" "}
                     {item.title}

@@ -1,7 +1,7 @@
 import DocsBreadcrumb from "@/components/docs-breadcrumb";
 import Pagination from "@/components/pagination";
 import Toc from "@/components/toc";
-import { FLATTEND_ROUTES } from "@/lib/routes-config";
+import { page_routes } from "@/lib/routes-config";
 import { notFound } from "next/navigation";
 import { getMarkdownForSlug } from "@/lib/markdown";
 import { cache } from "react";
@@ -24,11 +24,9 @@ export async function generateMetadata({
 }
 
 export function generateStaticParams() {
-  return FLATTEND_ROUTES.filter((item) => item.disabled != true).map(
-    (item) => ({
-      slug: item.href.split("/"),
-    })
-  );
+  return page_routes.map((item) => ({
+    slug: item.href.split("/"),
+  }));
 }
 
 export default async function DocsPage({

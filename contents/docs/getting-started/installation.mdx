@@ -1,44 +1,44 @@
 ---
 title: Installation
-description: How to install dependencies and structure your app.
+description: Installation guide for our application.
 ---
 
-## TypeScript
+To get started with our application, follow these simple steps:
 
-This project and the components are written in TypeScript. We recommend using TypeScript for your project as well.
+## Prerequisites
 
-However we provide a JavaScript version of the components as well. The JavaScript version is available via the cli.
+Before installing our application, make sure you have the following:
 
-To opt-out of TypeScript, you can use the tsx flag in your `components.json` file.
+- Node.js installed on your machine
 
-```json:components.json
-{
-  "style": "default",
-  "tailwind": {
-    "config": "tailwind.config.js",
-    "css": "src/app/globals.css",
-    "baseColor": "zinc",
-    "cssVariables": true
-  },
-  "rsc": false,
-  "tsx": false,
-  "aliases": {
-    "utils": "~/lib/utils",
-    "components": "~/components"
-  }
-}
-```
+## Installation Steps
 
-## Import Alias
+1. **Clone the Repository**: Clone our GitHub repository to your local machine.
+   ```bash
+   git clone https://github.com/your-repo/your-project.git
+   ```
 
-To configure import aliases, you can use the following jsconfig.json:
+2. **Navigate to the Project Directory**: Change directory to your project folder.
+   ```bash
+   cd your-project
+   ```
 
-```json:jsconfig.json
-{
-  "compilerOptions": {
-    "paths": {
-      "@/*": ["./*"]
-    }
-  }
-}
-```
+3. **Install Dependencies**: Install the necessary dependencies using npm or yarn.
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+4. **Start the Application**: Start the application in development mode.
+   ```bash
+   npm start
+   # or
+   yarn start
+   ```
+
+5. **Open in Browser**: Open your web browser and navigate to `http://localhost:3000` to view the application.
+
+## Additional Information
+
+For more detailed instructions and troubleshooting tips, refer to our [documentation](/docs).

@@ -1,162 +1,50 @@
-// remove disabled for now its added because there are no pages for that route
-
+// for page navigation & to sort on leftbar
 export const ROUTES = [
   {
     title: "Getting Started",
     href: "getting-started",
     items: [
-      {
-        title: "Introduction",
-        href: "/introduction",
-      },
-      {
-        title: "Installation",
-        href: "/installation",
-      },
-      {
-        title: "components.json",
-        href: "/components-json",
-      },
-      {
-        title: "Project Structure",
-        href: "/project-structure",
-        disabled: true,
-      },
-      {
-        title: "Theming",
-        href: "/theming",
-        disabled: true,
-      },
-      {
-        title: "Typography",
-        href: "/typography",
-        disabled: true,
-      },
-      {
-        title: "Changelog",
-        href: "/changelog",
-        disabled: true,
-      },
+      { title: "Introduction", href: "/introduction" },
+      { title: "Installation", href: "/installation" },
+      { title: "Quick Start Guide", href: "/quick-start-guide" },
+      { title: "Project Structure", href: "/project-structure" },
+      { title: "Changelog", href: "/changelog" },
+      { title: "FAQ", href: "/faq" },
     ],
   },
   {
-    title: "Components",
-    href: "components",
+    title: "API References",
+    href: "api-references",
     items: [
-      {
-        title: "Accordian",
-        href: "/accordian",
-      },
-      {
-        title: "Alert Dialog",
-        href: "/alert-dialog",
-        disabled: true,
-      },
-      {
-        title: "Breadcrumb",
-        href: "/breadcrumb",
-        disabled: true,
-      },
-      {
-        title: "Button",
-        href: "/button",
-        disabled: true,
-      },
-      {
-        title: "Context Menu",
-        href: "/context-menu",
-        disabled: true,
-      },
-      {
-        title: "Data Table",
-        href: "/data-table",
-        disabled: true,
-      },
-      {
-        title: "Date Picker",
-        href: "/date-picker",
-        disabled: true,
-      },
-      {
-        title: "Dialog",
-        href: "/dialog",
-        disabled: true,
-      },
-      {
-        title: "Dropdown Menu",
-        href: "/dropdown-menu",
-        disabled: true,
-      },
-      {
-        title: "Form",
-        href: "/form",
-        disabled: true,
-      },
-      {
-        title: "Hover Card",
-        href: "/hover-card",
-        disabled: true,
-      },
-      {
-        title: "Input",
-        href: "/input",
-        disabled: true,
-      },
-      {
-        title: "Input OTP",
-        href: "/input-otp",
-        disabled: true,
-      },
-      {
-        title: "Label",
-        href: "/label",
-        disabled: true,
-      },
-      {
-        title: "Menubar",
-        href: "/menubar",
-        disabled: true,
-      },
-      {
-        title: "Navigation Menu",
-        href: "/navigation-menu",
-        disabled: true,
-      },
-      {
-        title: "Pagination",
-        href: "/pagination",
-        disabled: true,
-      },
-      {
-        title: "Radio Group",
-        href: "/radio-group",
-        disabled: true,
-      },
-      {
-        title: "Resizable",
-        href: "/resizable",
-        disabled: true,
-      },
-      {
-        title: "Scroll Area",
-        href: "/scroll-area",
-        disabled: true,
-      },
-      {
-        title: "Toast",
-        href: "/toast",
-        disabled: true,
-      },
+      { title: "useFetch", href: "/use-fetch" },
+      { title: "useAuth", href: "/use-auth" },
+      { title: "useProduct", href: "/use-product" },
+      { title: "useOrder", href: "/use-order" },
+      { title: "useCart", href: "/use-cart" },
+      { title: "usePayment", href: "/use-payment" },
+      { title: "useShipping", href: "/use-shipping" },
+      { title: "useNotification", href: "/use-notification" },
+      { title: "useReview", href: "/use-review" },
+      { title: "useInventory", href: "/use-inventory" },
+      { title: "useUser", href: "/use-user" },
+      { title: "useSettings", href: "/use-settings" },
+      { title: "useAnalytics", href: "/use-analytics" },
+      { title: "useTheme", href: "/use-theme" },
+      { title: "useRouter", href: "/use-router" },
+      { title: "useData", href: "/use-data" },
+      { title: "useSession", href: "/use-session" },
+      { title: "useCache", href: "/use-cache" },
+      { title: "useStorage", href: "/use-storage" },
+      { title: "useApi", href: "/use-api" },
     ],
   },
 ];
 
-export const FLATTEND_ROUTES = ROUTES.map(({ href, items }) => {
+export const page_routes = ROUTES.map(({ href, items }) => {
   return items.map((link) => {
     return {
       title: link.title,
       href: href + link.href,
-      disabled: link.disabled,
     };
   });
 }).flat();
