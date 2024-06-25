@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { page_routes } from "@/lib/routes-config";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useDeferredValue, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import Anchor from "./anchor";
 
 export default function Search() {
@@ -55,10 +55,10 @@ export default function Search() {
               className="h-14 px-4 bg-transparent border-b  outline-none"
             />
           </DialogHeader>
-          {filteredResults.length == 0 && (
+          {filteredResults.length == 0 && searchedInput && (
             <p className="text-muted-foreground mx-auto mt-2 text-sm">
               No results found for{" "}
-              <span className="dark:text-white text-black">{`"${searchedInput}"`}</span>
+              <span className="text-primary">{`"${searchedInput}"`}</span>
             </p>
           )}
           <ScrollArea className="max-h-[350px]">

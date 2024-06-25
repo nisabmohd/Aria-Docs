@@ -9,21 +9,6 @@ import rehypeCodeTitles from "rehype-code-titles";
 import { page_routes } from "./routes-config";
 
 // custom components imports
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 type MdxFrontmatter = {
@@ -33,26 +18,11 @@ type MdxFrontmatter = {
 
 // add custom components
 const components = {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 };
-
-function getContentPath(slug: string) {
-  return path.join(process.cwd(), "/contents/docs/", `${slug}.mdx`);
-}
 
 export async function getMarkdownForSlug(slug: string) {
   try {
@@ -79,17 +49,22 @@ export async function getMarkdownForSlug(slug: string) {
   }
 }
 
-export async function getToc(slug: string) {
+export async function getTocs(slug: string) {
   const contentPath = getContentPath(slug);
   const rawMdx = await fs.readFile(contentPath, "utf-8");
-
+  // captures between ## - #### can modify accordingly
   const headingsRegex = /^(#{2,4})\s(.+)$/gm;
   let match;
   const extractedHeadings = [];
   while ((match = headingsRegex.exec(rawMdx)) !== null) {
     const headingLevel = match[1].length;
     const headingText = match[2].trim();
-    extractedHeadings.push({ level: headingLevel, text: headingText });
+    const slug = sluggify(headingText);
+    extractedHeadings.push({
+      level: headingLevel,
+      text: headingText,
+      href: `#${slug}`,
+    });
   }
   return extractedHeadings;
 }
@@ -102,7 +77,11 @@ export function getPreviousNext(path: string) {
   };
 }
 
-export function sluggify(text: string) {
+function sluggify(text: string) {
   const slug = text.toLowerCase().replace(/\s+/g, "-");
   return slug.replace(/[^a-z0-9-]/g, "");
+}
+
+function getContentPath(slug: string) {
+  return path.join(process.cwd(), "/contents/docs/", `${slug}.mdx`);
 }
