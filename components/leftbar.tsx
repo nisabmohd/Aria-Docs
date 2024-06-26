@@ -26,7 +26,7 @@ export function Leftbar() {
                   const key = `/docs/${href}${subItem.href}`;
                   return (
                     <Anchor
-                      activeClassName="font-medium dark:text-white text-black"
+                      activeClassName="font-medium text-primary"
                       href={key}
                       key={key}
                     >

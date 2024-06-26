@@ -7,9 +7,11 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import rehypeCodeTitles from "rehype-code-titles";
 import { page_routes } from "./routes-config";
+import { visit } from "unist-util-visit";
 
 // custom components imports
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Pre from "@/components/pre";
 
 type MdxFrontmatter = {
   title: string;
@@ -22,6 +24,7 @@ const components = {
   TabsContent,
   TabsList,
   TabsTrigger,
+  pre: Pre,
 };
 
 export async function getMarkdownForSlug(slug: string) {
@@ -34,10 +37,12 @@ export async function getMarkdownForSlug(slug: string) {
         parseFrontmatter: true,
         mdxOptions: {
           rehypePlugins: [
+            preProcess,
             rehypeCodeTitles,
             rehypePrism,
             rehypeSlug,
             rehypeAutolinkHeadings,
+            postProcess,
           ],
           remarkPlugins: [remarkGfm],
         },
@@ -85,3 +90,23 @@ function sluggify(text: string) {
 function getContentPath(slug: string) {
   return path.join(process.cwd(), "/contents/docs/", `${slug}.mdx`);
 }
+
+// for copying the code
+export const preProcess = () => (tree: any) => {
+  visit(tree, (node) => {
+    if (node?.type === "element" && node?.tagName === "pre") {
+      const [codeEl] = node.children;
+      if (codeEl.tagName !== "code") return;
+      node.raw = codeEl.children?.[0].value;
+    }
+  });
+};
+
+export const postProcess = () => (tree: any) => {
+  visit(tree, "element", (node) => {
+    if (node?.type === "element" && node?.tagName === "pre") {
+      node.properties["raw"] = node.raw;
+      // console.log(node);
+    }
+  });
+};
