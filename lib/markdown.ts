@@ -92,7 +92,7 @@ function getContentPath(slug: string) {
 }
 
 // for copying the code
-export const preProcess = () => (tree: any) => {
+const preProcess = () => (tree: any) => {
   visit(tree, (node) => {
     if (node?.type === "element" && node?.tagName === "pre") {
       const [codeEl] = node.children;
@@ -102,7 +102,7 @@ export const preProcess = () => (tree: any) => {
   });
 };
 
-export const postProcess = () => (tree: any) => {
+const postProcess = () => (tree: any) => {
   visit(tree, "element", (node) => {
     if (node?.type === "element" && node?.tagName === "pre") {
       node.properties["raw"] = node.raw;
