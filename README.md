@@ -55,6 +55,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 - Custom components
 - Light mode & dark mode
 - Code Switcher
+- Code copy
+- Table of content observer highlight
 
 <img src="./public/screely-1719313562121.png" />
 <img src="./public/screely-1719313578041.png" />
