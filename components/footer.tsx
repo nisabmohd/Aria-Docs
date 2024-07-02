@@ -38,17 +38,14 @@ export function FooterButtons() {
         href="https://vercel.com/templates/next.js/documentation-template"
         className={buttonVariants({ variant: "outline", size: "sm" })}
       >
-        <TriangleIcon
-          fill="white"
-          className="h-[0.8rem] w-4 mr-2 text-primary"
-        />
+        <TriangleIcon className="h-[0.8rem] w-4 mr-2 text-primary fill-current" />
         Deploy
       </Link>
       <Link
         href="https://github.com/sponsors/nisabmohd"
         className={buttonVariants({ variant: "outline", size: "sm" })}
       >
-        <HeartIcon fill="red" className="h-4 w-4 mr-2 text-red-500" />
+        <HeartIcon className="h-4 w-4 mr-2 text-red-600 fill-current" />
         Sponsor
       </Link>
     </>
