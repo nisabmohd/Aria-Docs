@@ -1,0 +1,29 @@
+---
+title: getRole
+description: This section covers the getRole server function.
+---
+
+The `getRole` function is used to determine the role of the currently authenticated user. This can be useful for implementing role-based access control (RBAC) in your application.
+
+## Usage
+
+```javascript
+import { getRole } from "auth";
+
+async function handleRequest(req, res) {
+  const role = await getRole(req);
+
+  if (role) {
+    // Role retrieved successfully
+    res.status(200).json({ message: "Role retrieved successfully", role });
+  } else {
+    // No role available
+    res.status(401).json({ message: "No role available" });
+  }
+}
+```
+
+## Parameters
+
+- **`req`**: The request object, typically provided by the server framework (e.g., Next.js, Express).
+- **`res`**: The response object,

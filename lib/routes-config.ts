@@ -13,8 +13,17 @@ export const ROUTES = [
     ],
   },
   {
-    title: "API References",
-    href: "api-references",
+    title: "Server Actions",
+    href: "server-actions",
+    items: [
+      { title: "getSession", href: "/getSession" },
+      { title: "getToken", href: "/getToken" },
+      { title: "getRole", href: "/getRole" },
+    ],
+  },
+  {
+    title: "React Hooks",
+    href: "react-hooks",
     items: [
       { title: "useFetch", href: "/use-fetch" },
       { title: "useAuth", href: "/use-auth" },
@@ -33,9 +42,6 @@ export const ROUTES = [
       { title: "useRouter", href: "/use-router" },
       { title: "useData", href: "/use-data" },
       { title: "useSession", href: "/use-session" },
-      { title: "useCache", href: "/use-cache" },
-      { title: "useStorage", href: "/use-storage" },
-      { title: "useApi", href: "/use-api" },
     ],
   },
 ];
