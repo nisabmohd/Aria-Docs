@@ -1,5 +1,5 @@
 import { ModeToggle } from "@/components/theme-toggle";
-import { GithubIcon, TwitterIcon, ParenthesesIcon } from "lucide-react";
+import { GithubIcon, TwitterIcon, ShellIcon } from "lucide-react";
 import Link from "next/link";
 import { buttonVariants } from "./ui/button";
 import Search from "./search";
@@ -33,8 +33,8 @@ export const NAVLINKS = [
 
 export function Navbar() {
   return (
-    <nav className="border-b w-full sm:h-14 h-16 sticky top-0 bg-inherit z-50 lg:px-2 px-3">
-      <div className="sm:p-5 p-2 max-w-[1480px] mx-auto h-full flex items-center justify-between gap-2">
+    <nav className="w-full border-b h-16 sticky top-0 bg-inherit z-50 lg:px-2 px-3">
+      <div className="sm:p-5 p-2 max-w-[1505px] mx-auto h-full flex items-center justify-between gap-2">
         <SheetLeftbar />
         <div className="flex items-center gap-6">
           <div className="md:flex hidden">
@@ -45,9 +45,9 @@ export function Navbar() {
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <div className="flex gap-2">
+          <div className="flex items-center gap-2">
             <Search />
-            <div className="flex -space-x-0.5">
+            <div className="flex">
               <Link
                 href="https://github.com/nisabmohd/Docs-Stater-Template"
                 className={buttonVariants({ variant: "ghost", size: "icon" })}
@@ -74,8 +74,8 @@ export function Navbar() {
 
 export function Logo() {
   return (
-    <Link href="/" className="flex items-center gap-2.5">
-      <ParenthesesIcon className="w-6 h-6 text-muted-foreground" />
+    <Link href="/" className="flex items-center gap-2">
+      <ShellIcon className="w-6 h-6 text-muted-foreground" />
       <h2 className="text-md font-bold">template/docs</h2>
     </Link>
   );
