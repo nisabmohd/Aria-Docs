@@ -6,6 +6,7 @@ import Search from "./search";
 import Anchor from "./anchor";
 import { SheetLeftbar } from "./leftbar";
 import { page_routes } from "@/lib/routes-config";
+import { SheetClose } from "@/components/ui/sheet";
 
 export const NAVLINKS = [
   {
@@ -40,18 +41,7 @@ export function Navbar() {
             <Logo />
           </div>
           <div className="lg:flex hidden items-center gap-5 text-sm font-medium text-muted-foreground">
-            {NAVLINKS.map((item) => {
-              return (
-                <Anchor
-                  key={item.title + item.href}
-                  activeClassName="text-black dark:text-white font-semibold"
-                  absolute
-                  href={item.href}
-                >
-                  {item.title}
-                </Anchor>
-              );
-            })}
+            <NavMenu />
           </div>
         </div>
         <div className="flex items-center gap-3">
@@ -88,5 +78,31 @@ export function Logo() {
       <ParenthesesIcon className="w-6 h-6 text-muted-foreground" />
       <h2 className="text-md font-bold">template/docs</h2>
     </Link>
+  );
+}
+
+export function NavMenu({ isSheet = false }) {
+  return (
+    <>
+      {NAVLINKS.map((item) => {
+        const Comp = (
+          <Anchor
+            key={item.title + item.href}
+            activeClassName="text-black dark:text-white font-semibold"
+            absolute
+            href={item.href}
+          >
+            {item.title}
+          </Anchor>
+        );
+        return isSheet ? (
+          <SheetClose key={item.title + item.href} asChild>
+            {Comp}
+          </SheetClose>
+        ) : (
+          Comp
+        );
+      })}
+    </>
   );
 }
