@@ -6,8 +6,9 @@ export function Footer() {
   return (
     <footer className="border-t w-full h-16">
       <div className="container flex items-center sm:justify-between justify-center sm:gap-0 gap-4 h-full text-muted-foreground text-sm flex-wrap sm:py-0 py-3">
-        <p className="flex items-center text-center">
-          <HexagonIcon className="w-4 h-4 mr-2 text-muted-foreground fill-current" />
+<div className="flex item-center">
+ <HexagonIcon className="w-4 h-4 mr-2 text-muted-foreground fill-current" />
+        <p className="text-center">
           Build by{" "}
           <Link
             className="px-1 underline underline-offset-2"
@@ -24,6 +25,7 @@ export function Footer() {
           </Link>
           .
         </p>
+</div>
         <div className="gap-4 items-center hidden sm:flex">
           <FooterButtons />
         </div>
