@@ -38,13 +38,13 @@ export function SheetLeftbar() {
           </SheetClose>
         </SheetHeader>
         <ScrollArea className="flex flex-col gap-4">
-          <div className="flex flex-col gap-2 mt-3 mx-2 px-8">
+          <div className="flex flex-col gap-2 mt-3 mx-2 px-5">
             <NavMenu isSheet />
           </div>
-          <div className="mx-2 px-8">
+          <div className="mx-2 px-5">
             <Menu isSheet />
           </div>
-          <div className="p-8 pb-4 flex gap-2">
+          <div className="p-6 pb-4 flex gap-2">
             <FooterButtons />
           </div>
         </ScrollArea>

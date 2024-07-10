@@ -25,6 +25,8 @@ export const ROUTES = [
     title: "React Hooks",
     href: "react-hooks",
     items: [
+      { title: "useSession", href: "/use-session" },
+
       { title: "useFetch", href: "/use-fetch" },
       { title: "useAuth", href: "/use-auth" },
       { title: "useProduct", href: "/use-product" },
@@ -41,7 +43,6 @@ export const ROUTES = [
       { title: "useTheme", href: "/use-theme" },
       { title: "useRouter", href: "/use-router" },
       { title: "useData", href: "/use-data" },
-      { title: "useSession", href: "/use-session" },
     ],
   },
 ];

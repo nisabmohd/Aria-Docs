@@ -57,7 +57,7 @@ export default function Search() {
               placeholder="Search documentation..."
               type="search"
             />
-            <div className="sm:flex hidden absolute top-1/2 -translate-y-1/2 right-2 text-xs font-medium font-mono items-center gap-0.5 bg-muted-foreground text-muted p-1 rounded-md">
+            <div className="sm:flex hidden absolute top-1/2 -translate-y-1/2 right-2 text-xs font-medium font-mono items-center gap-0.5 dark:bg-neutral-700 bg-zinc-200 p-1 rounded-sm">
               <CommandIcon className="w-3 h-3" />
               <span>k</span>
             </div>
