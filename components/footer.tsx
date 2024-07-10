@@ -1,13 +1,11 @@
 import Link from "next/link";
 import { buttonVariants } from "./ui/button";
-import { HeartIcon, HexagonIcon, TriangleIcon } from "lucide-react";
+import { HeartIcon, TriangleIcon } from "lucide-react";
 
 export function Footer() {
   return (
     <footer className="border-t w-full h-16">
       <div className="container flex items-center sm:justify-between justify-center sm:gap-0 gap-4 h-full text-muted-foreground text-sm flex-wrap sm:py-0 py-3">
-<div className="flex item-center">
- <HexagonIcon className="w-4 h-4 mr-2 text-muted-foreground fill-current" />
         <p className="text-center">
           Build by{" "}
           <Link
@@ -25,7 +23,6 @@ export function Footer() {
           </Link>
           .
         </p>
-</div>
         <div className="gap-4 items-center hidden sm:flex">
           <FooterButtons />
         </div>
