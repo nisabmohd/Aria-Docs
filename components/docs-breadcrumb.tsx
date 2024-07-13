@@ -16,11 +16,19 @@ export default function DocsBreadcrumb({ paths }: { paths: string[] }) {
           <BreadcrumbItem>
             <BreadcrumbLink>Docs</BreadcrumbLink>
           </BreadcrumbItem>
-          {paths.map((path) => (
+          {paths.map((path, index) => (
             <Fragment key={path}>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbPage>{toTitleCase(path)}</BreadcrumbPage>
+                {index < paths.length - 1 ? (
+                  <BreadcrumbLink className="a">
+                    {toTitleCase(path)}
+                  </BreadcrumbLink>
+                ) : (
+                  <BreadcrumbPage className="b">
+                    {toTitleCase(path)}
+                  </BreadcrumbPage>
+                )}
               </BreadcrumbItem>
             </Fragment>
           ))}

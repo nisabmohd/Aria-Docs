@@ -19,7 +19,7 @@ export default async function DocsPage({ params: { slug = [] } }: PageProps) {
   if (!res) notFound();
   return (
     <div className="flex items-start gap-12">
-      <div className="flex-[3] py-10">
+      <div className="flex-[3] pt-10">
         <DocsBreadcrumb paths={slug} />
         <Markdown>
           <h1>{res.frontmatter.title}</h1>
