@@ -43,20 +43,30 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nisabmohd/Documentation-Template)
 
+Got it! Here's a way to present the features in a more structured and visually appealing way using a table:
+
+
+
+
 ## Features
 
-- MDX supported
-- Syntax highlighting
-- Table of contents
-- Pagination
-- Search
-- Code line highlight & code title
-- Static site generation
-- Custom components
-- Light mode & dark mode
-- Code Switcher
-- Code copy
-- Table of content observer highlight
+```plaintext
+Features
+├── MDX supported
+├── Syntax highlighting
+├── Table of contents
+├── Pagination
+├── Search
+├── Code line highlight & code title
+├── Static site generation
+├── Custom components
+├── Light mode & dark mode
+├── Code Switcher
+├── Code copy
+└── Table of content observer highlight
+```
+
+
 
 <img src="./public/screely-1719313562121.png" />
 <img src="./public/screely-1719313578041.png" />
