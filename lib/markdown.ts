@@ -13,6 +13,7 @@ import { visit } from "unist-util-visit";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Pre from "@/components/pre";
 import Note from "@/components/note";
+import { Stepper, StepperItem } from "@/components/ui/stepper";
 
 type MdxFrontmatter = {
   title: string;
@@ -27,6 +28,8 @@ const components = {
   TabsTrigger,
   pre: Pre,
   Note,
+  Stepper,
+  StepperItem,
 };
 
 export async function getMarkdownForSlug(slug: string) {

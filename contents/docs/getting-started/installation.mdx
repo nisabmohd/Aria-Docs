@@ -19,35 +19,60 @@ Before installing our application, make sure you have the following:
 
 ## Installation Steps
 
-1. **Clone the Repository**: Clone our GitHub repository to your local machine.
+<Stepper>
+<StepperItem title="Clone the Repository">
+Start by creating a new React project using vite:
 
-   ```bash
-   git clone https://github.com/your-repo/your-project.git
-   ```
+```bash
+git clone https://github.com/your-repo/your-project.git
+```
 
-2. **Navigate to the Project Directory**: Change directory to your project folder.
+</StepperItem>
+<StepperItem title="Navigate to the Project Directory">
+Install `tailwindcss` and its peer dependencies, then add your `tailwind.config.js` and postcss.config.js files:
 
-   ```bash
-   cd your-project
-   ```
+```tsx
+import "@/styles/globals.css";
+import { Inter as FontSans } from "next/font/google";
 
-3. **Install Dependencies**: Install the necessary dependencies using npm or yarn.
+import { cn } from "@/lib/utils";
 
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
+const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
 
-4. **Start the Application**: Start the application in development mode.
+export default function RootLayout({ children }: RootLayoutProps) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <head />
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.variable
+        )}
+      >
+        ...
+      </body>
+    </html>
+  );
+}
+```
 
-   ```bash
-   npm start
-   # or
-   yarn start
-   ```
+</StepperItem>
 
-5. **Open in Browser**: Open your web browser and navigate to `http://localhost:3000` to view the application.
+<StepperItem title="Install Dependencies">
+ Install the necessary dependencies using npm or yarn.
+
+```bash
+npm install
+# or
+yarn install
+```
+
+</StepperItem>
+
+</Stepper>
 
 ## Additional Information
 
