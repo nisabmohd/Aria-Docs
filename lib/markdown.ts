@@ -80,7 +80,7 @@ export async function getTocs(slug: string) {
 }
 
 export function getPreviousNext(path: string) {
-  const index = page_routes.findIndex(({ href }) => href == path);
+  const index = page_routes.findIndex(({ href }) => href == `/${path}`);
   return {
     prev: page_routes[index - 1],
     next: page_routes[index + 1],
@@ -93,7 +93,7 @@ function sluggify(text: string) {
 }
 
 function getContentPath(slug: string) {
-  return path.join(process.cwd(), "/contents/docs/", `${slug}.mdx`);
+  return path.join(process.cwd(), "/contents/docs/", `${slug}/index.mdx`);
 }
 
 // for copying the code
