@@ -7,7 +7,7 @@ export default function DocsLayout({
 }>) {
   return (
     <div className="flex items-start gap-14">
-      <Leftbar />
+      <Leftbar key="leftbar" />
       <div className="flex-[4]">{children}</div>{" "}
     </div>
   );
