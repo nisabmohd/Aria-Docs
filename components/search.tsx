@@ -8,6 +8,7 @@ import {
   DialogHeader,
   DialogTrigger,
   DialogClose,
+  DialogTitle,
 } from "@/components/ui/dialog";
 import { page_routes } from "@/lib/routes-config";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -64,6 +65,7 @@ export default function Search() {
           </div>
         </DialogTrigger>
         <DialogContent className="p-0 max-w-[650px] sm:top-[38%] top-[45%]">
+          <DialogTitle className="sr-only">Search</DialogTitle>
           <DialogHeader>
             <input
               value={searchedInput}
@@ -82,14 +84,10 @@ export default function Search() {
           <ScrollArea className="max-h-[350px]">
             <div className="flex flex-col items-start overflow-y-auto sm:px-3 px-1 pb-4 gap-0.5">
               {filteredResults.map((item) => (
-                <DialogClose
-                  onChange={(val) => console.log(val)}
-                  key={item.href}
-                  asChild
-                >
+                <DialogClose key={item.href} asChild>
                   <Anchor
                     className="dark:hover:bg-neutral-900 hover:bg-neutral-100 w-full p-2.5 px-3 rounded-sm text-[15px] flex items-center gap-2.5"
-                    href={`/docs/${item.href}`}
+                    href={`/docs${item.href}`}
                     activeClassName="dark:bg-neutral-900 bg-neutral-100"
                   >
                     <FileTextIcon className="h-[1.1rem] w-[1.1rem]" />{" "}

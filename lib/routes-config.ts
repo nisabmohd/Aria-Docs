@@ -1,20 +1,57 @@
 // for page navigation & to sort on leftbar
-export const ROUTES = [
+
+export type EachRoute = {
+  title: string;
+  href: string;
+  noLink?: true;
+  items?: EachRoute[];
+};
+
+export const ROUTES: EachRoute[] = [
   {
     title: "Getting Started",
-    href: "getting-started",
+    href: "/getting-started",
+    noLink: true,
     items: [
       { title: "Introduction", href: "/introduction" },
-      { title: "Installation", href: "/installation" },
+      {
+        title: "Installation",
+        href: "/installation",
+        items: [
+          { title: "Laravel", href: "/laravel" },
+          { title: "React", href: "/react" },
+          { title: "Gatsby", href: "/gatsby" },
+        ],
+      },
       { title: "Quick Start Guide", href: "/quick-start-guide" },
-      { title: "Project Structure", href: "/project-structure" },
+      {
+        title: "Project Structure",
+        href: "/project-structure",
+        items: [
+          { title: "Layouts", href: "/layouts" },
+          { title: "Integrations", href: "/integrations" },
+          {
+            title: "Manual",
+            href: "/manual",
+            items: [
+              { title: "JavaScript", href: "/javascript" },
+              { title: "Typescript", href: "/typescript" },
+              { title: "Golang", href: "/golang" },
+            ],
+          },
+        ],
+      },
       { title: "Changelog", href: "/changelog" },
-      { title: "FAQ", href: "/faq" },
+      {
+        title: "FAQ",
+        href: "/faq",
+      },
     ],
   },
   {
     title: "Server Actions",
-    href: "server-actions",
+    href: "/server-actions",
+    noLink: true,
     items: [
       { title: "getSession", href: "/getSession" },
       { title: "getToken", href: "/getToken" },
@@ -23,10 +60,10 @@ export const ROUTES = [
   },
   {
     title: "React Hooks",
-    href: "react-hooks",
+    href: "/react-hooks",
+    noLink: true,
     items: [
       { title: "useSession", href: "/use-session" },
-
       { title: "useFetch", href: "/use-fetch" },
       { title: "useAuth", href: "/use-auth" },
       { title: "useProduct", href: "/use-product" },
@@ -47,11 +84,18 @@ export const ROUTES = [
   },
 ];
 
-export const page_routes = ROUTES.map(({ href, items }) => {
-  return items.map((link) => {
-    return {
-      title: link.title,
-      href: href + link.href,
-    };
+type Page = { title: string; href: string };
+
+function getRecurrsiveAllLinks(node: EachRoute) {
+  const ans: Page[] = [];
+  if (!node.noLink) {
+    ans.push({ title: node.title, href: node.href });
+  }
+  node.items?.forEach((subNode) => {
+    const temp = { ...subNode, href: `${node.href}${subNode.href}` };
+    ans.push(...getRecurrsiveAllLinks(temp));
   });
-}).flat();
+  return ans;
+}
+
+export const page_routes = ROUTES.map((it) => getRecurrsiveAllLinks(it)).flat();
