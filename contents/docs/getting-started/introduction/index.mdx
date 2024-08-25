@@ -1,47 +1,102 @@
 ---
 title: Introduction
-description: Introduction guide for our application.
+description: This section provides an overview of Introduction.
 ---
 
-## Overview
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam iste dolorum tempore consectetur explicabo tempora provident quia maxime, molestiae, facilis aperiam et, error illum vel ullam? Quis architecto dolore ullam
 
-Welcome to the Introduction guide. Here, you'll find all the information you need to get started.
+## Getting Started
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ut metus ligula. Proin vehicula velit quis justo facilisis, in facilisis dolor interdum.
+To begin using the Documentation Template, follow these simple steps:
 
-## Prerequisites
+1. **Clone the Repository**: Start by cloning the repository to your local machine.
+2. **Install Dependencies**: If any dependencies are required, follow the installation instructions provided.
+3. **Customize**: Replace placeholder content with your actual documentation.
+4. **Publish**: Once customized, publish your documentation for others to access.
 
-Before proceeding, ensure you have the following:
+## Blockquotes
 
-- Node.js installed
-- Basic knowledge of command-line interface (CLI)
-- A code editor (e.g., VSCode)
+Blockquotes are useful for emphasizing key points or quoting external sources:
 
-## Installation Steps
+> "Documentation is a love letter that you write to your future self." - Damian Conway
 
-1. **Clone the Repository**:
-   Clone the repository using the following command:
+Feel free to use blockquotes to highlight important information or quotes relevant to your documentation.
 
-   ```bash
-   git clone https://github.com/your-repo/your-project.git
-   ```
+## Code Examples with switch
 
-2. **Navigate to the Project Directory**:
-   Use the `cd` command to navigate to your project directory:
+Here a custom tab component from shadcn ui is used.
 
-   ```bash
-   cd your-project
-   ```
+<Tabs defaultValue="js" className="pt-5 pb-1">
+  <TabsList className="">
+    <TabsTrigger value="js">layout.jsx</TabsTrigger>
+    <TabsTrigger value="ts">layout.tsx</TabsTrigger>
+  </TabsList>
+  <TabsContent value="js">
+  ```jsx {7} showLineNumbers
+import ThemeProvider from './theme-provider'
+ 
+export default function RootLayout({ children }) {
+  return (
+    <html>
+      <body className="container">
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
+    </html>
+  )}
+````
+  </TabsContent>
+  <TabsContent value="ts">
+```tsx {11} showLineNumbers
+import ThemeProvider from './theme-provider'
+ 
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html>
+      <body className="container">
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
+    </html>
+  )
+}
+```
+  </TabsContent>
+</Tabs>
 
-3. **Install Dependencies**:
-   Install the required dependencies using npm or yarn:
+## Project Structure
 
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
+This file serves as the introduction to your documentation. Customize it to provide an overview of your project, highlight key features, and guide users on what to expect from the documentation. Start here to set the tone and direction for your documentation portal.
 
-## Additional Information
+```plaintext
+root
+├── app
+├── content
+│   └── docs
+│       └── getting-started
+│           ├── introduction.mdx     /*Get started by editing this file*/
+│           └── installation.mdx
+└── package.json
+```
 
-For more details, please refer to our official [documentation](#).
+The structure ought to be obvious and simple to comprehend thanks to this representation. In the event that you wish to add new routes or a routes section, you can edit the `routes.config.ts` file as necessary.
+
+```ts:lib/routes-config.ts {8}
+export const ROUTES = [
+  {
+    title: "Getting Started",
+    href: "getting-started",
+    items: [
+      { title: "Introduction", href: "/introduction" },
+      { title: "Installation", href: "/installation" },
+      { title: "Refrences", href: "/refrences" },
+    ],
+  },
+]
+```
+
+## Conclusion
+
+Thank you for choosing the Documentation Template for your project. Whether you're documenting software, APIs, or processes, we're here to support you in creating clear and effective documentation. Happy documenting!
