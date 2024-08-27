@@ -10,11 +10,10 @@ import {
   DialogClose,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { page_routes } from "@/lib/routes-config";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useEffect, useMemo, useState } from "react";
 import Anchor from "./anchor";
-import { cn } from "@/lib/utils";
+import { advanceSearch, cn } from "@/lib/utils";
 
 export default function Search() {
   const [searchedInput, setSearchedInput] = useState("");
@@ -35,10 +34,7 @@ export default function Search() {
   }, []);
 
   const filteredResults = useMemo(
-    () =>
-      page_routes.filter((item) =>
-        item.title.toLowerCase().includes(searchedInput.toLowerCase())
-      ),
+    () => advanceSearch(searchedInput),
     [searchedInput]
   );
 
@@ -123,9 +119,5 @@ const paddingMap = {
   1: "pl-2",
   2: "pl-4",
   3: "pl-10",
-  6: "pl-12",
-  7: "pl-14",
-  8: "pl-16",
-  9: "pl-18",
   // Add more levels if needed
 } as const;
