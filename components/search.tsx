@@ -34,7 +34,7 @@ export default function Search() {
   }, []);
 
   const filteredResults = useMemo(
-    () => advanceSearch(searchedInput),
+    () => advanceSearch(searchedInput.trim()),
     [searchedInput]
   );
 

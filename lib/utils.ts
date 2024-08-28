@@ -9,7 +9,9 @@ export function cn(...inputs: ClassValue[]) {
 export function helperSearch(
   query: string,
   node: EachRoute,
-  prefix: string = ""
+  prefix: string,
+  currenLevel: number,
+  maxLevel?: number
 ) {
   const res: EachRoute[] = [];
   let parentHas = false;
@@ -19,17 +21,27 @@ export function helperSearch(
     res.push({ ...node, items: undefined, href: nextLink });
     parentHas = true;
   }
-  node.items?.forEach((item) => {
-    const innerRes = helperSearch(query, item, nextLink);
-    if (!!innerRes.length && !parentHas && !node.noLink) {
-      res.push({ ...node, items: undefined, href: nextLink });
-      parentHas = true;
-    }
-    res.push(...innerRes);
-  });
+  const goNext = maxLevel ? currenLevel < maxLevel : true;
+  if (goNext)
+    node.items?.forEach((item) => {
+      const innerRes = helperSearch(
+        query,
+        item,
+        nextLink,
+        currenLevel + 1,
+        maxLevel
+      );
+      if (!!innerRes.length && !parentHas && !node.noLink) {
+        res.push({ ...node, items: undefined, href: nextLink });
+        parentHas = true;
+      }
+      res.push(...innerRes);
+    });
   return res;
 }
 
 export function advanceSearch(query: string) {
-  return ROUTES.map((node) => helperSearch(query, node)).flat();
+  return ROUTES.map((node) =>
+    helperSearch(query, node, "", 1, query.length == 0 ? 2 : undefined)
+  ).flat();
 }
