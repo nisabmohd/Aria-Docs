@@ -3,18 +3,16 @@ import Pagination from "@/components/pagination";
 import Toc from "@/components/toc";
 import { page_routes } from "@/lib/routes-config";
 import { notFound } from "next/navigation";
-import { getDocForSlug } from "@/lib/markdown";
-import { PropsWithChildren, cache } from "react";
+import { getDocsForSlug } from "@/lib/markdown";
+import { Markdown } from "@/components/markdown";
 
 type PageProps = {
   params: { slug: string[] };
 };
 
-const cachedGetMarkdownForSlug = cache(getDocForSlug);
-
 export default async function DocsPage({ params: { slug = [] } }: PageProps) {
   const pathName = slug.join("/");
-  const res = await cachedGetMarkdownForSlug(pathName);
+  const res = await getDocsForSlug(pathName);
 
   if (!res) notFound();
   return (
@@ -35,17 +33,9 @@ export default async function DocsPage({ params: { slug = [] } }: PageProps) {
   );
 }
 
-function Markdown({ children }: PropsWithChildren) {
-  return (
-    <div className="prose prose-zinc dark:prose-invert prose-code:font-code dark:prose-code:bg-neutral-900 dark:prose-pre:bg-neutral-900 prose-code:bg-neutral-100 prose-pre:bg-neutral-100 prose-headings:scroll-m-20 w-[85vw] sm:w-full sm:mx-auto prose-code:text-sm prose-code:leading-6 dark:prose-code:text-white prose-code:text-neutral-800 prose-code:p-1 prose-code:rounded-md prose-pre:border pt-2 prose-code:before:content-none prose-code:after:content-none">
-      {children}
-    </div>
-  );
-}
-
 export async function generateMetadata({ params: { slug = [] } }: PageProps) {
   const pathName = slug.join("/");
-  const res = await cachedGetMarkdownForSlug(pathName);
+  const res = await getDocsForSlug(pathName);
   if (!res) return null;
   const { frontmatter } = res;
   return {
