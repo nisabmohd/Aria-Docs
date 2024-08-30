@@ -11,8 +11,8 @@ export default async function BlogIndexPage() {
       stringToDate(a.frontmatter.date).getTime()
   );
   return (
-    <div className="w-full flex  flex-col gap-5 sm:min-h-[91vh] min-h-[88vh] pt-6">
-      <div className="md:mb-16 mb-8 flex flex-col gap-2">
+    <div className="w-full flex  flex-col gap-5 sm:min-h-[91vh] min-h-[88vh] md:pt-6 pt-2">
+      <div className="md:mb-14 mb-8 flex flex-col gap-2 ">
         <h1 className="text-3xl font-extrabold">
           The latest blogs of this product
         </h1>
@@ -37,13 +37,13 @@ function BlogCard({
 }: BlogMdxFrontmatter & { slug: string }) {
   return (
     <div className="flex flex-col md:flex-row items-start">
-      <div className="text-sm text-muted-foreground text-nowrap md:pr-12 ">
+      <div className="text-sm text-muted-foreground text-nowrap md:pr-12 mb-2">
         <p className="md:w-24">{formatDate2(date)}</p>
       </div>
       <div className="md:border-l md:pl-14 pb-12 relative">
-        <CircleIcon className="w-3.5 h-3.5 absolute -left-[0.481rem] fill-background md:flex hidden" />
+        <CircleIcon className="w-3.5 h-3.5 absolute -left-[0.481rem] fill-background text-muted-foreground md:flex hidden" />
         <Link className="flex flex-col gap-3" href={`/blog/${slug}`}>
-          <h3 className="text-xl font-bold">{title}</h3>
+          <h3 className="text-xl font-bold -mt-1">{title}</h3>
           <p className="text-sm text-muted-foreground">{description}</p>
           <Button
             variant="link"
