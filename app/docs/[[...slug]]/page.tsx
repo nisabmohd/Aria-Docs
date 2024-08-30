@@ -3,14 +3,14 @@ import Pagination from "@/components/pagination";
 import Toc from "@/components/toc";
 import { page_routes } from "@/lib/routes-config";
 import { notFound } from "next/navigation";
-import { getMarkdownForSlug } from "@/lib/markdown";
+import { getDocForSlug } from "@/lib/markdown";
 import { PropsWithChildren, cache } from "react";
 
 type PageProps = {
   params: { slug: string[] };
 };
 
-const cachedGetMarkdownForSlug = cache(getMarkdownForSlug);
+const cachedGetMarkdownForSlug = cache(getDocForSlug);
 
 export default async function DocsPage({ params: { slug = [] } }: PageProps) {
   const pathName = slug.join("/");

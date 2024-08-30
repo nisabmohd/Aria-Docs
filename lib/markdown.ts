@@ -15,11 +15,6 @@ import Pre from "@/components/pre";
 import Note from "@/components/note";
 import { Stepper, StepperItem } from "@/components/ui/stepper";
 
-type MdxFrontmatter = {
-  title: string;
-  description: string;
-};
-
 // add custom components
 const components = {
   Tabs,
@@ -32,35 +27,47 @@ const components = {
   StepperItem,
 };
 
-export async function getMarkdownForSlug(slug: string) {
-  try {
-    const contentPath = getContentPath(slug);
-    const rawMdx = await fs.readFile(contentPath, "utf-8");
-    return await compileMDX<MdxFrontmatter>({
-      source: rawMdx,
-      options: {
-        parseFrontmatter: true,
-        mdxOptions: {
-          rehypePlugins: [
-            preProcess,
-            rehypeCodeTitles,
-            rehypePrism,
-            rehypeSlug,
-            rehypeAutolinkHeadings,
-            postProcess,
-          ],
-          remarkPlugins: [remarkGfm],
-        },
+// can be used for other pages like blogs, Guides etc
+async function parseMdx<Frontmatter>(path: string) {
+  const rawMdx = await fs.readFile(path, "utf-8");
+  return await compileMDX<Frontmatter>({
+    source: rawMdx,
+    options: {
+      parseFrontmatter: true,
+      mdxOptions: {
+        rehypePlugins: [
+          preProcess,
+          rehypeCodeTitles,
+          rehypePrism,
+          rehypeSlug,
+          rehypeAutolinkHeadings,
+          postProcess,
+        ],
+        remarkPlugins: [remarkGfm],
       },
-      components,
-    });
+    },
+    components,
+  });
+}
+
+// logic for docs
+
+type DocsMdxFrontmatter = {
+  title: string;
+  description: string;
+};
+
+export async function getDocForSlug(slug: string) {
+  try {
+    const contentPath = getDocsContentPath(slug);
+    return await parseMdx<DocsMdxFrontmatter>(contentPath);
   } catch (err) {
     console.log(err);
   }
 }
 
 export async function getTocs(slug: string) {
-  const contentPath = getContentPath(slug);
+  const contentPath = getDocsContentPath(slug);
   const rawMdx = await fs.readFile(contentPath, "utf-8");
   // captures between ## - #### can modify accordingly
   const headingsRegex = /^(#{2,4})\s(.+)$/gm;
@@ -92,7 +99,7 @@ function sluggify(text: string) {
   return slug.replace(/[^a-z0-9-]/g, "");
 }
 
-function getContentPath(slug: string) {
+function getDocsContentPath(slug: string) {
   return path.join(process.cwd(), "/contents/docs/", `${slug}/index.mdx`);
 }
 
