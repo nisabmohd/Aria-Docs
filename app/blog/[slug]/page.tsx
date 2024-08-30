@@ -45,7 +45,7 @@ export default async function BlogPage({ params: { slug } }: PageProps) {
         <p className="text-muted-foreground text-sm">
           {formatDate(res.frontmatter.date)}
         </p>
-        <h1 className="text-4xl font-extrabold">{res.frontmatter.title}</h1>
+        <h1 className="sm:text-4xl text-2xl font-extrabold">{res.frontmatter.title}</h1>
         <div className="mt-6 flex flex-col gap-3">
           <p className="text-sm text-muted-foreground">Posted by</p>
           <Authors authors={res.frontmatter.authors} />
