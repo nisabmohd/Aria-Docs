@@ -130,7 +130,7 @@ export type Author = {
   handleUrl: string;
 };
 
-type BlogMdxFrontmatter = BaseMdxFrontmatter & {
+export type BlogMdxFrontmatter = BaseMdxFrontmatter & {
   date: string;
   authors: Author[];
 };

@@ -31,7 +31,7 @@ export default async function BlogPage({ params: { slug } }: PageProps) {
   const res = await getBlogForSlug(slug);
   if (!res) notFound();
   return (
-    <div className="w-full">
+    <div className="lg:w-[85%] md:[95%] mx-auto">
       <Link
         className={buttonVariants({
           variant: "link",
