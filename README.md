@@ -1,4 +1,4 @@
-## Documentation Template
+## NexDocs - Documentation Template
 
 This feature-packed documentation template, built with Next.js, offers a sleek and responsive design, perfect for all your project documentation needs.
 
@@ -53,6 +53,7 @@ Got it! Here's a way to present the features in a more structured and visually a
 ```plaintext
 Features
 ├── MDX supported
+├── Blog section (New)
 ├── Syntax highlighting
 ├── Table of contents
 ├── Pagination
@@ -72,4 +73,6 @@ Features
 <img src="./public/screely-1719313578041.png" />
 <img src="./public/screely-1719313622174.png" />
 <img src="./public/screely-1719313611520.png" />
+<img src="./public/screely-1725045955250.png" />
+<img src="./public/screely-1725045968399.png" />
 <img src="./public/screely-1719313597608.png" />
