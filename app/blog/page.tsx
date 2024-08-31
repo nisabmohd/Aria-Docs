@@ -43,7 +43,7 @@ function BlogCard({
       <div className="md:border-l md:pl-14 pb-12 relative">
         <CircleIcon className="w-3.5 h-3.5 absolute -left-[0.481rem] fill-background text-muted-foreground md:flex hidden" />
         <Link className="flex flex-col gap-3" href={`/blog/${slug}`}>
-          <h3 className="text-xl font-bold -mt-1">{title}</h3>
+          <h3 className="sm:text-xl text-lg font-bold -mt-1">{title}</h3>
           <p className="text-sm text-muted-foreground">{description}</p>
           <Button
             variant="link"
