@@ -1,4 +1,3 @@
-import { ROUTES } from "@/lib/routes-config";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Sheet,
@@ -12,13 +11,13 @@ import { Button } from "./ui/button";
 import { AlignLeftIcon } from "lucide-react";
 import { FooterButtons } from "./footer";
 import { DialogTitle } from "./ui/dialog";
-import SubLink from "./sublink";
+import DocsMenu from "./docs-menu";
 
 export function Leftbar() {
   return (
     <aside className="md:flex hidden flex-[1] min-w-[230px] sticky top-16 flex-col h-[92.75vh] overflow-y-auto">
       <ScrollArea className="py-4">
-        <Menu />
+        <DocsMenu />
       </ScrollArea>
     </aside>
   );
@@ -44,7 +43,7 @@ export function SheetLeftbar() {
             <NavMenu isSheet />
           </div>
           <div className="mx-2 px-5">
-            <Menu isSheet />
+            <DocsMenu isSheet />
           </div>
           <div className="p-6 pb-4 flex gap-2.5">
             <FooterButtons />
@@ -52,21 +51,5 @@ export function SheetLeftbar() {
         </ScrollArea>
       </SheetContent>
     </Sheet>
-  );
-}
-
-function Menu({ isSheet = false }) {
-  return (
-    <div className="flex flex-col gap-3.5 mt-5">
-      {ROUTES.map((item, index) => {
-        const modifiedItems = {
-          ...item,
-          href: `/docs${item.href}`,
-          level: 0,
-          isSheet,
-        };
-        return <SubLink key={item.title + index} {...modifiedItems} />;
-      })}
-    </div>
   );
 }
