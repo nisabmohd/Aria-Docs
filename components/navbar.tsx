@@ -1,5 +1,10 @@
 import { ModeToggle } from "@/components/theme-toggle";
-import { GithubIcon, TwitterIcon, HexagonIcon } from "lucide-react";
+import {
+  GithubIcon,
+  TwitterIcon,
+  HexagonIcon,
+  MoveUpRightIcon,
+} from "lucide-react";
 import Link from "next/link";
 import { buttonVariants } from "./ui/button";
 import Search from "./search";
@@ -28,6 +33,7 @@ export const NAVLINKS = [
   {
     title: "Community",
     href: "#",
+    external: true,
   },
 ];
 
@@ -52,7 +58,7 @@ export function Navbar() {
             <Search />
             <div className="flex">
               <Link
-                href="https://github.com/nisabmohd/Docs-Stater-Template"
+                href="https://github.com/nisabmohd/NexDocs"
                 className={buttonVariants({ variant: "ghost", size: "icon" })}
               >
                 <GithubIcon className="h-[1.1rem] w-[1.1rem]" />
@@ -91,11 +97,18 @@ export function NavMenu({ isSheet = false }) {
         const Comp = (
           <Anchor
             key={item.title + item.href}
-            activeClassName="text-black dark:text-white font-semibold"
+            activeClassName="text-primary font-semibold"
             absolute
+            className="flex items-center gap-1"
             href={item.href}
           >
-            {item.title}
+            {item.title}{" "}
+            {item.external && (
+              <MoveUpRightIcon
+                className="w-3 h-3 align-super"
+                strokeWidth={3}
+              />
+            )}
           </Anchor>
         );
         return isSheet ? (

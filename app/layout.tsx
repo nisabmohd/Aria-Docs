@@ -7,8 +7,8 @@ import { Footer } from "@/components/footer";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Docs stater template",
-  metadataBase: new URL("https://docstemplate.vercel.app/"),
+  title: "NexDocx template",
+  metadataBase: new URL("https://nexdocs.vercel.app//"),
   description:
     "This comprehensive documentation template, crafted with Next.js and available as open-source, delivers a sleek and responsive design, tailored to meet all your project documentation requirements.",
 };

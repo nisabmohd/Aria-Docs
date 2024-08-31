@@ -1,5 +1,4 @@
-import { EachRoute, ROUTES } from "@/lib/routes-config";
-import Anchor from "./anchor";
+import { ROUTES } from "@/lib/routes-config";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Sheet,
@@ -41,13 +40,13 @@ export function SheetLeftbar() {
           </SheetClose>
         </SheetHeader>
         <ScrollArea className="flex flex-col gap-4">
-          <div className="flex flex-col gap-2 mt-3 mx-2 px-5">
+          <div className="flex flex-col gap-2.5 mt-3 mx-2 px-5">
             <NavMenu isSheet />
           </div>
           <div className="mx-2 px-5">
             <Menu isSheet />
           </div>
-          <div className="p-6 pb-4 flex gap-2">
+          <div className="p-6 pb-4 flex gap-2.5">
             <FooterButtons />
           </div>
         </ScrollArea>

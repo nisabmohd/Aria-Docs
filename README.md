@@ -53,6 +53,7 @@ Got it! Here's a way to present the features in a more structured and visually a
 ```plaintext
 Features
 ├── MDX supported
+├── Nested pages support
 ├── Blog section (New)
 ├── Syntax highlighting
 ├── Table of contents

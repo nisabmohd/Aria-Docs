@@ -1,4 +1,4 @@
-import { Markdown } from "@/components/markdown";
+import { Typography } from "@/components/typography";
 import { buttonVariants } from "@/components/ui/button";
 import { Author, getAllBlogStaticPaths, getBlogForSlug } from "@/lib/markdown";
 import { ArrowLeftIcon } from "lucide-react";
@@ -52,7 +52,7 @@ export default async function BlogPage({ params: { slug } }: PageProps) {
         </div>
       </div>
       <div className="!w-full">
-        <Markdown>{res.content}</Markdown>
+        <Typography>{res.content}</Typography>
       </div>
     </div>
   );

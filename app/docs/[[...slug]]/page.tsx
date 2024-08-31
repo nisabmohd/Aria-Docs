@@ -4,7 +4,7 @@ import Toc from "@/components/toc";
 import { page_routes } from "@/lib/routes-config";
 import { notFound } from "next/navigation";
 import { getDocsForSlug } from "@/lib/markdown";
-import { Markdown } from "@/components/markdown";
+import { Typography } from "@/components/typography";
 
 type PageProps = {
   params: { slug: string[] };
@@ -19,14 +19,14 @@ export default async function DocsPage({ params: { slug = [] } }: PageProps) {
     <div className="flex items-start gap-12">
       <div className="flex-[3] pt-10">
         <DocsBreadcrumb paths={slug} />
-        <Markdown>
+        <Typography>
           <h1>{res.frontmatter.title}</h1>
           <p className="-mt-4 text-muted-foreground text-[16.5px]">
             {res.frontmatter.description}
           </p>
           <div>{res.content}</div>
           <Pagination pathname={pathName} />
-        </Markdown>
+        </Typography>
       </div>
       <Toc path={pathName} />
     </div>
