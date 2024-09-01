@@ -43,7 +43,7 @@ export function Navbar() {
       <div className="sm:p-3 p-1 max-w-[1530px] mx-auto h-full flex items-center justify-between md:gap-2">
         <div className="flex items-center gap-5">
           <SheetLeftbar />
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-6">
             <div className="sm:flex hidden">
               <Logo />
             </div>

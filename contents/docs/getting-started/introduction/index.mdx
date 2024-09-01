@@ -65,37 +65,6 @@ export default function RootLayout({
   </TabsContent>
 </Tabs>
 
-## Project Structure
-
-This file serves as the introduction to your documentation. Customize it to provide an overview of your project, highlight key features, and guide users on what to expect from the documentation. Start here to set the tone and direction for your documentation portal.
-
-```plaintext
-root
-├── app
-├── content
-│   └── docs
-│       └── getting-started
-│           ├── introduction.mdx     /*Get started by editing this file*/
-│           └── installation.mdx
-└── package.json
-```
-
-The structure ought to be obvious and simple to comprehend thanks to this representation. In the event that you wish to add new routes or a routes section, you can edit the `routes.config.ts` file as necessary.
-
-```ts:lib/routes-config.ts {8}
-export const ROUTES = [
-  {
-    title: "Getting Started",
-    href: "getting-started",
-    items: [
-      { title: "Introduction", href: "/introduction" },
-      { title: "Installation", href: "/installation" },
-      { title: "Refrences", href: "/refrences" },
-    ],
-  },
-]
-```
-
 ## Conclusion
 
 Thank you for choosing the Documentation Template for your project. Whether you're documenting software, APIs, or processes, we're here to support you in creating clear and effective documentation. Happy documenting!

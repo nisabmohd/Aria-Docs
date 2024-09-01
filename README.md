@@ -70,10 +70,8 @@ Features
 
 
 
-<img src="./public/screely-1719313562121.png" />
-<img src="./public/screely-1719313578041.png" />
-<img src="./public/screely-1719313622174.png" />
-<img src="./public/screely-1719313611520.png" />
-<img src="./public/screely-1725045955250.png" />
-<img src="./public/screely-1725045968399.png" />
-<img src="./public/screely-1719313597608.png" />
+<img src="./public/screely-1725177219172.png" />
+<img src="./public/screely-1725177232311.png" />
+<img src="./public/screely-1725177246584.png" />
+<img src="./public/screely-1725177258988.png" />
+<img src="./public/screely-1725177268056.png" />
