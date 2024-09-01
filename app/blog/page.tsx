@@ -2,7 +2,12 @@ import { Button } from "@/components/ui/button";
 import { BlogMdxFrontmatter, getAllBlogs } from "@/lib/markdown";
 import { formatDate2, stringToDate } from "@/lib/utils";
 import { ChevronRightIcon, CircleIcon } from "lucide-react";
+import { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "AriaDocs - Blog",
+};
 
 export default async function BlogIndexPage() {
   const blogs = (await getAllBlogs()).sort(
