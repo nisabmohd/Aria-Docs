@@ -20,7 +20,7 @@ export default async function DocsPage({ params: { slug = [] } }: PageProps) {
       <div className="flex-[3] pt-10">
         <DocsBreadcrumb paths={slug} />
         <Typography>
-          <h1>{res.frontmatter.title}</h1>
+          <h1 className="text-3xl -mt-2">{res.frontmatter.title}</h1>
           <p className="-mt-4 text-muted-foreground text-[16.5px]">
             {res.frontmatter.description}
           </p>
