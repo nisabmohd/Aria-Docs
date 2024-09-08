@@ -104,12 +104,25 @@ pre>code {
   color: gray;
 }
 
+/* Light Mode */
 .keyword {
-  color: rgb(255, 50, 115)
+  color: #e53e3e;
+  /* Red */
 }
 
 .function {
-  color: hsla(210, 100%, 66%, 1)
+  color: #c53030;
+  /* Darker Red */
+}
+
+.punctuation {
+  color: #718096;
+  /* Light Gray */
+}
+
+.comment {
+  color: #a0aec0;
+  /* Gray */
 }
 
 .string,
@@ -117,37 +130,60 @@ pre>code {
 .annotation,
 .boolean,
 .number {
-  color: hsl(0, 0%, 29%)
+  color: #f56565;
+  /* Soft Red */
+}
+
+.tag {
+  color: #fc8181;
+  /* Light Red */
+}
+
+.attr-name {
+  color: #e53e3e;
+  /* Red */
+}
+
+.attr-value {
+  color: #f6ad55;
+  /* Soft Orange */
+}
+
+/* Dark Mode */
+.dark .keyword {
+  color: #fc8181;
+  /* Light Red */
+}
+
+.dark .function {
+  color: #e53e3e;
+  /* Red */
 }
 
 .dark .string,
 .dark .constant,
 .dark .annotation,
 .dark .boolean,
-.dark.number {
-  color: hsl(0, 0%, 71%)
+.dark .number {
+  color: #f56565;
+  /* Soft Red */
 }
 
-.dark .keyword {
-  color: hsla(341, 90%, 67%, 1)
-}
-
-.attr-value {
-  color: hsla(131, 43%, 57%, 1)
-}
-
-.tag {
-  color: hsla(341, 90%, 67%, 1)
-}
-
-.attr-name {
-  color: #414141;
+.dark .tag {
+  color: #fbb6ce;
+  /* Soft Pink */
 }
 
 .dark .attr-name {
-  color: #cacaca;
-
+  color: #e53e3e;
+  /* Red */
 }
+
+.dark .attr-value {
+  color: #f6ad55;
+  /* Soft Orange */
+}
+
 
 .rehype-code-title {
   @apply px-2;

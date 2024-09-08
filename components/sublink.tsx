@@ -10,9 +10,8 @@ import {
 import { cn } from "@/lib/utils";
 import { SheetClose } from "@/components/ui/sheet";
 import { Button } from "./ui/button";
-import { ChevronDown, ChevronRight, ChevronsUpDownIcon } from "lucide-react";
-import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+import { ChevronDown, ChevronRight } from "lucide-react";
+import { useState } from "react";
 
 export default function SubLink({
   title,
@@ -22,15 +21,10 @@ export default function SubLink({
   level,
   isSheet,
 }: EachRoute & { level: number; isSheet: boolean }) {
-  const path = usePathname();
   const [isOpen, setIsOpen] = useState(level == 0);
 
-  useEffect(() => {
-    if (path != href && path.includes(href)) setIsOpen(true);
-  }, [href, path]);
-
   const Comp = (
-    <Anchor activeClassName="text-primary font-medium" href={href}>
+    <Anchor activeClassName="text-primary font-semibold" href={href}>
       {title}
     </Anchor>
   );
@@ -42,7 +36,7 @@ export default function SubLink({
       Comp
     )
   ) : (
-    <h4 className="font-medium sm:text-sm text-primary">{title}</h4>
+    <h4 className="font-semibold sm:text-sm text-primary">{title}</h4>
   );
 
   if (!items) {

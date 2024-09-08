@@ -1,4 +1,6 @@
-## AriaDocs - Documentation Template
+## AriaDocsLite - Documentation Template (Branch - `minimal-docs`)
+
+This branch has feature for document versioning
 
 This feature-packed documentation template, built with Next.js, offers a sleek and responsive design, perfect for all your project documentation needs.
 
@@ -57,24 +59,13 @@ Got it! Here's a way to present the features in a more structured and visually a
 Features
 ├── MDX supported
 ├── Nested pages support
-├── Blog section (New)
 ├── Syntax highlighting
 ├── Table of contents
-├── Pagination
-├── Search
 ├── Code line highlight & code title
 ├── Static site generation
 ├── Custom components
-├── Light mode & dark mode
-├── Code Switcher
-├── Code copy
-└── Table of content observer highlight
+└── Light mode & dark mode
 ```
 
-
-
-<img src="./public/screely-1725177219172.png" />
-<img src="./public/screely-1725177232311.png" />
-<img src="./public/screely-1725177246584.png" />
-<img src="./public/screely-1725177258988.png" />
-<img src="./public/screely-1725177268056.png" />
+<img src="./public/1.png" />
+<img src="./public/2.png" />
