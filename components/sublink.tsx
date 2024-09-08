@@ -8,7 +8,7 @@ import {
 import { cn } from "@/lib/utils";
 import { SheetClose } from "@/components/ui/sheet";
 import { Button } from "./ui/button";
-import { ChevronDown, ChevronRight, ChevronsUpDownIcon } from "lucide-react";
+import { ChevronDown, ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
