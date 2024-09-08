@@ -4,11 +4,20 @@ This feature-packed documentation template, built with Next.js, offers a sleek a
 
 <img src="./public/public-og.png" />
 
-
 <br/>
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Here are the alternative versions of the AriaDocs template, each crafted for specific use cases:
 
+- **Lite Version:** A streamlined, no-frills template perfect for straightforward documentation needs.  
+  [Explore the Lite Version](https://github.com/nisabmohd/Aria-Docs/tree/minimal-docs)
+
+- **Version with Versioning:** A powerful option for projects that require historical documentation tracking. Manage multiple versions of your docs effortlessly.  
+  [Check out the Versioning Feature](https://github.com/nisabmohd/Aria-Docs/tree/version_docs)
+
+- **i18n Support Version (WIP):** Designed for international audiences, this version will offer comprehensive multilingual support.  
+  [Preview the i18n Support](https://github.com/nisabmohd/Aria-Docs/tree/i18n-support)
+
+  
 ## Getting Started
 
 First, run the development server:
