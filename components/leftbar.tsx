@@ -32,11 +32,11 @@ export function SheetLeftbar() {
           <AlignLeftIcon />
         </Button>
       </SheetTrigger>
-      <SheetContent className="flex flex-col gap-4 px-0" side="left">
+      <SheetContent className="flex flex-col gap-2 px-0" side="left">
         <DialogTitle className="sr-only">Menu</DialogTitle>
         <SheetHeader>
           <SheetClose className="px-5 flex items-center gap-2" asChild>
-            <div>
+            <div className="flex !items-start flex-col gap-3">
               <Logo />
               <VersionManager />
             </div>

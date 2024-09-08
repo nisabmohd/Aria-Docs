@@ -13,14 +13,22 @@ import { SheetLeftbar } from "./leftbar";
 import { SheetClose } from "@/components/ui/sheet";
 import NavGetStarted from "./nav-get-started";
 import dynamic from "next/dynamic";
+import { ReactNode } from "react";
 
 const VersionManager = dynamic(() => import("./version-select"), {
   ssr: false,
 });
 
-export const NAVLINKS = [
+type NavLink =
+  | {
+      title: string;
+      href: string;
+      external?: boolean;
+    }
+  | { component: ReactNode; href: null };
+
+export const NAVLINKS: NavLink[] = [
   {
-    title: "Documentation",
     href: null,
     component: <NavGetStarted />,
   },
@@ -122,7 +130,7 @@ export function NavMenu({ isSheet = false }) {
             </Anchor>
           );
         return isSheet ? (
-          <SheetClose key={item.title + item.href} asChild>
+          <SheetClose key={item.href} asChild>
             {Comp}
           </SheetClose>
         ) : (

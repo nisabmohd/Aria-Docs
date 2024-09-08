@@ -43,7 +43,7 @@ export default function VersionManager() {
       value={currentVersion}
       onValueChange={(v: Version) => changeVersion(v)}
     >
-      <SelectTrigger className="w-fit border-none font-code font-medium bg-muted rounded-full text-xs h-8 pl-5">
+      <SelectTrigger className="sm:w-fit w-full border-none font-code font-medium bg-muted rounded-full text-xs h-8 pl-5">
         <SelectValue placeholder="Version" />
       </SelectTrigger>
       <SelectContent side="bottom" className="font-code">

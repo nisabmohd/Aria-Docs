@@ -1,13 +1,18 @@
 "use client";
 
-import Link from "next/link";
 import { getRoutesFlatten } from "@/lib/routes-config";
 import { useVersion } from "./context/version";
+import Anchor from "./anchor";
 
 export default function NavGetStarted() {
   const { currentVersion } = useVersion();
   const routes = getRoutesFlatten(currentVersion);
   return (
-    <Link href={`/docs/${currentVersion}${routes[0].href}`}>Documentation</Link>
+    <Anchor
+      activeClassName="text-primary font-semibold"
+      href={`/docs/${currentVersion}${routes[0].href}`}
+    >
+      Documentation
+    </Anchor>
   );
 }
