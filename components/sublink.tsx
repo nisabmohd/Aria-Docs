@@ -1,5 +1,3 @@
-"use client";
-
 import { EachRoute } from "@/lib/routes-config";
 import Anchor from "./anchor";
 import {

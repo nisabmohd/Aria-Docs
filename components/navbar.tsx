@@ -32,7 +32,7 @@ export const NAVLINKS = [
   },
   {
     title: "Community",
-    href: "#",
+    href: "https://github.com/nisabmohd/Aria-Docs/discussions",
     external: true,
   },
 ];
