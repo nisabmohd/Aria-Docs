@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { EachRoute, ROUTES } from "./routes-config";
+import { EachRoute, getRoutesForVersion, Version } from "./routes-config";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -40,10 +40,13 @@ export function helperSearch(
   return res;
 }
 
-export function advanceSearch(query: string) {
-  return ROUTES.map((node) =>
-    helperSearch(query, node, "", 1, query.length == 0 ? 2 : undefined)
-  ).flat();
+export function advanceSearch(query: string, v: Version) {
+  const routes = getRoutesForVersion(v);
+  return routes
+    .map((node) =>
+      helperSearch(query, node, "", 1, query.length == 0 ? 2 : undefined)
+    )
+    .flat();
 }
 
 // Thursday, May 23, 2024

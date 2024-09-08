@@ -1,7 +1,7 @@
 import { buttonVariants } from "@/components/ui/button";
-import { page_routes } from "@/lib/routes-config";
 import { MoveUpRightIcon, TerminalIcon } from "lucide-react";
 import Link from "next/link";
+import GetStarted from "../components/get-started";
 
 export default function Home() {
   return (
@@ -23,12 +23,7 @@ export default function Home() {
         needs.
       </p>
       <div className="flex flex-row items-center gap-5">
-        <Link
-          href={`/docs${page_routes[0].href}`}
-          className={buttonVariants({ className: "px-6", size: "lg" })}
-        >
-          Get Stared
-        </Link>
+        <GetStarted />
         <Link
           href="#"
           className={buttonVariants({

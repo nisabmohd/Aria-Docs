@@ -6,6 +6,13 @@ import { GeistMono } from "geist/font/mono";
 import { Footer } from "@/components/footer";
 import "./globals.css";
 
+import dynamic from "next/dynamic";
+
+const VersionContextProvider = dynamic(
+  () => import("@/components/context/version"),
+  { ssr: false }
+);
+
 export const metadata: Metadata = {
   title: "AriaDocs - Template",
   metadataBase: new URL("https://ariadocs.vercel.app/"),
@@ -30,11 +37,13 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Navbar />
-          <main className="sm:container mx-auto w-[88vw] h-auto">
-            {children}
-          </main>
-          <Footer />
+          <VersionContextProvider>
+            <Navbar />
+            <main className="sm:container mx-auto w-[88vw] h-auto">
+              {children}
+            </main>
+            <Footer />
+          </VersionContextProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -1,7 +1,7 @@
 import DocsBreadcrumb from "@/components/docs-breadcrumb";
 import Pagination from "@/components/pagination";
 import Toc from "@/components/toc";
-import { page_routes } from "@/lib/routes-config";
+import { availableVersions, getRoutesFlatten } from "@/lib/routes-config";
 import { notFound } from "next/navigation";
 import { getDocsForSlug } from "@/lib/markdown";
 import { Typography } from "@/components/typography";
@@ -45,7 +45,12 @@ export async function generateMetadata({ params: { slug = [] } }: PageProps) {
 }
 
 export function generateStaticParams() {
-  return page_routes.map((item) => ({
-    slug: item.href.split("/").slice(1),
-  }));
+  const slugArr: { slug: string[] }[] = [];
+  availableVersions.forEach((v) => {
+    const arr = getRoutesFlatten(v).map((item) => ({
+      slug: [v, ...item.href.split("/").slice(1)],
+    }));
+    slugArr.push(...arr);
+  });
+  return slugArr;
 }

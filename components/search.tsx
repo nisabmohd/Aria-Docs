@@ -14,8 +14,10 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useEffect, useMemo, useState } from "react";
 import Anchor from "./anchor";
 import { advanceSearch, cn } from "@/lib/utils";
+import { useVersion } from "./context/version";
 
 export default function Search() {
+  const { currentVersion } = useVersion();
   const [searchedInput, setSearchedInput] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
@@ -34,8 +36,8 @@ export default function Search() {
   }, []);
 
   const filteredResults = useMemo(
-    () => advanceSearch(searchedInput.trim()),
-    [searchedInput]
+    () => advanceSearch(searchedInput.trim(), currentVersion),
+    [searchedInput, currentVersion]
   );
 
   return (
@@ -92,7 +94,7 @@ export default function Search() {
                         "dark:hover:bg-neutral-900 hover:bg-neutral-100 w-full px-3 rounded-sm text-[15px] flex items-center gap-2.5",
                         paddingClass
                       )}
-                      href={`/docs${item.href}`}
+                      href={`/docs/${currentVersion}${item.href}`}
                     >
                       <div
                         className={cn(

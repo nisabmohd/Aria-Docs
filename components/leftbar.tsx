@@ -12,6 +12,7 @@ import { AlignLeftIcon } from "lucide-react";
 import { FooterButtons } from "./footer";
 import { DialogTitle } from "./ui/dialog";
 import DocsMenu from "./docs-menu";
+import VersionManager from "./version-select";
 
 export function Leftbar() {
   return (
@@ -34,8 +35,11 @@ export function SheetLeftbar() {
       <SheetContent className="flex flex-col gap-4 px-0" side="left">
         <DialogTitle className="sr-only">Menu</DialogTitle>
         <SheetHeader>
-          <SheetClose className="px-5" asChild>
-            <Logo />
+          <SheetClose className="px-5 flex items-center gap-2" asChild>
+            <div>
+              <Logo />
+              <VersionManager />
+            </div>
           </SheetClose>
         </SheetHeader>
         <ScrollArea className="flex flex-col gap-4">
