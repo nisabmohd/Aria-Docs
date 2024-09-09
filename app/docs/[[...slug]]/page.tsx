@@ -14,7 +14,7 @@ export default async function DocsPage({ params: { slug = [] } }: PageProps) {
 
   if (!res) notFound();
   return (
-    <div className="flex items-start gap-12">
+    <div className="flex items-start gap-14">
       <div className="flex-[3] py-10">
         <Typography>
           <h1 className="text-3xl -mt-2">{res.frontmatter.title}</h1>
