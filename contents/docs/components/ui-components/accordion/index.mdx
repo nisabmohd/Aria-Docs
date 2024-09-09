@@ -1,0 +1,33 @@
+---
+title: Accordion 
+---
+
+## Overview
+
+The `Accordion` component is used to create collapsible sections of content. It allows users to expand or collapse content areas, which is useful for FAQs, lists, or any content-heavy sections where only one part is visible at a time.
+
+### Features:
+- Collapsible content sections.
+- Supports multiple accordion items.
+- Configurable open/close behavior.
+
+## Props
+
+| Prop        | Type       | Description                                                         |
+| ----------- | ---------- | ------------------------------------------------------------------- |
+| `items`     | `array`    | An array of accordion items to be rendered. Each item contains a title and content. |
+| `className` | `string`   | Optional additional classes for styling the accordion container.     |
+
+## Usage
+
+Here’s an example of how to use the `Accordion` component:
+
+```tsx
+import Accordion from '@/components/UI/Accordion';
+
+const items = [
+  { title: "What is Aria-Docs?", content: "Aria-Docs is a feature-packed documentation template..." },
+  { title: "How does it work?", content: "This project uses next/font to automatically optimize and load Inter, a custom Google Font.." }
+];
+
+<Accordion items={items} />

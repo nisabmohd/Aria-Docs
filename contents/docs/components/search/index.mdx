@@ -1,0 +1,32 @@
+---
+title: Search 
+---
+
+## Overview
+
+The `Search` component provides users with a way to search through content or data on the site. It offers a search input field that can be connected to various backends or client-side data sources.
+
+### Features:
+- Customizable search input field.
+- Supports client-side or server-side search implementations.
+- Optionally renders search suggestions or results as the user types.
+
+## Props
+
+| Prop        | Type       | Description                                                         |
+| ----------- | ---------- | ------------------------------------------------------------------- |
+| `onSearch`  | `function` | Callback function triggered when a search is performed.              |
+| `placeholder`| `string`  | Placeholder text for the search input field.                         |
+| `className` | `string`   | Optional additional classes for styling the search input field.      |
+
+## Usage
+
+Here’s an example of how to use the `Search` component:
+
+```tsx
+import Search from '@/components/Search';
+
+<Search
+  placeholder="Search documentation..."
+  onSearch={(query) => console.log("Searching for", query)}
+/>

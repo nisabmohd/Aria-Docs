@@ -1,0 +1,36 @@
+---
+title: Tabs Component
+---
+
+## Overview
+
+The `Tabs` component is used to organize content into multiple sections, each with its own tab. It's commonly used for displaying different categories of content or settings in a compact and organized manner.
+
+### Features:
+- Supports multiple tabs with customizable content.
+- Easy switching between tabs.
+- Customizable active and inactive tab styles.
+
+## Props
+
+| Prop        | Type       | Description                                                         |
+| ----------- | ---------- | ------------------------------------------------------------------- |
+| `tabs`      | `array`    | An array of tab objects, each containing a label and content.        |
+| `activeTab` | `number`   | The index of the currently active tab.                              |
+| `onTabChange` | `function` | Callback function triggered when a tab is changed.                 |
+| `className` | `string`   | Optional additional classes for styling the tabs container.          |
+
+## Usage
+
+Here’s an example of how to use the `Tabs` component:
+
+```tsx
+import Tabs from '@/components/UI/Tabs';
+
+const tabs = [
+  { label: "Tab 1", content: "This is the content for tab 1" },
+  { label: "Tab 2", content: "This is the content for tab 2" },
+  { label: "Tab 3", content: "This is the content for tab 3" }
+];
+
+<Tabs tabs={tabs} activeTab={0} onTabChange={(tabIndex) => console.log("Tab changed:", tabIndex)} />

@@ -1,0 +1,34 @@
+---
+title: Pagination 
+---
+
+## Overview
+
+The `Pagination` component is used to handle paginated data in the application. It allows users to navigate between multiple pages of content, such as lists, tables, or search results.
+
+### Features:
+- Supports page numbers, next, and previous controls.
+- Customizable number of items per page.
+- Easily integrated with lists, tables, or other paginated content.
+
+## Props
+
+| Prop        | Type       | Description                                                         |
+| ----------- | ---------- | ------------------------------------------------------------------- |
+| `currentPage`| `number`  | The currently active page.                                           |
+| `totalPages` | `number`  | The total number of pages available.                                 |
+| `onPageChange`| `function`| Callback function called when the page changes.                      |
+| `className` | `string`   | Optional additional classes for styling the pagination component.    |
+
+## Usage
+
+Here’s an example of how to use the `Pagination` component:
+
+```tsx
+import Pagination from '@/components/Pagination';
+
+<Pagination
+  currentPage={1}
+  totalPages={5}
+  onPageChange={(page) => console.log("Page changed to", page)}
+/>

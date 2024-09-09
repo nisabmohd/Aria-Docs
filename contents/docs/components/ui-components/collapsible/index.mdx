@@ -1,0 +1,31 @@
+---
+title: Collapsible Component
+---
+
+## Overview
+
+The `Collapsible` component is used to hide or reveal content by toggling its visibility. It’s especially useful for creating expandable sections such as FAQs, dropdowns, or sections with additional information.
+
+### Features:
+- Supports open and close states for content.
+- Customizable transition animations.
+- Can be nested inside other components.
+
+## Props
+
+| Prop        | Type       | Description                                                         |
+| ----------- | ---------- | ------------------------------------------------------------------- |
+| `isOpen`    | `boolean`  | Controls whether the collapsible content is visible.                 |
+| `onToggle`  | `function` | Callback function triggered when the collapsible section is toggled. |
+| `className` | `string`   | Optional additional classes for styling the collapsible container.   |
+
+## Usage
+
+Here’s an example of how to use the `Collapsible` component:
+
+```tsx
+import Collapsible from '@/components/UI/Collapsible';
+
+<Collapsible isOpen={true} onToggle={() => console.log("Toggled")}>
+  <p>This content is inside the collapsible section.</p>
+</Collapsible>

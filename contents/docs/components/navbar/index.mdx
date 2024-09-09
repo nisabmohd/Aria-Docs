@@ -1,0 +1,35 @@
+---
+title: Navbar 
+---
+
+## Overview
+
+The `Navbar` component is used to render the top navigation bar of the website or application. It typically includes logo placement, navigation links, and optional actions such as search or profile menus.
+
+### Features:
+- Responsive design for mobile and desktop.
+- Supports links, buttons, and dropdowns.
+- Can include branding elements like logos or titles.
+
+## Props
+
+| Prop        | Type       | Description                                                         |
+| ----------- | ---------- | ------------------------------------------------------------------- |
+| `links`     | `array`    | Array of navigation links to be displayed in the navbar.             |
+| `className` | `string`   | Optional additional classes for styling the navbar container.        |
+
+## Usage
+
+Here’s an example of how to use the `Navbar` component:
+
+```tsx
+import Navbar from '@/components/Navbar';
+
+const links = [
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Services", href: "/services" },
+  { label: "Contact", href: "/contact" }
+];
+
+<Navbar links={links} className="custom-navbar" />

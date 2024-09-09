@@ -1,0 +1,33 @@
+---
+title: Leftbar 
+---
+
+## Overview
+
+The `Leftbar` component is a sidebar navigation component that appears on the left side of the page. It is commonly used to provide quick access to various sections or categories within a website or documentation.
+
+### Features:
+- Renders a customizable navigation sidebar.
+- Supports nested menu items.
+- Optional collapsible sections for better organization.
+
+## Props
+
+| Prop        | Type       | Description                                                         |
+| ----------- | ---------- | ------------------------------------------------------------------- |
+| `items`     | `array`    | An array of menu items to be displayed in the sidebar.               |
+| `className` | `string`   | Optional additional classes for styling the sidebar container.       |
+
+## Usage
+
+Here’s an example of how to use the `Leftbar` component:
+
+```tsx
+import Leftbar from '@/components/Leftbar';
+
+const items = [
+  { label: "Introduction", href: "/docs/introduction" },
+  { label: "Installation", href: "/docs/installation" }
+];
+
+<Leftbar items={items} />

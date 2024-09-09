@@ -1,0 +1,35 @@
+---
+title: Breadcrumb 
+---
+
+## Overview
+
+The `Breadcrumb` component is used to display navigation links that represent the user’s current location in the website hierarchy. It helps users understand the structure of the site and navigate back to previous sections.
+
+### Features:
+- Renders a list of links representing the user's current path.
+- Supports custom separators between breadcrumb items.
+- Easy to integrate with routing and navigation libraries.
+
+## Props
+
+| Prop        | Type       | Description                                                         |
+| ----------- | ---------- | ------------------------------------------------------------------- |
+| `items`     | `array`    | An array of breadcrumb items, each containing a label and a URL.     |
+| `separator` | `string`   | Optional separator between breadcrumb items.                        |
+| `className` | `string`   | Optional additional classes for styling the breadcrumb container.    |
+
+## Usage
+
+Here’s an example of how to use the `Breadcrumb` component:
+
+```tsx
+import Breadcrumb from '@/components/UI/Breadcrumb';
+
+const items = [
+  { label: "Home", href: "/" },
+  { label: "Docs", href: "/docs" },
+  { label: "Installation", href: "/docs/installation" }
+];
+
+<Breadcrumb items={items} separator=">" />

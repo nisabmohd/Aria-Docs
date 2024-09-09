@@ -1,0 +1,32 @@
+---
+title: Button 
+---
+
+## Overview
+
+The `Button` component is a versatile and reusable button element used to trigger actions or events. It supports different styles, sizes, and types based on the action being performed, such as submitting forms, navigation, or triggering modals.
+
+### Features:
+- Supports various button types (e.g., submit, reset, button).
+- Customizable sizes and styles.
+- Can be rendered as a link or button element.
+
+## Props
+
+| Prop        | Type       | Description                                                         |
+| ----------- | ---------- | ------------------------------------------------------------------- |
+| `type`      | `string`   | Specifies the button type (e.g., "button", "submit", "reset").       |
+| `onClick`   | `function` | Callback function triggered on button click.                        |
+| `disabled`  | `boolean`  | Disables the button if true.                                        |
+| `className` | `string`   | Optional additional classes for styling the button.                 |
+
+## Usage
+
+Here’s an example of how to use the `Button` component:
+
+```tsx
+import Button from '@/components/UI/Button';
+
+<Button type="submit" onClick={() => alert('Button clicked!')}>
+  Submit
+</Button>

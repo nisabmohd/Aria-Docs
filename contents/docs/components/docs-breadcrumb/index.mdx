@@ -1,0 +1,29 @@
+---
+title: Docs Breadcrumb 
+---
+
+
+## Overview
+
+The `Docs Breadcrumb` component provides navigational breadcrumbs to help users understand their current location within the documentation structure. It is especially useful in larger documentation systems where nested pages are common.
+
+### Features:
+- Dynamically generates breadcrumbs based on the current route.
+- Supports multi-level navigation.
+- Customizable styles and structure.
+
+## Props
+
+| Prop        | Type       | Description                                                         |
+| ----------- | ---------- | ------------------------------------------------------------------- |
+| `items`     | `array`    | An array of breadcrumb items representing the path structure.        |
+| `className` | `string`   | Optional additional classes for styling the breadcrumb container.    |
+
+## Usage
+
+Here’s an example of how to use the `Docs Breadcrumb` component:
+
+```tsx
+import DocsBreadcrumb from '@/components/DocsBreadcrumb';
+
+<DocsBreadcrumb items={[{ label: "Home", href: "/" }, { label: "Docs", href: "/docs" }]} />

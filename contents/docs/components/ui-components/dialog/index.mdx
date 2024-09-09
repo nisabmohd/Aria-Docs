@@ -1,0 +1,33 @@
+---
+title: Dialog 
+---
+
+## Overview
+
+The `Dialog` component is used to display a modal or popup window that overlays the current content. It is typically used for interactions that require user input or attention, such as confirmations, forms, or alerts.
+
+### Features:
+- Can be used to create modal dialogs or alert boxes.
+- Supports custom actions, such as close, submit, or cancel buttons.
+- Customizable animations and transitions.
+
+## Props
+
+| Prop        | Type       | Description                                                         |
+| ----------- | ---------- | ------------------------------------------------------------------- |
+| `isOpen`    | `boolean`  | Controls whether the dialog is visible.                              |
+| `onClose`   | `function` | Callback function triggered when the dialog is closed.               |
+| `className` | `string`   | Optional additional classes for styling the dialog container.        |
+
+## Usage
+
+Here’s an example of how to use the `Dialog` component:
+
+```tsx
+import Dialog from '@/components/UI/Dialog';
+
+<Dialog isOpen={true} onClose={() => console.log("Dialog closed")}>
+  <h2>Modal Title</h2>
+  <p>This is a modal dialog content.</p>
+  <button onClick={() => console.log("Confirmed")}>Confirm</button>
+</Dialog>

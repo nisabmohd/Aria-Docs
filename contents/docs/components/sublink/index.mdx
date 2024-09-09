@@ -1,0 +1,29 @@
+---
+title: Sublink 
+---
+
+## Overview
+
+The `Sublink` component is used to render a sub-navigation link. This is particularly useful in cases where you have a primary link with additional links nested under it, like a dropdown menu or secondary navigation.
+
+### Features:
+- Supports rendering sub-links or nested links within a navigation menu.
+- Customizable styles and functionality.
+- Can be used with dropdowns or navigation bars.
+
+## Props
+
+| Prop        | Type       | Description                                                         |
+| ----------- | ---------- | ------------------------------------------------------------------- |
+| `label`     | `string`   | The text to be displayed for the sublink.                            |
+| `href`      | `string`   | The URL or path the sublink will navigate to.                        |
+| `className` | `string`   | Optional additional classes for styling the sublink.                 |
+
+## Usage
+
+Here’s an example of how to use the `Sublink` component:
+
+```tsx
+import Sublink from '@/components/Sublink';
+
+<Sublink label="Documentation" href="/docs" />

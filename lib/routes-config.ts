@@ -82,6 +82,52 @@ export const ROUTES: EachRoute[] = [
       { title: "useData", href: "/use-data" },
     ],
   },
+  {
+    title: "Components",
+    href: "/components",
+    noLink: true,
+    items: [
+      {
+        title: "UI Components",
+        href: "/ui-components",
+        items: [
+          { title: "accordion", href: "/accordion" },
+          { title: "avatar", href: "/avatar" },
+          { title: "breadcrumb", href: "/breadcrumb" },
+          { title: "button", href: "/button" },
+          { title: "collapsible", href: "/collapsible" },
+          { title: "dialog", href: "/dialog" },
+          { title: "dropdown-menu", href: "/dropdown-menu" },
+          { title: "input", href: "/input" },
+          { title: "scroll-area", href: "/scroll-area" },
+          { title: "sheet", href: "/sheet" },
+          { title: "stepper", href: "/stepper" },
+          { title: "table", href: "/table" },
+          { title: "tabs", href: "/tabs" },
+        ],
+      },     
+      { title: "anchor", href: "/anchor" },
+      { title: "copy", href: "/copy" },
+      { title: "docs-breadcrumb", href: "/docs-breadcrumb" },
+      { title: "docs-menu", href: "/docs-menu" },
+      { title: "footer", href: "/footer" },
+      { title: "leftbar", href: "/leftbar" },
+      { title: "navbar", href: "/navbar" },
+      { title: "note", href: "/note" },
+      { title: "pagination", href: "/pagination" },
+      { title: "pre", href: "/pre" },
+      { title: "search", href: "/search" },
+      { title: "sublink", href: "/sublink" },
+      { title: "theme-provider", href: "/theme-provider" },
+      { title: "theme-toggle", href: "/theme-toggle" },
+      { title: "toc", href: "/toc" },
+      { title: "toc-observer", href: "/toc-observer" },
+      { title: "typography", href: "/typography" },
+     
+
+       
+    ],
+  },
 ];
 
 type Page = { title: string; href: string };

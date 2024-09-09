@@ -1,0 +1,30 @@
+---
+title: Pre 
+---
+
+## Overview
+
+The `Pre` component is used to display preformatted text. It's typically used for rendering code snippets or content that requires a fixed-width font and preserved whitespace formatting.
+
+### Features:
+- Renders content in a monospaced font.
+- Preserves whitespace, newlines, and indentation.
+- Useful for displaying code or technical text.
+
+## Props
+
+| Prop        | Type       | Description                                                         |
+| ----------- | ---------- | ------------------------------------------------------------------- |
+| `children`  | `ReactNode`| The content to be displayed inside the preformatted block.            |
+| `className` | `string`   | Optional additional classes for styling the pre block.               |
+
+## Usage
+
+Here’s an example of how to use the `Pre` component:
+
+```tsx
+import Pre from '@/components/Pre';
+
+<Pre>
+  const example = "This is preformatted text.";
+</Pre>

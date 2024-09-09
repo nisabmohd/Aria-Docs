@@ -1,0 +1,40 @@
+---
+title: Table 
+---
+
+## Overview
+
+The `Table` component is used to display data in a structured grid format, with rows and columns. It supports sorting, pagination, and customizable styling, making it perfect for showing tabular data like reports, lists, or any data-heavy interface.
+
+### Features:
+- Customizable rows and columns.
+- Supports pagination and sorting.
+- Easily stylable for different table designs.
+
+## Props
+
+| Prop        | Type       | Description                                                         |
+| ----------- | ---------- | ------------------------------------------------------------------- |
+| `data`      | `array`    | An array of objects representing the rows of data.                  |
+| `columns`   | `array`    | An array of objects representing the column definitions.            |
+| `className` | `string`   | Optional additional classes for styling the table.                  |
+
+## Usage
+
+Here’s an example of how to use the `Table` component:
+
+```tsx
+import Table from '@/components/UI/Table';
+
+const data = [
+  { name: "John Doe", age: 25, email: "john@example.com" },
+  { name: "Jane Doe", age: 30, email: "jane@example.com" }
+];
+
+const columns = [
+  { header: "Name", accessor: "name" },
+  { header: "Age", accessor: "age" },
+  { header: "Email", accessor: "email" }
+];
+
+<Table data={data} columns={columns} />

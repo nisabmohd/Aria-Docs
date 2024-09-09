@@ -1,0 +1,32 @@
+---
+title: Sheet 
+---
+
+## Overview
+
+The `Sheet` component is used to display a panel or drawer that slides in from the side of the screen. It's typically used for side menus, settings, or notifications that can be toggled on and off.
+
+### Features:
+- Slide-in and slide-out panel or drawer.
+- Customizable positioning (left, right, top, or bottom).
+- Supports multiple actions such as close, save, or submit.
+
+## Props
+
+| Prop        | Type       | Description                                                         |
+| ----------- | ---------- | ------------------------------------------------------------------- |
+| `isOpen`    | `boolean`  | Controls whether the sheet is visible.                              |
+| `onClose`   | `function` | Callback function triggered when the sheet is closed.               |
+| `position`  | `string`   | Defines the position of the sheet (e.g., "left", "right").           |
+| `className` | `string`   | Optional additional classes for styling the sheet.                  |
+
+## Usage
+
+Here’s an example of how to use the `Sheet` component:
+
+```tsx
+import Sheet from '@/components/UI/Sheet';
+
+<Sheet isOpen={true} onClose={() => console.log("Sheet closed")} position="right">
+  <p>This is a sheet content area.</p>
+</Sheet>

@@ -1,0 +1,30 @@
+---
+title: Theme Provider 
+---
+
+## Overview
+
+The `ThemeProvider` component allows you to manage and provide consistent theming (e.g., light or dark mode) across your application. It wraps the application and controls the theme context, ensuring all components adhere to the current theme.
+
+### Features:
+- Provides theme context across the application.
+- Supports light and dark modes or any custom themes.
+- Easily switch between themes programmatically.
+
+## Props
+
+| Prop        | Type       | Description                                                         |
+| ----------- | ---------- | ------------------------------------------------------------------- |
+| `children`  | `ReactNode`| The components to be wrapped by the theme provider.                  |
+| `initialTheme` | `string`| Sets the initial theme (e.g., "light", "dark").                      |
+
+## Usage
+
+Here’s an example of how to use the `ThemeProvider` component:
+
+```tsx
+import { ThemeProvider } from '@/components/ThemeProvider';
+
+<ThemeProvider initialTheme="dark">
+  <App />
+</ThemeProvider>
