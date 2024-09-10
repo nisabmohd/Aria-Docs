@@ -3,7 +3,9 @@ title: Introduction
 description: This section provides an overview of Introduction.
 ---
 
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam iste dolorum tempore consectetur explicabo tempora provident quia maxime, molestiae, facilis aperiam et, error illum vel ullam? Quis architecto dolore ullam
+# Welcome to AriaDocs
+
+AriaDocs is a flexible and powerful documentation template built with Next.js. Whether you're documenting software, APIs, or technical workflows, AriaDocs provides a clean, customizable structure to create and manage your documentation. With responsive design, version control support, and multiple layout options, it is suited for any project needing comprehensive and well-organized documentation.
 
 ## Getting Started
 
@@ -11,7 +13,21 @@ To begin using the Documentation Template, follow these simple steps:
 
 - Start by cloning the repository to your local machine.
 
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit quae iure nulla deserunt dolore quam pariatur minus sapiente accusantium. Optio, necessitatibus sequi. Veritatis, aspernatur? Possimus quis repellat eum vitae eveniet.
+Once cloned, you'll have access to all of the files needed to get started. Navigate to the project directory and install the required dependencies.
+
+```
+cd Aria-Docs
+
+npm install
+```
+
+With everything set up, you can start the development server to preview the documentation site in your browser.
+
+```
+npm run dev
+```
+
+AriaDocs comes with built-in support for MDX (Markdown + JSX), which allows you to easily create pages using markdown and add React components where needed. It’s a great choice for teams that need flexibility and scalability in their documentation structure.
 
 ## Alternative Versions
 
@@ -26,58 +42,12 @@ Here are the alternative versions of the AriaDocs template, each crafted for spe
 - **i18n Support Version (WIP):** Designed for international audiences, this version will offer comprehensive multilingual support.  
   [Preview the i18n Support](https://github.com/nisabmohd/Aria-Docs/tree/i18n-support)
 
-## Blockquotes
+## Usage
 
-Blockquotes are useful for emphasizing key points or quoting external sources:
+Refer to the Components documentation below for usage.
 
-> "Documentation is a love letter that you write to your future self." - Damian Conway
-
-Feel free to use blockquotes to highlight important information or quotes relevant to your documentation.
-
-## Code Examples with switch
-
-Here a custom tab component from shadcn ui is used.
-
-<Tabs defaultValue="js" className="pt-5 pb-1">
-  <TabsList className="">
-    <TabsTrigger value="js">layout.jsx</TabsTrigger>
-    <TabsTrigger value="ts">layout.tsx</TabsTrigger>
-  </TabsList>
-  <TabsContent value="js">
-  ```jsx {7} showLineNumbers
-import ThemeProvider from './theme-provider'
- 
-export default function RootLayout({ children }) {
-  return (
-    <html>
-      <body className="container">
-        <ThemeProvider>{children}</ThemeProvider>
-      </body>
-    </html>
-  )}
-````
-  </TabsContent>
-  <TabsContent value="ts">
-```tsx {11} showLineNumbers
-import ThemeProvider from './theme-provider'
- 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
-    <html>
-      <body className="container">
-        <ThemeProvider>{children}</ThemeProvider>
-      </body>
-    </html>
-  )
-}
-```
-  </TabsContent>
-</Tabs>
+[components](/docs/getting-started/components)
 
 ## Conclusion
 
-Thank you for choosing the Documentation Template for your project. Whether you're documenting software, APIs, or processes, we're here to support you in creating clear and effective documentation. Happy documenting!
+Thank you for choosing the AriaDocs Documentation Template for your project. Whether you're documenting software, APIs, or processes, this template supports you in creating clear and effective documentation. With AriaDocs, you can focus on writing great content, while we take care of the structure and organization.
