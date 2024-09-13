@@ -31,7 +31,7 @@ export default async function BlogPage({ params: { slug } }: PageProps) {
   const res = await getBlogForSlug(slug);
   if (!res) notFound();
   return (
-    <div className="lg:w-[80%] md:[95%] mx-auto">
+    <div className="lg:w-[60%] sm:[95%] md:[75%] mx-auto">
       <Link
         className={buttonVariants({
           variant: "link",
@@ -45,7 +45,9 @@ export default async function BlogPage({ params: { slug } }: PageProps) {
         <p className="text-muted-foreground text-sm">
           {formatDate(res.frontmatter.date)}
         </p>
-        <h1 className="sm:text-4xl text-3xl font-extrabold">{res.frontmatter.title}</h1>
+        <h1 className="sm:text-4xl text-3xl font-extrabold">
+          {res.frontmatter.title}
+        </h1>
         <div className="mt-6 flex flex-col gap-3">
           <p className="text-sm text-muted-foreground">Posted by</p>
           <Authors authors={res.frontmatter.authors} />

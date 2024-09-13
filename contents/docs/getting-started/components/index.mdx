@@ -1,0 +1,222 @@
+---
+title: Markdown & Custom Components Guide
+description: This section provides an overview of standard markdown components and custom components.
+---
+
+# Markdown Guide:
+
+This guide covers the necessary markdown elements and custom components used in this project.
+
+You can use different headings using the standard markdown like this
+
+```
+## Headings
+# Heading 1
+## Heading 2
+### Heading 3
+```
+
+The result looks like below
+
+## Headings
+
+# Heading 1
+
+## Heading 2
+
+### Heading 3
+
+The Lists can be used like this
+
+```
+## Lists
+### Unordered List
+- Item 1
+  - Nested Item 1.1
+  - Nested Item 1.2
+- Item 2
+### Ordered List
+1. Step 1
+2. Step 2
+   1. Sub-step 2.1
+```
+
+## Lists
+
+### Unordered List
+
+- Item 1
+  - Nested Item 1.1
+  - Nested Item 1.2
+- Item 2
+
+### Ordered List
+
+1. Step 1
+2. Step 2
+   1. Sub-step 2.1
+
+Blockquotes can be used like this
+
+```
+## Blockquotes
+> This is a blockquote. Blockquotes are useful for highlighting quotes or key information.
+```
+
+## Blockquotes
+
+> This is a blockquote. Blockquotes are useful for highlighting quotes or key information.
+> The usage of Code Blocks with line numbers is as follows
+
+````
+## Code Blocks
+Here’s an example of a code block with line numbers:
+```javascript {showLineNumbers=true}
+function helloWorld() {
+  console.log("Hello, world!");
+}```
+````
+
+## Code Blocks
+
+Here’s an example of a code block with line numbers:
+
+```javascript {showLineNumbers=true}
+function helloWorld() {
+  console.log("Hello, world!");
+}
+```
+
+# Custom Components Guide:
+
+# Tabs Component
+
+## Overview
+
+The `Tabs` component is used to organize content into multiple sections, each with its own tab. It's commonly used for displaying different categories of content or settings in a compact and organized manner.
+
+### Features:
+
+- Supports multiple tabs with customizable content.
+- Easy switching between tabs.
+- Customizable active and inactive tab styles.
+
+## Props
+
+| Prop          | Type       | Description                                                   |
+| ------------- | ---------- | ------------------------------------------------------------- |
+| `tabs`        | `array`    | An array of tab objects, each containing a label and content. |
+| `activeTab`   | `number`   | The index of the currently active tab.                        |
+| `onTabChange` | `function` | Callback function triggered when a tab is changed.            |
+| `className`   | `string`   | Optional additional classes for styling the tabs container.   |
+
+## Usage
+
+Here’s an example of how to use the `Tabs` component:
+
+```tsx
+import Tabs from "@/components/UI/Tabs";
+
+const tabs = [
+  { label: "Tab 1", content: "This is the content for tab 1" },
+  { label: "Tab 2", content: "This is the content for tab 2" },
+  { label: "Tab 3", content: "This is the content for tab 3" },
+];
+
+<Tabs
+  tabs={tabs}
+  activeTab={0}
+  onTabChange={(tabIndex) => console.log("Tab changed:", tabIndex)}
+/>;
+```
+
+# Note Component
+
+## Overview
+
+The `Note` component is used to display informational or warning messages in the documentation or UI. It helps to highlight important notes, tips, or warnings for the user.
+
+### Features:
+
+- Customizable for different types of notes (e.g., info, warning, success).
+- Supports rich text or markdown content inside the note.
+- Can be styled to match the theme of the application.
+
+## Props
+
+| Prop        | Type        | Description                                                    |
+| ----------- | ----------- | -------------------------------------------------------------- |
+| `type`      | `string`    | Defines the type of note (e.g., "info", "warning", "success"). |
+| `children`  | `ReactNode` | The content to be displayed inside the note.                   |
+| `className` | `string`    | Optional additional classes for styling the note container.    |
+
+## Usage
+
+Here’s an example of how to use the `Note` component:
+
+```tsx
+import Note from "@/components/Note";
+
+<Note type="info">This is an informational note for the user.</Note>;
+```
+
+# Stepper Component
+
+## Overview
+
+The `Stepper` component is used to break down complex workflows or processes into smaller steps, providing a visual representation of progress. It is ideal for forms, multi-step wizards, or onboarding processes.
+
+### Features:
+
+- Displays multiple steps with optional labels.
+- Can be horizontal or vertical.
+- Supports custom actions for each step (e.g., next, previous).
+
+## Props
+
+| Prop           | Type       | Description                                                             |
+| -------------- | ---------- | ----------------------------------------------------------------------- |
+| `steps`        | `array`    | An array of step objects, each containing a label and optional content. |
+| `currentStep`  | `number`   | The index of the current active step.                                   |
+| `onStepChange` | `function` | Callback function triggered when the step is changed.                   |
+| `className`    | `string`   | Optional additional classes for styling the stepper container.          |
+
+## Usage
+
+Here’s an example of how to use the `Stepper` component:
+
+```tsx
+import Stepper from "@/components/UI/Stepper";
+
+const steps = [
+  { label: "Step 1", content: "This is the content for step 1" },
+  { label: "Step 2", content: "This is the content for step 2" },
+  { label: "Step 3", content: "This is the content for step 3" },
+];
+
+<Stepper
+  steps={steps}
+  currentStep={1}
+  onStepChange={(step) => console.log("Step changed:", step)}
+/>;
+```
+
+# Images
+
+You can easily add images to your documentation using standard markdown syntax:
+
+```
+![Alt Text](path-to-image)
+```
+
+![Alt Text](path-to-image)
+
+# Links
+
+Adding links is straightforward. Use the markdown syntax for links:
+
+```
+[Link Text](https://example.com)
+```
+
+[Link Text](https://example.com)
