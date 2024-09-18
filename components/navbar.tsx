@@ -39,8 +39,8 @@ export const NAVLINKS = [
 
 export function Navbar() {
   return (
-    <nav className="w-full border-b h-16 sticky top-0 z-50 lg:px-4 px-2 backdrop-filter backdrop-blur-xl bg-opacity-5">
-      <div className="sm:p-3 p-1 max-w-[1500px] mx-auto h-full flex items-center justify-between md:gap-2">
+    <nav className="w-full border-b h-16 sticky top-0 z-50 bg-background">
+      <div className="sm:container w-[94vw] mx-auto h-full flex items-center justify-between md:gap-2">
         <div className="flex items-center gap-5">
           <SheetLeftbar />
           <div className="flex items-center gap-6">
@@ -84,8 +84,11 @@ export function Navbar() {
 export function Logo() {
   return (
     <Link href="/" className="flex items-center gap-2.5">
-      <HexagonIcon className="w-7 h-7 text-muted-foreground fill-current" />
-      <h2 className="text-md font-bold">AriaDocs</h2>
+      <HexagonIcon
+        className="w-6 h-6 text-muted-foreground fill-current"
+        strokeWidth={3}
+      />
+      <h2 className="text-lg font-bold font-code">AriaDocs</h2>
     </Link>
   );
 }

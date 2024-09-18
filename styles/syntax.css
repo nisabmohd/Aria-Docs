@@ -1,0 +1,79 @@
+/* Light Mode */
+.keyword {
+    color: #e11d48;
+    /* Red */
+}
+
+.function {
+    color: #0ea5e9;
+    /* Sky Blue */
+}
+
+.punctuation {
+    color: #64748b;
+    /* Slate Gray */
+}
+
+.comment {
+    color: #94a3b8;
+    /* Muted Slate Gray */
+}
+
+.string,
+.constant,
+.annotation,
+.boolean,
+.number {
+    color: #f59e0b;
+    /* Amber */
+}
+
+.tag {
+    color: #ec4899;
+    /* Pink */
+}
+
+.attr-name {
+    color: #16a34a;
+    /* Green */
+}
+
+.attr-value {
+    color: #f97316;
+    /* Orange */
+}
+
+/* Dark Mode */
+.dark .keyword {
+    color: #fb7185;
+    /* Light Red */
+}
+
+.dark .function {
+    color: #38bdf8;
+    /* Sky Blue */
+}
+
+.dark .string,
+.dark .constant,
+.dark .annotation,
+.dark .boolean,
+.dark .number {
+    color: #fbbf24;
+    /* Amber */
+}
+
+.dark .tag {
+    color: #fb7185;
+    /* Soft Pink */
+}
+
+.dark .attr-name {
+    color: #22c55e;
+    /* Green */
+}
+
+.dark .attr-value {
+    color: #fb923c;
+    /* Soft Orange */
+}

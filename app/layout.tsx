@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/components/contexts/theme-provider";
 import { Navbar } from "@/components/navbar";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${GeistSans.variable} ${GeistMono.variable} font-regular`}
+        className={`${GeistSans.variable} ${GeistMono.variable} font-regular antialiased`}
         suppressHydrationWarning
       >
         <ThemeProvider
@@ -31,7 +31,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Navbar />
-          <main className="sm:container mx-auto w-[88vw] h-auto">
+          <main className="sm:container mx-auto w-[90vw] h-auto">
             {children}
           </main>
           <Footer />

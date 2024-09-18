@@ -40,7 +40,7 @@ function BlogCard({
   slug,
 }: BlogMdxFrontmatter & { slug: string }) {
   return (
-    <div className="flex flex-col gap-2 items-start border rounded-md p-5 pt-7">
+    <div className="flex flex-col gap-2 items-start border rounded-md p-5 pt-7 dark:bg-stone-900 bg-stone-50">
       <Link
         href={`/blog/${slug}`}
         className="sm:text-lg text-lg font-semibold -mt-1"

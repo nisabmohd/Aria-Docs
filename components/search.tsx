@@ -49,13 +49,13 @@ export default function Search() {
       >
         <DialogTrigger asChild>
           <div className="relative flex-1 max-w-md cursor-pointer">
-            <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-500 dark:text-neutral-400" />
+            <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-stone-500 dark:text-stone-400" />
             <Input
-              className="md:w-full rounded-md bg-muted border h-9 pl-10 pr-4 text-sm shadow-sm "
+              className="md:w-full rounded-md dark:bg-stone-950/95 bg-stone-50 border h-9 pl-10 pr-0 sm:pr-4 text-sm shadow-sm overflow-ellipsis"
               placeholder="Search documentation..."
               type="search"
             />
-            <div className="sm:flex hidden absolute top-1/2 -translate-y-1/2 right-2 text-xs font-medium font-mono items-center gap-0.5 dark:bg-neutral-700 bg-zinc-200 p-1 rounded-sm">
+            <div className="sm:flex hidden absolute top-1/2 -translate-y-1/2 right-2 text-xs font-medium font-mono items-center gap-0.5 dark:bg-stone-900 bg-stone-200/65 p-1 rounded-sm">
               <CommandIcon className="w-3 h-3" />
               <span>k</span>
             </div>
@@ -89,7 +89,7 @@ export default function Search() {
                   <DialogClose key={item.href} asChild>
                     <Anchor
                       className={cn(
-                        "dark:hover:bg-neutral-900 hover:bg-neutral-100 w-full px-3 rounded-sm text-[15px] flex items-center gap-2.5",
+                        "dark:hover:bg-stone-900 hover:bg-stone-100 w-full px-3 rounded-sm text-[15px] flex items-center gap-2.5",
                         paddingClass
                       )}
                       href={`/docs${item.href}`}
