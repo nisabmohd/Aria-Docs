@@ -100,7 +100,7 @@ export function NavMenu({ isSheet = false }) {
         const Comp = (
           <Anchor
             key={item.title + item.href}
-            activeClassName="text-primary font-semibold"
+            activeClassName="!text-primary md:font-semibold font-medium"
             absolute
             className="flex items-center gap-1 dark:text-stone-300/85 text-stone-800"
             href={item.href}
