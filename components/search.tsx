@@ -1,6 +1,6 @@
 "use client";
 
-import { CommandIcon, FileTextIcon, SearchIcon } from "lucide-react";
+import { CommandIcon, FileIcon, SearchIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
   Dialog,
@@ -61,7 +61,7 @@ export default function Search() {
             </div>
           </div>
         </DialogTrigger>
-        <DialogContent className="p-0 max-w-[650px] sm:top-[38%] top-[45%]">
+        <DialogContent className="p-0 max-w-[700px] sm:top-[38%] top-[45%] !rounded-md">
           <DialogTitle className="sr-only">Search</DialogTitle>
           <DialogHeader>
             <input
@@ -69,7 +69,7 @@ export default function Search() {
               onChange={(e) => setSearchedInput(e.target.value)}
               placeholder="Type something to search..."
               autoFocus
-              className="h-14 px-4 bg-transparent border-b text-[15px] outline-none"
+              className="h-14 px-7 bg-transparent border-b text-[14px] outline-none"
             />
           </DialogHeader>
           {filteredResults.length == 0 && searchedInput && (
@@ -78,7 +78,7 @@ export default function Search() {
               <span className="text-primary">{`"${searchedInput}"`}</span>
             </p>
           )}
-          <ScrollArea className="max-h-[350px]">
+          <ScrollArea className="max-h-[320px]">
             <div className="flex flex-col items-start overflow-y-auto sm:px-3 px-1 pb-4">
               {filteredResults.map((item) => {
                 const level = (item.href.split("/").slice(1).length -
@@ -89,18 +89,18 @@ export default function Search() {
                   <DialogClose key={item.href} asChild>
                     <Anchor
                       className={cn(
-                        "dark:hover:bg-stone-900 hover:bg-stone-100 w-full px-3 rounded-sm text-[15px] flex items-center gap-2.5",
+                        "dark:hover:bg-stone-900 hover:bg-stone-100 w-full px-3 rounded-sm text-sm flex items-center gap-2.5",
                         paddingClass
                       )}
                       href={`/docs${item.href}`}
                     >
                       <div
                         className={cn(
-                          "flex items-center w-fit h-full py-3 gap-1.5",
+                          "flex items-center w-fit h-full py-3 gap-1.5 px-2",
                           level > 1 && "border-l pl-4"
                         )}
                       >
-                        <FileTextIcon className="h-[1.1rem] w-[1.1rem]" />{" "}
+                        <FileIcon className="h-[1.1rem] w-[1.1rem] mr-1" />{" "}
                         {item.title}
                       </div>
                     </Anchor>
