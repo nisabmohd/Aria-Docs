@@ -1,7 +1,8 @@
-import { buttonVariants } from "@/components/ui/button";
-import { BlogMdxFrontmatter, getAllBlogs } from "@/lib/markdown";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Author, BlogMdxFrontmatter, getAllBlogs } from "@/lib/markdown";
 import { formatDate2, stringToDate } from "@/lib/utils";
 import { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -15,8 +16,8 @@ export default async function BlogIndexPage() {
       stringToDate(a.frontmatter.date).getTime()
   );
   return (
-    <div className="w-full flex flex-col gap-1 sm:min-h-[91vh] min-h-[88vh] md:pt-6 pt-2">
-      <div className="mb-6 flex flex-col gap-2 ">
+    <div className="sm:w-[90%] mx-auto flex flex-col gap-1 sm:min-h-[91vh] min-h-[88vh] md:pt-6 pt-2">
+      <div className="mb-7 flex flex-col gap-2 ">
         <h1 className="text-3xl font-extrabold">
           The latest blogs of this product
         </h1>
@@ -24,7 +25,7 @@ export default async function BlogIndexPage() {
           All the latest blogs and news, straight from the team.
         </p>
       </div>
-      <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
+      <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 mb-5">
         {blogs.map((blog) => (
           <BlogCard {...blog.frontmatter} slug={blog.slug} key={blog.slug} />
         ))}
@@ -38,29 +39,58 @@ function BlogCard({
   title,
   description,
   slug,
+  cover,
+  authors,
 }: BlogMdxFrontmatter & { slug: string }) {
   return (
-    <div className="flex flex-col gap-2 items-start border rounded-md p-5 pt-7 dark:bg-stone-900 bg-stone-50">
-      <Link
-        href={`/blog/${slug}`}
-        className="sm:text-lg text-lg font-semibold -mt-1"
-      >
-        {title}
-      </Link>
+    <Link
+      href={`/blog/${slug}`}
+      className="flex flex-col gap-2 items-start border rounded-md p-5 min-h-[400px]"
+    >
+      <h3 className="text-md font-semibold -mt-1">{title}</h3>
+      <div className="w-full">
+        <Image
+          src={cover}
+          alt={title}
+          width={200}
+          height={150}
+          quality={80}
+          className="w-full rounded-md object-cover h-[180px] border"
+        />
+      </div>
       <p className="text-sm text-muted-foreground">{description}</p>
-      <p className="text-[13px] text-muted-foreground mb-1">
-        Published on {formatDate2(date)}
-      </p>
-      <Link
-        href={`/blog/${slug}`}
-        className={buttonVariants({
-          className: "w-full mt-auto",
-          variant: "secondary",
-          size: "sm",
-        })}
-      >
-        Read More
-      </Link>
+      <div className="flex items-center justify-between w-full mt-auto">
+        <p className="text-[13px] text-muted-foreground">{formatDate2(date)}</p>
+        <AvatarGroup users={authors} />
+      </div>
+    </Link>
+  );
+}
+
+function AvatarGroup({ users, max = 4 }: { users: Author[]; max?: number }) {
+  const displayUsers = users.slice(0, max);
+  const remainingUsers = Math.max(users.length - max, 0);
+
+  return (
+    <div className="flex items-center">
+      {displayUsers.map((user, index) => (
+        <Avatar
+          key={user.username}
+          className={`inline-block border-2 w-9 h-9 border-background ${
+            index !== 0 ? "-ml-3" : ""
+          } `}
+        >
+          <AvatarImage src={user.avatar} alt={user.username} />
+          <AvatarFallback>
+            {user.username.slice(0, 2).toUpperCase()}
+          </AvatarFallback>
+        </Avatar>
+      ))}
+      {remainingUsers > 0 && (
+        <Avatar className="-ml-3 inline-block border-2 border-background hover:translate-y-1 transition-transform">
+          <AvatarFallback>+{remainingUsers}</AvatarFallback>
+        </Avatar>
+      )}
     </div>
   );
 }

@@ -79,11 +79,3 @@ Features
 ├── Code copy
 └── Table of content observer highlight
 ```
-
-
-
-<img src="./public/screely-1725177219172.png" />
-<img src="./public/screely-1725177232311.png" />
-<img src="./public/screely-1725177246584.png" />
-<img src="./public/screely-1725177258988.png" />
-<img src="./public/screely-1725177268056.png" />
