@@ -55,7 +55,7 @@ function BlogCard({
           width={400}
           height={150}
           quality={80}
-          className="w-full rounded-md object-cover h-[180px] border opacity-85"
+          className="w-full rounded-md object-cover h-[180px] border"
         />
       </div>
       <p className="text-sm text-muted-foreground">{description}</p>
