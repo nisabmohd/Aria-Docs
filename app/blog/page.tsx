@@ -25,7 +25,7 @@ export default async function BlogIndexPage() {
           All the latest blogs and news, straight from the team.
         </p>
       </div>
-      <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5 mb-5">
+      <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 sm:gap-8 gap-4 mb-5">
         {blogs.map((blog) => (
           <BlogCard {...blog.frontmatter} slug={blog.slug} key={blog.slug} />
         ))}
@@ -52,15 +52,17 @@ function BlogCard({
         <Image
           src={cover}
           alt={title}
-          width={200}
+          width={400}
           height={150}
           quality={80}
-          className="w-full rounded-md object-cover h-[180px] border"
+          className="w-full rounded-md object-cover h-[180px] border opacity-85"
         />
       </div>
       <p className="text-sm text-muted-foreground">{description}</p>
       <div className="flex items-center justify-between w-full mt-auto">
-        <p className="text-[13px] text-muted-foreground">{formatDate2(date)}</p>
+        <p className="text-[13px] text-muted-foreground">
+          Published on {formatDate2(date)}
+        </p>
         <AvatarGroup users={authors} />
       </div>
     </Link>

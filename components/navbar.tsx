@@ -88,7 +88,7 @@ export function Logo() {
         className="w-6 h-6 text-muted-foreground fill-current"
         strokeWidth={3}
       />
-      <h2 className="text-lg font-bold font-code">AriaDocs</h2>
+      <h2 className="text-md font-bold">AriaDocs</h2>
     </Link>
   );
 }
