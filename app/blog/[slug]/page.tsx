@@ -6,6 +6,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { formatDate } from "@/lib/utils";
+import Image from "next/image";
 
 type PageProps = {
   params: { slug: string };
@@ -41,7 +42,7 @@ export default async function BlogPage({ params: { slug } }: PageProps) {
       >
         <ArrowLeftIcon className="w-4 h-4 mr-1.5" /> Back to blog
       </Link>
-      <div className="flex flex-col gap-3 pb-7 w-full border-b mb-4">
+      <div className="flex flex-col gap-3 pb-7 w-full mb-2">
         <p className="text-muted-foreground text-sm">
           {formatDate(res.frontmatter.date)}
         </p>
@@ -54,6 +55,15 @@ export default async function BlogPage({ params: { slug } }: PageProps) {
         </div>
       </div>
       <div className="!w-full">
+        <div className="w-full mb-7">
+          <Image
+            src={res.frontmatter.cover}
+            alt="cover"
+            width={500}
+            height={400}
+            className="w-full h-[400px] rounded-md border object-cover"
+          />
+        </div>
         <Typography>{res.content}</Typography>
       </div>
     </div>
