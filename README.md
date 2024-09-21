@@ -6,7 +6,11 @@ This feature-packed documentation template, built with Next.js, offers a sleek a
 
 <br/>
 
-Here are the alternative versions of the AriaDocs template, each crafted for specific use cases:
+Here are all versions of the AriaDocs template, each crafted for specific use cases:
+
+
+- **Advanced Docs:** A comprehensive template offering extensive features for in-depth documentation needs. Perfect for larger projects that require detailed explanations and advanced configurations.  
+  [Explore the Advanced Docs](https://github.com/nisabmohd/Aria-Docs/tree/master)
 
 - **Lite Version:** A streamlined, no-frills template perfect for straightforward documentation needs.  
   [Explore the Lite Version](https://github.com/nisabmohd/Aria-Docs/tree/minimal-docs)
@@ -17,7 +21,32 @@ Here are the alternative versions of the AriaDocs template, each crafted for spe
 - **i18n Support Version (WIP):** Designed for international audiences, this version will offer comprehensive multilingual support.  
   [Preview the i18n Support](https://github.com/nisabmohd/Aria-Docs/tree/i18n-support)
 
-  
+### Quick Start
+
+You can create a new Ariadocs project using the command:
+
+```bash
+npx create-aria-doc <project-directory>
+```
+
+### Expected Output
+
+When you run the CLI, you can expect an output similar to this:
+
+```
+Creating a new Ariadocs project in /path/to/your/project from the master branch...
+Cloning Master (Full Documentation)...
+Ariadocs project successfully created in /path/to/your/project!
+
+Next steps:
+1. Navigate to your project directory:
+   cd <project-directory>
+2. Install dependencies:
+   npm install
+3. Start the development server:
+   npm run dev
+```
+
 ## Getting Started
 
 First, run the development server:
