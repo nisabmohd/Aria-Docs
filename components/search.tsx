@@ -10,7 +10,6 @@ import {
   DialogClose,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { useEffect, useMemo, useState } from "react";
 import Anchor from "./anchor";
 import { advanceSearch, cn } from "@/lib/utils";
@@ -69,7 +68,7 @@ export default function Search() {
               onChange={(e) => setSearchedInput(e.target.value)}
               placeholder="Type something to search..."
               autoFocus
-              className="h-14 px-7 bg-transparent border-b text-[14px] outline-none"
+              className="h-14 px-6 bg-transparent border-b text-[14px] outline-none"
             />
           </DialogHeader>
           {filteredResults.length == 0 && searchedInput && (
@@ -78,8 +77,8 @@ export default function Search() {
               <span className="text-primary">{`"${searchedInput}"`}</span>
             </p>
           )}
-          <ScrollArea className="max-h-[320px]">
-            <div className="flex flex-col items-start overflow-y-auto sm:px-3 px-1 pb-4">
+          <div className="max-h-[350px] overflow-y-auto">
+            <div className="flex flex-col items-start overflow-y-auto sm:px-2 px-1 pb-4">
               {filteredResults.map((item) => {
                 const level = (item.href.split("/").slice(1).length -
                   1) as keyof typeof paddingMap;
@@ -108,7 +107,7 @@ export default function Search() {
                 );
               })}
             </div>
-          </ScrollArea>
+          </div>
         </DialogContent>
       </Dialog>
     </div>

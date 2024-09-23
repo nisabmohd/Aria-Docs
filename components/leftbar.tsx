@@ -1,4 +1,3 @@
-import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Sheet,
   SheetClose,
@@ -15,10 +14,10 @@ import DocsMenu from "./docs-menu";
 
 export function Leftbar() {
   return (
-    <aside className="md:flex hidden flex-[1] min-w-[230px] sticky top-16 flex-col h-[94.5vh] overflow-y-auto">
-      <ScrollArea className="py-4">
+    <aside className="md:flex hidden flex-[1] min-w-[235px] sticky top-16 flex-col h-[94.5vh] overflow-y-auto">
+      <div className="py-4">
         <DocsMenu />
-      </ScrollArea>
+      </div>
     </aside>
   );
 }
@@ -38,7 +37,7 @@ export function SheetLeftbar() {
             <Logo />
           </SheetClose>
         </SheetHeader>
-        <ScrollArea className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 overflow-y-auto">
           <div className="flex flex-col gap-2.5 mt-3 mx-2 px-5">
             <NavMenu isSheet />
           </div>
@@ -48,7 +47,7 @@ export function SheetLeftbar() {
           <div className="p-6 pb-4 flex gap-2.5">
             <FooterButtons />
           </div>
-        </ScrollArea>
+        </div>
       </SheetContent>
     </Sheet>
   );

@@ -10,11 +10,9 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam iste dolorum te
 
 Before installing our application, make sure you have the following:
 
-- Node.js installed on your machine
 
 <Note title="Remember">
-  Lorem ipsum dolor sit amet consectetur adipisicing elit Numquam iste dolorum
-  tempore consectetur explicabo.
+Node.js installed lets you run JavaScript outside the browser and manage dependencies with npm, essential for frameworks like React and Next.js.
 </Note>
 
 ## Installation Steps
@@ -23,9 +21,34 @@ Before installing our application, make sure you have the following:
 <StepperItem title="Clone the Repository">
 Start by creating a new React project using vite:
 
-```bash
-git clone https://github.com/your-repo/your-project.git
-```
+<Tabs defaultValue="npm" className="pt-5 pb-1">
+  <TabsList className="">
+    <TabsTrigger value="npm">npm</TabsTrigger>
+    <TabsTrigger value="yarn">yarn</TabsTrigger>
+     <TabsTrigger value="bun">bun</TabsTrigger>
+      <TabsTrigger value="pnpm">pnpm</TabsTrigger>
+  </TabsList>
+  <TabsContent value="npm">
+  ```bash
+  npm i react 
+   ```
+   </TabsContent>
+  <TabsContent value="yarn">
+  ```bash
+  yarn add react
+    ```
+  </TabsContent>
+  <TabsContent value="bun">
+  ```bash
+  bun add react 
+   ```
+   </TabsContent>
+  <TabsContent value="pnpm">
+  ```bash
+  pnpm i react
+    ```
+  </TabsContent>
+</Tabs>
 
 </StepperItem>
 <StepperItem title="Navigate to the Project Directory">

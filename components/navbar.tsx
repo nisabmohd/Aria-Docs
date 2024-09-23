@@ -1,10 +1,5 @@
 import { ModeToggle } from "@/components/theme-toggle";
-import {
-  GithubIcon,
-  TwitterIcon,
-  HexagonIcon,
-  MoveUpRightIcon,
-} from "lucide-react";
+import { GithubIcon, TwitterIcon, CommandIcon } from "lucide-react";
 import Link from "next/link";
 import { buttonVariants } from "./ui/button";
 import Search from "./search";
@@ -33,14 +28,13 @@ export const NAVLINKS = [
   {
     title: "Community",
     href: "https://github.com/nisabmohd/Aria-Docs/discussions",
-    external: true,
   },
 ];
 
 export function Navbar() {
   return (
     <nav className="w-full border-b h-16 sticky top-0 z-50 bg-background">
-      <div className="max-w-[1300px] sm:px-0 px-3 mx-auto h-full flex items-center justify-between md:gap-2">
+      <div className="sm:container mx-auto w-[95vw] h-full flex items-center justify-between md:gap-2">
         <div className="flex items-center gap-5">
           <SheetLeftbar />
           <div className="flex items-center gap-6">
@@ -84,10 +78,7 @@ export function Navbar() {
 export function Logo() {
   return (
     <Link href="/" className="flex items-center gap-2.5">
-      <HexagonIcon
-        className="w-6 h-6 text-muted-foreground fill-current"
-        strokeWidth={3}
-      />
+      <CommandIcon className="w-6 h-6 text-muted-foreground" strokeWidth={2} />
       <h2 className="text-md font-bold">AriaDocs</h2>
     </Link>
   );
@@ -105,13 +96,7 @@ export function NavMenu({ isSheet = false }) {
             className="flex items-center gap-1 dark:text-stone-300/85 text-stone-800"
             href={item.href}
           >
-            {item.title}{" "}
-            {item.external && (
-              <MoveUpRightIcon
-                className="w-3 h-3 align-super"
-                strokeWidth={3}
-              />
-            )}
+            {item.title}
           </Anchor>
         );
         return isSheet ? (
