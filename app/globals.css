@@ -88,7 +88,8 @@ pre>code {
 }
 
 .code-line {
-  padding: 0.75px 18px;
+  padding: 0.75px 16px;
+  @apply border-l-2 border-transparent
 }
 
 .line-number::before {
@@ -108,22 +109,12 @@ blockquote>p::before {
 
 
 .highlight-line {
-  @apply dark:bg-stone-900/95;
-  @apply bg-stone-200/90;
+  @apply bg-primary/5 border-l-2 border-primary/30;
 }
 
 
 .rehype-code-title {
-  @apply px-2;
-  @apply -mb-8;
-  @apply w-full;
-  @apply text-sm;
-  @apply pt-1;
-  @apply pb-5;
-  @apply font-normal;
-  @apply tracking-wider;
-  @apply font-medium;
-  font-family: var(--font-code) !important;
+  @apply px-2 -mb-8 w-full text-sm pb-5 font-medium mt-5 font-code;
 }
 
 .highlight-comp>code {
