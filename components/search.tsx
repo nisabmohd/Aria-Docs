@@ -13,6 +13,7 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import Anchor from "./anchor";
 import { advanceSearch, cn } from "@/lib/utils";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function Search() {
   const [searchedInput, setSearchedInput] = useState("");
@@ -50,7 +51,7 @@ export default function Search() {
           <div className="relative flex-1 max-w-md cursor-pointer">
             <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-stone-500 dark:text-stone-400" />
             <Input
-              className="md:w-full rounded-md dark:bg-stone-950/95 bg-stone-50 border h-9 pl-10 pr-0 sm:pr-4 text-sm shadow-sm overflow-ellipsis"
+              className="md:w-full rounded-md dark:bg-background/95 bg-background border h-9 pl-10 pr-0 sm:pr-4 text-sm shadow-sm overflow-ellipsis"
               placeholder="Search documentation..."
               type="search"
             />
@@ -60,7 +61,7 @@ export default function Search() {
             </div>
           </div>
         </DialogTrigger>
-        <DialogContent className="p-0 max-w-[700px] sm:top-[38%] top-[45%] !rounded-md">
+        <DialogContent className="p-0 max-w-[650px] sm:top-[38%] top-[45%] !rounded-md">
           <DialogTitle className="sr-only">Search</DialogTitle>
           <DialogHeader>
             <input
@@ -77,7 +78,7 @@ export default function Search() {
               <span className="text-primary">{`"${searchedInput}"`}</span>
             </p>
           )}
-          <div className="max-h-[350px] overflow-y-auto">
+          <ScrollArea className="max-h-[400px] overflow-y-auto">
             <div className="flex flex-col items-start overflow-y-auto sm:px-2 px-1 pb-4">
               {filteredResults.map((item) => {
                 const level = (item.href.split("/").slice(1).length -
@@ -107,7 +108,7 @@ export default function Search() {
                 );
               })}
             </div>
-          </div>
+          </ScrollArea>
         </DialogContent>
       </Dialog>
     </div>

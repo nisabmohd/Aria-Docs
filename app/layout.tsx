@@ -4,7 +4,7 @@ import { Navbar } from "@/components/navbar";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { Footer } from "@/components/footer";
-import "./globals.css";
+import "@/styles/globals.css";
 
 export const metadata: Metadata = {
   title: "AriaDocs - Template",
