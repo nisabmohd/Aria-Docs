@@ -11,9 +11,7 @@ export const metadata: Metadata = {
 
 export default async function BlogIndexPage() {
   const blogs = (await getAllBlogs()).sort(
-    (a, b) =>
-      stringToDate(b.frontmatter.date).getTime() -
-      stringToDate(a.frontmatter.date).getTime()
+    (a, b) => stringToDate(b.date).getTime() - stringToDate(a.date).getTime()
   );
   return (
     <div className="w-full mx-auto flex flex-col gap-1 sm:min-h-[91vh] min-h-[88vh] pt-2">
@@ -27,7 +25,7 @@ export default async function BlogIndexPage() {
       </div>
       <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 sm:gap-8 gap-4 mb-5">
         {blogs.map((blog) => (
-          <BlogCard {...blog.frontmatter} slug={blog.slug} key={blog.slug} />
+          <BlogCard {...blog} slug={blog.slug} key={blog.slug} />
         ))}
       </div>
     </div>

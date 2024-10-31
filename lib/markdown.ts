@@ -187,24 +187,30 @@ export async function getAllBlogStaticPaths() {
     console.log(err);
   }
 }
-
-// todo refactor
 export async function getAllBlogs() {
   const blogFolder = path.join(process.cwd(), "/contents/blogs/");
   const files = await fs.readdir(blogFolder);
-  return await Promise.all(
+  const uncheckedRes = await Promise.all(
     files.map(async (file) => {
+      console.log(file);
+      if (!file.endsWith(".mdx")) return undefined;
       const filepath = path.join(process.cwd(), `/contents/blogs/${file}`);
       const rawMdx = await fs.readFile(filepath, "utf-8");
       return {
-        ...(await parseMdx<BlogMdxFrontmatter>(rawMdx)),
+        ...justGetFrontmatterFromMD<BlogMdxFrontmatter>(rawMdx),
         slug: file.split(".")[0],
       };
     })
   );
+  return uncheckedRes.filter((it) => !!it);
 }
 
 export async function getBlogForSlug(slug: string) {
-  const blogs = await getAllBlogs();
-  return blogs.find((it) => it.slug == slug);
+  const blogFile = path.join(process.cwd(), "/contents/blogs/", `${slug}.mdx`);
+  try {
+    const rawMdx = await fs.readFile(blogFile, "utf-8");
+    return await parseMdx<BlogMdxFrontmatter>(rawMdx);
+  } catch {
+    return undefined;
+  }
 }
