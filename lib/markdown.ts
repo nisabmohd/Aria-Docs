@@ -8,6 +8,7 @@ import rehypeSlug from "rehype-slug";
 import rehypeCodeTitles from "rehype-code-titles";
 import { page_routes } from "./routes-config";
 import { visit } from "unist-util-visit";
+import matter from "gray-matter";
 
 // custom components imports
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -16,6 +17,7 @@ import Note from "@/components/markdown/note";
 import { Stepper, StepperItem } from "@/components/markdown/stepper";
 import Image from "@/components/markdown/image";
 import Link from "@/components/markdown/link";
+import Outlet from "@/components/markdown/outlet";
 
 // add custom components
 const components = {
@@ -29,6 +31,7 @@ const components = {
   StepperItem,
   img: Image,
   a: Link,
+  Outlet,
 };
 
 // can be used for other pages like blogs, Guides etc
@@ -105,6 +108,15 @@ function sluggify(text: string) {
 
 function getDocsContentPath(slug: string) {
   return path.join(process.cwd(), "/contents/docs/", `${slug}/index.mdx`);
+}
+
+function justGetFrontmatterFromMD<Frontmatter>(rawMd: string): Frontmatter {
+  return matter(rawMd).data as Frontmatter;
+}
+
+// TODO:
+export async function getAllChilds(pathString: string) {
+  const parentPath = path.join(process.cwd(), "/contents/docs/", pathString);
 }
 
 // for copying the code

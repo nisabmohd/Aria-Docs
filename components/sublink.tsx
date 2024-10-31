@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/collapsible";
 import { cn } from "@/lib/utils";
 import { SheetClose } from "@/components/ui/sheet";
-import { Button } from "./ui/button";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
@@ -24,7 +23,7 @@ export default function SubLink({
   const [isOpen, setIsOpen] = useState(level == 0);
 
   useEffect(() => {
-    if (path != href && path.includes(href)) setIsOpen(true);
+    if (path == href || path.includes(href)) setIsOpen(true);
   }, [href, path]);
 
   const Comp = (
@@ -50,28 +49,23 @@ export default function SubLink({
   return (
     <div className="flex flex-col gap-1 w-full">
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-        <div className="flex items-center gap-2">
-          {titleOrLink}
-          <CollapsibleTrigger asChild>
-            <Button
-              className="ml-auto mr-3.5 h-6 w-6"
-              variant="link"
-              size="icon"
-            >
+        <CollapsibleTrigger className="w-full pr-5">
+          <div className="flex items-center justify-between cursor-pointer w-full">
+            {titleOrLink}
+            <span>
               {!isOpen ? (
                 <ChevronRight className="h-[0.9rem] w-[0.9rem]" />
               ) : (
                 <ChevronDown className="h-[0.9rem] w-[0.9rem]" />
               )}
-              <span className="sr-only">Toggle</span>
-            </Button>
-          </CollapsibleTrigger>
-        </div>
+            </span>
+          </div>
+        </CollapsibleTrigger>
         <CollapsibleContent>
           <div
             className={cn(
               "flex flex-col items-start sm:text-sm dark:text-stone-300/85 text-stone-800 ml-0.5 mt-2.5 gap-3",
-              level > 0 && "pl-4 border-l ml-2"
+              level > 0 && "pl-4 border-l ml-1.5"
             )}
           >
             {items?.map((innerLink) => {

@@ -5,17 +5,18 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex sm:min-h-[91vh] min-h-[88vh] flex-col items-center justify-center text-center px-2 py-8">
+    <div className="flex sm:min-h-[92vh] min-h-[85vh] flex-col items-center justify-center text-center px-2 py-8">
       <Link
         href="https://github.com/nisabmohd/Aria-Docs"
         target="_blank"
-        className="mb-5 sm:text-lg flex items-center gap-2 underline underline-offset-4"
+        className="mb-5 sm:text-lg flex items-center gap-2 underline underline-offset-4 sm:-mt-12"
       >
         Follow along on GitHub{" "}
         <MoveUpRightIcon className="w-4 h-4 font-extrabold" />
       </Link>
-      <h1 className="text-3xl font-bold mb-4 sm:text-7xl">
-        An example app built using Next.js and server components.
+      <h1 className="text-3xl font-bold mb-4 sm:text-6xl">
+        Effortlessly build stunning documentation sites with Next.js and server
+        components.
       </h1>
       <p className="mb-8 sm:text-xl max-w-[800px] text-muted-foreground">
         This feature-packed documentation template, built with Next.js, offers a

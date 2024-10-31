@@ -3,69 +3,71 @@ title: Project Structure
 description: This section provides an overview of Project Structure.
 ---
 
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam iste dolorum tempore consectetur explicabo tempora provident quia maxime, molestiae, facilis aperiam et, error illum vel ullam? Quis architecto dolore ullam
+The project is organized into distinct folders for easy navigation and development. In the root directory, you will find the following folders: `app`, `components`, `contents`, `public`, `lib`, and `styles`. Each folder serves a specific purpose, along with important files like `package.json` (for installed dependencies) and `tailwind.config.ts` (for customizing Tailwind CSS).
 
-## Overview
+## Project Structure Overview
 
-Welcome to the `Project Structure` section. Here, you'll find all the information you need to get started with our application.
+### app
 
-## Content
+This folder contains all Next.js application code, including the main layout and file-based routing for the `docs` and `blog` sections.
 
-- **Introduction**: Get to know the basics.
-- **Installation**: Step-by-step guide to set up the application.
-- **Configuration**: Learn how to configure the application.
-- **Examples**: Check out some practical examples.
-- **FAQ**: Frequently Asked Questions.
-
-## Getting Started
-
-### Step 1: Introduction
-
-The `Project Structure` section introduces you to the core concepts and functionalities of our application. It is designed to help you understand the essentials and get started quickly.
-
-### Step 2: Installation
-
-Follow these steps to install the necessary components:
-
-1. **Install Node.js**: Ensure you have Node.js installed.
-2. **Clone the Repository**: Clone our GitHub repository to your local machine.
-   ```bash
-   git clone https://github.com/your-repo/your-project.git
-   ```
-3. **Install Dependencies**: Navigate to the project directory and install dependencies.
-   ```bash
-   cd your-project
-   npm install
-   ```
-
-### Step 3: Configuration
-
-Configure your application by creating a `config.json` file and setting the required parameters.
-
-### Step 4: Examples
-
-Here are some examples to help you get started:
-
-```jsx
-// Basic usage example
-import React from "react";
-import { ExampleComponent } from "your-library";
-
-function App() {
-  return (
-    <div>
-      <ExampleComponent />
-    </div>
-  );
-}
-
-export default App;
+```
+app                       // Main Next.js app
+├── page.tsx             // Hero page
+├── layout.tsx           // Main layout
+├── blog
+│   ├── page.tsx         // Lists all blog posts
+│   └── [slug]
+│       └── page.tsx     // Specific blog post page
+└── docs
+    ├── layout.tsx       // Documentation layout with left panel
+    └── [[...slug]]      // Catch-all route for documentation pages
 ```
 
-### Step 5: FAQ
+### components
 
-Find answers to common questions in our [FAQ section](#).
+This folder contains all reusable components, including ShadCN components, custom Markdown components, and general components.
 
-## Conclusion
+```
+components                  // Reusable components
+├── ui                     // ShadCN components
+├── markdown                // Custom Markdown components
+└── navbar.tsx             // General navigation component
+```
 
-The `Project Structure` section is your starting point for exploring the application. Follow the steps above to get started quickly and easily.
+### styles
+
+This folder contains CSS files, including global styles and additional stylesheets for specific components.
+
+```
+styles                     // CSS files
+├── globals.css            // Global CSS file
+└── syntax.css             // Syntax highlighting styles
+```
+
+### contents
+
+This folder is for all Markdown content used for blogs and documentation.
+
+
+```
+contents                   // Markdown content for blogs and documentation
+├── docs                   // Documentation content
+└── blogs                  // Blog content
+```
+
+### public
+
+This folder holds all publicly accessible files, such as images and videos. Ensure that sensitive content is not placed here, as these files can be accessed directly via URLs.
+
+### lib
+
+This directory contains utility or helper functions, including the logic for parsing Markdown content and the routing configuration for documentation.
+
+```
+lib                        // Utility or helper functions
+├── markdown.ts            // Logic for parsing documentation and blog content
+├── routes-config.ts       // Routing configuration for documentation
+└── utils.tsx              // Helper functions
+```
+

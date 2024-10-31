@@ -1,105 +1,58 @@
 ---
 title: Introduction
-description: This section provides an overview of Introduction.
+description: This section provides an overview of AriaDocs.
 ---
 
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam iste dolorum tempore consectetur explicabo tempora provident quia maxime, molestiae, facilis aperiam et, error illum vel ullam? Quis architecto dolore ullam
+Welcome to **AriaDocs**! This template provides a modern, flexible, and user-friendly foundation for creating engaging documentation. Whether you're building a knowledge base, project docs, or a personal blog, AriaDocs makes it easy to set up and scale.
 
-## Getting Started
 
-To begin using the Documentation Template, follow these simple steps:
-Here are all versions of the AriaDocs template, each crafted for specific use cases:
+##  Open Source Philosophy
 
-- **Advanced Docs:** A comprehensive template offering extensive features for in-depth documentation needs. Perfect for larger projects that require detailed explanations and advanced configurations.  
-  [Explore the Advanced Docs](https://github.com/nisabmohd/Aria-Docs/tree/master)
+AriaDocs is proudly **open-source**! 🎉 We believe in creating an accessible, collaborative platform that thrives on community contributions.
 
-- **Lite Version:** A streamlined, no-frills template perfect for straightforward documentation needs.  
-  [Explore the Lite Version](https://github.com/nisabmohd/Aria-Docs/tree/minimal-docs)
+<Note title="Contribute"> 
+ Interested in helping us improve? Check out our [GitHub repository](https://github.com/your-repo) to get started! From feature suggestions to bug fixes, all contributions are welcome.
+</Note>
 
-- **Version with Versioning:** A powerful option for projects that require historical documentation tracking. Manage multiple versions of your docs effortlessly.  
-  [Check out the Versioning Feature](https://github.com/nisabmohd/Aria-Docs/tree/version_docs)
+## Project Overview
 
-- **i18n Support Version (WIP):** Designed for international audiences, this version will offer comprehensive multilingual support.  
-  [Preview the i18n Support](https://github.com/nisabmohd/Aria-Docs/tree/i18n-support)
+**AriaDocs** is more than just a documentation template. It's a **complete toolkit** designed for modern web development. Key features include:
 
-### Quick Start
+- **Markdown & MDX Support:** Easily write documentation in Markdown, with the option to include interactive components via MDX.
+- **Customizable Themes:** Designed with a minimalist ShadCN-inspired theme that’s easy to style.
+- **SEO-Optimized:** Each page is SEO-ready, ensuring search engines can find and rank your content.
+- **Interactive Code Blocks:** Beautifully styled, language-specific code blocks for an enhanced reading experience.
 
-You can create a new Ariadocs project using the command:
+### Key Features
 
-```bash
-npx create-aria-doc <project-directory>
-```
+| **Feature**                   | **Description**                                          |
+|-------------------------------|----------------------------------------------------------|
+| MDX Support                   | Write interactive documentation with MDX.                |
+| Nested Pages                  | Organize content in a nested, hierarchical structure.    |
+| Blog Section                  | Include a dedicated blog section.                        |
+| Pagination                    | Split content across multiple pages.                     |
+| Syntax Highlighting           | Highlight code for better readability.                   |
+| Code Line Highlighting & Titles | Highlight specific lines with descriptive titles.      |
+| Interactive Code Blocks       | Language-specific and interactive code display.          |
+| Custom Markdown Components             | Embed custom, reusable components in your docs.          |
+| Static Site Generation        | Generate a static, high-performance site.                |
+| SEO-Optimized                 | Structured for optimal search engine indexing.           |
 
-### Expected Output
 
-When you run the CLI, you can expect an output similar to this:
+## Technology & Libraries
 
-```
-Creating a new Ariadocs project in /path/to/your/project from the master branch...
-Cloning Master (Full Documentation)...
-Ariadocs project successfully created in /path/to/your/project!
+AriaDocs leverages cutting-edge technologies to ensure performance and flexibility:
 
-Next steps:
-1. Navigate to your project directory:
-   cd <project-directory>
-2. Install dependencies:
-   npm install
-3. Start the development server:
-   npm run dev
-```
+- **Next.js 14** - The powerful React framework optimized for production.
+- **Tailwind CSS** - Utility-first styling for quick, clean designs.
+- **Shadcn-UI** - Elegant, accessible components for a polished look.
+- **next-mdx-remote** - Enables MDX support for dynamic, interactive Markdown content.
 
-## Blockquotes
 
-Blockquotes are useful for emphasizing key points or quoting external sources:
+## Deploy on Vercel
 
-> "Documentation is a love letter that you write to your future self." - Damian Conway
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Feel free to use blockquotes to highlight important information or quotes relevant to your documentation.
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
-## Code Examples with switch
-
-Here a custom tab component from shadcn ui is used.
-
-<Tabs defaultValue="js" className="pt-5 pb-1">
-  <TabsList className="">
-    <TabsTrigger value="js">Javascript</TabsTrigger>
-    <TabsTrigger value="ts">TypeScript</TabsTrigger>
-  </TabsList>
-  <TabsContent value="js">
-  ```jsx {7} showLineNumbers
-import ThemeProvider from './theme-provider'
- 
-export default function RootLayout({ children }) {
-  return (
-    <html>
-      <body className="container">
-        <ThemeProvider>{children}</ThemeProvider>
-      </body>
-    </html>
-  )}
-````
-  </TabsContent>
-  <TabsContent value="ts">
-```tsx {11} showLineNumbers
-import ThemeProvider from './theme-provider'
- 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
-    <html>
-      <body className="container">
-        <ThemeProvider>{children}</ThemeProvider>
-      </body>
-    </html>
-  )
-}
-```
-  </TabsContent>
-</Tabs>
-
-## Conclusion
-
-Thank you for choosing the Documentation Template for your project. Whether you're documenting software, APIs, or processes, we're here to support you in creating clear and effective documentation. Happy documenting!
+You can deploy your project by clicking [Deploy with Vercel](https://vercel.com/new/clone?repository-url=https://github.com/nisabmohd/Aria-Docs)

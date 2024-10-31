@@ -94,3 +94,10 @@ Features
 ├── Code copy
 └── Table of content observer highlight
 ```
+
+
+## Themes
+
+<img src="./public/halloween.png" alt="halloween" />
+<img src="./public/nebula.png" alt="halloween" />
+<img src="./public/ocean.png" alt="halloween" />

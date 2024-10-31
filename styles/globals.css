@@ -103,11 +103,6 @@ pre>code {
   text-align: right;
 }
 
-blockquote>p::before {
-  display: none;
-}
-
-
 .highlight-line {
   @apply bg-primary/5 border-l-2 border-primary/30;
 }
