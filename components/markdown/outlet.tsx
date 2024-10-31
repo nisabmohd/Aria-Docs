@@ -7,12 +7,7 @@ export default async function Outlet({ path }: { path: string }) {
   return (
     <div className="grid md:grid-cols-2 gap-5">
       {output.map((child) => (
-        <ChildCard
-          href=""
-          description={child.description}
-          title={child.title}
-          key={child.title}
-        />
+        <ChildCard href="" {...child} key={child.title} />
       ))}
     </div>
   );

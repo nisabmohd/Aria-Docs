@@ -7,18 +7,22 @@ export default function Pagination({ pathname }: { pathname: string }) {
   const res = getPreviousNext(pathname);
 
   return (
-    <div className="grid grid-cols-2 sm:flex sm:justify-between flex-grow sm:py-7 py-5 gap-3">
+    <div className="grid grid-cols-2 flex-grow sm:py-7 py-5 gap-3">
       <div>
         {res.prev && (
           <Link
             className={buttonVariants({
               variant: "outline",
-              className: "no-underline w-full flex justify-between pl-2 !py-6 ",
+              className:
+                "no-underline w-full flex flex-col pl-3 !py-8 !items-start",
             })}
             href={`/docs${res.prev.href}`}
           >
-            <ChevronLeftIcon className="w-[1.1rem] h-[1.1rem] mr-1" />
-            <span>{res.prev.title}</span>
+            <span className="flex items-center text-muted-foreground text-xs">
+              <ChevronLeftIcon className="w-[1rem] h-[1rem] mr-1" />
+              Previous
+            </span>
+            <span className="mt-1 ml-1">{res.prev.title}</span>
           </Link>
         )}
       </div>
@@ -27,12 +31,16 @@ export default function Pagination({ pathname }: { pathname: string }) {
           <Link
             className={buttonVariants({
               variant: "outline",
-              className: "no-underline w-full flex justify-between pr-2 !py-6 ",
+              className:
+                "no-underline w-full flex flex-col pr-3 !py-8 !items-end",
             })}
             href={`/docs${res.next.href}`}
           >
-            <span>{res.next.title}</span>
-            <ChevronRightIcon className="w-[1.1rem] h-[1.1rem] ml-1" />
+            <span className="flex items-center text-muted-foreground text-xs">
+              Next
+              <ChevronRightIcon className="w-[1rem] h-[1rem] ml-1" />
+            </span>
+            <span className="mt-1 mr-1">{res.next.title}</span>
           </Link>
         )}
       </div>
