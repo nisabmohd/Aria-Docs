@@ -114,12 +114,38 @@ function justGetFrontmatterFromMD<Frontmatter>(rawMd: string): Frontmatter {
   return matter(rawMd).data as Frontmatter;
 }
 
-// TODO:
 export async function getAllChilds(pathString: string) {
   const parentPath = path.join(process.cwd(), "/contents/docs/", pathString);
+  const dirsAndFiles = await fs.readdir(parentPath);
+  const dirs = dirsAndFiles.filter((it) => !it.includes("."));
+  const res = await Promise.all(
+    dirs.map(async (child) => {
+      const childPath = path.join(
+        process.cwd(),
+        "/contents/docs/",
+        pathString,
+        child
+      );
+      const childDirsAndFiles = await fs.readdir(childPath);
+      const hasIndexFile = childDirsAndFiles.some((it) => it == "index.mdx");
+      if (hasIndexFile) {
+        const childMarkdownContentPath = path.join(
+          process.cwd(),
+          "/contents/docs/",
+          pathString,
+          child,
+          "index.mdx"
+        );
+        const raw = await fs.readFile(childMarkdownContentPath, "utf-8");
+        return justGetFrontmatterFromMD<BaseMdxFrontmatter>(raw);
+      } else return undefined;
+    })
+  );
+  // todo sort
+  return res.filter((it) => !!it);
 }
 
-// for copying the code
+// for copying the code in pre
 const preProcess = () => (tree: any) => {
   visit(tree, (node) => {
     if (node?.type === "element" && node?.tagName === "pre") {
