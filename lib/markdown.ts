@@ -58,7 +58,7 @@ async function parseMdx<Frontmatter>(rawMdx: string) {
 
 // logic for docs
 
-type BaseMdxFrontmatter = {
+export type BaseMdxFrontmatter = {
   title: string;
   description: string;
 };
@@ -114,6 +114,7 @@ function justGetFrontmatterFromMD<Frontmatter>(rawMd: string): Frontmatter {
   return matter(rawMd).data as Frontmatter;
 }
 
+// todo return link as well
 export async function getAllChilds(pathString: string) {
   const parentPath = path.join(process.cwd(), "/contents/docs/", pathString);
   const dirsAndFiles = await fs.readdir(parentPath);
@@ -142,7 +143,7 @@ export async function getAllChilds(pathString: string) {
     })
   );
   // todo sort
-  return res.filter((it) => !!it);
+  return res.filter((it) => !!it) as BaseMdxFrontmatter[];
 }
 
 // for copying the code in pre
@@ -188,6 +189,7 @@ export async function getAllBlogStaticPaths() {
   }
 }
 
+// todo refactor
 export async function getAllBlogs() {
   const blogFolder = path.join(process.cwd(), "/contents/blogs/");
   const files = await fs.readdir(blogFolder);

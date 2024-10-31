@@ -1,4 +1,4 @@
-import { getAllChilds } from "@/lib/markdown";
+import { BaseMdxFrontmatter, getAllChilds } from "@/lib/markdown";
 import Link from "next/link";
 
 export default async function Outlet({ path }: { path: string }) {
@@ -7,13 +7,18 @@ export default async function Outlet({ path }: { path: string }) {
   return (
     <div className="grid md:grid-cols-2 gap-5">
       {output.map((child) => (
-        <ChildCard href="" {...child} key={child.title} />
+        <ChildCard
+          href=""
+          description={child.description}
+          title={child.title}
+          key={child.title}
+        />
       ))}
     </div>
   );
 }
 
-type ChildCardProps = { title: string; description: string; href: string };
+type ChildCardProps = BaseMdxFrontmatter & { href: string };
 
 function ChildCard({ description, href, title }: ChildCardProps) {
   return (
