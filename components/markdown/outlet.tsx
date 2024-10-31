@@ -4,11 +4,11 @@ import Link from "next/link";
 export default async function Outlet({ path }: { path: string }) {
   if (!path) throw new Error("path not provided");
   const output = await getAllChilds(path);
+
   return (
     <div className="grid md:grid-cols-2 gap-5">
       {output.map((child) => (
-        // todo add content href
-        <ChildCard href={"#"} {...child} key={child.title} />
+        <ChildCard {...child} key={child.title} />
       ))}
     </div>
   );

@@ -6,7 +6,7 @@ import rehypePrism from "rehype-prism-plus";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import rehypeCodeTitles from "rehype-code-titles";
-import { page_routes } from "./routes-config";
+import { page_routes, ROUTES } from "./routes-config";
 import { visit } from "unist-util-visit";
 import matter from "gray-matter";
 
@@ -114,36 +114,35 @@ function justGetFrontmatterFromMD<Frontmatter>(rawMd: string): Frontmatter {
   return matter(rawMd).data as Frontmatter;
 }
 
-// todo refactor
 export async function getAllChilds(pathString: string) {
-  const parentPath = path.join(process.cwd(), "/contents/docs/", pathString);
-  const dirsAndFiles = await fs.readdir(parentPath);
-  const dirs = dirsAndFiles.filter((it) => !it.includes("."));
-  const res = await Promise.all(
-    dirs.map(async (child) => {
-      const childPath = path.join(
+  const items = pathString.split("/").filter((it) => it != "");
+  let page_routes_copy = ROUTES;
+
+  let prevHref = "";
+  for (let it of items) {
+    const found = page_routes_copy.find((innerIt) => innerIt.href == `/${it}`);
+    if (!found) break;
+    prevHref += found.href;
+    page_routes_copy = found.items ?? [];
+  }
+  if (!prevHref) return [];
+
+  return await Promise.all(
+    page_routes_copy.map(async (it) => {
+      const totalPath = path.join(
         process.cwd(),
         "/contents/docs/",
-        pathString,
-        child
+        prevHref,
+        it.href,
+        "index.mdx"
       );
-      const childDirsAndFiles = await fs.readdir(childPath);
-      const hasIndexFile = childDirsAndFiles.some((it) => it == "index.mdx");
-      if (hasIndexFile) {
-        const childMarkdownContentPath = path.join(
-          process.cwd(),
-          "/contents/docs/",
-          pathString,
-          child,
-          "index.mdx"
-        );
-        const raw = await fs.readFile(childMarkdownContentPath, "utf-8");
-        return justGetFrontmatterFromMD<BaseMdxFrontmatter>(raw);
-      } else return undefined;
+      const raw = await fs.readFile(totalPath, "utf-8");
+      return {
+        ...justGetFrontmatterFromMD<BaseMdxFrontmatter>(raw),
+        href: `/docs${prevHref}${it.href}`,
+      };
     })
   );
-  // todo sort
-  return res.filter((it) => !!it) as BaseMdxFrontmatter[];
 }
 
 // for copying the code in pre
