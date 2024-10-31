@@ -192,7 +192,6 @@ export async function getAllBlogs() {
   const files = await fs.readdir(blogFolder);
   const uncheckedRes = await Promise.all(
     files.map(async (file) => {
-      console.log(file);
       if (!file.endsWith(".mdx")) return undefined;
       const filepath = path.join(process.cwd(), `/contents/blogs/${file}`);
       const rawMdx = await fs.readFile(filepath, "utf-8");
