@@ -160,7 +160,6 @@ const postProcess = () => (tree: any) => {
   visit(tree, "element", (node) => {
     if (node?.type === "element" && node?.tagName === "pre") {
       node.properties["raw"] = node.raw;
-      // console.log(node);
     }
   });
 };
@@ -201,7 +200,9 @@ export async function getAllBlogs() {
       };
     })
   );
-  return uncheckedRes.filter((it) => !!it);
+  return uncheckedRes.filter((it) => !!it) as (BlogMdxFrontmatter & {
+    slug: string;
+  })[];
 }
 
 export async function getBlogForSlug(slug: string) {
