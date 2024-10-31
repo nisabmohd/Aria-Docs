@@ -70,30 +70,26 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nisabmohd/Aria-Docs)
 
-Got it! Here's a way to present the features in a more structured and visually appealing way using a table:
+## Key Features
 
-
-
-
-## Features
-
-```plaintext
-Features
-├── MDX supported
-├── Nested pages support
-├── Blog section (New)
-├── Syntax highlighting
-├── Table of contents
-├── Pagination
-├── Search
-├── Code line highlight & code title
-├── Static site generation
-├── Custom components
-├── Light mode & dark mode
-├── Code Switcher
-├── Code copy
-└── Table of content observer highlight
-```
+| **Feature**                   | **Description**                                          |
+|-------------------------------|----------------------------------------------------------|
+| MDX Support                   | Write interactive documentation with MDX.                |
+| Nested Pages                  | Organize content in a nested, hierarchical structure.    |
+| Blog Section                  | Include a dedicated blog section.                        |
+| Table of Contents             | Auto-generated TOC for easy navigation.                  |
+| Pagination                    | Split content across multiple pages.                     |
+| Syntax Highlighting           | Highlight code for better readability.                   |
+| Code Line Highlighting & Titles | Highlight specific lines with descriptive titles.      |
+| Interactive Code Blocks       | Language-specific and interactive code display.          |
+| Custom Components             | Embed custom, reusable components in your docs.          |
+| Light & Dark Mode             | Toggle between light and dark themes.                    |
+| Search Functionality          | Quickly find content with a built-in search.             |
+| Code Switcher                 | Switch between code languages or variations.             |
+| Code Copy                     | Copy code blocks with a single click.                    |
+| TOC Observer Highlight        | Highlight active sections in the TOC as you scroll.      |
+| Static Site Generation        | Generate a static, high-performance site.                |
+| SEO-Optimized                 | Structured for optimal search engine indexing.           |
 
 
 ## Themes
