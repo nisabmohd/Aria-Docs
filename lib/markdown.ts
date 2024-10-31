@@ -114,7 +114,7 @@ function justGetFrontmatterFromMD<Frontmatter>(rawMd: string): Frontmatter {
   return matter(rawMd).data as Frontmatter;
 }
 
-// todo return link as well
+// todo refactor
 export async function getAllChilds(pathString: string) {
   const parentPath = path.join(process.cwd(), "/contents/docs/", pathString);
   const dirsAndFiles = await fs.readdir(parentPath);

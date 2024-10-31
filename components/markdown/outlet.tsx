@@ -7,7 +7,8 @@ export default async function Outlet({ path }: { path: string }) {
   return (
     <div className="grid md:grid-cols-2 gap-5">
       {output.map((child) => (
-        <ChildCard href="" {...child} key={child.title} />
+        // todo add content href
+        <ChildCard href={"#"} {...child} key={child.title} />
       ))}
     </div>
   );
@@ -19,7 +20,7 @@ function ChildCard({ description, href, title }: ChildCardProps) {
   return (
     <Link
       href={href}
-      className="border rounded-md px-6 no-underline flex flex-col py-5 gap-0.5"
+      className="border rounded-md p-4 no-underline flex flex-col gap-0.5"
     >
       <h4 className="!my-0">{title}</h4>
       <p className="text-sm text-muted-foreground !my-0">{description}</p>
