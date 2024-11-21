@@ -1,5 +1,9 @@
 @import url("./syntax.css");
 
+:root {
+  font-variant-ligatures: none;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -81,7 +85,7 @@ pre {
   overflow-x: auto;
 }
 
-pre > code {
+pre>code {
   display: grid;
   max-width: inherit !important;
   padding: 14px 0 !important;
@@ -111,6 +115,6 @@ pre > code {
   @apply px-2 -mb-8 w-full text-sm pb-5 font-medium mt-5 font-code;
 }
 
-.highlight-comp > code {
+.highlight-comp>code {
   background-color: transparent !important;
 }

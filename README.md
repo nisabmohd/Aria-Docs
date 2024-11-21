@@ -42,7 +42,8 @@ Next steps:
 1. Navigate to your project directory:
    cd <project-directory>
 2. Install dependencies:
-   npm install
+   // To support React 19, package maintainers will need to test and update their packages to include React 19 as a peer dependency. This is already in progress.
+   npm install --force 
 3. Start the development server:
    npm run dev
 ```
