@@ -25,7 +25,7 @@ Here are all versions of the AriaDocs template, each crafted for specific use ca
 
 You can create a new Ariadocs project using the command:
 
-```bash
+```plaintext
 npx create-aria-doc <project-directory>
 ```
 
@@ -51,7 +51,7 @@ Next steps:
 
 First, run the development server:
 
-```bash
+```plaintext
 npm run dev
 # or
 yarn dev

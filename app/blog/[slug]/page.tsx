@@ -9,10 +9,16 @@ import { formatDate } from "@/lib/utils";
 import Image from "next/image";
 
 type PageProps = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
-export async function generateMetadata({ params: { slug } }: PageProps) {
+export async function generateMetadata(props: PageProps) {
+  const params = await props.params;
+
+  const {
+    slug
+  } = params;
+
   const res = await getBlogForSlug(slug);
   if (!res) return null;
   const { frontmatter } = res;
@@ -28,7 +34,13 @@ export async function generateStaticParams() {
   return val.map((it) => ({ slug: it }));
 }
 
-export default async function BlogPage({ params: { slug } }: PageProps) {
+export default async function BlogPage(props: PageProps) {
+  const params = await props.params;
+
+  const {
+    slug
+  } = params;
+
   const res = await getBlogForSlug(slug);
   if (!res) notFound();
   return (

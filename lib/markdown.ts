@@ -119,7 +119,7 @@ export async function getAllChilds(pathString: string) {
   let page_routes_copy = ROUTES;
 
   let prevHref = "";
-  for (let it of items) {
+  for (const it of items) {
     const found = page_routes_copy.find((innerIt) => innerIt.href == `/${it}`);
     if (!found) break;
     prevHref += found.href;
@@ -134,18 +134,19 @@ export async function getAllChilds(pathString: string) {
         "/contents/docs/",
         prevHref,
         it.href,
-        "index.mdx"
+        "index.mdx",
       );
       const raw = await fs.readFile(totalPath, "utf-8");
       return {
         ...justGetFrontmatterFromMD<BaseMdxFrontmatter>(raw),
         href: `/docs${prevHref}${it.href}`,
       };
-    })
+    }),
   );
 }
 
 // for copying the code in pre
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const preProcess = () => (tree: any) => {
   visit(tree, (node) => {
     if (node?.type === "element" && node?.tagName === "pre") {
@@ -156,6 +157,7 @@ const preProcess = () => (tree: any) => {
   });
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const postProcess = () => (tree: any) => {
   visit(tree, "element", (node) => {
     if (node?.type === "element" && node?.tagName === "pre") {
@@ -198,7 +200,7 @@ export async function getAllBlogs() {
         ...justGetFrontmatterFromMD<BlogMdxFrontmatter>(rawMdx),
         slug: file.split(".")[0],
       };
-    })
+    }),
   );
   return uncheckedRes.filter((it) => !!it) as (BlogMdxFrontmatter & {
     slug: string;
