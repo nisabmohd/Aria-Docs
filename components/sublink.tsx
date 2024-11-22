@@ -27,7 +27,10 @@ export default function SubLink({
   }, [href, path]);
 
   const Comp = (
-    <Anchor activeClassName="text-primary font-medium" href={href}>
+    <Anchor
+      activeClassName="text-primary dark:font-medium font-semibold"
+      href={href}
+    >
       {title}
     </Anchor>
   );
