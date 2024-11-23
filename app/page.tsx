@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex sm:min-h-[92vh] min-h-[85vh] flex-col items-center justify-center text-center px-2 py-8">
+    <div className="flex sm:min-h-[85.5vh] min-h-[85vh] flex-col items-center justify-center text-center px-2 sm:py-8 py-12">
       <Link
         href="https://github.com/nisabmohd/Aria-Docs"
         target="_blank"
@@ -41,8 +41,8 @@ export default function Home() {
           Read Blog
         </Link>
       </div>
-      <span className="flex flex-row items-start sm:gap-2 gap-0.5 text-muted-foreground text-md mt-7 -mb-12 max-[800px]:mb-12 font-code text-base font-medium">
-        <TerminalSquareIcon className="w-5 h-5 mr-1 mt-0.5" />
+      <span className="flex flex-row items-start sm:gap-2 gap-0.5 text-muted-foreground text-md mt-7 -mb-12 max-[800px]:mb-12 font-code sm:text-base text-sm font-medium">
+        <TerminalSquareIcon className="w-5 h-5 sm:mr-1 mt-0.5" />
         {"npx create-aria-doc <project-directory>"}
       </span>
     </div>
