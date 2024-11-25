@@ -48,10 +48,10 @@ export default function TocObserver({ data }: Props) {
 
   return (
     <div className="flex flex-col gap-2.5 text-sm dark:text-stone-300/85 text-stone-800 ml-0.5">
-      {data.map(({ href, level, text }) => {
+      {data.map(({ href, level, text }, index) => {
         return (
           <Link
-            key={href}
+            key={href + text + level + index}
             href={href}
             className={clsx({
               "pl-0": level == 2,
