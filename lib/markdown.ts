@@ -6,7 +6,7 @@ import rehypePrism from "rehype-prism-plus";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import rehypeCodeTitles from "rehype-code-titles";
-import { page_routes, ROUTES } from "./routes-config";
+import { Docs_page_routes, Example_page_routes, ROUTES } from "./routes-config";
 import { visit } from "unist-util-visit";
 import matter from "gray-matter";
 
@@ -72,6 +72,15 @@ export async function getDocsForSlug(slug: string) {
     console.log(err);
   }
 }
+export async function getExampleForSlug(slug: string) {
+  try {
+    const contentPath = getExampleContentPath(slug);
+    const rawMdx = await fs.readFile(contentPath, "utf-8");
+    return await parseMdx<BaseMdxFrontmatter>(rawMdx);
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 export async function getDocsTocs(slug: string) {
   const contentPath = getDocsContentPath(slug);
@@ -94,10 +103,17 @@ export async function getDocsTocs(slug: string) {
 }
 
 export function getPreviousNext(path: string) {
-  const index = page_routes.findIndex(({ href }) => href == `/${path}`);
+  const index = Docs_page_routes.findIndex(({ href }) => href == `/${path}`);
   return {
-    prev: page_routes[index - 1],
-    next: page_routes[index + 1],
+    prev: Docs_page_routes[index - 1],
+    next: Docs_page_routes[index + 1],
+  };
+}
+export function getExamplePreviousNext(path: string) {
+  const index = Example_page_routes.findIndex(({ href }) => href == `/${path}`);
+  return {
+    prev: Example_page_routes[index - 1],
+    next: Example_page_routes[index + 1],
   };
 }
 
@@ -108,6 +124,9 @@ function sluggify(text: string) {
 
 function getDocsContentPath(slug: string) {
   return path.join(process.cwd(), "/contents/docs/", `${slug}/index.mdx`);
+}
+function getExampleContentPath(slug: string) {
+  return path.join(process.cwd(), "/contents/examples/", `${slug}/index.mdx`);
 }
 
 function justGetFrontmatterFromMD<Frontmatter>(rawMd: string): Frontmatter {
@@ -134,14 +153,14 @@ export async function getAllChilds(pathString: string) {
         "/contents/docs/",
         prevHref,
         it.href,
-        "index.mdx",
+        "index.mdx"
       );
       const raw = await fs.readFile(totalPath, "utf-8");
       return {
         ...justGetFrontmatterFromMD<BaseMdxFrontmatter>(raw),
         href: `/docs${prevHref}${it.href}`,
       };
-    }),
+    })
   );
 }
 
@@ -200,7 +219,7 @@ export async function getAllBlogs() {
         ...justGetFrontmatterFromMD<BlogMdxFrontmatter>(rawMdx),
         slug: file.split(".")[0],
       };
-    }),
+    })
   );
   return uncheckedRes.filter((it) => !!it) as (BlogMdxFrontmatter & {
     slug: string;

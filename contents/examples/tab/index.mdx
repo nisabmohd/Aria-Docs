@@ -1,0 +1,95 @@
+---
+title: Tabs
+description: This section previews the Tabs component with a Fruits and Vegetables example.
+---
+
+The `Tabs` component allows you to organize content into multiple sections, enabling users to switch between them easily. This is particularly useful for displaying related content in a compact manner.
+
+## Preview
+
+<Tabs defaultValue="fruits" className="pt-5 pb-1">
+  <TabsList>
+    <TabsTrigger value="fruits">Fruits</TabsTrigger>
+    <TabsTrigger value="vegetables">Vegetables</TabsTrigger>
+  </TabsList>
+  <TabsContent value="fruits">
+    <ul>
+      <li>
+        <strong>Apple</strong>: A sweet, edible fruit produced by an apple tree.
+      </li>
+      <li>
+        <strong>Banana</strong>: A long, curved fruit that grows in clusters and
+        has soft pulpy flesh.
+      </li>
+      <li>
+        <strong>Orange</strong>: A citrus fruit with a tough skin and juicy,
+        segmented flesh.
+      </li>
+    </ul>
+  </TabsContent>
+  <TabsContent value="vegetables">
+    <ul>
+      <li>
+        <strong>Carrot</strong>: A root vegetable, usually orange in color, that
+        is crunchy and sweet.
+      </li>
+      <li>
+        <strong>Broccoli</strong>: A green vegetable that resembles a small
+        tree, rich in vitamins.
+      </li>
+      <li>
+        <strong>Spinach</strong>: A leafy green vegetable known for its high
+        iron content.
+      </li>
+    </ul>
+  </TabsContent>
+</Tabs>
+
+## Props
+
+| Prop           | Type     | Default | Description                                            |
+| -------------- | -------- | ------- | ------------------------------------------------------ |
+| `defaultValue` | `string` | `null`  | The value of the tab that is selected by default.      |
+| `className`    | `string` | `""`    | Additional CSS classes for styling the Tabs component. |
+
+## Code
+
+```jsx
+<Tabs defaultValue="fruits" className="pt-5 pb-1">
+  <TabsList>
+    <TabsTrigger value="fruits">Fruits</TabsTrigger>
+    <TabsTrigger value="vegetables">Vegetables</TabsTrigger>
+  </TabsList>
+  <TabsContent value="fruits">
+    <ul>
+      <li>
+        <strong>Apple</strong>: A sweet, edible fruit produced by an apple tree.
+      </li>
+      <li>
+        <strong>Banana</strong>: A long, curved fruit that grows in clusters and
+        has soft pulpy flesh.
+      </li>
+      <li>
+        <strong>Orange</strong>: A citrus fruit with a tough skin and juicy,
+        segmented flesh.
+      </li>
+    </ul>
+  </TabsContent>
+  <TabsContent value="vegetables">
+    <ul>
+      <li>
+        <strong>Carrot</strong>: A root vegetable, usually orange in color, that
+        is crunchy and sweet.
+      </li>
+      <li>
+        <strong>Broccoli</strong>: A green vegetable that resembles a small
+        tree, rich in vitamins.
+      </li>
+      <li>
+        <strong>Spinach</strong>: A leafy green vegetable known for its high
+        iron content.
+      </li>
+    </ul>
+  </TabsContent>
+</Tabs>
+```

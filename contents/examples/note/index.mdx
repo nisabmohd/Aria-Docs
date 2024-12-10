@@ -1,0 +1,48 @@
+---
+title: Note
+description: This section previews the Note component in a user guide context.
+---
+
+The `Note` component allows you to display various types of messages such as tips, important reminders, or alerts in a user guide. Each type is styled to highlight the significance of the information.
+
+## Preview
+
+<Note type="note" title="Getting Started">
+  Start by setting up your account and exploring the dashboard for the best
+  experience.
+</Note>
+<Note type="danger" title="Important">
+  Do not share your account credentials with anyone to ensure your data remains
+  secure.
+</Note>
+<Note type="warning" title="Backup Reminder">
+  Make sure to back up your data regularly to avoid potential data loss.
+</Note>
+<Note type="success" title="Account Setup Complete">
+  Congratulations! Your account setup is complete, and you're ready to start
+  using the platform.
+</Note>
+
+## Props
+
+| Prop    | Type                                           | Default | Description                              |
+| ------- | ---------------------------------------------- | ------- | ---------------------------------------- |
+| `title` | `string`                                       | "Note"  | Sets the title of the note.              |
+| `type`  | `"note"`, `"danger"`, `"warning"`, `"success"` | "note"  | Determines the visual style of the note. |
+
+## Code
+
+```jsx
+<Note type="note" title="Getting Started">
+  Start by setting up your account and exploring the dashboard for the best experience.
+</Note>
+<Note type="danger" title="Important">
+  Do not share your account credentials with anyone to ensure your data remains secure.
+</Note>
+<Note type="warning" title="Backup Reminder">
+  Make sure to back up your data regularly to avoid potential data loss.
+</Note>
+<Note type="success" title="Account Setup Complete">
+  Congratulations! Your account setup is complete, and you're ready to start using the platform.
+</Note>
+```

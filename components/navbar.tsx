@@ -5,13 +5,13 @@ import { buttonVariants } from "./ui/button";
 import Search from "./search";
 import Anchor from "./anchor";
 import { SheetLeftbar } from "./leftbar";
-import { page_routes } from "@/lib/routes-config";
+import { Docs_page_routes, Example_page_routes } from "@/lib/routes-config";
 import { SheetClose } from "@/components/ui/sheet";
 
 export const NAVLINKS = [
   {
     title: "Documentation",
-    href: `/docs${page_routes[0].href}`,
+    href: `/docs${Docs_page_routes[0].href}`,
   },
   {
     title: "Blog",
@@ -19,7 +19,7 @@ export const NAVLINKS = [
   },
   {
     title: "Examples",
-    href: "#",
+    href: `/examples${Example_page_routes[0].href}`,
   },
   {
     title: "Guides",
