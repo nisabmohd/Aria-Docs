@@ -5,14 +5,14 @@ import { Space_Mono, Space_Grotesk } from "next/font/google";
 import { Footer } from "@/components/footer";
 import "@/styles/globals.css";
 
-const GeistSans = Space_Grotesk({
+const sansFont = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-geist-sans",
   display: "swap",
   weight: "400",
 });
 
-const GeistMono = Space_Mono({
+const monoFont = Space_Mono({
   subsets: ["latin"],
   variable: "--font-geist-mono",
   display: "swap",
@@ -34,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${GeistSans.variable} ${GeistMono.variable} font-regular antialiased tracking-wide`}
+        className={`${sansFont.variable} ${monoFont.variable} font-regular antialiased tracking-wide`}
         suppressHydrationWarning
       >
         <ThemeProvider
