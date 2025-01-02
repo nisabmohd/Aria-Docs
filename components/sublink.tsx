@@ -24,7 +24,7 @@ export default function SubLink({
   const [isOpen, setIsOpen] = useState(level == 0);
 
   const Comp = (
-    <Anchor activeClassName="text-primary font-semibold" href={href}>
+    <Anchor activeClassName="text-primary font-medium" href={href}>
       {title}
     </Anchor>
   );
@@ -36,7 +36,7 @@ export default function SubLink({
       Comp
     )
   ) : (
-    <h4 className="font-semibold sm:text-sm text-primary">{title}</h4>
+    <h4 className="font-medium sm:text-sm">{title}</h4>
   );
 
   if (!items) {
@@ -50,7 +50,7 @@ export default function SubLink({
           {titleOrLink}
           <CollapsibleTrigger asChild>
             <Button
-              className="ml-auto mr-3.5 h-6 w-6"
+              className="ml-auto mr-3.5 h-6 w-6 text-foreground"
               variant="link"
               size="icon"
             >

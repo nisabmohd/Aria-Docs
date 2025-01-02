@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div className="flex sm:min-h-[91vh] min-h-[88vh] flex-col items-center justify-center text-center px-2 py-8">
       <h1 className="text-5xl font-bold mb-4 sm:text-7xl">
-        Aria Docs <span className="text-red-700">Lite</span>{" "}
+        Aria Docs <span className="text-primary">Lite</span>{" "}
       </h1>
       <h1 className="text-3xl font-bold mb-4 sm:text-5xl">
         A minimal version of AriaDocs

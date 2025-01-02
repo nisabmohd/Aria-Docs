@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/navbar";
 import { Space_Mono, Space_Grotesk } from "next/font/google";
-import "./globals.css";
+import "@/styles/globals.css";
 
 const regularFont = Space_Grotesk({
   subsets: ["latin"],
