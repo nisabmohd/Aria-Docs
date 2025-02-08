@@ -1,0 +1,69 @@
+{
+    "metadata": {
+        "title": "AriaDocs - テンプレート",
+        "description": "Next.jsで作成されたこの包括的なドキュメントテンプレートは、オープンソースで提供され、洗練されたレスポンシブデザインを備え、あらゆるプロジェクトのドキュメント要件に対応します。"
+    },
+    "home": {
+        "follow_github": "GitHubでフォロー",
+        "main_header": "Next.jsとサーバーコンポーネントで簡単に魅力的なドキュメントサイトを構築。",
+        "sub_header": "Next.jsで構築されたこの多機能なドキュメントテンプレートは、洗練されたレスポンシブデザインを提供し、あらゆるプロジェクトのドキュメントに最適です。",
+        "get_started": "始める",
+        "read_blog": "ブログを読む",
+        "name": "AriaDocs"
+    },
+    "footer": {
+        "built_by": "作成者",
+        "source_code_available": "ソースコードは以下で利用可能",
+        "deploy": "デプロイ",
+        "sponsor": "スポンサー"
+    },
+    "navbar": {
+        "links": {
+            "documentation": "ドキュメント",
+            "blog": "ブログ",
+            "examples": "サンプル",
+            "guides": "ガイド",
+            "community": "コミュニティ"
+        },
+        "search": {
+            "search_documentation": "ドキュメントを検索...",
+            "no_results_found": "該当する結果が見つかりません",
+            "type_something": "検索する内容を入力..."
+        },
+        "theme": {
+            "light": "ライト",
+            "dark": "ダーク",
+            "system": "システム"
+        }
+    },
+    "docs": {
+        "on_this_page": "このページについて",
+        "next": "次へ",
+        "previous": "前へ"
+    },
+    "not_found": {
+        "404": "404",
+        "page_not_found": "ページが見つかりません",
+        "sub_text": "おっと！お探しのページは存在しません。",
+        "back_to_homepage": "ホームページへ戻る"
+    },
+    "leftbar": {
+        "getting_started": "使い方",
+        "introduction": "イントロダクション",
+        "installation": "インストール"
+    },
+    "blog": {
+        "title": "この製品の最新ブログ",
+        "sub_title": "最新のブログやニュースをチームから直接お届けします。",
+        "published_on": "公開日",
+        "back_to_blog": "ブログへ戻る",
+        "posted_by": "投稿者"
+    },
+    "error": {
+        "oops": "おっと！",
+        "something_went_wrong": "何かがうまくいきませんでした。",
+        "sub_text": "申し訳ありませんが、リクエストの処理中にエラーが発生しました。",
+        "reload_page": "ページを再読み込み",
+        "back_to_homepage": "ホームページへ戻る"
+    }
+}

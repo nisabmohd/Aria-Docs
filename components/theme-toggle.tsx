@@ -11,9 +11,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Dictionary } from "@/lib/dictionaries";
+import { useDictionary } from "./contexts/dict-provider";
 
-export function ModeToggle() {
+export function ModeToggle({}: { dict: Dictionary }) {
   const { setTheme } = useTheme();
+  const dict = useDictionary();
 
   return (
     <DropdownMenu>
@@ -26,13 +29,13 @@ export function ModeToggle() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => setTheme("light")}>
-          Light
+          {dict.navbar.theme.light}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("dark")}>
-          Dark
+          {dict.navbar.theme.dark}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("system")}>
-          System
+          {dict.navbar.theme.system}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -9,6 +9,7 @@ import rehypeCodeTitles from "rehype-code-titles";
 import { page_routes, ROUTES } from "./routes-config";
 import { visit } from "unist-util-visit";
 import matter from "gray-matter";
+import { Locale } from "./locale";
 
 // custom components imports
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -102,8 +103,12 @@ export function getPreviousNext(path: string) {
 }
 
 function sluggify(text: string) {
-  const slug = text.toLowerCase().replace(/\s+/g, "-");
-  return slug.replace(/[^a-z0-9-]/g, "");
+  return text
+    .normalize("NFKC") // Normalize Unicode (important for consistency)
+    .toLowerCase()
+    .trim()
+    .replace(/[\s]+/g, "-") // Replace spaces with hyphens
+    .replace(/[!\"#$%&'()*+,./:;<=>?@[\\\]^_`{|}~]/g, ""); // Remove punctuation
 }
 
 function getDocsContentPath(slug: string) {
@@ -179,22 +184,26 @@ export type BlogMdxFrontmatter = BaseMdxFrontmatter & {
   cover: string;
 };
 
-export async function getAllBlogStaticPaths() {
+export async function getAllBlogStaticPaths(lang: Locale) {
   try {
-    const blogFolder = path.join(process.cwd(), "/contents/blogs/");
+    const blogFolder = path.join(process.cwd(), `/contents/blogs/${lang}`);
     const res = await fs.readdir(blogFolder);
     return res.map((file) => file.split(".")[0]);
   } catch (err) {
     console.log(err);
   }
 }
-export async function getAllBlogs() {
-  const blogFolder = path.join(process.cwd(), "/contents/blogs/");
+
+export async function getAllBlogs(lang: Locale) {
+  const blogFolder = path.join(process.cwd(), `/contents/blogs/${lang}`);
   const files = await fs.readdir(blogFolder);
   const uncheckedRes = await Promise.all(
     files.map(async (file) => {
       if (!file.endsWith(".mdx")) return undefined;
-      const filepath = path.join(process.cwd(), `/contents/blogs/${file}`);
+      const filepath = path.join(
+        process.cwd(),
+        `/contents/blogs/${lang}/${file}`,
+      );
       const rawMdx = await fs.readFile(filepath, "utf-8");
       return {
         ...justGetFrontmatterFromMD<BlogMdxFrontmatter>(rawMdx),
@@ -207,8 +216,12 @@ export async function getAllBlogs() {
   })[];
 }
 
-export async function getBlogForSlug(slug: string) {
-  const blogFile = path.join(process.cwd(), "/contents/blogs/", `${slug}.mdx`);
+export async function getBlogForSlug(slug: string, lang: Locale) {
+  const blogFile = path.join(
+    process.cwd(),
+    "/contents/blogs/",
+    `${lang}/${slug}.mdx`,
+  );
   try {
     const rawMdx = await fs.readFile(blogFile, "utf-8");
     return await parseMdx<BlogMdxFrontmatter>(rawMdx);

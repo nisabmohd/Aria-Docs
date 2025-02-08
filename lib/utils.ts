@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { EachRoute, ROUTES } from "./routes-config";
+import { Dictionary } from "./dictionaries";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -8,28 +9,35 @@ export function cn(...inputs: ClassValue[]) {
 
 export function helperSearch(
   query: string,
+  dict: Dictionary,
   node: EachRoute,
   prefix: string,
   currenLevel: number,
-  maxLevel?: number
+  maxLevel?: number,
 ) {
   const res: EachRoute[] = [];
   let parentHas = false;
 
   const nextLink = `${prefix}${node.href}`;
-  if (!node.noLink && node.title.toLowerCase().includes(query.toLowerCase())) {
+
+  if (
+    !node.noLink &&
+    dict.leftbar[node.title as keyof typeof dict.leftbar].toLowerCase()
+      .includes(query.toLowerCase())
+  ) {
     res.push({ ...node, items: undefined, href: nextLink });
     parentHas = true;
   }
   const goNext = maxLevel ? currenLevel < maxLevel : true;
-  if (goNext)
+  if (goNext) {
     node.items?.forEach((item) => {
       const innerRes = helperSearch(
         query,
+        dict,
         item,
         nextLink,
         currenLevel + 1,
-        maxLevel
+        maxLevel,
       );
       if (!!innerRes.length && !parentHas && !node.noLink) {
         res.push({ ...node, items: undefined, href: nextLink });
@@ -37,12 +45,13 @@ export function helperSearch(
       }
       res.push(...innerRes);
     });
+  }
   return res;
 }
 
-export function advanceSearch(query: string) {
+export function advanceSearch(query: string, dict: Dictionary) {
   return ROUTES.map((node) =>
-    helperSearch(query, node, "", 1, query.length == 0 ? 2 : undefined)
+    helperSearch(query, dict, node, "", 1, query.length == 0 ? 2 : undefined)
   ).flat();
 }
 

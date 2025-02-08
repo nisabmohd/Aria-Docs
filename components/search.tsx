@@ -11,11 +11,12 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useEffect, useMemo, useState } from "react";
-import Anchor from "./anchor";
 import { advanceSearch, cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Dictionary } from "@/lib/dictionaries";
+import LangLink from "./lang-link";
 
-export default function Search() {
+export default function Search({ dict }: { dict: Dictionary }) {
   const [searchedInput, setSearchedInput] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
@@ -34,8 +35,8 @@ export default function Search() {
   }, []);
 
   const filteredResults = useMemo(
-    () => advanceSearch(searchedInput.trim()),
-    [searchedInput]
+    () => advanceSearch(searchedInput.trim(), dict),
+    [searchedInput, dict]
   );
 
   return (
@@ -52,7 +53,7 @@ export default function Search() {
             <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-stone-500 dark:text-stone-400" />
             <Input
               className="md:w-full rounded-md dark:bg-background/95 bg-background border h-9 pl-10 pr-0 sm:pr-7 text-sm shadow-sm overflow-ellipsis"
-              placeholder="Search documentation..."
+              placeholder={dict.navbar.search.search_documentation}
               type="search"
             />
             <div className="sm:flex hidden absolute top-1/2 -translate-y-1/2 right-2 text-xs font-medium font-mono items-center gap-0.5 dark:bg-stone-900 bg-stone-200/65 p-1 rounded-sm">
@@ -67,14 +68,14 @@ export default function Search() {
             <input
               value={searchedInput}
               onChange={(e) => setSearchedInput(e.target.value)}
-              placeholder="Type something to search..."
+              placeholder={dict.navbar.search.type_something}
               autoFocus
               className="h-14 px-6 bg-transparent border-b text-[14px] outline-none"
             />
           </DialogHeader>
           {filteredResults.length == 0 && searchedInput && (
             <p className="text-muted-foreground mx-auto mt-2 text-sm">
-              No results found for{" "}
+              {dict.navbar.search.no_results_found}{" "}
               <span className="text-primary">{`"${searchedInput}"`}</span>
             </p>
           )}
@@ -87,7 +88,7 @@ export default function Search() {
 
                 return (
                   <DialogClose key={item.href} asChild>
-                    <Anchor
+                    <LangLink
                       className={cn(
                         "dark:hover:bg-stone-900 hover:bg-stone-100 w-full px-3 rounded-sm text-sm flex items-center gap-2.5",
                         paddingClass
@@ -101,9 +102,9 @@ export default function Search() {
                         )}
                       >
                         <FileIcon className="h-[1.1rem] w-[1.1rem] mr-1" />{" "}
-                        {item.title}
+                        {dict.leftbar[item.title as keyof typeof dict.leftbar]}
                       </div>
-                    </Anchor>
+                    </LangLink>
                   </DialogClose>
                 );
               })}

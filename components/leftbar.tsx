@@ -12,6 +12,7 @@ import { FooterButtons } from "./footer";
 import { DialogTitle } from "./ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import DocsMenu from "./docs-menu";
+import { Dictionary } from "@/lib/dictionaries";
 
 export function Leftbar() {
   return (
@@ -23,7 +24,7 @@ export function Leftbar() {
   );
 }
 
-export function SheetLeftbar() {
+export function SheetLeftbar({ dict }: { dict: Dictionary }) {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -40,13 +41,13 @@ export function SheetLeftbar() {
         </SheetHeader>
         <div className="flex flex-col gap-4 overflow-y-auto">
           <div className="flex flex-col gap-2.5 mt-3 mx-2 px-5">
-            <NavMenu isSheet />
+            <NavMenu isSheet dict={dict} />
           </div>
           <div className="mx-2 px-5">
             <DocsMenu isSheet />
           </div>
           <div className="p-6 pb-4 flex gap-2.5">
-            <FooterButtons />
+            <FooterButtons dict={dict} />
           </div>
         </div>
       </SheetContent>

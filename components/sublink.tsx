@@ -1,5 +1,4 @@
 import { EachRoute } from "@/lib/routes-config";
-import Anchor from "./anchor";
 import {
   Collapsible,
   CollapsibleContent,
@@ -10,6 +9,8 @@ import { SheetClose } from "@/components/ui/sheet";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import LangLink from "./lang-link";
+import { useDictionary } from "./contexts/dict-provider";
 
 export default function SubLink({
   title,
@@ -21,18 +22,19 @@ export default function SubLink({
 }: EachRoute & { level: number; isSheet: boolean }) {
   const path = usePathname();
   const [isOpen, setIsOpen] = useState(level == 0);
+  const dict = useDictionary();
 
   useEffect(() => {
     if (path == href || path.includes(href)) setIsOpen(true);
   }, [href, path]);
 
   const Comp = (
-    <Anchor
-      activeClassName="text-primary dark:font-medium font-semibold"
+    <LangLink
+      activeClassName="text-red-500 dark:font-medium font-semibold"
       href={href}
     >
-      {title}
-    </Anchor>
+      {dict.leftbar[title as keyof typeof dict.leftbar]}
+    </LangLink>
   );
 
   const titleOrLink = !noLink ? (
@@ -42,7 +44,9 @@ export default function SubLink({
       Comp
     )
   ) : (
-    <h4 className="font-medium sm:text-sm text-primary">{title}</h4>
+    <h4 className="font-medium sm:text-sm text-primary">
+      {dict.leftbar[title as keyof typeof dict.leftbar]}
+    </h4>
   );
 
   if (!items) {
