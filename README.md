@@ -95,6 +95,6 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## Additional Themes
 
-<img src="./public/halloween.png" alt="halloween" />
-<img src="./public/nebula.png" alt="halloween" />
-<img src="./public/ocean.png" alt="halloween" />
+<img src="./public/home.png" alt="home" />
+<img src="./public/docs.png" alt="docs" />
+<img src="./public/blog.png" alt="blog" />

@@ -1,23 +1,23 @@
+"use client";
+
+import { useDictionary } from "@/components/contexts/dict-provider";
 import { buttonVariants } from "@/components/ui/button";
-// import { LangProps } from "@/lib/dictionaries";
 import Link from "next/link";
 
-// TODO: Lang
-export default async function NotFound() {
-  // const { lang } = await params;
-  // console.log(props);
+export default function NotFound() {
+  const dict = useDictionary();
 
   return (
     <div className="min-h-[87vh] px-2 sm:py-28 py-36 flex flex-col gap-4 items-center">
       <div className="text-center flex flex-col items-center justify-center w-fit gap-2">
-        <h2 className="text-7xl font-bold pr-1">404</h2>
+        <h2 className="text-7xl font-bold pr-1">{dict.not_found["404"]}</h2>
         <p className="text-muted-foreground text-md font-medium">
-          Page not found {":("}
+          {dict.not_found.page_not_found} {":("}
         </p>
-        <p>Oops! The page you&apos;re looking for doesn&apos;t exist.</p>
+        <p> {dict.not_found.sub_text}</p>
       </div>
       <Link href="/" className={buttonVariants({})}>
-        Back to homepage
+        {dict.not_found.back_to_homepage}
       </Link>
     </div>
   );

@@ -7,18 +7,16 @@ export type EachRoute = {
   items?: EachRoute[];
 };
 
-// TODO: Test all nested ones
 export const ROUTES: EachRoute[] = [
   {
+    // this title is translation key present in en.json or other language files
     title: "getting_started",
     href: "/getting-started",
     noLink: true,
     items: [
       { title: "introduction", href: "/introduction" },
-      // {
-      //   title: "installation",
-      //   href: "/installation",
-      // },
+      // this file doesn't exist
+      { title: "installation", href: "/installation" },
     ],
   },
 ];

@@ -22,7 +22,7 @@ export function helperSearch(
 
   if (
     !node.noLink &&
-    dict.leftbar[node.title as keyof typeof dict.leftbar].toLowerCase()
+    dict.leftbar[node.title as keyof typeof dict.leftbar]?.toLowerCase()
       .includes(query.toLowerCase())
   ) {
     res.push({ ...node, items: undefined, href: nextLink });
