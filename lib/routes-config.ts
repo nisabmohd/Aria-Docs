@@ -15,8 +15,6 @@ export const ROUTES: EachRoute[] = [
     noLink: true,
     items: [
       { title: "introduction", href: "/introduction" },
-      // this file doesn't exist
-      { title: "installation", href: "/installation" },
     ],
   },
 ];
