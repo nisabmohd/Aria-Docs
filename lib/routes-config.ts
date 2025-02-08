@@ -10,6 +10,7 @@ export type EachRoute = {
 export const ROUTES: EachRoute[] = [
   {
     // this title is translation key present in en.json or other language files
+    // make sure you add translation for this key in all language files
     title: "getting_started",
     href: "/getting-started",
     noLink: true,
