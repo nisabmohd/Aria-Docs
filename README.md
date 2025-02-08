@@ -2,8 +2,6 @@
 
 This feature-packed documentation template, built with Next.js, offers a sleek and responsive design, perfect for all your project documentation needs.
 
-<img src="./public/public-og.png" />
-
 <br/>
 
 Here are all versions of the AriaDocs template, each crafted for specific use cases:
@@ -92,8 +90,6 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 | Static Site Generation        | Generate a static, high-performance site.                |
 | SEO-Optimized                 | Structured for optimal search engine indexing.           |
 
-
-## Additional Themes
 
 <img src="./public/home.png" alt="home" />
 <img src="./public/docs.png" alt="docs" />
