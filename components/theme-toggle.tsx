@@ -12,7 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Dictionary } from "@/lib/dictionaries";
-import { useDictionary } from "./contexts/dict-provider";
+import { useDictionary } from "./contexts/dictionary-provider";
 
 export function ModeToggle({}: { dict: Dictionary }) {
   const { setTheme } = useTheme();

@@ -1,4 +1,4 @@
-import LangLink from "@/components/lang-link";
+import LocalizedLink from "@/components/localized-link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Dictionary, getDictionary, LangProps } from "@/lib/dictionaries";
 import { Author, BlogMdxFrontmatter, getAllBlogs } from "@/lib/markdown";
@@ -41,7 +41,7 @@ function BlogCard({
   dict,
 }: BlogMdxFrontmatter & { slug: string; dict: Dictionary }) {
   return (
-    <LangLink
+    <LocalizedLink
       href={`/blog/${slug}`}
       className="flex flex-col gap-2 items-start border rounded-md py-5 px-3 min-h-[400px]"
     >
@@ -63,7 +63,7 @@ function BlogCard({
         </p>
         <AvatarGroup users={authors} />
       </div>
-    </LangLink>
+    </LocalizedLink>
   );
 }
 

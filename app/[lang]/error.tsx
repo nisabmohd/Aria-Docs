@@ -1,6 +1,6 @@
 "use client"; // Error components must be Client Components
 
-import { useDictionary } from "@/components/contexts/dict-provider";
+import { useDictionary } from "@/components/contexts/dictionary-provider";
 import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import { useEffect } from "react";

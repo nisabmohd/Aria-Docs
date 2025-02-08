@@ -14,7 +14,7 @@ import { useEffect, useMemo, useState } from "react";
 import { advanceSearch, cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Dictionary } from "@/lib/dictionaries";
-import LangLink from "./lang-link";
+import LocalizedLink from "./localized-link";
 
 export default function Search({ dict }: { dict: Dictionary }) {
   const [searchedInput, setSearchedInput] = useState("");
@@ -88,7 +88,7 @@ export default function Search({ dict }: { dict: Dictionary }) {
 
                 return (
                   <DialogClose key={item.href} asChild>
-                    <LangLink
+                    <LocalizedLink
                       className={cn(
                         "dark:hover:bg-stone-900 hover:bg-stone-100 w-full px-3 rounded-sm text-sm flex items-center gap-2.5",
                         paddingClass
@@ -104,7 +104,7 @@ export default function Search({ dict }: { dict: Dictionary }) {
                         <FileIcon className="h-[1.1rem] w-[1.1rem] mr-1" />{" "}
                         {dict.leftbar[item.title as keyof typeof dict.leftbar]}
                       </div>
-                    </LangLink>
+                    </LocalizedLink>
                   </DialogClose>
                 );
               })}

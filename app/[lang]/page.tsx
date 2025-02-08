@@ -1,4 +1,4 @@
-import LangLink from "@/components/lang-link";
+import LocalizedLink from "@/components/localized-link";
 import { buttonVariants } from "@/components/ui/button";
 import { getDictionary, LangProps } from "@/lib/dictionaries";
 import { page_routes } from "@/lib/routes-config";
@@ -25,13 +25,13 @@ export default async function Home({ params }: LangProps) {
         {dict.home.sub_header}
       </p>
       <div className="flex flex-row items-center gap-5">
-        <LangLink
+        <LocalizedLink
           href={`/docs${page_routes[0].href}`}
           className={buttonVariants({ className: "px-6", size: "lg" })}
         >
           {dict.home.get_started}
-        </LangLink>
-        <LangLink
+        </LocalizedLink>
+        <LocalizedLink
           href="/blog"
           className={buttonVariants({
             variant: "secondary",
@@ -40,7 +40,7 @@ export default async function Home({ params }: LangProps) {
           })}
         >
           {dict.home.read_blog}
-        </LangLink>
+        </LocalizedLink>
       </div>
       <span className="flex flex-row items-start sm:gap-2 gap-0.5 text-muted-foreground text-md mt-7 -mb-12 max-[800px]:mb-12 font-code sm:text-base text-sm font-medium">
         <TerminalSquareIcon className="w-5 h-5 sm:mr-1 mt-0.5" />

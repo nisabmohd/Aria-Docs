@@ -9,8 +9,8 @@ import { SheetClose } from "@/components/ui/sheet";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import LangLink from "./lang-link";
-import { useDictionary } from "./contexts/dict-provider";
+import LocalizedLink from "./localized-link";
+import { useDictionary } from "./contexts/dictionary-provider";
 
 export default function SubLink({
   title,
@@ -29,12 +29,12 @@ export default function SubLink({
   }, [href, path]);
 
   const Comp = (
-    <LangLink
+    <LocalizedLink
       activeClassName="text-red-500 dark:font-medium font-semibold"
       href={href}
     >
       {dict.leftbar[title as keyof typeof dict.leftbar]}
-    </LangLink>
+    </LocalizedLink>
   );
 
   const titleOrLink = !noLink ? (

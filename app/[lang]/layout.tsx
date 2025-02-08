@@ -4,7 +4,7 @@ import { Navbar } from "@/components/navbar";
 import { Space_Mono, Space_Grotesk } from "next/font/google";
 import { Footer } from "@/components/footer";
 import { getDictionary, LangProps } from "@/lib/dictionaries";
-import { DictProvider } from "@/components/contexts/dict-provider";
+import { ClientDictionary } from "@/components/contexts/dictionary-provider";
 import { locales } from "@/lib/locale";
 import "@/styles/globals.css";
 
@@ -48,7 +48,7 @@ export default async function RootLayout({
         className={`${sansFont.variable} ${monoFont.variable} font-regular antialiased tracking-wide`}
         suppressHydrationWarning
       >
-        <DictProvider dict={dict}>
+        <ClientDictionary dict={dict}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -61,7 +61,7 @@ export default async function RootLayout({
             </main>
             <Footer dict={dict} />
           </ThemeProvider>
-        </DictProvider>
+        </ClientDictionary>
       </body>
     </html>
   );

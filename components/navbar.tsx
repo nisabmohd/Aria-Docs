@@ -8,7 +8,7 @@ import { page_routes } from "@/lib/routes-config";
 import { SheetClose } from "@/components/ui/sheet";
 import LangSelect from "./lang-select";
 import { Dictionary } from "@/lib/dictionaries";
-import LangLink from "./lang-link";
+import LocalizedLink from "./localized-link";
 
 export const NAVLINKS = [
   {
@@ -81,10 +81,10 @@ export function Navbar({ dict }: { dict: Dictionary }) {
 
 export function Logo() {
   return (
-    <LangLink href="/" className="flex items-center gap-2.5">
+    <LocalizedLink href="/" className="flex items-center gap-2.5">
       <CommandIcon className="w-6 h-6 text-muted-foreground" strokeWidth={2} />
       <h2 className="text-md font-bold font-code">AriaDocs</h2>
-    </LangLink>
+    </LocalizedLink>
   );
 }
 
@@ -99,7 +99,7 @@ export function NavMenu({
     <>
       {NAVLINKS.map((item) => {
         const Comp = (
-          <LangLink
+          <LocalizedLink
             key={item.title + item.href}
             className="flex items-center gap-1 dark:text-stone-300/85 text-stone-800"
             activeClassName="!text-red-600 dark:font-medium font-semibold"
@@ -107,7 +107,7 @@ export function NavMenu({
             absolute={item.absolute}
           >
             {dict.navbar.links[item.title as keyof typeof dict.navbar.links]}
-          </LangLink>
+          </LocalizedLink>
         );
         return isSheet ? (
           <SheetClose key={item.title + item.href} asChild>

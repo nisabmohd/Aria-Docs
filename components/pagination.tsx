@@ -1,7 +1,7 @@
 import { getPreviousNext } from "@/lib/markdown";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { buttonVariants } from "./ui/button";
-import LangLink from "./lang-link";
+import LocalizedLink from "./localized-link";
 import { Dictionary } from "@/lib/dictionaries";
 
 export default function Pagination({
@@ -17,7 +17,7 @@ export default function Pagination({
     <div className="grid grid-cols-2 flex-grow sm:py-10 py-7 gap-3">
       <div>
         {res.prev && (
-          <LangLink
+          <LocalizedLink
             className={buttonVariants({
               variant: "outline",
               className:
@@ -32,12 +32,12 @@ export default function Pagination({
             <span className="mt-1 ml-1">
               {dict.leftbar[res.prev.title as keyof typeof dict.leftbar]}
             </span>
-          </LangLink>
+          </LocalizedLink>
         )}
       </div>
       <div>
         {res.next && (
-          <LangLink
+          <LocalizedLink
             className={buttonVariants({
               variant: "outline",
               className:
@@ -52,7 +52,7 @@ export default function Pagination({
             <span className="mt-1 mr-1">
               {dict.leftbar[res.next.title as keyof typeof dict.leftbar]}
             </span>
-          </LangLink>
+          </LocalizedLink>
         )}
       </div>
     </div>

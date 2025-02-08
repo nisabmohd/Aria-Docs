@@ -3,7 +3,7 @@
 import { Dictionary } from "@/lib/dictionaries";
 import { createContext, PropsWithChildren, useContext } from "react";
 
-export function DictProvider({
+export function ClientDictionary({
   children,
   dict,
 }: PropsWithChildren<{ dict: Dictionary }>) {
