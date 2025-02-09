@@ -4,21 +4,6 @@ This feature-packed documentation template, built with Next.js, offers a sleek a
 
 <br/>
 
-Here are all versions of the AriaDocs template, each crafted for specific use cases:
-
-
-- **Advanced Docs:** A comprehensive template offering extensive features for in-depth documentation needs. Perfect for larger projects that require detailed explanations and advanced configurations.  
-  [Explore the Advanced Docs](https://github.com/nisabmohd/Aria-Docs/tree/master)
-
-- **Lite Version:** A streamlined, no-frills template perfect for straightforward documentation needs.  
-  [Explore the Lite Version](https://github.com/nisabmohd/Aria-Docs/tree/minimal-docs)
-
-- **Version with Versioning:** A powerful option for projects that require historical documentation tracking. Manage multiple versions of your docs effortlessly.  
-  [Check out the Versioning Feature](https://github.com/nisabmohd/Aria-Docs/tree/version_docs)
-
-- **i18n Support Version (WIP):** Designed for international audiences, this version will offer comprehensive multilingual support.  
-  [Preview the i18n Support](https://github.com/nisabmohd/Aria-Docs/tree/i18n-support)
-
 ### Quick Start
 
 You can create a new Ariadocs project using the command:
@@ -89,7 +74,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 | TOC Observer Highlight        | Highlight active sections in the TOC as you scroll.      |
 | Static Site Generation        | Generate a static, high-performance site.                |
 | SEO-Optimized                 | Structured for optimal search engine indexing.           |
-
+| Internationalisation               | Added support for i18n for multiple languages |
 
 <img src="./public/home.png" alt="home" />
 <img src="./public/docs.png" alt="docs" />
