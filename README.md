@@ -18,7 +18,7 @@ Here are all versions of the AriaDocs template, each crafted for specific use ca
 - **Version with Versioning:** A powerful option for projects that require historical documentation tracking. Manage multiple versions of your docs effortlessly.  
   [Check out the Versioning Feature](https://github.com/nisabmohd/Aria-Docs/tree/version_docs)
 
-- **i18n Support Version (WIP):** Designed for international audiences, this version will offer comprehensive multilingual support.  
+- **i18n Support Version (NEW):** Designed for international audiences, this version will offer comprehensive multilingual support.  
   [Preview the i18n Support](https://github.com/nisabmohd/Aria-Docs/tree/i18n-support)
 
 ### Quick Start
@@ -91,10 +91,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 | TOC Observer Highlight        | Highlight active sections in the TOC as you scroll.      |
 | Static Site Generation        | Generate a static, high-performance site.                |
 | SEO-Optimized                 | Structured for optimal search engine indexing.           |
+| Internationalisation               | Added support for i18n for multiple languages |
 
-
-## Additional Themes
-
-<img src="./public/halloween.png" alt="halloween" />
-<img src="./public/nebula.png" alt="halloween" />
-<img src="./public/ocean.png" alt="halloween" />
