@@ -91,5 +91,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 | TOC Observer Highlight        | Highlight active sections in the TOC as you scroll.      |
 | Static Site Generation        | Generate a static, high-performance site.                |
 | SEO-Optimized                 | Structured for optimal search engine indexing.           |
-| Internationalisation               | Added support for i18n for multiple languages |
+| Internationalisation (New)             | Added support for i18n for multiple languages |
 
