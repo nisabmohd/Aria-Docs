@@ -110,8 +110,8 @@ function Folder({
           )}
         </div>
       </div>
-      {isOpen && (
-        <div className="pl-5 pt-1 flex flex-col gap-1.5">
+      {isOpen && items?.length != 0 && (
+        <div className="pl-2 pt-1 flex flex-col gap-1.5 border-l ml-5">
           {items?.map((f) => {
             if (isFile(f)) return <File {...f} key={f.name} />;
             return <Folder {...f} key={f.name} />;
