@@ -14,7 +14,7 @@ export default function Home() {
         Follow along on GitHub{" "}
         <MoveUpRightIcon className="w-4 h-4 font-extrabold" />
       </Link>
-      <h1 className="text-3xl font-bold mb-4 sm:text-6xl">
+      <h1 className="sm:text-3xl text-2xl font-bold sm:mb-4 mb-6 md:text-6xl">
         Effortlessly build stunning documentation sites with Next.js and server
         components.
       </h1>

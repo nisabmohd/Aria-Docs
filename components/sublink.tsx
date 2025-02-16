@@ -18,6 +18,7 @@ export default function SubLink({
   noLink,
   level,
   isSheet,
+  tag,
 }: EachRoute & { level: number; isSheet: boolean }) {
   const path = usePathname();
   const [isOpen, setIsOpen] = useState(level == 0);
@@ -32,6 +33,11 @@ export default function SubLink({
       href={href}
     >
       {title}
+      {tag && (
+        <span className="dark:bg-blue-700 bg-blue-500 rounded-md px-1.5 py-0.5 ml-2 text-xs text-white !font-normal">
+          {tag}
+        </span>
+      )}
     </Anchor>
   );
 
@@ -42,7 +48,9 @@ export default function SubLink({
       Comp
     )
   ) : (
-    <h4 className="font-medium sm:text-sm text-primary">{title}</h4>
+    <h4 className="font-medium sm:text-sm text-primary">
+      {title} {tag}
+    </h4>
   );
 
   if (!items) {

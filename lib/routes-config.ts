@@ -5,6 +5,7 @@ export type EachRoute = {
   href: string;
   noLink?: true; // noLink will create a route segment (section) but cannot be navigated
   items?: EachRoute[];
+  tag?: string;
 };
 
 export const ROUTES: EachRoute[] = [
@@ -26,12 +27,14 @@ export const ROUTES: EachRoute[] = [
       {
         title: "Components",
         href: "/components",
+        tag: "Essential",
         items: [
           { title: "Stepper", href: "/stepper" },
           { title: "Tabs", href: "/tabs" },
           { title: "Note", href: "/note" },
           { title: "Code Block", href: "/code-block" },
           { title: "Image & Link", href: "/image-link" },
+          { title: "File System", href: "/file-system", tag: "New" },
           { title: "Custom", href: "/custom" },
         ],
       },
