@@ -22,7 +22,7 @@ export function isFile(f: FileOrFolderType): f is FileType {
 }
 
 export function sortFileAndFolder(items: FileOrFolderType[]) {
-  return items.toSorted((a, b) => a.name.localeCompare(b.name));
+  return [...items.sort((a, b) => a.name.localeCompare(b.name))];
 }
 
 export default function Files(props: {
