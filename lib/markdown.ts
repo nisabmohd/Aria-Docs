@@ -19,6 +19,14 @@ import Image from "@/components/markdown/image";
 import Link from "@/components/markdown/link";
 import Outlet from "@/components/markdown/outlet";
 import Files from "@/components/markdown/files";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 // add custom components
 const components = {
@@ -34,6 +42,12 @@ const components = {
   a: Link,
   Outlet,
   Files,
+  table: Table,
+  thead: TableHeader,
+  th: TableHead,
+  tr: TableRow,
+  tbody: TableBody,
+  t: TableCell,
 };
 
 // can be used for other pages like blogs, Guides etc
