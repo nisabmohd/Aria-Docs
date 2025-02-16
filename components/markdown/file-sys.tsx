@@ -41,8 +41,8 @@ function File({ name, highlight, indicator }: FileType) {
         highlight && "dark:text-blue-400 text-blue-500"
       )}
     >
-      <FileIcon className="min-w-[1.2rem] min-h-[1.2rem] w-[1.2rem] h-[1.2rem] text-current" />
-      <div className="text-[15px]">
+      <FileIcon className="sm:min-w-[1.2rem] sm:min-h-[1.2rem] sm:w-[1.2rem] sm:h-[1.2rem] min-w-[1rem] min-h-[1rem] w-[1rem] h-[1rem] text-current" />
+      <div className="sm:text-[15px] text-[13.5px]">
         {name}
         {indicator && (
           <span
@@ -89,11 +89,11 @@ function Folder({
         onClick={() => setIsOpen(!isOpen)}
       >
         {isOpen ? (
-          <FolderOpenIcon className="min-w-[1.2rem] min-h-[1.2rem] w-[1.2rem] h-[1.2rem]" />
+          <FolderOpenIcon className="sm:min-w-[1.2rem] sm:min-h-[1.2rem] sm:w-[1.2rem] sm:h-[1.2rem] min-w-[1rem] min-h-[1rem] w-[1rem] h-[1rem]" />
         ) : (
-          <FolderIcon className="min-w-[1.2rem] min-h-[1.2rem] w-[1.2rem] h-[1.2rem]" />
+          <FolderIcon className="sm:min-w-[1.2rem] sm:min-h-[1.2rem] sm:w-[1.2rem] sm:h-[1.2rem] min-w-[1rem] min-h-[1rem] w-[1rem] h-[1rem]" />
         )}
-        <div className="text-[15px]">
+        <div className="sm:text-[15px] text-[13.5px]">
           {name}
           {indicator && (
             <span

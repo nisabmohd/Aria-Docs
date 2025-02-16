@@ -15,12 +15,10 @@ type PageProps = {
 export async function generateMetadata(props: PageProps) {
   const params = await props.params;
 
-  const {
-    slug
-  } = params;
+  const { slug } = params;
 
   const res = await getBlogForSlug(slug);
-  if (!res) return null;
+  if (!res) return {};
   const { frontmatter } = res;
   return {
     title: frontmatter.title,
@@ -37,9 +35,7 @@ export async function generateStaticParams() {
 export default async function BlogPage(props: PageProps) {
   const params = await props.params;
 
-  const {
-    slug
-  } = params;
+  const { slug } = params;
 
   const res = await getBlogForSlug(slug);
   if (!res) notFound();
@@ -58,7 +54,7 @@ export default async function BlogPage(props: PageProps) {
         <p className="text-muted-foreground text-sm">
           {formatDate(res.frontmatter.date)}
         </p>
-        <h1 className="sm:text-4xl text-3xl font-extrabold">
+        <h1 className="sm:text-3xl text-2xl font-extrabold">
           {res.frontmatter.title}
         </h1>
         <div className="mt-6 flex flex-col gap-3">
