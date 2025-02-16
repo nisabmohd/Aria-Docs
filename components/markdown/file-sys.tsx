@@ -24,7 +24,7 @@ export default function FileSys({
   }, [sorted, children]);
 
   return (
-    <div className="dark:bg-stone-950/25 bg-stone-50/25 rounded-md p-4 px-3 border flex flex-col gap-1.5 font-code">
+    <div className="dark:bg-stone-950/25 bg-stone-50/25 rounded-md p-4 px-3 border flex flex-col gap-1.5 font-code max-w-full overflow-x-auto">
       {items.map((f) => {
         if (isFile(f)) return <File {...f} key={f.name} />;
         return <Folder {...f} key={f.name} sorted={sorted} />;
@@ -41,7 +41,7 @@ function File({ name, highlight, indicator }: FileType) {
         highlight && "dark:text-blue-400 text-blue-500"
       )}
     >
-      <FileIcon className="w-[1.2rem] h-[1.2rem] text-current" />
+      <FileIcon className="min-w-[1.2rem] min-h-[1.2rem] w-[1.2rem] h-[1.2rem] text-current" />
       <div className="text-[15px]">
         {name}
         {indicator && (
@@ -89,9 +89,9 @@ function Folder({
         onClick={() => setIsOpen(!isOpen)}
       >
         {isOpen ? (
-          <FolderOpenIcon className="w-[1.2rem] h-[1.2rem]" />
+          <FolderOpenIcon className="min-w-[1.2rem] min-h-[1.2rem] w-[1.2rem] h-[1.2rem]" />
         ) : (
-          <FolderIcon className="w-[1.2rem] h-[1.2rem]" />
+          <FolderIcon className="min-w-[1.2rem] min-h-[1.2rem] w-[1.2rem] h-[1.2rem]" />
         )}
         <div className="text-[15px]">
           {name}

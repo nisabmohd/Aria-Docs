@@ -85,7 +85,7 @@ pre {
   overflow-x: auto;
 }
 
-pre > code {
+pre>code {
   display: grid;
   max-width: inherit !important;
   padding: 14px 0 !important;
@@ -115,48 +115,55 @@ pre > code {
   @apply px-2 -mb-8 w-full text-sm pb-5 font-medium mt-5 font-code;
 }
 
-.highlight-comp > code {
+.highlight-comp>code {
   background-color: transparent !important;
 }
 
 /* Global Custom Scrollbar */
 :root {
-  --scrollbar-thumb: rgba(
-    113,
-    113,
-    122,
-    0.6
-  ); /* Subtle dark gray for light mode thumb */
+  --scrollbar-thumb: rgba(113,
+      113,
+      122,
+      0.6);
+  /* Subtle dark gray for light mode thumb */
 }
 
 [data-theme="dark"],
 [class*="dark"] {
-  --scrollbar-thumb: rgba(
-    160,
-    160,
-    160,
-    0.4
-  ); /* Softer gray for dark mode thumb */
+  --scrollbar-thumb: rgba(160,
+      160,
+      160,
+      0.4);
+  /* Softer gray for dark mode thumb */
 }
 
 /* Apply globally */
 * {
-  scrollbar-width: thin; /* Firefox thin scrollbar */
-  scrollbar-color: var(--scrollbar-thumb) transparent; /* Thumb color with transparent track */
+  scrollbar-width: thin;
+  /* Firefox thin scrollbar */
+  scrollbar-color: var(--scrollbar-thumb) transparent;
+  /* Thumb color with transparent track */
 }
 
 *::-webkit-scrollbar {
-  width: 8px; /* Vertical scrollbar width */
-  height: 8px; /* Horizontal scrollbar height */
+  width: 8px;
+  /* Vertical scrollbar width */
+  height: 8px;
+  /* Horizontal scrollbar height */
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: var(--scrollbar-thumb); /* Thumb color */
-  border-radius: 9999px; /* Fully rounded thumb */
-  border: 2px solid transparent; /* Thin padding effect */
-  background-clip: content-box; /* Smooth thumb edges */
+  background-color: var(--scrollbar-thumb);
+  /* Thumb color */
+  border-radius: 9999px;
+  /* Fully rounded thumb */
+  border: 2px solid transparent;
+  /* Thin padding effect */
+  background-clip: content-box;
+  /* Smooth thumb edges */
 }
 
 *::-webkit-scrollbar-track {
-  background-color: transparent; /* Transparent track */
+  background-color: transparent;
+  /* Transparent track */
 }

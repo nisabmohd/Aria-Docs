@@ -14,7 +14,7 @@ export default function Home() {
         Follow along on GitHub{" "}
         <MoveUpRightIcon className="w-4 h-4 font-extrabold" />
       </Link>
-      <h1 className="sm:text-3xl text-2xl font-bold sm:mb-4 mb-6 md:text-6xl">
+      <h1 className="text-3xl font-bold mb-4 sm:text-6xl">
         Effortlessly build stunning documentation sites with Next.js and server
         components.
       </h1>
@@ -41,7 +41,7 @@ export default function Home() {
           Read Blog
         </Link>
       </div>
-      <span className="flex flex-row items-start sm:gap-2 gap-0.5 text-muted-foreground text-md mt-7 -mb-12 max-[800px]:mb-12 font-code sm:text-base text-sm font-medium">
+      <span className="flex flex-row items-start sm:gap-2 gap-0.5 text-muted-foreground text-md mt-9 -mb-12 max-[800px]:mb-12 font-code sm:text-base text-sm font-medium border rounded-full p-2.5 px-5 bg-muted/55">
         <TerminalSquareIcon className="w-5 h-5 sm:mr-1 mt-0.5" />
         {"npx create-aria-doc <project-directory>"}
       </span>

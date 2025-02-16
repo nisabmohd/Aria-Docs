@@ -34,7 +34,7 @@ export default function SubLink({
     >
       {title}
       {tag && (
-        <span className="dark:bg-blue-700 bg-blue-500 rounded-md px-1.5 py-0.5 ml-2 text-xs text-white !font-normal">
+        <span className="dark:bg-blue-700 bg-blue-500 rounded-md px-1.5 py-0.5 mx-2 text-xs text-white !font-normal">
           {tag}
         </span>
       )}
@@ -49,7 +49,12 @@ export default function SubLink({
     )
   ) : (
     <h4 className="font-medium sm:text-sm text-primary">
-      {title} {tag}
+      {title}
+      {tag && (
+        <span className="dark:bg-blue-700 bg-blue-500 rounded-md px-1.5 py-0.5 mx-2 text-xs text-white !font-normal">
+          {tag}
+        </span>
+      )}
     </h4>
   );
 
@@ -62,8 +67,10 @@ export default function SubLink({
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
         <CollapsibleTrigger className="w-full pr-5">
           <div className="flex items-center justify-between cursor-pointer w-full">
-            {titleOrLink}
-            <span>
+            <span className="w-[95%] overflow-hidden text-ellipsis text-start">
+              {titleOrLink}
+            </span>
+            <span className="sm:ml-0 -mr-1.5">
               {!isOpen ? (
                 <ChevronRight className="h-[0.9rem] w-[0.9rem]" />
               ) : (
