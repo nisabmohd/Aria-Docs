@@ -2,11 +2,11 @@ import { ModeToggle } from "@/components/theme-toggle";
 import { GithubIcon, TwitterIcon, CommandIcon } from "lucide-react";
 import Link from "next/link";
 import { buttonVariants } from "./ui/button";
-import Search from "./search";
 import Anchor from "./anchor";
 import { SheetLeftbar } from "./leftbar";
 import { page_routes } from "@/lib/routes-config";
 import { SheetClose } from "@/components/ui/sheet";
+import AlgoliaSearch from "./algolia-search";
 
 export const NAVLINKS = [
   {
@@ -31,6 +31,12 @@ export const NAVLINKS = [
   },
 ];
 
+const algolia_props = {
+  appId: process.env.ALGOLIA_APP_ID!,
+  indexName: process.env.ALGOLIA_INDEX!,
+  apiKey: process.env.ALGOLIA_SEARCH_API_KEY!,
+};
+
 export function Navbar() {
   return (
     <nav className="w-full border-b h-16 sticky top-0 z-50 bg-background">
@@ -49,7 +55,7 @@ export function Navbar() {
 
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
-            <Search />
+            <AlgoliaSearch {...algolia_props} />
             <div className="flex ml-2.5 sm:ml-0">
               <Link
                 href="https://github.com/nisabmohd/NexDocs"
