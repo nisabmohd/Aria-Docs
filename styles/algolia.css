@@ -32,7 +32,7 @@
 
 
 .DocSearch-Modal {
-    @apply mt-20
+    @apply sm:mt-20
 }
 
 .DocSearch-Button {
