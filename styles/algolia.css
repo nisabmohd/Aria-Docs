@@ -31,12 +31,16 @@
 /* todo implement properly */
 
 
+.DocSearch-Modal {
+    @apply mt-20
+}
+
 .DocSearch-Button {
-    @apply rounded-full pl-5 w-40 bg-muted !important
+    @apply pl-4 ml-0 w-44 bg-muted !important
 }
 
 .DocSearch-Button-Placeholder {
-    @apply ml-1 text-muted-foreground text-sm
+    @apply ml-1 text-muted-foreground text-sm flex
 }
 
 .DocSearch-Search-Icon {
@@ -48,9 +52,13 @@
 }
 
 .DocSearch-Form>label>.DocSearch-Search-Icon {
-    @apply w-4 h-4
+    @apply w-4 h-4 mr-2
 }
 
 .DocSearch-Input {
     @apply text-[15px] !important
+}
+
+.DocSearch-SearchBar {
+    @apply border-b pb-0.5 pt-0.5
 }
