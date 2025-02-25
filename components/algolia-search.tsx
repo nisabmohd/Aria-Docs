@@ -11,7 +11,7 @@ type AlgoliaProps = {
 
 export default function AlgoliaSearch(props: AlgoliaProps) {
   return (
-    <div className="relative">
+    <div className="relative border rounded-lg">
       <div className="absolute right-2 top-[0.4rem] hidden items-center gap-0.5 text-xs font-code sm:flex pointer-events-none">
         <div className="bg-background/30 border rounded-md py-0.5 px-1 dark:border-neutral-700 border-neutral-300">
           Ctrl

@@ -40,8 +40,8 @@ const algolia_props = {
 export function Navbar() {
   return (
     <nav className="w-full border-b h-16 sticky top-0 z-50 bg-background">
-      <div className="sm:container mx-auto w-[95vw] h-full flex items-center justify-between md:gap-2">
-        <div className="flex items-center gap-5">
+      <div className="sm:container mx-auto w-[95vw] h-full flex items-center sm:justify-between md:gap-2">
+        <div className="flex items-center sm:gap-5 gap-2.5">
           <SheetLeftbar />
           <div className="flex items-center gap-6">
             <div className="sm:flex hidden">
@@ -53,8 +53,8 @@ export function Navbar() {
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2">
+        <div className="flex items-center sm:gap-3">
+          <div className="flex items-center sm:gap-2">
             <AlgoliaSearch {...algolia_props} />
             <div className="flex ml-2.5 sm:ml-0">
               <Link
