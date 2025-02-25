@@ -23,7 +23,7 @@ export default function Home() {
         sleek and responsive design, perfect for all your project documentation
         needs.
       </p>
-      <div className="flex flex-row items-center gap-5">
+      <div className="flex flex-row items-center sm;gap-5 gap-3 mb-8">
         <Link
           href={`/docs${page_routes[0].href}`}
           className={buttonVariants({ className: "px-6", size: "lg" })}
