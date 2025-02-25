@@ -85,7 +85,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 | Interactive Code Blocks       | Language-specific and interactive code display.          |
 | Custom Components             | Embed custom, reusable components in your docs.          |
 | Light & Dark Mode             | Toggle between light and dark themes.                    |
-| Search Functionality          | Quickly find content with a built-in search.             |
+| Search Functionality          | Quickly find content with Algolia DocsSearch.             |
 | Code Switcher                 | Switch between code languages or variations.             |
 | Code Copy                     | Copy code blocks with a single click.                    |
 | TOC Observer Highlight        | Highlight active sections in the TOC as you scroll.      |
