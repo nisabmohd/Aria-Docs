@@ -28,9 +28,6 @@
     --docsearch-footer-shadow: none !important;
 }
 
-/* todo implement properly */
-
-
 .DocSearch-Modal {
     @apply sm:mt-20
 }
@@ -61,4 +58,12 @@
 
 .DocSearch-SearchBar {
     @apply border-b pb-0.5 pt-0.5
+}
+
+.DocSearch-Cancel {
+    @apply text-[13px] !important
+}
+
+.DocSearch-Hit-action>svg, .DocSearch-Reset>svg {
+    @apply w-4 h-4
 }
