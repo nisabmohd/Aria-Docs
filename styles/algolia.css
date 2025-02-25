@@ -37,11 +37,11 @@
 }
 
 .DocSearch-Button-Placeholder {
-    @apply ml-1 text-muted-foreground text-sm flex
+    @apply ml-1 text-muted-foreground text-[14px] flex font-code !important
 }
 
 .DocSearch-Search-Icon {
-    @apply w-4 h-4
+    @apply w-4 h-4 text-muted-foreground !important
 }
 
 .DocSearch-Button-Keys {
