@@ -53,13 +53,16 @@ export function Navbar() {
           </div>
         </div>
 
-        <div className="flex items-center sm:gap-3">
-          <div className="flex items-center sm:gap-2">
-            <AlgoliaSearch {...algolia_props} />
-            <div className="flex ml-2.5 sm:ml-0">
+        <div className="flex items-center sm:justify-normal justify-between sm:gap-3 ml-1 sm:w-fit w-[90%]">
+          <AlgoliaSearch {...algolia_props} />
+          <div className="flex items-center justify-between sm:gap-2">
+            <div className="flex ml-4 sm:ml-0">
               <Link
                 href="https://github.com/nisabmohd/NexDocs"
-                className={buttonVariants({ variant: "ghost", size: "icon" })}
+                className={buttonVariants({
+                  variant: "ghost",
+                  size: "icon",
+                })}
               >
                 <GithubIcon className="h-[1.1rem] w-[1.1rem]" />
               </Link>
