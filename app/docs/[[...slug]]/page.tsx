@@ -21,7 +21,7 @@ export default async function DocsPage(props: PageProps) {
   if (!res) notFound();
   return (
     <div className="flex items-start gap-10">
-      <div className="flex-[4.5] pt-10">
+      <div className="flex-[4.5] py-10">
         <DocsBreadcrumb paths={slug} />
         <Typography>
           <h1 className="sm:text-3xl text-2xl !-mt-0.5">
