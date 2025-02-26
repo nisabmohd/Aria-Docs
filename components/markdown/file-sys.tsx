@@ -33,6 +33,42 @@ export default function FileSys({
   );
 }
 
+// https://devicon.dev/
+//  icon format : <i class="devicon-go-plain"></i>
+const fileExtensionIconMap = {
+  js: "javascript",
+  ts: "typescript",
+  jsx: "react",
+  tsx: "react",
+  java: "java",
+  css: "css3",
+  md: "markdown",
+  mdx: "markdown",
+  go: "go",
+  astro: "astro",
+  prisma: "prisma",
+  py: "python",
+  kt: "kotlin",
+  php: "php",
+  gitignore: "git",
+  cs: "csharp",
+  cpp: "cplusplus",
+  c: "c",
+};
+
+function hasSupportedExtension(name: string) {
+  const splittedNames = name.split(".");
+  const ext = splittedNames[splittedNames.length - 1];
+  if (!ext) return false;
+  return !!fileExtensionIconMap[ext as keyof typeof fileExtensionIconMap];
+}
+
+function getIconName(name: string) {
+  const splittedNames = name.split(".");
+  const ext = splittedNames[splittedNames.length - 1];
+  return fileExtensionIconMap[ext as keyof typeof fileExtensionIconMap];
+}
+
 function File({ name, highlight, indicator }: FileType) {
   return (
     <div
@@ -41,7 +77,16 @@ function File({ name, highlight, indicator }: FileType) {
         highlight && "dark:text-blue-400 text-blue-500"
       )}
     >
-      <FileIcon className="sm:min-w-[1.2rem] sm:min-h-[1.2rem] sm:w-[1.2rem] sm:h-[1.2rem] min-w-[1rem] min-h-[1rem] w-[1rem] h-[1rem] text-current" />
+      {hasSupportedExtension(name) ? (
+        <i
+          className={`devicon-${getIconName(
+            name
+          )}-plain text-[17px] mr-[0.14rem]`}
+        ></i>
+      ) : (
+        <FileIcon className="sm:min-w-[1.2rem] sm:min-h-[1.2rem] sm:w-[1.2rem] sm:h-[1.2rem] min-w-[1rem] min-h-[1rem] w-[1rem] h-[1rem] text-current" />
+      )}
+
       <div className="sm:text-[15px] text-[13.5px]">
         {name}
         {indicator && (
