@@ -168,3 +168,7 @@ pre>code {
   background-color: transparent;
   /* Transparent track */
 }
+
+.rehype-code-title {
+  @apply flex items-center gap-2
+}

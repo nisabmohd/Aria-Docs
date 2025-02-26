@@ -10,7 +10,9 @@ Follow these simple instructions to set up your project efficiently and begin cr
 1. **Configure Routing**
 
    - Open the `@lib/route-config.ts` file and add your routing pages:
-     ```typescript
+
+   
+     ```typescript:route-config.ts
      export const ROUTES: EachRoute[] = [
        // Add new route below
        {
@@ -28,13 +30,39 @@ Follow these simple instructions to set up your project efficiently and begin cr
 2. **Create Content Structure**
 
    - Navigate to the `@content/docs` directory and create a folder named `fundamentals`, as defined in the `route-config` file. Within this folder, create a subfolder named `http-server`, and inside that, create an `index.mdx` file that will render when you navigate to `/fundamentals/http-server`:
-     ```plaintext
-     root
-     ├── content/docs
-     │   └── fundamentals
-     │       └── http-server
-     │           └── index.mdx
-     ```
+
+<Files
+  items={[
+    {
+      type: "folder",
+      name: "content",
+      isOpen: true,
+      children: [
+        {
+          type: "folder",
+          name: "docs",
+          isOpen: true,
+          children: [
+            {
+              type: "folder",
+              name: "fundamentals",
+              isOpen: true,
+              children: [
+                {
+                  type: "folder",
+                  name: "http-server",
+                  isOpen: true,
+                  children: [{ type: "file", name: "index.mdx" }],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ]}
+/>
+
 
 3. **Write Your Markdown Content**
    - Start writing your markdown content inside the `index.mdx` file.
@@ -44,7 +72,7 @@ Follow these simple instructions to set up your project efficiently and begin cr
   the page title and description:
 </Note>
 
-     ```markdown showLineNumbers {1-4}
+     ```markdown:index.mdx showLineNumbers {1-4}
      ---
      title: HTTP Server
      description: This section is about HTTP Server.
@@ -67,7 +95,7 @@ To get started with blogs, follow these steps:
   properly
 </Note>
 
-```markdown
+```markdown:blog-name.mdx
 ---
 title: "Building a Recursive File System with React: A Deep Dive"
 description: "Explore how to create a recursive file system in React. This blog post provides a comprehensive guide on building a file system where folders and files can be nested, added, renamed, and deleted."
