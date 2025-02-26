@@ -76,7 +76,11 @@ In this example, the file system has been modified:
     },
     { type: "file", name: "next.config.js" },
     { type: "file", name: ".gitignore" },
-    { type: "folder", name: "public", indicator: "delete" },
+    { type: "folder", name: "public", indicator: "delete",
+    children: [
+           { type: "file", name: "index.html" },   
+      ], 
+    },
   ]}
 />{" "}
 

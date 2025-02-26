@@ -9,7 +9,7 @@ import {
   sortFileAndFolder,
 } from "./files";
 import { FileIcon, FolderIcon, FolderOpenIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, getIconName, hasSupportedExtension } from "@/lib/utils";
 
 export default function FileSys({
   items: children,
@@ -31,42 +31,6 @@ export default function FileSys({
       })}
     </div>
   );
-}
-
-// https://devicon.dev/
-//  icon format : <i class="devicon-go-plain"></i>
-const fileExtensionIconMap = {
-  js: "javascript",
-  ts: "typescript",
-  jsx: "react",
-  tsx: "react",
-  java: "java",
-  css: "css3",
-  md: "markdown",
-  mdx: "markdown",
-  go: "go",
-  astro: "astro",
-  prisma: "prisma",
-  py: "python",
-  kt: "kotlin",
-  php: "php",
-  gitignore: "git",
-  cs: "csharp",
-  cpp: "cplusplus",
-  c: "c",
-};
-
-function hasSupportedExtension(name: string) {
-  const splittedNames = name.split(".");
-  const ext = splittedNames[splittedNames.length - 1];
-  if (!ext) return false;
-  return !!fileExtensionIconMap[ext as keyof typeof fileExtensionIconMap];
-}
-
-function getIconName(name: string) {
-  const splittedNames = name.split(".");
-  const ext = splittedNames[splittedNames.length - 1];
-  return fileExtensionIconMap[ext as keyof typeof fileExtensionIconMap];
 }
 
 function File({ name, highlight, indicator }: FileType) {
