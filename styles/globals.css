@@ -172,3 +172,7 @@ pre>code {
 .rehype-code-title {
   @apply flex items-center gap-2
 }
+
+td>code {
+  word-break: keep-all !important;
+}
