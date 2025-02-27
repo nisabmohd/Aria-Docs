@@ -34,8 +34,7 @@ React Server Components (RSC) are a new type of component introduced by React th
 
 Here’s a basic example of a React Server Component in a Next.js application:
 
-```jsx
-// app/components/UserProfile.server.js
+```jsx:profile.server.js
 import { getUserData } from "../lib/api";
 
 export default async function UserProfile() {
@@ -66,8 +65,7 @@ Server Actions are functions that run on the server in response to user interact
 
 Here’s how you can use Server Actions in a Next.js application to handle form submissions:
 
-```jsx
-// app/actions/submitForm.js
+```jsx:app/actions/submit.js
 import { saveFormData } from "../lib/api";
 
 export async function submitForm(data) {
@@ -76,8 +74,7 @@ export async function submitForm(data) {
 }
 ```
 
-```jsx
-// app/components/ContactForm.js
+```jsx:contactForm.js
 "use client";
 
 import { submitForm } from "../actions/submitForm";
