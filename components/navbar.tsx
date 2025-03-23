@@ -102,7 +102,7 @@ export function NavMenu({ isSheet = false }) {
             key={item.title + item.href}
             activeClassName="!text-primary dark:font-medium font-semibold"
             absolute
-            className="flex items-center gap-1 sm:text-base text-[14.5px] dark:text-stone-300/85 text-stone-800"
+            className="flex items-center gap-1 sm:text-sm text-[14.5px] dark:text-stone-300/85 text-stone-800"
             href={item.href}
           >
             {item.title}

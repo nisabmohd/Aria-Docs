@@ -7,14 +7,14 @@ export default function Pagination({ pathname }: { pathname: string }) {
   const res = getPreviousNext(pathname);
 
   return (
-    <div className="grid grid-cols-2 flex-grow sm:py-10 py-7 gap-3">
+    <div className="grid grid-cols-2 flex-grow sm:py-10 py-7 gap-5">
       <div>
         {res.prev && (
           <Link
             className={buttonVariants({
               variant: "outline",
               className:
-                "no-underline w-full flex flex-col pl-3 !py-8 !items-start",
+                "no-underline w-full flex flex-col sm:pl-7 pl-3 sm:py-10 py-8 !items-start",
             })}
             href={`/docs${res.prev.href}`}
           >
@@ -32,7 +32,7 @@ export default function Pagination({ pathname }: { pathname: string }) {
             className={buttonVariants({
               variant: "outline",
               className:
-                "no-underline w-full flex flex-col pr-3 !py-8 !items-end",
+                "no-underline w-full flex flex-col pr-7 sm:pr-7 pl-3 sm:py-10 py-8 !items-end",
             })}
             href={`/docs${res.next.href}`}
           >
