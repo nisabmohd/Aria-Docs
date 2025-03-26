@@ -11,7 +11,7 @@ export function Stepper({ children }: PropsWithChildren) {
         return (
           <div
             className={cn(
-              "border-l pl-9 ml-3 relative my-1",
+              "border-l pl-12 ml-3 relative pb-1 pr-2 py-3",
               clsx({
                 "pb-5 ": index < length - 1,
               })
@@ -20,7 +20,7 @@ export function Stepper({ children }: PropsWithChildren) {
             <div className="bg-muted w-8 h-8 text-xs font-medium rounded-md border flex items-center justify-center absolute -left-4 font-code">
               {index + 1}
             </div>
-            <div className="prose-headings:mt-0.5 font-medium prose-p:mb-0">
+            <div className="prose-headings:mt-0 prose-p:mb-3 prose-p:mt-3 last:prose-p:mb-0">
               {child}
             </div>
           </div>
@@ -36,7 +36,7 @@ export function StepperItem({
 }: PropsWithChildren & { title?: string }) {
   return (
     <div className="pt-0.5">
-      <h4 className="mt-0">{title}</h4>
+      <h5 className="mt-0 font-semibold">{title}</h5>
       <div>{children}</div>
     </div>
   );
