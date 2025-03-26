@@ -113,7 +113,7 @@ pre>code {
 }
 
 .rehype-code-title {
-  @apply px-2 -mb-8 w-full text-sm pb-5 font-medium mt-5 font-code;
+  @apply px-2 -mb-10 w-full text-sm pb-5 font-medium mt-5 font-code;
 }
 
 .highlight-comp>code {

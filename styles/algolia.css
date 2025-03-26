@@ -33,7 +33,7 @@
 }
 
 .DocSearch-Button {
-    @apply pl-4 ml-0 sm:w-64 !w-full rounded-md bg-muted/55 !important
+    @apply pl-4 ml-0 sm:w-52 !w-full rounded-md bg-muted/55 !important
 }
 
 .DocSearch-Button-Placeholder {
