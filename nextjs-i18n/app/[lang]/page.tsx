@@ -21,7 +21,7 @@ export default async function Home({ params }: LangProps) {
       <h1 className="text-3xl font-bold mb-4 sm:text-6xl">
         {dict.home.main_header}
       </h1>
-      <p className="mb-8 sm:text-lg max-w-[800px] text-muted-foreground">
+      <p className="mb-8 sm:text-lg max-w-[1200px] text-muted-foreground">
         {dict.home.sub_header}
       </p>
       <div className="flex flex-row items-center gap-5">

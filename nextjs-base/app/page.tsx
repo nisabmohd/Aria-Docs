@@ -15,10 +15,10 @@ export default function Home() {
         <MoveUpRightIcon className="w-4 h-4 font-extrabold" />
       </Link>
       <h1 className="text-[2.4rem] sm:px-8 leading-10 sm:leading-[4.5rem] font-bold mb-4 sm:text-6xl text-left sm:text-center">
-        Effortlessly build stunning documentation sites with multiple frameworks
-        including Next.js, React Router, and TanStack Router.
+        Effortlessly build stunning documentation sites with flexibility for
+        diverse projects.
       </h1>
-      <p className="mb-8 sm:text-lg max-w-[800px] text-muted-foreground text-left sm:text-center">
+      <p className="mb-8 sm:text-lg max-w-[1200px] text-muted-foreground text-left sm:text-center">
         This feature-packed documentation template, built with multiple
         frameworks including Next.js, React Router, and TanStack Router, offers
         a sleek and responsive design, perfect for all your project
