@@ -8,9 +8,11 @@ import ora from "ora";
 import chalk from "chalk";
 
 const templateOptions = {
-  master: chalk.blue("Advanced Docs"),
-  "minimal-docs": chalk.green("Minimal Docs"),
-  version_docs: chalk.yellow("Versioned Docs"),
+  "nextjs-base": chalk.blue("Next.js Base"),
+  "nextjs-i18n": chalk.green("Next.js i18n"),
+  "nextjs-minimal": chalk.yellow("Next.js Minimal"),
+  "nextjs-versioning": chalk.cyan("Next.js Versioning"),
+  "react-router-base": chalk.magenta("React Router Base"),
 };
 
 program
@@ -22,33 +24,33 @@ program
   )
   .action(async (projectDirectory) => {
     // Prompt user to choose template
-    const { version } = await inquirer.prompt([
+    const { template } = await inquirer.prompt([
       {
         type: "list",
-        name: "version",
+        name: "template",
         message:
           "Which version of the Ariadocs template would you like to use?",
         choices: Object.values(templateOptions),
       },
     ]);
 
-    // Map user choice to branch
-    const branch =
+    // Map user choice to folder
+    const folder =
       Object.keys(templateOptions).find(
-        (key) => templateOptions[key] === version
-      ) || "master"; // Fallback to master if no branch found
+        (key) => templateOptions[key] === template
+      ) || "nextjs-base"; // Fallback to nextjs-base if no folder found
 
     // Correct repo URL for degit
-    const repo = `github:nisabmohd/Aria-Docs#${branch}`;
+    const repo = `github:nisabmohd/Aria-Docs/${folder}`;
     const emitter = degit(repo);
     const projectPath = path.resolve(process.cwd(), projectDirectory);
 
     console.log(
-      `Creating a new Ariadocs project in ${projectPath} from the ${branch} branch...`
+      `Creating a new Ariadocs project in ${projectPath} from the ${folder} folder...`
     );
 
     // Create spinner
-    const spinner = ora(`Cloning ${chalk.magenta(branch)}...`).start();
+    const spinner = ora(`Cloning ${chalk.magenta(folder)}...`).start();
 
     try {
       await emitter.clone(projectPath);
