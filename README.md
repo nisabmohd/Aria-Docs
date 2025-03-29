@@ -28,19 +28,12 @@ npx ariadocs-cli <template> <project-directory>
 
 ### Deploy
 
-Deploy easily on Vercel.  
-
-- **Next.js Base:**  
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nisabmohd/Aria-Docs&project-name=nextjs-base&root-directory=nextjs-base)
-
-- **Next.js Minimal:**  
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nisabmohd/Aria-Docs&project-name=nextjs-minimal&root-directory=nextjs-minimal)
-
-- **Next.js i18n:**  
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nisabmohd/Aria-Docs&project-name=nextjs-i18n&root-directory=nextjs-i18n)
-
-- **React Router Base:**  
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nisabmohd/Aria-Docs&project-name=react-router-base&root-directory=react-router-base)
+| Template               | Deploy Link                                                                                                                       |
+|-------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
+| Next.js Base            | [![Deploy](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nisabmohd/Aria-Docs&project-name=nextjs-base&root-directory=nextjs-base) |
+| Next.js Minimal         | [![Deploy](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nisabmohd/Aria-Docs&project-name=nextjs-minimal&root-directory=nextjs-minimal) |
+| Next.js i18n            | [![Deploy](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nisabmohd/Aria-Docs&project-name=nextjs-i18n&root-directory=nextjs-i18n) |
+| React Router Base       | [![Deploy](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nisabmohd/Aria-Docs&project-name=react-router-base&root-directory=react-router-base) |
 
 ### Features
 
