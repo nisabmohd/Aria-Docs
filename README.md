@@ -1,93 +1,58 @@
 ## AriaDocs - Documentation Template
 
-This feature-packed documentation template, built with Next.js, offers a sleek and responsive design, perfect for all your project documentation needs.
+A versatile, open-source documentation template supporting multiple frameworks.
 
 <img src="./resources/public-og.png" />
 
-<br/>
+### Templates
 
-<!-- Here are all versions of the AriaDocs template, each crafted for specific use cases:
+- **Next.js Base:** Full-featured documentation with SSR and SSG.  
+  [View Template](https://github.com/nisabmohd/Aria-Docs/tree/nextjs-base)
 
+- **Next.js Minimal:** Lightweight documentation for simple needs.  
+  [View Template](https://github.com/nisabmohd/Aria-Docs/tree/nextjs-minimal)
 
-- **Advanced Docs:** A comprehensive template offering extensive features for in-depth documentation needs. Perfect for larger projects that require detailed explanations and advanced configurations.
-  [Explore the Advanced Docs](https://github.com/nisabmohd/Aria-Docs/tree/master)
+- **Next.js i18n:** Multilingual support for global audiences.  
+  [View Template](https://github.com/nisabmohd/Aria-Docs/tree/nextjs-i18n)
 
-- **Lite Version:** A streamlined, no-frills template perfect for straightforward documentation needs.
-  [Explore the Lite Version](https://github.com/nisabmohd/Aria-Docs/tree/minimal-docs)
-
-- **Version with Versioning:** A powerful option for projects that require historical documentation tracking. Manage multiple versions of your docs effortlessly.
-  [Check out the Versioning Feature](https://github.com/nisabmohd/Aria-Docs/tree/version_docs)
-
-- **i18n Support Version (NEW):** Designed for international audiences, this version will offer comprehensive multilingual support.
-  [Preview the i18n Support](https://github.com/nisabmohd/Aria-Docs/tree/i18n-support) -->
+- **React Router Base:** SPA documentation with client-side routing.  
+  [View Template](https://github.com/nisabmohd/Aria-Docs/tree/react-router-base)
 
 ### Quick Start
 
-You can create a new Ariadocs project using the command:
+Create a new project:
 
 ```plaintext
-npx create-aria-doc <project-directory>
+npx ariadocs-cli <template> <project-directory>
 ```
 
-### Expected Output
+### Deploy
 
-When you run the CLI, you can expect an output similar to this:
+Deploy easily on Vercel.  
 
-```
-Creating a new Ariadocs project in /path/to/your/project from the master branch...
-Cloning Master (Full Documentation)...
-Ariadocs project successfully created in /path/to/your/project!
+- **Next.js Base:**  
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nisabmohd/Aria-Docs&project-name=nextjs-base&root-directory=nextjs-base)
 
-Next steps:
-1. Navigate to your project directory:
-   cd <project-directory>
-2. Install dependencies:
-   // To support React 19, package maintainers will need to test and update their packages to include React 19 as a peer dependency. This is already in progress.
-   npm install --force
-3. Start the development server:
-   npm run dev
-```
+- **Next.js Minimal:**  
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nisabmohd/Aria-Docs&project-name=nextjs-minimal&root-directory=nextjs-minimal)
 
-## Getting Started
+- **Next.js i18n:**  
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nisabmohd/Aria-Docs&project-name=nextjs-i18n&root-directory=nextjs-i18n)
 
-First, run the development server:
+- **React Router Base:**  
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nisabmohd/Aria-Docs&project-name=react-router-base&root-directory=react-router-base)
 
-```plaintext
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Features
 
-## Deploy on Vercel
+- SSR and SSG Support
+- Multiple Frameworks (Next.js, React Router)
+- MDX for Interactive Docs
+- TOC with Scroll Highlight
+- Dark Mode
+- i18n for Multilingual Docs
+- Static and Dynamic Routing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Support
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nisabmohd/Aria-Docs)
-
-## Key Features
-
-| **Feature**                     | **Description**                                       |
-| ------------------------------- | ----------------------------------------------------- |
-| MDX Support                     | Write interactive documentation with MDX.             |
-| Nested Pages                    | Organize content in a nested, hierarchical structure. |
-| Blog Section                    | Include a dedicated blog section.                     |
-| Table of Contents               | Auto-generated TOC for easy navigation.               |
-| Pagination                      | Split content across multiple pages.                  |
-| Syntax Highlighting             | Highlight code for better readability.                |
-| Code Line Highlighting & Titles | Highlight specific lines with descriptive titles.     |
-| Interactive Code Blocks         | Language-specific and interactive code display.       |
-| Custom Components               | Embed custom, reusable components in your docs.       |
-| Light & Dark Mode               | Toggle between light and dark themes.                 |
-| Search Functionality            | Quickly find content with Algolia DocsSearch.         |
-| Code Switcher                   | Switch between code languages or variations.          |
-| Code Copy                       | Copy code blocks with a single click.                 |
-| TOC Observer Highlight          | Highlight active sections in the TOC as you scroll.   |
-| Static Site Generation          | Generate a static, high-performance site.             |
-| SEO-Optimized                   | Structured for optimal search engine indexing.        |
-| Internationalisation (New)      | Added support for i18n for multiple languages         |
+Please consider sponsoring to keep this project alive.  
+[Sponsor Me](https://github.com/sponsors/nisabmohd)
