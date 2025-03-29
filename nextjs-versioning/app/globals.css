@@ -1,0 +1,167 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.prose {
+  margin: 0 !important;
+}
+
+pre {
+  padding: 0 !important;
+  width: inherit !important;
+  overflow-x: auto;
+}
+
+pre>code {
+  display: grid;
+  max-width: inherit !important;
+  padding: 14px 0 !important;
+}
+
+.code-line {
+  padding: 0.75px 12.5px;
+}
+
+.line-number::before {
+  display: inline-block;
+  width: 1rem;
+  margin-right: 22px;
+  margin-left: -2px;
+  color: rgb(110, 110, 110);
+  content: attr(line);
+  font-size: 13.5px;
+  text-align: right;
+}
+
+
+.highlight-line {
+  @apply dark:bg-neutral-800/90;
+  @apply bg-neutral-200/90;
+}
+
+.punctuation {
+  color: gray;
+}
+
+.comment {
+  color: gray;
+}
+
+.keyword {
+  color: rgb(255, 50, 115)
+}
+
+.function {
+  color: hsla(210, 100%, 66%, 1)
+}
+
+.string,
+.constant,
+.annotation,
+.boolean,
+.number {
+  color: hsl(0, 0%, 29%)
+}
+
+.dark .string,
+.dark .constant,
+.dark .annotation,
+.dark .boolean,
+.dark.number {
+  color: hsl(0, 0%, 71%)
+}
+
+.dark .keyword {
+  color: hsla(341, 90%, 67%, 1)
+}
+
+.attr-value {
+  color: hsla(131, 43%, 57%, 1)
+}
+
+.tag {
+  color: hsla(341, 90%, 67%, 1)
+}
+
+.attr-name {
+  color: #414141;
+}
+
+.dark .attr-name {
+  color: #cacaca;
+
+}
+
+.rehype-code-title {
+  @apply px-2;
+  @apply -mb-8;
+  @apply w-full;
+  @apply text-sm;
+  @apply pt-1;
+  @apply pb-5;
+  @apply font-normal;
+  @apply tracking-wider;
+  @apply font-medium;
+  font-family: var(--font-code) !important;
+}
+
+.highlight-comp>code {
+  background-color: transparent !important;
+}
