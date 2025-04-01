@@ -18,6 +18,9 @@ A versatile, open-source documentation template supporting multiple frameworks.
 - **React Router Base:** SPA documentation with client-side routing.  
   [View Template](https://github.com/nisabmohd/Aria-Docs/tree/react-router-base)
 
+- **TanStack Start Base:** Documentation setup powered by TanStack Router.  
+  [View Template](https://github.com/nisabmohd/Aria-Docs/tree/tanstack-start-base)
+
 ### Quick Start
 
 Create a new project:
@@ -34,11 +37,12 @@ npx ariadocs-cli <template> <project-directory>
 | Next.js Minimal         | [![Deploy](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nisabmohd/Aria-Docs&project-name=nextjs-minimal&root-directory=nextjs-minimal) |
 | Next.js i18n            | [![Deploy](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nisabmohd/Aria-Docs&project-name=nextjs-i18n&root-directory=nextjs-i18n) |
 | React Router Base       | [![Deploy](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nisabmohd/Aria-Docs&project-name=react-router-base&root-directory=react-router-base) |
+| TanStack Start Base     | [![Deploy](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nisabmohd/Aria-Docs&project-name=tanstack-start-base&root-directory=tanstack-start-base) |
 
 ### Features
 
 - SSR and SSG Support
-- Multiple Frameworks (Next.js, React Router)
+- Multiple Frameworks (Next.js, React Router, TanStack Router)
 - MDX for Interactive Docs
 - TOC with Scroll Highlight
 - Dark Mode

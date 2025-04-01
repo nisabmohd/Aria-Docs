@@ -13,6 +13,7 @@ const templateOptions = {
   "nextjs-minimal": chalk.yellow("Next.js Minimal"),
   "nextjs-versioning": chalk.cyan("Next.js Versioning"),
   "react-router-base": chalk.magenta("React Router Base"),
+  "tanstack-start-base": chalk.red("TanStack Start Base"),
 };
 
 program
