@@ -1,6 +1,11 @@
 import { Typography } from "@/components/typography";
 import { buttonVariants } from "@/components/ui/button";
-import { Author, getAllBlogStaticPaths, getBlogForSlug } from "@/lib/markdown";
+import {
+  Author,
+  getAllBlogStaticPaths,
+  getCompiledBlogForSlug,
+  getBlogFrontmatter,
+} from "@/lib/markdown";
 import { ArrowLeftIcon } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -14,15 +19,13 @@ type PageProps = {
 
 export async function generateMetadata(props: PageProps) {
   const params = await props.params;
-
   const { slug } = params;
-
-  const res = await getBlogForSlug(slug);
+  const res = await getBlogFrontmatter(slug);
   if (!res) return {};
-  const { frontmatter } = res;
+  const { title, description } = res;
   return {
-    title: frontmatter.title,
-    description: frontmatter.description,
+    title,
+    description,
   };
 }
 
@@ -37,7 +40,7 @@ export default async function BlogPage(props: PageProps) {
 
   const { slug } = params;
 
-  const res = await getBlogForSlug(slug);
+  const res = await getCompiledBlogForSlug(slug);
   if (!res) notFound();
   return (
     <div className="lg:w-[60%] sm:[95%] md:[75%] mx-auto">

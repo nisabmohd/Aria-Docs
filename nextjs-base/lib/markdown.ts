@@ -81,7 +81,7 @@ export type BaseMdxFrontmatter = {
   description: string;
 };
 
-export async function getDocsForSlug(slug: string) {
+export async function getCompiledDocsForSlug(slug: string) {
   try {
     const contentPath = getDocsContentPath(slug);
     const rawMdx = await fs.readFile(contentPath, "utf-8");
@@ -152,14 +152,14 @@ export async function getAllChilds(pathString: string) {
         "/contents/docs/",
         prevHref,
         it.href,
-        "index.mdx",
+        "index.mdx"
       );
       const raw = await fs.readFile(totalPath, "utf-8");
       return {
         ...justGetFrontmatterFromMD<BaseMdxFrontmatter>(raw),
         href: `/docs${prevHref}${it.href}`,
       };
-    }),
+    })
   );
 }
 
@@ -206,7 +206,8 @@ export async function getAllBlogStaticPaths() {
     console.log(err);
   }
 }
-export async function getAllBlogs() {
+
+export async function getAllBlogsFrontmatter() {
   const blogFolder = path.join(process.cwd(), "/contents/blogs/");
   const files = await fs.readdir(blogFolder);
   const uncheckedRes = await Promise.all(
@@ -218,18 +219,38 @@ export async function getAllBlogs() {
         ...justGetFrontmatterFromMD<BlogMdxFrontmatter>(rawMdx),
         slug: file.split(".")[0],
       };
-    }),
+    })
   );
   return uncheckedRes.filter((it) => !!it) as (BlogMdxFrontmatter & {
     slug: string;
   })[];
 }
 
-export async function getBlogForSlug(slug: string) {
+export async function getCompiledBlogForSlug(slug: string) {
   const blogFile = path.join(process.cwd(), "/contents/blogs/", `${slug}.mdx`);
   try {
     const rawMdx = await fs.readFile(blogFile, "utf-8");
     return await parseMdx<BlogMdxFrontmatter>(rawMdx);
+  } catch {
+    return undefined;
+  }
+}
+
+export async function getBlogFrontmatter(slug: string) {
+  const blogFile = path.join(process.cwd(), "/contents/blogs/", `${slug}.mdx`);
+  try {
+    const rawMdx = await fs.readFile(blogFile, "utf-8");
+    return justGetFrontmatterFromMD<BlogMdxFrontmatter>(rawMdx);
+  } catch {
+    return undefined;
+  }
+}
+
+export async function getDocFrontmatter(path: string) {
+  try {
+    const contentPath = getDocsContentPath(path);
+    const rawMdx = await fs.readFile(contentPath, "utf-8");
+    return justGetFrontmatterFromMD<BlogMdxFrontmatter>(rawMdx);
   } catch {
     return undefined;
   }
@@ -243,9 +264,9 @@ function rehypeCodeTitlesWithLogo() {
         node?.tagName === "div" &&
         node?.properties?.className?.includes("rehype-code-title")
       ) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const titleTextNode = node.children.find((child: any) =>
-          child.type === "text"
+        const titleTextNode = node.children.find(
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (child: any) => child.type === "text"
         );
         if (!titleTextNode) return;
 
@@ -256,11 +277,7 @@ function rehypeCodeTitlesWithLogo() {
 
         const splittedNames = titleText.split(".");
         const ext = splittedNames[splittedNames.length - 1];
-        const iconClass = `devicon-${
-          getIconName(
-            ext,
-          )
-        }-plain text-[17px]`;
+        const iconClass = `devicon-${getIconName(ext)}-plain text-[17px]`;
 
         // Insert icon before title text
         if (iconClass) {

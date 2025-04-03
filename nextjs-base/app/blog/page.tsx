@@ -1,5 +1,9 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Author, BlogMdxFrontmatter, getAllBlogs } from "@/lib/markdown";
+import {
+  Author,
+  BlogMdxFrontmatter,
+  getAllBlogsFrontmatter,
+} from "@/lib/markdown";
 import { formatDate2, stringToDate } from "@/lib/utils";
 import { Metadata } from "next";
 import Image from "next/image";
@@ -10,7 +14,7 @@ export const metadata: Metadata = {
 };
 
 export default async function BlogIndexPage() {
-  const blogs = (await getAllBlogs()).sort(
+  const blogs = (await getAllBlogsFrontmatter()).sort(
     (a, b) => stringToDate(b.date).getTime() - stringToDate(a.date).getTime()
   );
   return (

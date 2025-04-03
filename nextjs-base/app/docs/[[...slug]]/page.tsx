@@ -3,7 +3,7 @@ import Pagination from "@/components/pagination";
 import Toc from "@/components/toc";
 import { page_routes } from "@/lib/routes-config";
 import { notFound } from "next/navigation";
-import { getDocsForSlug } from "@/lib/markdown";
+import { getCompiledDocsForSlug, getDocFrontmatter } from "@/lib/markdown";
 import { Typography } from "@/components/typography";
 
 type PageProps = {
@@ -12,11 +12,10 @@ type PageProps = {
 
 export default async function DocsPage(props: PageProps) {
   const params = await props.params;
-
   const { slug = [] } = params;
 
   const pathName = slug.join("/");
-  const res = await getDocsForSlug(pathName);
+  const res = await getCompiledDocsForSlug(pathName);
 
   if (!res) notFound();
   return (
@@ -44,16 +43,15 @@ export default async function DocsPage(props: PageProps) {
 
 export async function generateMetadata(props: PageProps) {
   const params = await props.params;
-
   const { slug = [] } = params;
 
   const pathName = slug.join("/");
-  const res = await getDocsForSlug(pathName);
+  const res = await getDocFrontmatter(pathName);
   if (!res) return {};
-  const { frontmatter } = res;
+  const { title, description } = res;
   return {
-    title: frontmatter.title,
-    description: frontmatter.description,
+    title,
+    description,
   };
 }
 
