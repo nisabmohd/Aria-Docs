@@ -1,15 +1,19 @@
 import { type Author, type BlogMdxFrontmatter } from "~/lib/markdown";
 import { formatDate2, stringToDate } from "~/lib/utils";
 import type { Route } from "./+types/blog-index";
-import { Link } from "react-router";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
-import { getAllBlogs } from "~/lib/markdown-server";
+import { getAllBlogsFrontmatter } from "~/lib/markdown-server";
+import { Link } from "react-router";
 
 export async function loader() {
-  const blogs = (await getAllBlogs()).sort(
+  const blogs = (await getAllBlogsFrontmatter()).sort(
     (a, b) => stringToDate(b.date).getTime() - stringToDate(a.date).getTime()
   );
   return blogs;
+}
+
+export function meta() {
+  return [{ title: "AriaDocs - Blog" }];
 }
 
 export default function BlogIndex({ loaderData: blogs }: Route.ComponentProps) {

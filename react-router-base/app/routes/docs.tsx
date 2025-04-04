@@ -10,14 +10,26 @@ import { not_found } from "~/lib/utils";
 
 export async function loader({ params }: Route.LoaderArgs) {
   let path = params["*"];
-
   const mdx = await getDocsForSlug(path);
   const tocs = await getDocsTocs(path);
   return { mdx, tocs };
 }
 
+export function meta({ data }: Route.MetaArgs) {
+  if (!data.mdx) return [];
+  const { title, description } = data.mdx
+    .frontmatter as unknown as BaseMdxFrontmatter;
+  return [
+    { title },
+    {
+      name: "description",
+      content: description,
+    },
+  ];
+}
+
 export default function DocsPage({ loaderData, params }: Route.ComponentProps) {
-  if (!loaderData.mdx || !loaderData.tocs) throw new Error(not_found);
+  if (!loaderData.mdx) throw new Error(not_found);
 
   let path = params["*"];
   const frontmatter = loaderData.mdx

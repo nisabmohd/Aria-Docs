@@ -45,7 +45,7 @@ export async function getDocsTocs(slug: string) {
   }
 }
 
-export async function getAllBlogs() {
+export async function getAllBlogsFrontmatter() {
   const blogFolder = path.join(process.cwd(), "/app/contents/blogs/");
   const files = await fs.readdir(blogFolder);
   const uncheckedRes = await Promise.all(

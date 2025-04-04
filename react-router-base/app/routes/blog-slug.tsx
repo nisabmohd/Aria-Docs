@@ -19,6 +19,19 @@ export async function loader({ params }: Route.LoaderArgs) {
   return res;
 }
 
+export function meta({ data }: Route.MetaArgs) {
+  if (!data) return [];
+  const { title, description } =
+    data.frontmatter as unknown as BlogMdxFrontmatter;
+  return [
+    { title },
+    {
+      name: "description",
+      content: description,
+    },
+  ];
+}
+
 export default function BloogWithSlug({ loaderData }: Route.ComponentProps) {
   if (!loaderData) throw new Error(not_found);
   const frontmatter = loaderData.frontmatter as unknown as BlogMdxFrontmatter;

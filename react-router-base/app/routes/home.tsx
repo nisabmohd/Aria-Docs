@@ -1,14 +1,17 @@
 import { buttonVariants } from "~/components/ui/button";
 import { MoveUpRightIcon, TerminalSquareIcon } from "lucide-react";
-
 import type { Route } from "./+types/home";
 import { Link } from "react-router";
 import { page_routes } from "~/lib/routes-config";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "AriaDocs - Template" },
+    {
+      name: "description",
+      content:
+        "This comprehensive documentation template, crafted with Next.js and available as open-source, delivers a sleek and responsive design, tailored to meet all your project documentation requirements.",
+    },
   ];
 }
 
