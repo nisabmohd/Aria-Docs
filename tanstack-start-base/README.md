@@ -71,4 +71,4 @@ pnpm dev
 > [!WARNING]
 > You will need to update the `docs/config.json` file (in the project's repo) if you add a new doc page!
 
-<!-- TODO: Algolia search, dark mode, meta -->
+<!-- TODO: dark mode -->

@@ -33,14 +33,30 @@ export const Route = createFileRoute("/blog/$slug/")({
     const { slug } = params;
     const rawBlog = await getBlogRawServerFn({ data: { slug } });
     if (!rawBlog) throw notFound();
-    const res = compileRaw(rawBlog);
-    return res;
+    const res = await compileRaw(rawBlog);
+    return { mdx: res };
+  },
+  head: ({ loaderData }) => {
+    const { mdx } = loaderData!;
+    const { title, description } =
+      mdx.frontmatter as unknown as BlogMdxFrontmatter;
+    return {
+      meta: [
+        {
+          title,
+        },
+        {
+          name: "description",
+          content: description,
+        },
+      ],
+    };
   },
 });
 
 function RouteComponent() {
   const blogData = Route.useLoaderData();
-  const frontmatter = blogData.frontmatter as unknown as BlogMdxFrontmatter;
+  const frontmatter = blogData.mdx.frontmatter as unknown as BlogMdxFrontmatter;
 
   return (
     <div className="lg:w-[60%] sm:[95%] md:[75%] mx-auto">
@@ -76,7 +92,7 @@ function RouteComponent() {
           />
         </div>
         <Typography>
-          <MDXRemote {...blogData} components={components} />
+          <MDXRemote {...blogData.mdx} components={components} />
         </Typography>
       </div>
     </div>

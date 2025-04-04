@@ -1,12 +1,12 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Author, BlogMdxFrontmatter } from "@/lib/markdown";
-import { getAllBlogs } from "@/lib/markdown-server";
+import { getAllBlogsFrontmatter } from "@/lib/markdown-server";
 import { formatDate2, stringToDate } from "@/lib/utils";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 
 export const getAllBlogsServerFn = createServerFn().handler(async () => {
-  const blogs = (await getAllBlogs()).sort(
+  const blogs = (await getAllBlogsFrontmatter()).sort(
     (a, b) => stringToDate(b.date).getTime() - stringToDate(a.date).getTime()
   );
   return blogs;
@@ -17,6 +17,13 @@ export const Route = createFileRoute("/blog/")({
   loader: async () => {
     return await getAllBlogsServerFn();
   },
+  head: () => ({
+    meta: [
+      {
+        title: "AriaDocs - Blog",
+      },
+    ],
+  }),
 });
 
 function RouteBlogComponent() {

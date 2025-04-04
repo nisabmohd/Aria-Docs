@@ -41,6 +41,23 @@ export const Route = createFileRoute("/docs/$")({
     const tocs = await getDocsTocServerFn({ data: { path } });
     return { mdx, tocs };
   },
+
+  head: ({ loaderData }) => {
+    const { mdx } = loaderData!;
+    const { title, description } =
+      mdx.frontmatter as unknown as BaseMdxFrontmatter;
+    return {
+      meta: [
+        {
+          title,
+        },
+        {
+          name: "description",
+          content: description,
+        },
+      ],
+    };
+  },
 });
 
 function RouteComponent() {

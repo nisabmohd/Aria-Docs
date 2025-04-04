@@ -8,7 +8,6 @@ import {
 import appCss from "@/styles/app.css?url";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import NotFound from "@/components/not-found";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -21,13 +20,18 @@ export const Route = createRootRoute({
         content: "width=device-width, initial-scale=1",
       },
       {
-        title: "TanStack Start Starter",
+        title: "AriaDocs - Template",
       },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
+      },
+      {
+        rel: "icon",
+        type: "image/x-icon",
+        href: "https://ariadocs.vercel.app/favicon.ico",
       },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       {
