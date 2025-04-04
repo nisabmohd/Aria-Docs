@@ -29,6 +29,11 @@ export const Route = createRootRoute({
         href: appCss,
       },
       {
+        rel: "stylesheet",
+        href: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css",
+        type: "text/css",
+      },
+      {
         rel: "icon",
         type: "image/x-icon",
         href: "https://ariadocs.vercel.app/favicon.ico",
