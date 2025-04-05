@@ -8,6 +8,7 @@ import {
 import appCss from "@/styles/app.css?url";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import { getTheme, ThemeProvider, useTheme } from "@/components/theme-provider";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -51,23 +52,26 @@ export const Route = createRootRoute({
     ],
   }),
   component: RootComponent,
-  // notFoundComponent: () => {
-  //   return <NotFound />;
-  // },
+  loader: () => getTheme(),
 });
 
 function RootComponent() {
+  const data = Route.useLoaderData();
   return (
-    <RootDocument>
-      <Outlet />
-    </RootDocument>
+    <ThemeProvider theme={data}>
+      <RootDocument>
+        <Outlet />
+      </RootDocument>
+    </ThemeProvider>
   );
 }
 
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
+  const { theme } = useTheme();
   return (
-    <html suppressHydrationWarning>
+    <html className={theme} suppressHydrationWarning>
       <head>
+        <script defer></script>
         <HeadContent />
       </head>
       <body className="font-regular antialiased tracking-wide">

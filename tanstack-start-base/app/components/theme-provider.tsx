@@ -1,75 +1,51 @@
-// TODO:
+import { useRouter } from "@tanstack/react-router";
+import { createServerFn } from "@tanstack/react-start";
+import { getCookie, setCookie } from "@tanstack/react-start/server";
+import { createContext, PropsWithChildren, useContext, useState } from "react";
 
-import { createContext, useContext, useEffect, useState } from "react";
+const storageKey = "ui-theme";
 
-type Theme = "dark" | "light" | "system";
+export type Theme = "light" | "dark";
 
-type ThemeProviderProps = {
-  children: React.ReactNode;
-  defaultTheme?: Theme;
-  storageKey?: string;
-};
+type ThemeContext = { theme: Theme; setTheme: (val: Theme) => void };
 
-type ThemeProviderState = {
-  theme: Theme;
-  setTheme: (theme: Theme) => void;
-};
-
-const initialState: ThemeProviderState = {
-  theme: "system",
-  setTheme: () => null,
-};
-
-const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
+const ThemeContext = createContext<ThemeContext | null>(null);
 
 export function ThemeProvider({
   children,
-  defaultTheme = "system",
-  storageKey = "ui-theme",
-  ...props
-}: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(() => {
-    return (localStorage.getItem(storageKey) as Theme) || defaultTheme;
-  });
+  theme,
+}: PropsWithChildren<{ theme: Theme }>) {
+  const [_theme, _setTheme] = useState(theme);
+  const router = useRouter();
 
-  useEffect(() => {
-    const root = window.document.documentElement;
-
-    root.classList.remove("light", "dark");
-
-    if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-        .matches
-        ? "dark"
-        : "light";
-
-      root.classList.add(systemTheme);
-      return;
-    }
-
-    root.classList.add(theme);
-  }, [theme]);
-
-  const value = {
-    theme,
-    setTheme: (theme: Theme) => {
-      localStorage.setItem(storageKey, theme);
-      setTheme(theme);
-    },
-  };
+  function setTheme(val: Theme) {
+    setThemeSeverFn({ data: val });
+    router.invalidate();
+  }
 
   return (
-    <ThemeProviderContext.Provider {...props} value={value}>
+    <ThemeContext.Provider value={{ theme, setTheme }}>
       {children}
-    </ThemeProviderContext.Provider>
+    </ThemeContext.Provider>
   );
 }
 
-export const useTheme = () => {
-  const context = useContext(ThemeProviderContext);
+export const getTheme = createServerFn().handler(async () => {
+  return (getCookie(storageKey) || "light") as Theme;
+});
 
-  if (context === undefined)
-    throw new Error("useTheme must be used within a ThemeProvider");
+const setThemeSeverFn = createServerFn({ method: "POST" })
+  .validator((data: unknown) => {
+    if (typeof data != "string" && (data != "dark" || data != "light"))
+      throw new Error("Invalid theme provided");
+    return data as Theme;
+  })
+  .handler(async ({ data }) => {
+    setCookie(storageKey, data);
+  });
 
-  return context;
-};
+export function useTheme() {
+  const val = useContext(ThemeContext);
+  if (!val) throw new Error("useTheme called outside of ThemeProvider");
+  return val;
+}
