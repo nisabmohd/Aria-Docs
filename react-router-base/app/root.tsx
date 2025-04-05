@@ -5,8 +5,18 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from "react-router";
 
+import {
+  ThemeProvider,
+  useTheme,
+  PreventFlashOnWrongTheme,
+  createThemeAction,
+} from "remix-themes";
+import { themeSessionResolver } from "./lib/sessions.server";
+
+import type { PropsWithChildren } from "react";
 import type { Route } from "./+types/root";
 import { Navbar } from "./components/navbar";
 import { Footer } from "./components/footer";
@@ -14,6 +24,7 @@ import NotFound from "./components/not-found";
 import ErrorComp from "./components/error";
 import { not_found } from "./lib/utils";
 import "./styles/app.css";
+import clsx from "clsx";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -33,13 +44,27 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
+export const action = createThemeAction(themeSessionResolver);
+
 export function Layout({ children }: { children: React.ReactNode }) {
+  const data = useLoaderData();
   return (
-    <html lang="en">
+    <ThemeProvider specifiedTheme={data?.theme} themeAction="/">
+      <AppWithProviders>{children}</AppWithProviders>
+    </ThemeProvider>
+  );
+}
+
+function AppWithProviders({ children }: PropsWithChildren) {
+  const data = useLoaderData();
+  const [theme] = useTheme();
+  return (
+    <html lang="en" className={clsx(theme)}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
+        <PreventFlashOnWrongTheme ssrTheme={Boolean(data.theme)} />
         <Links />
       </head>
       <body className="font-regular antialiased tracking-wide">
@@ -53,6 +78,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </body>
     </html>
   );
+}
+
+export async function loader({ request }: Route.LoaderArgs) {
+  const { getTheme } = await themeSessionResolver(request);
+  return {
+    theme: getTheme(),
+  };
 }
 
 export default function App() {
