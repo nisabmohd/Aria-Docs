@@ -1,0 +1,94 @@
+---
+title: Internationalization
+description: Learn how to enable multilingual support in your documentation using the built-in i18n setup.
+---
+
+Internationalization (i18n) is built-in with this template to support multiple languages out of the box. This guide walks you through setting it up using the CLI and how to add and access translations across your app.
+
+## Getting Started
+
+To enable internationalization, initialize your project with the CLI and select the `i18n` option when prompted:
+
+```bash
+npx ariadocs-cli <template> <project-directory>
+```
+
+## Translation Files
+
+Translations are stored in dictionary files, organized by language codes. You can find them at:
+
+```
+nextjs-i18n/dictionaries/en.json
+nextjs-i18n/dictionaries/fr.json
+```
+
+Add all your translation keys and values inside these JSON files. The structure supports nested keys and is fully type-safe.
+
+Example `en.json`:
+```json
+{
+  "error": {
+    "title": "Something went wrong",
+    "sub_text": "Please try again later."
+  }
+}
+```
+
+## Organizing Localized Content
+
+To keep your localized content organized, follow this structure:
+
+- Documentation content:
+  ```
+  contents/docs/en/getting-started/introduction/index.mdx
+  contents/docs/fr/getting-started/introduction/index.mdx
+  ```
+
+- Blog content:
+  ```
+  contents/blog/en/introduction.mdx
+  contents/blog/fr/introduction.mdx
+  ```
+
+Each language should mirror the same structure to maintain consistency.
+
+## Accessing Dictionaries
+
+### In Server Components
+
+In your server components (including pages), you can fetch the dictionary for the current locale using the `getDictionary` utility:
+
+```ts
+import { getDictionary } from '@/lib/dictionary';
+
+export default async function Page({ params }) {
+  const { lang } = params;
+  const dict = await getDictionary(lang);
+
+  return <p>{dict.error.sub_text}</p>;
+}
+```
+
+You can also pass `dict` to other server components as a prop.
+
+### In Client Components
+
+For client-side usage, use the `useDictionary` hook:
+
+```ts
+'use client';
+
+import { useDictionary } from '@/lib/dictionary';
+
+export default function ErrorMessage() {
+  const dict = useDictionary();
+
+  return <p>{dict.error.sub_text}</p>;
+}
+```
+
+This hook gives you access to the type-safe dictionary in your client components.
+
+---
+
+For a full implementation, check out the blog post here: [Next.js i18n with Dictionary Pattern](https://nisabmohd.vercel.app/next-i18n)

@@ -7,19 +7,19 @@ A versatile, open-source documentation template supporting multiple frameworks.
 ### Templates
 
 - **Next.js Base:** Full-featured documentation with SSR and SSG.  
-  [View Template](https://github.com/nisabmohd/Aria-Docs/tree/nextjs-base)
+  [View Template](https://github.com/nisabmohd/Aria-Docs/tree/master/nextjs-base)
 
 - **Next.js Minimal:** Lightweight documentation for simple needs.  
-  [View Template](https://github.com/nisabmohd/Aria-Docs/tree/nextjs-minimal)
+  [View Template](https://github.com/nisabmohd/Aria-Docs/tree/master/nextjs-minimal)
 
 - **Next.js i18n:** Multilingual support for global audiences.  
-  [View Template](https://github.com/nisabmohd/Aria-Docs/tree/nextjs-i18n)
+  [View Template](https://github.com/nisabmohd/Aria-Docs/tree/master/nextjs-i18n)
 
 - **React Router Base:** SPA documentation with client-side routing.  
-  [View Template](https://github.com/nisabmohd/Aria-Docs/tree/react-router-base)
+  [View Template](https://github.com/nisabmohd/Aria-Docs/tree/master/react-router-base)
 
 - **TanStack Start Base:** Documentation setup powered by TanStack Router.  
-  [View Template](https://github.com/nisabmohd/Aria-Docs/tree/tanstack-start-base)
+  [View Template](https://github.com/nisabmohd/Aria-Docs/tree/master/tanstack-start-base)
 
 ### Quick Start
 
