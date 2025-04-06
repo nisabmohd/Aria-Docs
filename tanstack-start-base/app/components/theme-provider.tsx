@@ -30,7 +30,7 @@ export function ThemeProvider({
   );
 }
 
-export const getTheme = createServerFn().handler(async () => {
+export const getThemeSeverFn = createServerFn().handler(async () => {
   return (getCookie(storageKey) || "light") as Theme;
 });
 

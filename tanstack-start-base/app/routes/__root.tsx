@@ -8,7 +8,11 @@ import {
 import appCss from "@/styles/app.css?url";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { getTheme, ThemeProvider, useTheme } from "@/components/theme-provider";
+import {
+  getThemeSeverFn,
+  ThemeProvider,
+  useTheme,
+} from "@/components/theme-provider";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -52,7 +56,7 @@ export const Route = createRootRoute({
     ],
   }),
   component: RootComponent,
-  loader: () => getTheme(),
+  loader: () => getThemeSeverFn(),
 });
 
 function RootComponent() {
