@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { PropsWithChildren } from "react";
 import {
   Outlet,
   createRootRoute,
@@ -8,11 +8,8 @@ import {
 import appCss from "@/styles/app.css?url";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import {
-  getThemeSeverFn,
-  ThemeProvider,
-  useTheme,
-} from "@/components/theme-provider";
+import { ThemeProvider, useTheme } from "@/components/theme-provider";
+import { getThemeSeverFn } from "@/lib/theme";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -70,7 +67,7 @@ function RootComponent() {
   );
 }
 
-function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
+function RootDocument({ children }: PropsWithChildren) {
   const { theme } = useTheme();
   return (
     <html className={theme} suppressHydrationWarning>
