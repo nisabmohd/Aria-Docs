@@ -75,7 +75,6 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html className={theme} suppressHydrationWarning>
       <head>
-        <script defer></script>
         <HeadContent />
       </head>
       <body className="font-regular antialiased tracking-wide">
