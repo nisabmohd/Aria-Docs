@@ -31,14 +31,13 @@ npx ariadocs-cli <template> <project-directory>
 
 ### Deploy
 
-| Template            | Deploy Link                                                                                                                                                                                                                                            |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Next.js Base        | [![Deploy](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nisabmohd/Aria-Docs&project-name=nextjs-base&root-directory=nextjs-base)                                                                         |
-| Next.js Minimal     | [![Deploy](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nisabmohd/Aria-Docs&project-name=nextjs-minimal&root-directory=nextjs-minimal)                                                                   |
-| Next.js i18n        | [![Deploy](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nisabmohd/Aria-Docs&project-name=nextjs-i18n&root-directory=nextjs-i18n)                                                                         |
-| React Router Base   | [![Deploy](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nisabmohd/Aria-Docs&project-name=react-router-base&root-directory=react-router-base)                                                             |
-| TanStack Start Base | [![Deploy](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nisabmohd/Aria-Docs&project-name=tanstack-start-base&root-directory=tanstack-start-base&build-command=npm%20run%20build%20--%20--preset%20vercel |
-| )                   |
+| Template            | Deploy Link                                                                                                                                                                                                                                             |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Next.js Base        | [![Deploy](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nisabmohd/Aria-Docs&project-name=nextjs-base&root-directory=nextjs-base)                                                                          |
+| Next.js Minimal     | [![Deploy](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nisabmohd/Aria-Docs&project-name=nextjs-minimal&root-directory=nextjs-minimal)                                                                    |
+| Next.js i18n        | [![Deploy](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nisabmohd/Aria-Docs&project-name=nextjs-i18n&root-directory=nextjs-i18n)                                                                          |
+| React Router Base   | [![Deploy](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nisabmohd/Aria-Docs&project-name=react-router-base&root-directory=react-router-base)                                                              |
+| TanStack Start Base | [![Deploy](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nisabmohd/Aria-Docs&project-name=tanstack-start-base&root-directory=tanstack-start-base&build-command=npm%20run%20build%20--%20--preset%20vercel) |
 
 ### Features
 
