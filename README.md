@@ -15,7 +15,7 @@ A versatile, open-source documentation template supporting multiple frameworks.
 - **Next.js i18n:** Multilingual support for global audiences.  
   [View Template](https://github.com/nisabmohd/Aria-Docs/tree/master/nextjs-i18n)
 
-- **React Router Base:** SPA documentation with client-side routing.  
+- **React Router Base:** Documentation with React Router Framework.  
   [View Template](https://github.com/nisabmohd/Aria-Docs/tree/master/react-router-base)
 
 - **TanStack Start Base:** Documentation setup powered by TanStack Router.  
