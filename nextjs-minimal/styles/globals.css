@@ -8,92 +8,99 @@
 @tailwind components;
 @tailwind utilities;
 
-/* nebula */
 @layer base {
   :root {
-    --background: 152 9% 98%;
-    /* Soft white with a hint of green */
-    --foreground: 160 10% 10%;
-    /* Dark forest green */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 20%;
     --card: 0 0% 100%;
-    /* Pure white for a clean look */
-    --card-foreground: 160 10% 10%;
+    --card-foreground: 0 0% 20%;
     --popover: 0 0% 100%;
-    --popover-foreground: 160 10% 10%;
-    --primary: 158 85% 40%;
-    /* Vibrant Supabase green */
+    --popover-foreground: 0 0% 20%;
+    --primary: 217.22 91.22% 59.80%;
     --primary-foreground: 0 0% 100%;
-    /* Pure white for contrast */
-    --secondary: 152 14% 90%;
-    /* Light mint green */
-    --secondary-foreground: 160 10% 10%;
-    --muted: 152 14% 90%;
-    --muted-foreground: 160 10% 40%;
-    /* Muted olive green */
-    --accent: 158 85% 40%;
-    /* Same green as primary */
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 65% 55%;
-    /* Light red for warnings */
+    --secondary: 220.00 14.29% 95.88%;
+    --secondary-foreground: 215 13.79% 34.12%;
+    --muted: 210 20.00% 98.04%;
+    --muted-foreground: 220 8.94% 46.08%;
+    --accent: 204.00 93.75% 93.73%;
+    --accent-foreground: 224.44 64.29% 32.94%;
+    --destructive: 0 84.24% 60.20%;
     --destructive-foreground: 0 0% 100%;
-    --border: 160 10% 85%;
-    /* Light grey-green border */
-    --input: 160 10% 85%;
-    --ring: 158 85% 50%;
-    /* Slightly lighter green ring */
-    --radius: 0.5rem;
-    --chart-1: 158 85% 40%;
-    /* Green for primary chart */
-    --chart-2: 160 20% 45%;
-    /* Subdued green for charts */
-    --chart-3: 160 10% 30%;
-    /* Darker forest green */
-    --chart-4: 154 60% 50%;
-    /* Light pastel green */
-    --chart-5: 160 10% 85%;
-    /* Very light green for background */
+    --border: 220 13.04% 90.98%;
+    --input: 220 13.04% 90.98%;
+    --ring: 217.22 91.22% 59.80%;
+    --chart-1: 217.22 91.22% 59.80%;
+    --chart-2: 221.21 83.19% 53.33%;
+    --chart-3: 224.28 76.33% 48.04%;
+    --chart-4: 225.93 70.73% 40.20%;
+    --chart-5: 224.44 64.29% 32.94%;
+    --sidebar: 210 20.00% 98.04%;
+    --sidebar-foreground: 0 0% 20%;
+    --sidebar-primary: 217.22 91.22% 59.80%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 204.00 93.75% 93.73%;
+    --sidebar-accent-foreground: 224.44 64.29% 32.94%;
+    --sidebar-border: 220 13.04% 90.98%;
+    --sidebar-ring: 217.22 91.22% 59.80%;
+    --font-sans: Inter, sans-serif;
+    --font-serif: Source Serif 4, serif;
+    --font-mono: JetBrains Mono, monospace;
+    --radius: 0.375rem;
+    --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+    --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+    --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
+    --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
+    --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 2px 4px -1px hsl(0 0% 0% / 0.10);
+    --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 4px 6px -1px hsl(0 0% 0% / 0.10);
+    --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 8px 10px -1px hsl(0 0% 0% / 0.10);
+    --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
   }
 
   .dark {
-    --background: 160 10% 5%;
-    /* Very dark greenish-grey */
-    --foreground: 0 0% 100%;
-    /* Bright white */
-    --card: 160 10% 8%;
-    /* Slightly lighter dark green */
-    --card-foreground: 0 0% 100%;
-    --popover: 160 10% 8%;
-    --popover-foreground: 0 0% 100%;
-    --primary: 158 85% 50%;
-    /* Bright green for dark mode */
+    --background: 0 0% 9.02%;
+    --foreground: 0 0% 89.80%;
+    --card: 0 0% 14.90%;
+    --card-foreground: 0 0% 89.80%;
+    --popover: 0 0% 14.90%;
+    --popover-foreground: 0 0% 89.80%;
+    --primary: 217.22 91.22% 59.80%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 160 10% 15%;
-    /* Dark muted green */
-    --secondary-foreground: 0 0% 100%;
-    --muted: 160 10% 15%;
-    --muted-foreground: 160 10% 75%;
-    /* Light grey-green */
-    --accent: 158 85% 50%;
-    /* Bright green accent */
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 65% 50%;
-    /* Soft red for alerts */
+    --secondary: 0 0% 14.90%;
+    --secondary-foreground: 0 0% 89.80%;
+    --muted: 0 0% 14.90%;
+    --muted-foreground: 0 0% 63.92%;
+    --accent: 224.44 64.29% 32.94%;
+    --accent-foreground: 213.33 96.92% 87.25%;
+    --destructive: 0 84.24% 60.20%;
     --destructive-foreground: 0 0% 100%;
-    --border: 160 10% 15%;
-    /* Dark green border */
-    --input: 160 10% 15%;
-    --ring: 158 85% 60%;
-    /* Vibrant green ring */
-    --chart-1: 158 85% 50%;
-    /* Main green for charts */
-    --chart-2: 160 20% 45%;
-    /* Subdued green for contrast */
-    --chart-3: 160 10% 30%;
-    /* Deep forest green */
-    --chart-4: 154 60% 50%;
-    /* Light green accent */
-    --chart-5: 160 10% 85%;
-    /* Soft background green */
+    --border: 0 0% 25.10%;
+    --input: 0 0% 25.10%;
+    --ring: 217.22 91.22% 59.80%;
+    --chart-1: 213.12 93.90% 67.84%;
+    --chart-2: 217.22 91.22% 59.80%;
+    --chart-3: 221.21 83.19% 53.33%;
+    --chart-4: 224.28 76.33% 48.04%;
+    --chart-5: 225.93 70.73% 40.20%;
+    --sidebar: 0 0% 9.02%;
+    --sidebar-foreground: 0 0% 89.80%;
+    --sidebar-primary: 217.22 91.22% 59.80%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 224.44 64.29% 32.94%;
+    --sidebar-accent-foreground: 213.33 96.92% 87.25%;
+    --sidebar-border: 0 0% 25.10%;
+    --sidebar-ring: 217.22 91.22% 59.80%;
+    --font-sans: Inter, sans-serif;
+    --font-serif: Source Serif 4, serif;
+    --font-mono: JetBrains Mono, monospace;
+    --radius: 0.375rem;
+    --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+    --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+    --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
+    --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
+    --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 2px 4px -1px hsl(0 0% 0% / 0.10);
+    --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 4px 6px -1px hsl(0 0% 0% / 0.10);
+    --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 8px 10px -1px hsl(0 0% 0% / 0.10);
+    --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
   }
 }
 

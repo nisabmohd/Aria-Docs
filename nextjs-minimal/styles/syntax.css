@@ -1,80 +1,81 @@
- /* nebula */
- /* Light Mode */
- .keyword {
-   color: #15803d;
-   /* Dark Green */
- }
+.keyword {
+  color: hsl(217, 85%, 50%);
+}
 
- .function {
-   color: #0ea5e9;
-   /* Sky Blue */
- }
+.function {
+  color: hsl(200, 100%, 45%);
+}
 
- .punctuation {
-   color: #64748b;
-   /* Slate Gray */
- }
+.punctuation {
+  color: hsl(220, 10%, 50%);
+}
 
- .comment {
-   color: #94a3b8;
-   /* Muted Slate Gray */
- }
+.comment {
+  color: hsl(215, 13%, 55%);
+  font-style: italic;
+}
 
- .string,
- .constant,
- .annotation,
- .boolean,
- .number {
-   color: #16a34a;
-   /* Medium Green */
- }
+.string,
+.constant,
+.annotation,
+.boolean,
+.number {
+  color: hsl(140, 60%, 40%);
+}
 
- .tag {
-   color: #15803d;
-   /* Dark Green */
- }
+.tag {
+  color: hsl(160, 60%, 45%);
+}
 
- .attr-name {
-   color: #0d9488;
-   /* Teal */
- }
+.attr-name {
+  color: hsl(190, 70%, 40%);
+}
 
- .attr-value {
-   color: #059669;
-   /* Emerald Green */
- }
+.attr-value {
+  color: hsl(160, 70%, 35%);
+}
 
- /* Dark Mode */
- .dark .keyword {
-   color: #86efac;
-   /* Light Green */
- }
+.dark .keyword {
+  color: hsl(217, 100%, 75%);
+  /* Vibrant light blue - eye-catching but readable */
+}
 
- .dark .function {
-   color: #38bdf8;
-   /* Sky Blue */
- }
+.dark .function {
+  color: hsl(200, 100%, 70%);
+  /* Slightly cooler blue for functions */
+}
 
- .dark .string,
- .dark .constant,
- .dark .annotation,
- .dark .boolean,
- .dark .number {
-   color: #4ade80;
-   /* Soft Lime Green */
- }
+.dark .punctuation {
+  color: hsl(220, 14%, 60%);
+  /* Muted slate gray for symbols */
+}
 
- .dark .tag {
-   color: #86efac;
-   /* Light Green */
- }
+.dark .comment {
+  color: hsl(215, 13%, 50%);
+  font-style: italic;
+  /* Dim but visible gray, italic for style */
+}
 
- .dark .attr-name {
-   color: #34d399;
-   /* Teal */
- }
+.dark .string,
+.dark .constant,
+.dark .annotation,
+.dark .boolean,
+.dark .number {
+  color: hsl(140, 70%, 65%);
+  /* Soft green with vibrance for literals */
+}
 
- .dark .attr-value {
-   color: #6ee7b7;
-   /* Light Emerald */
- }
+.dark .tag {
+  color: hsl(160, 70%, 75%);
+  /* Minty green for tags - different from keyword */
+}
+
+.dark .attr-name {
+  color: hsl(190, 80%, 70%);
+  /* Teal-blue for attribute names */
+}
+
+.dark .attr-value {
+  color: hsl(160, 80%, 60%);
+  /* Greenish-cyan for attribute values */
+}
