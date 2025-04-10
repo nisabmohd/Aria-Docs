@@ -9,7 +9,7 @@ import appCss from "@/styles/app.css?url";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { ThemeProvider, useTheme } from "@/components/theme-provider";
-import { getThemeSeverFn } from "@/lib/theme";
+import { getThemeServerFn } from "@/lib/theme";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -53,7 +53,7 @@ export const Route = createRootRoute({
     ],
   }),
   component: RootComponent,
-  loader: () => getThemeSeverFn(),
+  loader: () => getThemeServerFn(),
 });
 
 function RootComponent() {
@@ -70,7 +70,7 @@ function RootComponent() {
 function RootDocument({ children }: PropsWithChildren) {
   const { theme } = useTheme();
   return (
-    <html className={theme} suppressHydrationWarning>
+    <html className={theme}>
       <head>
         <HeadContent />
       </head>
