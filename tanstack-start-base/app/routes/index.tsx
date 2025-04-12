@@ -9,7 +9,7 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   return (
-    <div className="flex sm:min-h-[87.5vh] min-h-[82vh] flex-col sm:items-center justify-center text-center px-2 sm:py-8 py-12">
+    <div className="flex sm:min-h-[87.5vh] min-h-[82vh] flex-col sm:items-center justify-center text-center sm:py-8 py-12">
       <a
         href="https://github.com/nisabmohd/Aria-Docs"
         target="_blank"
