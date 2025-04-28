@@ -1,5 +1,4 @@
 import { type getDocsTocs } from "@/lib/markdown-server";
-import { Link } from "@tanstack/react-router";
 import clsx from "clsx";
 import { useState, useRef, useEffect } from "react";
 
@@ -48,9 +47,9 @@ export default function TocObserver({ data }: Props) {
     <div className="flex flex-col gap-2.5 text-sm dark:text-stone-300/85 text-stone-800 ml-0.5">
       {data.map(({ href, level, text }, index) => {
         return (
-          <Link
+          <a
             key={href + text + level + index}
-            to={href}
+            href={href}
             className={clsx({
               "pl-0": level == 2,
               "pl-4": level == 3,
@@ -60,7 +59,7 @@ export default function TocObserver({ data }: Props) {
             })}
           >
             {text}
-          </Link>
+          </a>
         );
       })}
     </div>
