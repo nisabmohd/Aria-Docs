@@ -1,6 +1,6 @@
 import { setThemeServerFn } from "@/lib/theme";
 import { useRouter } from "@tanstack/react-router";
-import { createContext, PropsWithChildren, use, useState } from "react";
+import { createContext, PropsWithChildren, use } from "react";
 
 export type Theme = "light" | "dark";
 
@@ -10,12 +10,10 @@ type Props = PropsWithChildren<{ theme: Theme }>;
 const ThemeContext = createContext<ThemeContextVal | null>(null);
 
 export function ThemeProvider({ children, theme }: Props) {
-  const [_theme, _setTheme] = useState(theme);
   const router = useRouter();
 
   function setTheme(val: Theme) {
     setThemeServerFn({ data: val });
-    _setTheme(val);
     router.invalidate();
   }
 
