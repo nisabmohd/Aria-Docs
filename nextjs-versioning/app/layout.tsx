@@ -5,13 +5,7 @@ import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { Footer } from "@/components/footer";
 import "./globals.css";
-
-import dynamic from "next/dynamic";
-
-const VersionContextProvider = dynamic(
-  () => import("@/components/context/version"),
-  { ssr: false }
-);
+import VersionContextWrapper from "@/components/version-context-wrapper";
 
 export const metadata: Metadata = {
   title: "AriaDocs - Template",
@@ -37,13 +31,13 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <VersionContextProvider>
+          <VersionContextWrapper>
             <Navbar />
             <main className="sm:container mx-auto w-[88vw] h-auto">
               {children}
             </main>
             <Footer />
-          </VersionContextProvider>
+          </VersionContextWrapper>
         </ThemeProvider>
       </body>
     </html>
