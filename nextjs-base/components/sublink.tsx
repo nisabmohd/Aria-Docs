@@ -27,10 +27,24 @@ export default function SubLink({
     if (path == href || path.includes(href)) setIsOpen(true);
   }, [href, path]);
 
+  const handleTitleClick = () => {
+    if (items && items.length > 0) {
+      setIsOpen(!isOpen);
+    }
+  };
+
   const Comp = (
     <Anchor
       activeClassName="text-primary dark:font-medium font-semibold"
       href={href}
+      onClick={
+        items && items.length > 0
+          ? (e) => {
+              e.preventDefault();
+              handleTitleClick();
+            }
+          : undefined
+      }
     >
       {title}
       {tag && (
@@ -65,7 +79,7 @@ export default function SubLink({
   return (
     <div className="flex flex-col gap-1 w-full">
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-        <CollapsibleTrigger className="w-full pr-5">
+        <CollapsibleTrigger className="w-full pr-5" onClick={handleTitleClick}>
           <div className="flex items-center justify-between cursor-pointer w-full">
             <span className="w-[95%] overflow-hidden text-ellipsis text-start">
               {titleOrLink}
