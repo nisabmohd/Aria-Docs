@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 import { SheetClose } from "@/components/ui/sheet";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function SubLink({
   title,
@@ -21,30 +21,31 @@ export default function SubLink({
   tag,
 }: EachRoute & { level: number; isSheet: boolean }) {
   const path = usePathname();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(level == 0);
 
   useEffect(() => {
     if (path == href || path.includes(href)) setIsOpen(true);
   }, [href, path]);
 
-  const handleTitleClick = () => {
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    // Toggle collapsible if has items
     if (items && items.length > 0) {
       setIsOpen(!isOpen);
     }
+
+    // Always navigate to the page
+    router.push(href);
   };
 
   const Comp = (
     <Anchor
       activeClassName="text-primary dark:font-medium font-semibold"
       href={href}
-      onClick={
-        items && items.length > 0
-          ? (e) => {
-              e.preventDefault();
-              handleTitleClick();
-            }
-          : undefined
-      }
+      onClick={handleClick}
     >
       {title}
       {tag && (
@@ -79,8 +80,8 @@ export default function SubLink({
   return (
     <div className="flex flex-col gap-1 w-full">
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-        <CollapsibleTrigger className="w-full pr-5" onClick={handleTitleClick}>
-          <div className="flex items-center justify-between cursor-pointer w-full">
+        <CollapsibleTrigger asChild>
+          <div className="flex items-center justify-between cursor-pointer w-full pr-5">
             <span className="w-[95%] overflow-hidden text-ellipsis text-start">
               {titleOrLink}
             </span>
