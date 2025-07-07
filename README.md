@@ -1,4 +1,4 @@
-## AriaDocs - Documentation Template
+## Kipps.AI - Documentation
 
 A versatile, open-source documentation template supporting multiple frameworks.
 
