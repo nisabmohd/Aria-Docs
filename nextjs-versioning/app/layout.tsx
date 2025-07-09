@@ -6,6 +6,7 @@ import { GeistMono } from "geist/font/mono";
 import { Footer } from "@/components/footer";
 import "./globals.css";
 import VersionContextWrapper from "@/components/version-context-wrapper";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "AriaDocs - Template",

@@ -1,0 +1,123 @@
+# AI Chat Agent Embedded
+
+### Overview  
+The **Chatbot Embedded** feature enables seamless integration of your trained AI chatbot into any website using either **JavaScript embed code** or an **iframe**. This capability empowers businesses to deliver intelligent, real-time conversational experiences directly within their digital ecosystem—without requiring users to leave the site.
+
+---
+
+### Integration Methods
+
+#### 1. JavaScript Embed (Recommended)  
+This is the preferred method. Paste the following code before the closing `</body>` tag in your website’s HTML:
+
+```html
+<script>
+  window.embeddedChatbotConfig = {
+    chatbotId: "your-chatbot-id", 
+    divId: "kipps-chatbot",       
+    user_detail: {
+      id: "user-123",
+      name: "John Doe",
+      email: "john@example.com",
+      companyId: "company-123",
+      companyName: "Acme Inc."
+    }
+  };
+
+  let rootDiv = document.createElement("div");
+  rootDiv.id = window.embeddedChatbotConfig.divId;
+  document.body.appendChild(rootDiv);
+
+  let script = document.createElement("script");
+  script.src = "https://your-cdn-url/chatbot.js";
+  script.defer = true;
+  script.async = true;
+  document.body.appendChild(script);
+</script>
+```
+
+---
+
+#### 2. Iframe Integration  
+For platforms that limit JavaScript usage or require iframe-based integration:
+
+```html
+<iframe
+  src="https://your-domain.com/iframe/your-chatbot-id"
+  title="AI Chatbot"
+  width="100%"
+  height="600px"
+  frameborder="0">
+</iframe>
+```
+
+---
+
+### Configuration Options
+
+#### Basic Configuration
+- `chatbotId`: A unique identifier generated for your chatbot instance
+- `divId`: The HTML `id` of the container element where the chatbot interface will be injected
+- `user_detail` (optional): Pass authenticated or contextual user data for a personalized chatbot experience (name, email, company, etc)
+
+---
+
+### Customization Features
+
+- Inherits theme colors, logo, and branding
+- Custom header, welcome message, input placeholder
+- Light/dark mode support
+- Automatic lead form display (name, email, phone)
+- Real-time validation & thank-you message
+
+---
+
+### Implementation Steps
+
+1. **Get Code** → Agent > Embed
+2. **Copy Code** → Choose JS or iframe
+3. **Paste Code** → Insert in your HTML
+4. **Test** → Verify the chatbot loads
+5. **Customize** → Appearance, welcome text, forms
+
+---
+
+### Security & Privacy
+
+#### Data Protection
+- End-to-end encrypted data
+- GDPR-compliant infra
+- Custom data retention
+- Built-in consent management
+
+#### Cross-Domain Security
+- CORS-enabled APIs
+- Input sanitization
+- Rate limiting against abuse
+
+---
+
+### Troubleshooting
+
+#### Common Issues
+- Invalid `chatbotId` or URL
+- CSS overrides from site theme
+- Incomplete layout rendering
+- Script loading conflicts
+
+#### Debug Tips
+- Use browser dev tools
+- Check console for JS errors
+- Test in a clean HTML page
+- Confirm chatbot is trained & live
+
+---
+
+### Best Practices
+- Always use `async` + `defer` for loading
+- Keep script at the end of `body`
+- Ensure chatbot appearance is consistent with site branding
+
+---
+
+> ⚡ The embedded chatbot inherits all configurations from your main settings including appearance, behavior, lead forms, and messages.
