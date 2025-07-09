@@ -124,6 +124,33 @@ const v1_2_2_ROUTES: EachRoute[] = [
       { title: "useData", href: "/use-data" },
     ],
   },
+  {
+    title: "Quick-Start",
+    href: "/quick-start",
+    noLink: true,
+    items: [
+      { title: "Introduction", href: "/introduction" },
+      { title: "Best Chapter", href: "/best-chapter" },
+
+    ],
+  },
+
+   {
+    title: "AI Chat Agents",
+    href: "/ai-chat-agents",
+    noLink: true,
+    items: [
+      { title: "Introduction", href: "/introduction" },
+      { title: "Appearance", href: "/appearance" },
+      // { title: "Lead", href: "/lead" },
+      { title: "Embeded", href: "/embeded" },
+      { title: "Dashboard", href: "/dashboard" },
+
+
+
+
+    ],
+  },
 ];
 
 const v2_3_6_ROUTES: EachRoute[] = [
