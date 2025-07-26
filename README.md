@@ -26,7 +26,7 @@ A versatile, open-source documentation template supporting multiple frameworks.
 Create a new project:
 
 ```plaintext
-npx ariadocs-cli <template> <project-directory>
+npx create-aria-doc <project-directory>
 ```
 
 ### Deploy
