@@ -1,0 +1,90 @@
+---
+title: Tanstack start framework guide
+---
+
+### Install
+
+```bash
+pnpm add @ariadocs/react
+```
+
+---
+
+### `src/ariadocs.ts`
+
+```ts
+import { type DocsConfigLocal, LocalDocs } from "@ariadocs/react/core";
+import {
+  recommendedRehypePlugins,
+  recommendedRemarkPlugins,
+} from "@ariadocs/react/utils";
+
+export const docsConfig: DocsConfigLocal = {
+  contentDir: "/contents/docs",
+  rehypePlugins: recommendedRehypePlugins, // optional
+  remarkPlugins: recommendedRemarkPlugins, // optional
+};
+
+type F = { title: string };
+export const docs = new LocalDocs<F>(docsConfig);
+```
+
+---
+
+### `src/routes/docs/$.tsx`
+
+```tsx
+import { createFileRoute, notFound } from "@tanstack/react-router";
+import { MdxClient } from "@ariadocs/react/client";
+import { docs } from "@/ariadocs";
+
+export const Route = createFileRoute("/docs/$")({
+  loader: async ({ params }) => {
+    const slug = params._splat;
+    if (!slug) throw notFound();
+    return docs.serialize({ slug });
+  },
+  component: Page,
+});
+
+function Page() {
+  const { serialized, frontmatter } = Route.useLoaderData();
+
+  return (
+    <section>
+      <title>{frontmatter.title}</title>
+      <MdxClient serialized={serialized} />
+    </section>
+  );
+}
+```
+
+---
+
+### Content Example
+
+Create `contents/docs/hello.mdx` in project root:
+
+```md
+---
+title: Hello
+---
+
+# Hello World 👋
+
+This is rendered with **Ariadocs + TanStack Start**.
+```
+
+---
+
+### Run Dev Server
+
+```bash
+pnpm dev
+```
+
+App runs at **[http://localhost:3000/docs/hello](http://localhost:3000/docs/hello)**
+
+---
+
+Do you also want me to show how to **pre-render all docs pages** in TanStack Start (like we did with React Router config), or just keep it runtime loader only?

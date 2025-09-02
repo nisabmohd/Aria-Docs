@@ -1,0 +1,120 @@
+---
+title: Next.js Pages Router Setup
+---
+
+Here’s how to set up Ariadocs with the **Pages Router** in just a few steps.
+
+---
+
+## 1. Install the dependency
+
+```bash
+pnpm add @ariadocs/react
+```
+
+---
+
+## 2. Configure Ariadocs
+
+Create a config file in your project root:
+
+```ts
+// ariadocs.ts
+import { type DocsConfigLocal, LocalDocs } from "@ariadocs/react/core";
+import {
+  recommendedRehypePlugins,
+  recommendedRemarkPlugins,
+} from "@ariadocs/react/utils";
+
+export const docsConfig: DocsConfigLocal = {
+  contentDir: "/contents/docs",
+  rehypePlugins: recommendedRehypePlugins, // optional
+  remarkPlugins: recommendedRemarkPlugins, //optional
+};
+
+type F = { title: string };
+export const docs = new LocalDocs<F>(docsConfig);
+```
+
+---
+
+## 3. Add a Docs Page
+
+In the **Pages Router**, use a catch-all route:
+
+```tsx
+// pages/docs/[[...path]].tsx
+import { docs } from "@/ariadocs";
+
+export default function Docs({
+  MDX,
+  frontmatter,
+}: {
+  MDX: React.ReactNode;
+  frontmatter: { title: string };
+}) {
+  return (
+    <section>
+      <title>{frontmatter.title}</title>
+      {MDX}
+    </section>
+  );
+}
+
+export const getStaticPaths = async () => {
+  const rawPaths = await docs.pagePaths();
+  return {
+    paths: rawPaths.map((str) => ({
+      params: { path: str.split("/").slice(1) },
+    })),
+    fallback: false,
+  };
+};
+
+export const getStaticProp = async ({ params }) => {
+  const slug = (params?.path as string[]).join("/");
+  const { MDX, frontmatter } = await docs.parse({ slug });
+  return { props: { MDX, frontmatter } };
+};
+```
+
+---
+
+## 4. Create Your First Doc
+
+Inside your project, add a single doc file:
+
+```
+my-app/
+├── pages/
+│   └── docs/
+│       └── [[...path]].tsx
+├── contents/
+│   └── docs/
+│       └── hello-world.mdx
+├── ariadocs.ts
+```
+
+### Example: `hello-world.mdx`
+
+```md
+---
+title: Hello World
+---
+
+# Hello World 👋
+```
+
+---
+
+## 5. Run the App
+
+Start the dev server:
+
+```bash
+pnpm dev
+```
+
+Then open 👉 [`http://localhost:3000/docs/hello-world`](http://localhost:3000/docs/hello-world)
+
+You should see your very first doc live! 🎉

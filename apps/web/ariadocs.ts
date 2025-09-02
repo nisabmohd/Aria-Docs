@@ -5,7 +5,7 @@ import {
 } from "@ariadocs/react/utils";
 
 export const docsConfig: DocsConfigLocal = {
-  contentDir: "/docs/contents",
+  contentDir: "/contents/docs",
   rehypePlugins: recommendedRehypePlugins,
   remarkPlugins: recommendedRemarkPlugins,
 };
