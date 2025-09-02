@@ -1,0 +1,12 @@
+[
+  {
+    "slug": "installation",
+    "title": "Installation",
+    "props": { "icon": "/react.png" }
+  },
+  {
+    "slug": "getting-started",
+    "title": "Get Started",
+    "nav": false
+  }
+]

@@ -1,0 +1,21 @@
+{
+  "extends": "@workspace/typescript-config/react-library.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@ariadocs/react/*": [
+        "./src/*"
+      ]
+    },
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "module": "nodenext"
+  },
+  "include": [
+    "./src"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}
