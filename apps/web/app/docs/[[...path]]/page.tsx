@@ -8,7 +8,7 @@ export default async function Docs({
   const slug = (await params).path.join("/");
   const { MDX, frontmatter } = await docs.parse({ slug });
   return (
-    <section className="prose dark:prose-invert mx-auto py-10 prose-code:font-mono">
+    <section className="prose dark:prose-invert mx-auto py-10 prose-code:font-mono max-w-full px-4">
       <h2>{frontmatter.title}</h2>
       <title>{frontmatter.title}</title>
       {MDX}
