@@ -3,7 +3,7 @@
 import {
   type MDXClientSerializedProps,
   MdxClient,
-} from "@ariadocs/react/components/client";
+} from "@ariadocs/react/client";
 
 type SerializedProps = Pick<MDXClientSerializedProps, "serialized">;
 
