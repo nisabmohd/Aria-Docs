@@ -41,13 +41,13 @@ program
         (key) => templateOptions[key] === template
       ) || "nextjs-base"; // Fallback to nextjs-base if no folder found
 
-    // Correct repo URL for degit
-    const repo = `github:nisabmohd/Aria-Docs/${folder}`;
+    // Repo with templates_deprecated branch
+    const repo = `github:nisabmohd/Aria-Docs/${folder}#templates_deprecated`;
     const emitter = degit(repo);
     const projectPath = path.resolve(process.cwd(), projectDirectory);
 
     console.log(
-      `Creating a new Ariadocs project in ${projectPath} from the ${folder} folder...`
+      `Creating a new Ariadocs project in ${projectPath} from the ${folder} folder (branch templates_deprecated)...`
     );
 
     // Create spinner
