@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default async function Page() {
   return (
-    <section className="mx-auto max-w-2xl px-4 py-10">
+    <section>
       <h1 className="text-3xl font-bold mb-4">Ariadocs</h1>
       <p className="text-lg text-gray-600 mb-8">
         Ariadocs is a lightweight, React-first library for building

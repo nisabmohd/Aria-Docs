@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${sans.variable} ${mono.variable} font-sans antialiased dark px-4`}
+        className={`${sans.variable} ${mono.variable} font-sans antialiased dark mx-auto max-w-2xl px-4 py-10`}
       >
         <Providers>{children}</Providers>
       </body>
