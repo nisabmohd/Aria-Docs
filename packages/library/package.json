@@ -1,31 +1,52 @@
 {
   "name": "@ariadocs/react",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "type": "module",
   "author": {
     "name": "Nisab Mohd",
     "email": "nisabmohd@gmail.com"
   },
   "license": "MIT",
+  "description": "A documentation-building library for React and Next.js. Render MDX content, organize docs, and build modern documentation sites.",
+  "keywords": [
+    "react",
+    "nextjs",
+    "mdx",
+    "documentation",
+    "docs",
+    "markdown"
+  ],
   "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
     "./client": {
-      "types": "./dist/components/client/index.d.ts",
-      "default": "./dist/components/client/index.js"
+      "types": "./dist/components/client.d.ts",
+      "default": "./dist/components/client.js"
     },
     "./server": {
-      "types": "./dist/components/server/index.d.ts",
-      "default": "./dist/components/server/index.js"
+      "types": "./dist/components/server.d.ts",
+      "default": "./dist/components/server.js"
+    },
+    "./plugins": {
+      "types": "./dist/plugins.d.ts",
+      "default": "./dist/plugins.js"
+    },
+    "./nav": {
+      "types": "./dist/nav.d.ts",
+      "default": "./dist/nav.js"
+    },
+    "./parse": {
+      "types": "./dist/parse.d.ts",
+      "default": "./dist/parse.js"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts",
+      "default": "./dist/types.js"
     },
     "./syntax.css": {
       "default": "./dist/styles/syntax.css"
-    },
-    "./core": {
-      "types": "./dist/core/index.d.ts",
-      "default": "./dist/core/index.js"
-    },
-    "./utils": {
-      "types": "./dist/utils/index.d.ts",
-      "default": "./dist/utils/index.js"
     }
   },
   "scripts": {
@@ -53,7 +74,6 @@
     "@workspace/eslint-config": "workspace:*",
     "@workspace/typescript-config": "workspace:*",
     "copyfiles": "^2.4.1",
-    "tsup": "^8.5.0",
     "typescript": "^5.9.2"
   },
   "peerDependencies": {
@@ -66,10 +86,19 @@
     "README.md",
     "LICENSE"
   ],
-  "main": "./dist/core/index.js",
-  "types": "./dist/core/index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "sideEffects": false,
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nisabmohd/Aria-Docs.git",
+    "directory": "packages/library"
+  },
+  "bugs": {
+    "url": "https://github.com/nisabmohd/Aria-Docs/issues"
+  },
+  "homepage": "https://github.com/nisabmohd/Aria-Docs#readme"
 }

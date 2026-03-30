@@ -9,7 +9,8 @@
     },
     "rootDir": "./src",
     "outDir": "./dist",
-    "module": "nodenext"
+    "module": "nodenext",
+    "types": ["node"]
   },
   "include": [
     "./src"
