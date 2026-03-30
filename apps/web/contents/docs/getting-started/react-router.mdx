@@ -2,45 +2,13 @@
 title: React Router Framework Setup
 ---
 
-Here’s how to wire up Ariadocs in a **React Router framework** project, with MDX support and prerendering.
+Getting started with Ariadocs in a **React Router framework** project is simple.
 
----
+> **Prerequisites**: Complete the [Installation & Configuration](/docs/getting-started/installation) first.
 
-## 1. Install
+## Define Routes
 
-```bash
-pnpm add @ariadocs/react
-```
-
----
-
-## 2. Config
-
-Make a config file inside `app/`:
-
-```ts
-// app/ariadocs.ts
-import { type DocsConfigLocal, LocalDocs } from "@ariadocs/react/core";
-import {
-  recommendedRehypePlugins,
-  recommendedRemarkPlugins,
-} from "@ariadocs/react/utils";
-
-export const docsConfig: DocsConfigLocal = {
-  contentDir: "/contents/docs",
-  rehypePlugins: recommendedRehypePlugins, // optional
-  remarkPlugins: recommendedRemarkPlugins, // optional
-};
-
-type F = { title: string };
-export const docs = new LocalDocs<F>(docsConfig);
-```
-
----
-
-## 3. Routes
-
-Tell React Router where your docs route lives. Inside `app/routes.ts`:
+Inside `app/routes.ts`:
 
 ```ts
 // app/routes.ts
@@ -52,9 +20,7 @@ export default [
 ] satisfies RouteConfig;
 ```
 
----
-
-## 4. Docs Route
+## Create Docs Route
 
 Catch all docs pages inside `app/routes/docs.tsx`:
 
@@ -81,61 +47,9 @@ export default function Docs() {
 }
 ```
 
----
+## Pre-render Docs
 
-## 5. Add Your Docs
-
-Docs live under `/contents/docs` at the project root.
-
-```
-my-app/
-├── app/
-│   ├── ariadocs.ts
-│   ├── routes.ts
-│   └── routes/
-│       ├── home.tsx
-│       └── docs.tsx
-├── contents/
-│   └── docs/
-│       ├── index.mdx
-│       └── hello-world.mdx
-├── react-router.config.ts
-```
-
-### Example: `contents/docs/index.mdx`
-
-```md
----
-title: Docs Home
----
-
-# Welcome to the Docs 👋
-
-Start with [Hello World](/docs/hello-world).
-```
-
-### Example: `contents/docs/hello-world.mdx`
-
-```md
----
-title: Hello World
----
-
-# Hello World 🚀
-
-This is your first Ariadocs page with React Router.
-```
-
-Now you’ll have:
-
-- `/docs` → loads `index.mdx`
-- `/docs/hello-world` → loads `hello-world.mdx`
-
----
-
-## 6. Pre-render
-
-Add `react-router.config.ts` in the project root to prerender all docs:
+Add `react-router.config.ts` to prerender all docs:
 
 ```ts
 // react-router.config.ts
@@ -151,20 +65,24 @@ export default {
 } satisfies Config;
 ```
 
-- `docs.pagePaths()` → gives all slugs (`hello-world, etc.)
-- Prefix with `/docs/` so they match your route
-- During build, these become static pages
+## Create Your First Doc
 
+`contents/docs/hello-world.mdx`
+
+```md
+---
+title: Hello World
 ---
 
-## 7. Run it
+# Hello World
 
-Start the dev server:
+This is your **first Ariadocs page**.
+```
+
+## Run the App
 
 ```bash
 pnpm dev
 ```
 
-React Router runs on port **5173**, so you can open:
-
-- [http://localhost:5173/docs/hello-world](http://localhost:5173/docs/hello-world) → shows `hello-world.mdx`
+Open [`http://localhost:5173/docs/hello-world`](http://localhost:5173/docs/hello-world)

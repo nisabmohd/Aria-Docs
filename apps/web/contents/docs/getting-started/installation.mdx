@@ -1,0 +1,51 @@
+---
+title: Installation & Configuration
+---
+
+Get started with Ariadocs in your project.
+
+## Install the dependency
+
+```bash
+pnpm add @ariadocs/react
+```
+
+## Configure Ariadocs
+
+Create a config file at the root of your project (e.g. `ariadocs.ts`):
+
+```ts
+// ariadocs.ts
+import { createDocs, type DocsConfig } from "@ariadocs/react";
+import {
+  remarkGfm,
+  rehypePrism,
+  rehypeAutolinkHeadings,
+  rehypeSlug,
+  rehypeCodeTitles,
+  rehypeCodeRaw,
+} from "@ariadocs/react/plugins";
+
+export const docsConfig: DocsConfig = {
+  contentDir: "contents/docs",
+  rehypePlugins: [
+    rehypeCodeRaw,
+    rehypeCodeTitles,
+    rehypePrism,
+    rehypeSlug,
+    rehypeAutolinkHeadings,
+  ],
+  remarkPlugins: [remarkGfm],
+};
+
+export const docs = createDocs(docsConfig);
+```
+
+## Next Steps
+
+Choose your framework to continue:
+
+- [Next.js App Router](/docs/getting-started/nextjs-app)
+- [Next.js Pages Router](/docs/getting-started/nextjs-pages)
+- [React Router](/docs/getting-started/react-router)
+- [TanStack Start](/docs/getting-started/tanstack-start)

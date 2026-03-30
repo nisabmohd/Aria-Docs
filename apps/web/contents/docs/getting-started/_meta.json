@@ -1,0 +1,8 @@
+[
+  { "slug": "installation", "title": "Installation", "nav": true },
+  { "slug": "nextjs-app", "title": "Next.js App Router", "nav": true },
+  { "slug": "nextjs-pages", "title": "Next.js Pages Router", "nav": true },
+  { "slug": "react-router", "title": "React Router", "nav": true },
+  { "slug": "tanstack-start", "title": "TanStack Start", "nav": true },
+  { "slug": "whats-next", "title": "What's Next", "nav": true }
+]

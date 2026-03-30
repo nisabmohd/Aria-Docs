@@ -1,14 +1,23 @@
+import { createDocs, type DocsConfig } from "@ariadocs/react";
 import {
-  createDocs,
-  recommendedRehypePlugins,
-  recommendedRemarkPlugins,
-  type DocsConfig,
-} from "@ariadocs/react";
+  remarkGfm,
+  rehypePrism,
+  rehypeAutolinkHeadings,
+  rehypeSlug,
+  rehypeCodeTitles,
+  rehypeCodeRaw,
+} from "@ariadocs/react/plugins";
 
 export const docsConfig: DocsConfig = {
   contentDir: "contents/docs",
-  rehypePlugins: recommendedRehypePlugins,
-  remarkPlugins: recommendedRemarkPlugins,
+  rehypePlugins: [
+    rehypeCodeRaw,
+    rehypeCodeTitles,
+    rehypePrism,
+    rehypeSlug,
+    rehypeAutolinkHeadings,
+  ],
+  remarkPlugins: [remarkGfm],
 };
 
 export const docs = createDocs(docsConfig);

@@ -1,8 +1,7 @@
-import { Space_Grotesk, Space_Mono } from "next/font/google";
+import { Space_Grotesk,Space_Mono} from "next/font/google";
 import { Providers } from "@/components/providers";
 import "@workspace/ui/globals.css";
-
-import "@ariadocs/react/syntax.css";
+// import "@ariadocs/react/syntax.css";
 
 const sans = Space_Grotesk({
   subsets: ["latin"],
@@ -23,9 +22,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${sans.variable} ${mono.variable} font-sans antialiased dark mx-auto max-w-2xl px-4 py-10`}
+        className={`${sans.variable} ${mono.variable} font-sans antialiased mx-auto max-w-2xl px-4 py-10`}
       >
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}</Providers>
       </body>
     </html>
   );

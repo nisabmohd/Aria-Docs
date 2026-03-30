@@ -2,45 +2,13 @@
 title: Next.js Pages Router Setup
 ---
 
-Here’s how to set up Ariadocs with the **Pages Router** in just a few steps.
+Getting started with Ariadocs in a Next.js **Pages Router** project is simple.
 
----
+> **Prerequisites**: Complete the [Installation & Configuration](/docs/getting-started/installation) first.
 
-## 1. Install the dependency
+## Add a Docs Page
 
-```bash
-pnpm add @ariadocs/react
-```
-
----
-
-## 2. Configure Ariadocs
-
-Create a config file in your project root:
-
-```ts
-// ariadocs.ts
-import { type DocsConfigLocal, LocalDocs } from "@ariadocs/react/core";
-import {
-  recommendedRehypePlugins,
-  recommendedRemarkPlugins,
-} from "@ariadocs/react/utils";
-
-export const docsConfig: DocsConfigLocal = {
-  contentDir: "/contents/docs",
-  rehypePlugins: recommendedRehypePlugins, // optional
-  remarkPlugins: recommendedRemarkPlugins, //optional
-};
-
-type F = { title: string };
-export const docs = new LocalDocs<F>(docsConfig);
-```
-
----
-
-## 3. Add a Docs Page
-
-In the **Pages Router**, use a catch-all route:
+Use a catch-all route inside `pages/docs/[[...path]].tsx`:
 
 ```tsx
 // pages/docs/[[...path]].tsx
@@ -71,50 +39,31 @@ export const getStaticPaths = async () => {
   };
 };
 
-export const getStaticProp = async ({ params }) => {
+export const getStaticProps = async ({ params }) => {
   const slug = (params?.path as string[]).join("/");
   const { MDX, frontmatter } = await docs.parse({ slug });
   return { props: { MDX, frontmatter } };
 };
 ```
 
----
+## Create Your First Doc
 
-## 4. Create Your First Doc
-
-Inside your project, add a single doc file:
-
-```
-my-app/
-├── pages/
-│   └── docs/
-│       └── [[...path]].tsx
-├── contents/
-│   └── docs/
-│       └── hello-world.mdx
-├── ariadocs.ts
-```
-
-### Example: `hello-world.mdx`
+`contents/docs/hello-world.mdx`
 
 ```md
 ---
 title: Hello World
 ---
 
-# Hello World 👋
+# Hello World
+
+This is your **first Ariadocs page**.
 ```
 
----
-
-## 5. Run the App
-
-Start the dev server:
+## Run the App
 
 ```bash
 pnpm dev
 ```
 
-Then open 👉 [`http://localhost:3000/docs/hello-world`](http://localhost:3000/docs/hello-world)
-
-You should see your very first doc live! 🎉
+Open [`http://localhost:3000/docs/hello-world`](http://localhost:3000/docs/hello-world)

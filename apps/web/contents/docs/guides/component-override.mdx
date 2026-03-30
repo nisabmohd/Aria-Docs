@@ -1,0 +1,134 @@
+---
+title: Component Override
+---
+
+Override default MDX components with custom implementations.
+
+## Basic Usage
+
+Pass `mdxComponents` to your docs config:
+
+```ts
+import { createDocs, type DocsConfig } from "@ariadocs/react";
+
+export const docsConfig: DocsConfig = {
+  contentDir: "contents/docs",
+  mdxComponents: {
+    h1: ({ children }) => (
+      <h1 className="text-4xl font-bold text-primary">{children}</h1>
+    ),
+    p: ({ children }) => <p className="text-muted-foreground">{children}</p>,
+  },
+};
+```
+
+## Available Components
+
+Override any HTML element that MDX renders:
+
+| Component                                   | Description                 |
+| ------------------------------------------- | --------------------------- |
+| `h1`-`h6`                                   | Heading elements            |
+| `p`                                         | Paragraph                   |
+| `a`                                         | Anchor/link                 |
+| `ul`, `ol`, `li`                            | Lists                       |
+| `blockquote`                                | Block quotes                |
+| `pre`, `code`                               | Code blocks and inline code |
+| `table`, `thead`, `tbody`, `tr`, `th`, `td` | Tables                      |
+| `img`                                       | Images                      |
+| `hr`                                        | Horizontal rule             |
+
+## Code Block Customization
+
+Customize code blocks with line numbers, copy button, etc:
+
+```tsx
+import { createDocs, type DocsConfig } from "@ariadocs/react";
+
+const CodeBlock = ({ children, className }) => {
+  const language = className?.replace("language-", "");
+
+  return (
+    <div className="relative">
+      {language && (
+        <span className="absolute right-2 top-2 text-xs text-muted-foreground">
+          {language}
+        </span>
+      )}
+      <pre className={className}>{children}</pre>
+    </div>
+  );
+};
+
+export const docsConfig: DocsConfig = {
+  contentDir: "contents/docs",
+  mdxComponents: {
+    pre: CodeBlock,
+  },
+};
+```
+
+## Link Component
+
+Add custom link handling (e.g., for internal routing):
+
+```tsx
+import Link from "next/link";
+import { createDocs, type DocsConfig } from "@ariadocs/react";
+
+const CustomLink = ({ href, children }) => {
+  // Internal links use Next.js Link
+  if (href?.startsWith("/")) {
+    return <Link href={href}>{children}</Link>;
+  }
+
+  // External links open in new tab
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer">
+      {children}
+    </a>
+  );
+};
+
+export const docsConfig: DocsConfig = {
+  contentDir: "contents/docs",
+  mdxComponents: {
+    a: CustomLink,
+  },
+};
+```
+
+## With Plugins
+
+Combine with plugins for full customization:
+
+```tsx
+import { createDocs, type DocsConfig } from "@ariadocs/react";
+import {
+  remarkGfm,
+  rehypePrism,
+  rehypeSlug,
+  rehypeAutolinkHeadings,
+} from "@ariadocs/react/plugins";
+
+export const docsConfig: DocsConfig = {
+  contentDir: "contents/docs",
+  remarkPlugins: [remarkGfm],
+  rehypePlugins: [rehypeSlug, rehypePrism, rehypeAutolinkHeadings],
+  mdxComponents: {
+    // Your custom components
+  },
+};
+```
+
+## Type Safety
+
+Import types for better TypeScript support:
+
+```tsx
+import type { MDXComponents } from "@ariadocs/react/types";
+
+const components: MDXComponents = {
+  h1: ({ children }) => <h1 className="text-3xl">{children}</h1>,
+};
+```

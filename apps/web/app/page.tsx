@@ -2,66 +2,39 @@ import Link from "next/link";
 
 export default async function Page() {
   return (
-    <section>
-      <h1 className="text-3xl font-bold mb-4">Ariadocs</h1>
-      <p className="text-lg text-gray-600 mb-8">
-        Ariadocs is a lightweight, React-first library for building
-        documentation sites. It works seamlessly with frameworks like{" "}
-        <span className="font-medium">Next.js</span>,{" "}
-        <span className="font-medium">TanStack Start</span>, and{" "}
-        <span className="font-medium">React Router</span>, giving you full
-        control over content, styling, and rendering.
-      </p>
-
-      <div className="mb-10">
-        <h2 className="text-xl font-semibold mb-3">Get started</h2>
-        <ul className="space-y-2">
-          <li>
-            <Link
-              href="/docs/getting-started/nextjs-app"
-              className="text-blue-600 hover:underline"
-            >
-              Next.js App Router
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/docs/getting-started/nextjs-pages"
-              className="text-blue-600 hover:underline"
-            >
-              Next.js Pages Router
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/docs/getting-started/react-router"
-              className="text-blue-600 hover:underline"
-            >
-              React Router
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/docs/getting-started/tanstack-start"
-              className="text-blue-600 hover:underline"
-            >
-              TanStack Start
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/docs/getting-started/whats-next"
-              className="text-blue-600 hover:underline"
-            >
-              What's next?
-            </Link>
-          </li>
-        </ul>
+    <section className="not-prose flex min-h-[70vh] flex-col items-center justify-center text-center">
+      <div className="mb-6 inline-flex items-center rounded-full border px-3 py-1 text-sm">
+        <span className="mr-2 inline-block h-2 w-2 rounded-full bg-green-500"></span>
+        Open Source
       </div>
 
-      <p className="text-sm text-gray-500">
-        🚀 Tune in for updates — new features and improvements coming soon.
+      <h1 className="mb-4 text-4xl font-bold tracking-tight sm:text-5xl">
+        Free Documentation
+        <br />
+        for Modern React
+      </h1>
+
+      <p className="mb-8 max-w-xl text-lg text-muted-foreground">
+        A lightweight, React-first library for building beautiful documentation
+        sites. Works with Next.js, TanStack Start, and React Router.
       </p>
+
+      <div className="flex flex-col gap-3 sm:flex-row">
+        <Link
+          href="/docs/getting-started/nextjs-app"
+          className="inline-flex items-center justify-center rounded-lg bg-foreground px-6 py-3 font-medium text-background transition-colors hover:bg-foreground/80"
+        >
+          Get Started
+        </Link>
+        <Link
+          href="https://github.com/nisabmohd/Aria-Docs"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center rounded-lg border px-6 py-3 font-medium transition-colors hover:bg-accent"
+        >
+          GitHub
+        </Link>
+      </div>
     </section>
   );
 }

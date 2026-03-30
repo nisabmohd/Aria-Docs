@@ -1,0 +1,64 @@
+---
+title: Remote Docs
+---
+
+Fetch MDX from remote sources like APIs, databases, or CMS.
+
+## Basic Usage
+
+```ts
+import { createRemoteDocs, type RemoteDocsConfig } from "@ariadocs/react";
+
+const remoteConfig: RemoteDocsConfig = {
+  rehypePlugins: [...],
+  remarkPlugins: [...],
+};
+
+const remoteDocs = createRemoteDocs(remoteConfig);
+
+// Parse raw MDX string
+const { MDX, frontmatter } = await remoteDocs.parse({
+  raw: "# Hello\n\nContent here..."
+});
+```
+
+## Fetch from API
+
+```tsx
+async function fetchDoc(slug: string) {
+  const res = await fetch(`https://api.example.com/docs/${slug}`);
+  const raw = await res.text();
+  return remoteDocs.parse({ raw });
+}
+
+// In your page
+const { MDX, frontmatter, toc } = await fetchDoc("intro");
+```
+
+## With Frontend Frameworks
+
+For client-side rendering, use `serialize` + `MdxClient`:
+
+```tsx
+import { MdxClient } from "@ariadocs/react/client";
+
+export async function loader({ params }) {
+  const res = await fetch(`https://api.example.com/docs/${params.slug}`);
+  const raw = await res.text();
+  return remoteDocs.serialize({ raw });
+}
+
+export default function Page() {
+  const { serialized, frontmatter, toc } = useLoaderData();
+  return <MdxClient serialized={serialized} />;
+}
+```
+
+## Available Methods
+
+| Method                    | Description                         |
+| ------------------------- | ----------------------------------- |
+| `parse({ raw })`          | Parse MDX, returns `MDX` component  |
+| `serialize({ raw })`      | Serialize for client-side rendering |
+| `getFrontmatter({ raw })` | Extract frontmatter only            |
+| `getToc({ raw })`         | Extract table of contents           |

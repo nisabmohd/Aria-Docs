@@ -3,53 +3,12 @@ title: Next.js App Router Setup
 ---
 
 Getting started with Ariadocs in a Next.js **App Router** project is simple.
-Below you’ll find the step-by-step setup—from installation to rendering your docs.
 
----
+> **Prerequisites**: Complete the [Installation & Configuration](/docs/getting-started/installation) first.
 
-## 1. Install the dependency
+## Render a Docs Page
 
-First, add the Ariadocs React package:
-
-```bash
-pnpm add @ariadocs/react
-```
-
----
-
-## 2. Configure Ariadocs
-
-Create a config file at the root of your project (e.g. `ariadocs.ts`).
-This is where you’ll tell Ariadocs where your content lives and which plugins to use.
-
-```ts
-// ariadocs.ts
-import { type DocsConfigLocal, LocalDocs } from "@ariadocs/react/core";
-import {
-  recommendedRehypePlugins,
-  recommendedRemarkPlugins,
-} from "@ariadocs/react/utils";
-
-export const docsConfig: DocsConfigLocal = {
-  contentDir: "/contents/docs",
-  rehypePlugins: recommendedRehypePlugins, // optional
-  remarkPlugins: recommendedRemarkPlugins, // optional
-};
-
-type F = { title: string };
-export const docs = new LocalDocs<F>(docsConfig);
-```
-
-- `contentDir` → path to your docs folder
-- `rehypePlugins` / `remarkPlugins` → recommended markdown enhancements out of the box
-- `LocalDocs` → instance that manages your local markdown/MDX files
-
----
-
-## 3. Render a Docs Page
-
-Next, set up a dynamic route inside your App Router (`app/docs/[[...path]]/page.tsx`).
-This allows any path under `/docs/*` to automatically load the right markdown file.
+Create a dynamic route inside your App Router `app/docs/[[...path]]/page.tsx`:
 
 ```tsx
 // app/docs/[[...path]]/page.tsx
@@ -72,69 +31,35 @@ export default async function Docs({
 }
 ```
 
-Here’s what’s happening:
+## Add `generateStaticParams`
 
-- We grab the slug from the URL.
-- Ariadocs parses the matching file and gives back the **frontmatter** and compiled **MDX**.
-- You render the content directly inside your page.
-
----
-
-## 4. Add `generateStaticParams`
-
-To enable static site generation (SSG), include `generateStaticParams`.
-This tells Next.js what paths to pre-render at build time.
+To enable static site generation (SSG):
 
 ```ts
 export async function generateStaticParams() {
   const rawPaths = await docs.pagePaths();
-  // slice(1) removes the leading slash
   return rawPaths.map((str) => ({ path: str.split("/").slice(1) }));
 }
 ```
 
-That’s it—your docs are now statically generated and blazing fast 🚀.
+## Create Your First Doc
 
----
-
-## 5. Create Your First Doc
-
-Inside your project, add a single doc file:
-
-```
-root/
-├── app/
-│   └── docs/
-│       └── [[...path]]/
-|            └── page.tsx
-├── contents/
-│   └── docs/
-│       └── hello-world.mdx
-├── ariadocs.ts
-```
-
-### Example: `hello-world.mdx`
+`contents/docs/hello-world.mdx`
 
 ```md
 ---
 title: Hello World
 ---
 
-# Hello World 👋
+# Hello World
 
 This is your **first Ariadocs page**.
 ```
 
----
-
-## 5. Run the App
-
-Start the dev server:
+## Run the App
 
 ```bash
 pnpm dev
 ```
 
-Then open 👉 [`http://localhost:3000/docs/hello-world`](http://localhost:3000/docs/hello-world)
-
-You should see your very first doc live! 🎉
+Open [`http://localhost:3000/docs/hello-world`](http://localhost:3000/docs/hello-world)

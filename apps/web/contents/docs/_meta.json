@@ -1,0 +1,5 @@
+[
+  { "slug": "getting-started", "title": "Getting Started", "nav": true },
+  { "slug": "guides", "title": "Guides", "nav": true },
+  { "slug": "api-reference", "title": "API Reference", "nav": true }
+]

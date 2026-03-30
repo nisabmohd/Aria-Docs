@@ -1,0 +1,62 @@
+---
+title: Plugins
+---
+
+Ariadocs uses remark and rehype plugins for MDX processing.
+
+## Import Plugins
+
+```ts
+import {
+  remarkGfm,
+  rehypePrism,
+  rehypeAutolinkHeadings,
+  rehypeSlug,
+  rehypeCodeTitles,
+  rehypeCodeRaw,
+} from "@ariadocs/react/plugins";
+```
+
+## Plugin Order
+
+Order matters! Use this sequence:
+
+```ts
+export const docsConfig: DocsConfig = {
+  rehypePlugins: [
+    rehypeCodeRaw, // 1. Extract raw code
+    rehypeCodeTitles, // 2. Code block titles
+    rehypePrism, // 3. Syntax highlighting
+    rehypeSlug, // 4. Add IDs to headings
+    rehypeAutolinkHeadings, // 5. Link to headings
+  ],
+  remarkPlugins: [
+    remarkGfm, // GitHub Flavored Markdown
+  ],
+};
+```
+
+## Plugin Descriptions
+
+| Plugin                   | Type   | Description                                         |
+| ------------------------ | ------ | --------------------------------------------------- |
+| `remarkGfm`              | remark | GFM support (tables, strikethrough, task lists)     |
+| `rehypePrism`            | rehype | Syntax highlighting for code blocks                 |
+| `rehypeSlug`             | rehype | Add `id` attributes to headings                     |
+| `rehypeAutolinkHeadings` | rehype | Add anchor links to headings                        |
+| `rehypeCodeTitles`       | rehype | Add titles/filenames to code blocks                 |
+| `rehypeCodeRaw`          | rehype | Inject raw code into `<pre>` for copy functionality |
+
+## Custom Plugins
+
+Add any remark/rehype plugin:
+
+```ts
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+
+export const docsConfig: DocsConfig = {
+  remarkPlugins: [remarkGfm, remarkMath],
+  rehypePlugins: [rehypeSlug, rehypeKatex],
+};
+```

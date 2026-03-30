@@ -35,17 +35,6 @@ export {
 export { MdxServer } from "./components/server.js";
 export { MdxClient } from "./components/client.js";
 
-// ---------- Plugins ----------
-export {
-  recommendedRemarkPlugins,
-  recommendedRehypePlugins,
-  remarkGfm,
-  rehypePrism,
-  rehypeAutolinkHeadings,
-  rehypeSlug,
-  rehypeCodeTitles,
-} from "./plugins.js";
-
 // ---------- Types ----------
 export type {
   // Core types
