@@ -1,11 +1,8 @@
 "use client";
 
-import {
-  type MDXClientSerializedProps,
-  MdxClient,
-} from "@ariadocs/react/client";
+import { MdxClient, type SerializedSource } from "@ariadocs/react/client";
 
-type SerializedProps = Pick<MDXClientSerializedProps, "serialized">;
+type SerializedProps = { serialized: SerializedSource };
 
 export default function Client({ serialized }: SerializedProps) {
   return (

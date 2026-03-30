@@ -1,14 +1,14 @@
-import { type DocsConfigLocal, LocalDocs } from "@ariadocs/react/core";
 import {
+  createDocs,
   recommendedRehypePlugins,
   recommendedRemarkPlugins,
-} from "@ariadocs/react/utils";
+  type DocsConfig,
+} from "@ariadocs/react";
 
-export const docsConfig: DocsConfigLocal = {
-  contentDir: "/contents/docs",
+export const docsConfig: DocsConfig = {
+  contentDir: "contents/docs",
   rehypePlugins: recommendedRehypePlugins,
   remarkPlugins: recommendedRemarkPlugins,
 };
 
-type F = { title: string };
-export const docs = new LocalDocs<F>(docsConfig);
+export const docs = createDocs(docsConfig);
