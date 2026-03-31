@@ -1,0 +1,74 @@
+/* Minimal Theme - Clean, subtle, low-contrast colors */
+
+.keyword {
+  color: #4a5568; /* Gray 700 */
+}
+
+.function {
+  color: #2d3748; /* Gray 800 */
+}
+
+.punctuation {
+  color: #718096; /* Gray 500 */
+}
+
+.comment {
+  color: #a0aec0; /* Gray 400 */
+}
+
+.string,
+.constant,
+.annotation,
+.boolean,
+.number {
+  color: #5a67d8; /* Indigo 500 */
+}
+
+.tag {
+  color: #319795; /* Teal 600 */
+}
+
+.attr-name {
+  color: #805ad5; /* Purple 500 */
+}
+
+.attr-value {
+  color: #d69e2e; /* Yellow 600 */
+}
+
+/* Dark Mode */
+.dark .keyword {
+  color: #a0aec0; /* Gray 400 */
+}
+
+.dark .function {
+  color: #e2e8f0; /* Gray 200 */
+}
+
+.dark .punctuation {
+  color: #718096; /* Gray 500 */
+}
+
+.dark .comment {
+  color: #4a5568; /* Gray 700 */
+}
+
+.dark .string,
+.dark .constant,
+.dark .annotation,
+.dark .boolean,
+.dark .number {
+  color: #a3bffa; /* Indigo 300 */
+}
+
+.dark .tag {
+  color: #4fd1c5; /* Teal 300 */
+}
+
+.dark .attr-name {
+  color: #b794f4; /* Purple 300 */
+}
+
+.dark .attr-value {
+  color: #faf089; /* Yellow 200 */
+}

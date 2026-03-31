@@ -1,0 +1,156 @@
+---
+title: Syntax Highlighting Themes
+---
+
+Customize the syntax highlighting for code blocks with built-in themes.
+
+## Available Themes
+
+Ariadocs provides multiple syntax highlighting themes for code blocks:
+
+| Theme     | Description                        |
+| --------- | ---------------------------------- |
+| `github`  | GitHub-inspired colors (default)   |
+| `nord`    | Arctic, bluish color palette       |
+| `minimal` | Clean, subtle, low-contrast colors |
+
+## Usage
+
+Import the theme CSS in your application:
+
+```tsx
+// In your app's layout or global styles
+
+// GitHub theme (default)
+import "@ariadocs/react/styles/github.css";
+
+// Nord theme - Arctic, bluish palette
+import "@ariadocs/react/styles/nord.css";
+
+// Minimal theme - Clean, subtle colors
+import "@ariadocs/react/styles/minimal.css";
+```
+
+## Example
+
+Here's how code blocks look with each theme:
+
+### GitHub Theme
+
+```tsx title="app/layout.tsx"
+import "@ariadocs/react/styles/github.css";
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+### Nord Theme
+
+```tsx title="app/layout.tsx"
+import "@ariadocs/react/styles/nord.css";
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+### Minimal Theme
+
+```tsx title="app/layout.tsx"
+import "@ariadocs/react/styles/minimal.css";
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+## Dark Mode Support
+
+All themes support dark mode out of the box. The theme automatically adapts when the `.dark` class is applied to a parent element (typically the `<html>` or `<body>` tag).
+
+```tsx
+<html className="dark">{/* Code blocks will use dark mode colors */}</html>
+```
+
+## Custom Theme
+
+You can create your own theme by defining CSS classes for syntax highlighting tokens:
+
+```css title="styles/custom.css"
+/* Custom Theme */
+
+.keyword {
+  color: #your-color;
+}
+
+.function {
+  color: #your-color;
+}
+
+.punctuation {
+  color: #your-color;
+}
+
+.comment {
+  color: #your-color;
+}
+
+.string,
+.constant,
+.annotation,
+.boolean,
+.number {
+  color: #your-color;
+}
+
+.tag {
+  color: #your-color;
+}
+
+.attr-name {
+  color: #your-color;
+}
+
+.attr-value {
+  color: #your-color;
+}
+
+/* Dark Mode */
+.dark .keyword {
+  color: #your-dark-color;
+}
+
+/* ... repeat for other tokens */
+```
+
+## Token Classes
+
+The following CSS classes are used for syntax highlighting:
+
+| Class          | Description                   |
+| -------------- | ----------------------------- |
+| `.keyword`     | JavaScript keywords (if, for) |
+| `.function`    | Function names                |
+| `.punctuation` | Brackets, parentheses, etc.   |
+| `.comment`     | Code comments                 |
+| `.string`      | String literals               |
+| `.constant`    | Constant values               |
+| `.annotation`  | TypeScript annotations        |
+| `.boolean`     | Boolean values (true, false)  |
+| `.number`      | Numeric literals              |
+| `.tag`         | HTML/JSX tags                 |
+| `.attr-name`   | HTML/JSX attribute names      |
+| `.attr-value`  | HTML/JSX attribute values     |

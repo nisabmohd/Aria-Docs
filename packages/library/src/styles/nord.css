@@ -1,0 +1,74 @@
+/* Nord Theme - Arctic, bluish color palette */
+
+.keyword {
+  color: #81a1c1; /* Nord Frost - Blue */
+}
+
+.function {
+  color: #88c0d0; /* Nord Snow Storm - Light Blue */
+}
+
+.punctuation {
+  color: #eceff4; /* Nord Snow Storm - White */
+}
+
+.comment {
+  color: #616e88; /* Nord Polar Night - Muted */
+}
+
+.string,
+.constant,
+.annotation,
+.boolean,
+.number {
+  color: #a3be8c; /* Nord Frost - Green */
+}
+
+.tag {
+  color: #81a1c1; /* Nord Frost - Blue */
+}
+
+.attr-name {
+  color: #8fbcbb; /* Nord Frost - Cyan */
+}
+
+.attr-value {
+  color: #bf616a; /* Nord Aurora - Red */
+}
+
+/* Dark Mode */
+.dark .keyword {
+  color: #81a1c1; /* Nord Frost - Blue */
+}
+
+.dark .function {
+  color: #88c0d0; /* Nord Snow Storm - Light Blue */
+}
+
+.dark .punctuation {
+  color: #d8dee9; /* Nord Snow Storm - Light Gray */
+}
+
+.dark .comment {
+  color: #616e88; /* Nord Polar Night - Muted */
+}
+
+.dark .string,
+.dark .constant,
+.dark .annotation,
+.dark .boolean,
+.dark .number {
+  color: #a3be8c; /* Nord Frost - Green */
+}
+
+.dark .tag {
+  color: #81a1c1; /* Nord Frost - Blue */
+}
+
+.dark .attr-name {
+  color: #8fbcbb; /* Nord Frost - Cyan */
+}
+
+.dark .attr-value {
+  color: #bf616a; /* Nord Aurora - Red */
+}

@@ -2,6 +2,8 @@
 
 A **documentation-building library** for React and Next.js. Render MDX content, organize docs with `_meta.json`, and build modern documentation sites with minimal setup.
 
+**🌐 Website: [ariadocs.vercel.app](https://ariadocs.vercel.app/)**
+
 ## Installation
 
 ```bash
@@ -14,14 +16,7 @@ yarn add @ariadocs/react
 
 ## Quick Start
 
-### 1. Import the CSS
-
-```tsx
-// In your app's layout or global styles
-import "@ariadocs/react/syntax.css";
-```
-
-### 2. Create a Docs Instance (Recommended)
+### 1. Create a Docs Instance (Recommended)
 
 Use `createDocs()` to avoid repeating configuration:
 
@@ -48,7 +43,7 @@ export const docs = createDocs({
 });
 ```
 
-### 3. Parse and Render MDX
+### 2. Parse and Render MDX
 
 ```tsx
 import { docs } from "./docs";
@@ -79,7 +74,7 @@ export default async function DocPage({
 }
 ```
 
-### 4. Build Navigation Sidebar
+### 3. Build Navigation Sidebar
 
 ```tsx
 import { docs, type NavItem } from "@ariadocs/react";

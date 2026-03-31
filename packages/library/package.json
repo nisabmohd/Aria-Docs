@@ -1,6 +1,6 @@
 {
   "name": "@ariadocs/react",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "type": "module",
   "author": {
     "name": "Nisab Mohd",
@@ -47,10 +47,19 @@
     },
     "./syntax.css": {
       "default": "./dist/styles/syntax.css"
+    },
+    "./styles/github.css": {
+      "default": "./dist/styles/github.css"
+    },
+    "./styles/nord.css": {
+      "default": "./dist/styles/nord.css"
+    },
+    "./styles/minimal.css": {
+      "default": "./dist/styles/minimal.css"
     }
   },
   "scripts": {
-    "lint": "eslint . --max-warnings 0",
+    "lint": "eslint . --max-warncd ings 0",
     "build": "tsc && copyfiles -u 1 \"src/styles/**/*.css\" dist"
   },
   "packageManager": "pnpm@10.4.1",

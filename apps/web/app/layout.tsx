@@ -1,14 +1,15 @@
-import { Space_Grotesk,Space_Mono} from "next/font/google";
+import { Host_Grotesk,JetBrains_Mono} from "next/font/google";
 import { Providers } from "@/components/providers";
 import "@workspace/ui/globals.css";
-// import "@ariadocs/react/syntax.css";
+import "@ariadocs/react/styles/minimal.css";
 
-const sans = Space_Grotesk({
+const sans = Host_Grotesk({
   subsets: ["latin"],
   variable: "--font-sans",
+  weight:"400"
 });
 
-const mono = Space_Mono({
+const mono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
   weight: "400",

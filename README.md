@@ -2,6 +2,8 @@
 
 A **documentation-building library** for React and Next.js. Render MDX content, organize docs with `_meta.json`, and build modern documentation sites with minimal setup.
 
+**🌐 Website: [ariadocs.vercel.app](https://ariadocs.vercel.app/)**
+
 ## Packages
 
 | Package                               | Description                          |
