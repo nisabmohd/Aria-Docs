@@ -1,0 +1,156 @@
+# `_meta.json`
+
+The `_meta.json` file defines the navigation structure and metadata for your documentation content. It controls how items appear in the sidebar navigation, their order, titles, and custom properties.
+
+## Overview
+
+Each directory in your `contents` folder can contain a `_meta.json` file that specifies:
+
+- **Order** of navigation items
+- **Custom titles** for pages and sections
+- **Visibility** in navigation
+- **Custom properties** for advanced rendering
+
+## File Structure
+
+```json
+[
+  { "slug": "item-one", "title": "Item One", "nav": true },
+  {
+    "slug": "item-two",
+    "title": "Item Two",
+    "nav": false,
+    "props": { "badge": "New" }
+  }
+]
+```
+
+## Schema
+
+The `_meta.json` file is a JSON array where each item has the following properties:
+
+| Property | Type                     | Required | Default                  | Description                                        |
+| -------- | ------------------------ | -------- | ------------------------ | -------------------------------------------------- |
+| `slug`   | `string`                 | Yes      | -                        | The file or folder name (without `.mdx` extension) |
+| `title`  | `string`                 | No       | Auto-generated from slug | Display title in navigation                        |
+| `nav`    | `boolean`                | No       | `true`                   | Whether to show in navigation                      |
+| `props`  | `Record<string, string>` | No       | `{}`                     | Custom properties for rendering                    |
+
+## Examples
+
+### Basic Navigation
+
+```json
+[
+  { "slug": "introduction", "title": "Introduction" },
+  { "slug": "quick-start", "title": "Quick Start" },
+  { "slug": "examples", "title": "Examples" }
+]
+```
+
+### Nested Sections
+
+For nested navigation, create a directory with its own `_meta.json`:
+
+```
+contents/
+├── _meta.json
+├── getting-started/
+│   ├── _meta.json
+│   ├── installation.mdx
+│   └── configuration.mdx
+└── api/
+    ├── _meta.json
+    └── endpoints.mdx
+```
+
+Root `_meta.json`:
+
+```json
+[
+  { "slug": "getting-started", "title": "Getting Started" },
+  { "slug": "api", "title": "API Reference" }
+]
+```
+
+`getting-started/_meta.json`:
+
+```json
+[
+  { "slug": "installation", "title": "Installation" },
+  { "slug": "configuration", "title": "Configuration" }
+]
+```
+
+### Hidden Pages
+
+Use `nav: false` to hide pages from navigation while keeping them accessible via URL:
+
+```json
+[
+  { "slug": "overview", "title": "Overview" },
+  { "slug": "changelog", "title": "Changelog", "nav": false }
+]
+```
+
+### Custom Props
+
+Pass custom properties for advanced rendering (e.g., badges, icons):
+
+```json
+[
+  { "slug": "stable-feature", "title": "Stable Feature" },
+  {
+    "slug": "beta-feature",
+    "title": "Beta Feature",
+    "props": { "badge": "Beta" }
+  },
+  {
+    "slug": "deprecated",
+    "title": "Legacy",
+    "props": { "badge": "Deprecated", "type": "warning" }
+  }
+]
+```
+
+## Behavior
+
+### Ordering
+
+- Items appear in the order defined in `_meta.json`
+- Items not listed in `_meta.json` are appended at the end (sorted alphabetically)
+
+### Title Generation
+
+If `title` is omitted, it's auto-generated from the slug:
+
+- `getting-started` → "Getting Started"
+- `api-reference` → "Api Reference"
+
+### Fallback
+
+If no `_meta.json` exists in a directory:
+
+- All `.mdx` files are included
+- Items are sorted alphabetically
+- Titles are auto-generated from slugs
+
+## TypeScript Types
+
+```typescript
+interface MetaItem {
+  /** File/folder slug (without extension) */
+  slug: string;
+  /** Display title (optional, defaults to slugToTitle) */
+  title: string;
+  /** Whether to show in navigation */
+  nav: boolean;
+  /** Custom properties for rendering */
+  props: Record<string, string>;
+}
+```
+
+## Related
+
+- [Navigation](/docs/guides/navigation) - Building custom navigation components
+- [Plugins](/docs/guides/plugins) - Extending MDX processing

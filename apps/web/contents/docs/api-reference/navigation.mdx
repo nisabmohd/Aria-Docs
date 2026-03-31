@@ -1,0 +1,194 @@
+# Navigation Functions
+
+Functions for building navigation sidebars and generating static paths.
+
+## `getNavItems(options)`
+
+Build a navigation tree from the content directory structure and `_meta.json` files.
+
+### Usage
+
+```tsx
+import { getNavItems } from "@ariadocs/react";
+
+const navItems = await getNavItems({
+  contentDir: "contents/docs",
+});
+```
+
+### Parameters
+
+| Property     | Type     | Required | Description               |
+| ------------ | -------- | -------- | ------------------------- |
+| `contentDir` | `string` | Yes      | Path to content directory |
+
+### Returns
+
+Returns an array of `NavItem` objects:
+
+| Property | Type        | Description                        |
+| -------- | ----------- | ---------------------------------- |
+| `title`  | `string`    | Display title                      |
+| `href`   | `string`    | URL path                           |
+| `slug`   | `string`    | File/folder slug                   |
+| `nav`    | `boolean`   | Whether to show in navigation      |
+| `items`  | `NavItem[]` | Nested child items                 |
+| `props`  | `object`    | Custom properties from \_meta.json |
+
+### Example
+
+```tsx
+import { getNavItems, type NavItem } from "@ariadocs/react";
+
+export default async function Sidebar() {
+  const navItems = await getNavItems({ contentDir: "contents/docs" });
+  return <NavList items={navItems} />;
+}
+
+function NavList({ items }: { items: NavItem[] }) {
+  return (
+    <ul>
+      {items
+        .filter((item) => item.nav)
+        .map((item) => (
+          <li key={item.href}>
+            <a href={item.href}>{item.title}</a>
+            {item.items.length > 0 && <NavList items={item.items} />}
+          </li>
+        ))}
+    </ul>
+  );
+}
+```
+
+---
+
+## `getPagePaths(options)`
+
+Get all page paths for static generation. Useful for `generateStaticParams` in Next.js.
+
+### Usage
+
+```tsx
+import { getPagePaths } from "@ariadocs/react";
+
+const paths = await getPagePaths({
+  contentDir: "contents/docs",
+});
+// Returns: ["index", "getting-started", "api/reference", ...]
+```
+
+### Parameters
+
+| Property     | Type     | Required | Description               |
+| ------------ | -------- | -------- | ------------------------- |
+| `contentDir` | `string` | Yes      | Path to content directory |
+
+### Returns
+
+Returns an array of path strings (slugs joined with `/`).
+
+### Example with Next.js App Router
+
+```tsx
+import { getPagePaths } from "@ariadocs/react";
+
+export async function generateStaticParams() {
+  const paths = await getPagePaths({ contentDir: "contents/docs" });
+  return paths.map((path) => ({
+    path: path.split("/").filter(Boolean),
+  }));
+}
+```
+
+---
+
+## `slugToTitle(slug)`
+
+Convert a slug string to a title case string.
+
+### Usage
+
+```tsx
+import { slugToTitle } from "@ariadocs/react";
+
+slugToTitle("getting-started"); // "Getting Started"
+slugToTitle("api-reference"); // "Api Reference"
+slugToTitle("what-is-mdx"); // "What Is Mdx"
+```
+
+### Parameters
+
+| Property | Type     | Required | Description            |
+| -------- | -------- | -------- | ---------------------- |
+| `slug`   | `string` | Yes      | Slug string to convert |
+
+### Returns
+
+Returns a title case string.
+
+---
+
+## Navigation Structure
+
+The navigation is built from:
+
+1. **Directory structure** - Folders become nested navigation items
+2. **`_meta.json` files** - Control order, titles, and visibility
+3. **MDX files** - Each `.mdx` file becomes a navigation item
+
+### Example Directory Structure
+
+```
+contents/docs/
+├── _meta.json
+├── introduction.mdx
+├── getting-started/
+│   ├── _meta.json
+│   ├── installation.mdx
+│   └── configuration.mdx
+└── api/
+    ├── _meta.json
+    └── reference.mdx
+```
+
+### Generated Navigation
+
+```json
+[
+  {
+    "title": "Introduction",
+    "href": "/docs/introduction",
+    "slug": "introduction",
+    "nav": true,
+    "items": []
+  },
+  {
+    "title": "Getting Started",
+    "href": "/docs/getting-started",
+    "slug": "getting-started",
+    "nav": true,
+    "items": [
+      {
+        "title": "Installation",
+        "href": "/docs/getting-started/installation",
+        "slug": "installation",
+        "nav": true,
+        "items": []
+      },
+      {
+        "title": "Configuration",
+        "href": "/docs/getting-started/configuration",
+        "slug": "configuration",
+        "nav": true,
+        "items": []
+      }
+    ]
+  }
+]
+```
+
+## Related
+
+- [\_meta.json](/docs/api-reference/meta-json) - Configure navigation with metadata
+- [createDocs](/docs/api-reference/create-docs) - Create a docs instance with navigation methods

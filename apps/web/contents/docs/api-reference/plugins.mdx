@@ -1,0 +1,289 @@
+# Plugins
+
+AriaDocs provides built-in rehype and remark plugins for extending MDX processing. Import them from the `@ariadocs/react/plugins` sub-path.
+
+## Available Plugins
+
+| Plugin                   | Description                                     |
+| ------------------------ | ----------------------------------------------- |
+| `remarkGfm`              | GitHub Flavored Markdown support                |
+| `rehypePrism`            | Syntax highlighting with Prism.js               |
+| `rehypeSlug`             | Add IDs to headings                             |
+| `rehypeAutolinkHeadings` | Add anchor links to headings                    |
+| `rehypeCodeTitles`       | Add titles to code blocks                       |
+| `rehypeCodeRaw`          | Inject raw code string into `<pre>` for copying |
+
+## Import
+
+```tsx
+import {
+  remarkGfm,
+  rehypePrism,
+  rehypeSlug,
+  rehypeAutolinkHeadings,
+  rehypeCodeTitles,
+  rehypeCodeRaw,
+} from "@ariadocs/react/plugins";
+```
+
+---
+
+## `remarkGfm`
+
+Enables GitHub Flavored Markdown features:
+
+- Tables
+- Strikethrough
+- Task lists
+- Autolinks
+
+### Usage
+
+```tsx
+import { createDocs } from "@ariadocs/react";
+import { remarkGfm } from "@ariadocs/react/plugins";
+
+const docs = createDocs({
+  contentDir: "contents/docs",
+  remarkPlugins: [remarkGfm],
+});
+```
+
+### Features
+
+```markdown
+| Column 1 | Column 2 |
+| -------- | -------- |
+| Cell 1   | Cell 2   |
+
+~~Strikethrough text~~
+
+- [x] Completed task
+- [ ] Incomplete task
+
+https://autolink.example.com
+```
+
+---
+
+## `rehypePrism`
+
+Syntax highlighting for code blocks using Prism.js.
+
+### Usage
+
+```tsx
+import { createDocs } from "@ariadocs/react";
+import { rehypePrism } from "@ariadocs/react/plugins";
+
+const docs = createDocs({
+  contentDir: "contents/docs",
+  rehypePlugins: [rehypePrism],
+});
+```
+
+### CSS
+
+Import the syntax highlighting CSS:
+
+```tsx
+import "@ariadocs/react/syntax.css";
+```
+
+### Supported Languages
+
+Prism supports many languages including:
+
+- JavaScript, TypeScript
+- Python
+- Rust
+- Go
+- HTML, CSS
+- JSON, YAML
+- Bash, Shell
+- And many more
+
+### Example
+
+````markdown
+```tsx
+const greeting: string = "Hello, World!";
+console.log(greeting);
+```
+````
+
+````
+
+---
+
+## `rehypeSlug`
+
+Adds unique IDs to all headings based on their text content.
+
+### Usage
+
+```tsx
+import { rehypeSlug } from "@ariadocs/react/plugins";
+
+const docs = createDocs({
+  contentDir: "contents/docs",
+  rehypePlugins: [rehypeSlug],
+});
+````
+
+### Result
+
+```markdown
+# Getting Started
+
+## Installation
+```
+
+Becomes:
+
+```html
+<h1 id="getting-started">Getting Started</h1>
+<h2 id="installation">Installation</h2>
+```
+
+---
+
+## `rehypeAutolinkHeadings`
+
+Adds anchor links to headings for easy sharing and navigation.
+
+### Usage
+
+```tsx
+import { rehypeSlug, rehypeAutolinkHeadings } from "@ariadocs/react/plugins";
+
+const docs = createDocs({
+  contentDir: "contents/docs",
+  rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings],
+});
+```
+
+**Note:** Use with `rehypeSlug` to ensure headings have IDs.
+
+### Result
+
+Headings become clickable links:
+
+```html
+<h1 id="getting-started">
+  <a href="#getting-started">Getting Started</a>
+</h1>
+```
+
+---
+
+## `rehypeCodeTitles`
+
+Adds titles/filenames to code blocks.
+
+### Usage
+
+```tsx
+import { rehypeCodeTitles } from "@ariadocs/react/plugins";
+
+const docs = createDocs({
+  contentDir: "contents/docs",
+  rehypePlugins: [rehypeCodeTitles],
+});
+```
+
+### Syntax
+
+````markdown
+```tsx:app.tsx
+export default function App() {
+  return <div>Hello</div>;
+}
+```
+````
+
+````
+
+### Result
+
+The code block will have a title "app.tsx" displayed above it.
+
+---
+
+## `rehypeCodeRaw`
+
+Injects the raw code string into `<pre>` elements, useful for building copy buttons.
+
+### Usage
+
+```tsx
+import { rehypeCodeRaw } from "@ariadocs/react/plugins";
+
+const docs = createDocs({
+  contentDir: "contents/docs",
+  rehypePlugins: [rehypeCodeRaw],
+});
+````
+
+### Result
+
+The raw code is added as a `data-raw` attribute on `<pre>` elements:
+
+```html
+<pre data-raw="const greeting = 'Hello';">
+  <code>...</code>
+</pre>
+```
+
+---
+
+## Recommended Setup
+
+Combine plugins for the best experience:
+
+```tsx
+import { createDocs } from "@ariadocs/react";
+import {
+  remarkGfm,
+  rehypePrism,
+  rehypeSlug,
+  rehypeAutolinkHeadings,
+  rehypeCodeTitles,
+} from "@ariadocs/react/plugins";
+
+const docs = createDocs({
+  contentDir: "contents/docs",
+  remarkPlugins: [remarkGfm],
+  rehypePlugins: [
+    rehypeSlug,
+    rehypeAutolinkHeadings,
+    rehypeCodeTitles,
+    rehypePrism,
+  ],
+});
+```
+
+### Plugin Order
+
+The order of rehype plugins matters:
+
+1. `rehypeSlug` - Add IDs first
+2. `rehypeAutolinkHeadings` - Then add links to those IDs
+3. `rehypeCodeTitles` - Process code blocks
+4. `rehypePrism` - Apply syntax highlighting last
+
+---
+
+## Sub-path Export
+
+Plugins are available from a dedicated sub-path for tree-shaking:
+
+```tsx
+import { remarkGfm, rehypePrism } from "@ariadocs/react/plugins";
+```
+
+## Related
+
+- [createDocs](/docs/api-reference/create-docs) - Create a docs instance with plugins
+- [parseMdx](/docs/api-reference/parse-mdx) - Parse MDX with plugins
+- [Components](/docs/api-reference/components) - MDX rendering components

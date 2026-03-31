@@ -1,0 +1,175 @@
+# Remote MDX Functions
+
+For MDX content from APIs, CMS, or GitHub, use the remote MDX functions. These work with raw MDX strings instead of local files.
+
+## Available Functions
+
+| Function               | Description                                    |
+| ---------------------- | ---------------------------------------------- |
+| `parseMdxRemote`       | Parse remote MDX for server-side rendering     |
+| `serializeMdxRemote`   | Serialize remote MDX for client-side rendering |
+| `getFrontmatterRemote` | Get frontmatter from remote content            |
+| `getTocRemote`         | Get TOC from remote content                    |
+
+## `parseMdxRemote(options)`
+
+Parse MDX content from a string for server-side rendering.
+
+```tsx
+import { parseMdxRemote } from "@ariadocs/react";
+
+const mdxContent = `---
+title: Hello World
+---
+
+# Hello
+
+This is **markdown** content.
+`;
+
+const { MDX, frontmatter, toc } = await parseMdxRemote({
+  raw: mdxContent,
+  rehypePlugins: [],
+  remarkPlugins: [],
+});
+```
+
+### Parameters
+
+| Property        | Type            | Required | Description             |
+| --------------- | --------------- | -------- | ----------------------- |
+| `raw`           | `string`        | Yes      | Raw MDX content string  |
+| `remarkPlugins` | `RemarkPlugins` | No       | Array of remark plugins |
+| `rehypePlugins` | `RehypePlugins` | No       | Array of rehype plugins |
+| `mdxComponents` | `MDXComponents` | No       | Custom MDX components   |
+
+### Returns
+
+Same as `parseMdx`: `{ raw, content, frontmatter, toc, MDX }`
+
+---
+
+## `serializeMdxRemote(options)`
+
+Serialize MDX content from a string for client-side rendering.
+
+```tsx
+import { serializeMdxRemote } from "@ariadocs/react";
+
+const { serialized, frontmatter, toc } = await serializeMdxRemote({
+  raw: mdxContent,
+  rehypePlugins: [],
+});
+```
+
+### Parameters
+
+| Property        | Type            | Required | Description             |
+| --------------- | --------------- | -------- | ----------------------- |
+| `raw`           | `string`        | Yes      | Raw MDX content string  |
+| `remarkPlugins` | `RemarkPlugins` | No       | Array of remark plugins |
+| `rehypePlugins` | `RehypePlugins` | No       | Array of rehype plugins |
+
+### Returns
+
+Same as `serializeMdx`: `{ serialized, frontmatter, toc }`
+
+---
+
+## `getFrontmatterRemote(options)`
+
+Get frontmatter from a raw MDX string.
+
+```tsx
+import { getFrontmatterRemote } from "@ariadocs/react";
+
+const frontmatter = await getFrontmatterRemote({ raw: mdxContent });
+console.log(frontmatter.title); // "Hello World"
+```
+
+### Parameters
+
+| Property | Type     | Required | Description            |
+| -------- | -------- | -------- | ---------------------- |
+| `raw`    | `string` | Yes      | Raw MDX content string |
+
+### Returns
+
+Returns the parsed frontmatter object.
+
+---
+
+## `getTocRemote(options)`
+
+Get table of contents from a raw MDX string.
+
+```tsx
+import { getTocRemote } from "@ariadocs/react";
+
+const toc = await getTocRemote({ raw: mdxContent });
+```
+
+### Parameters
+
+| Property | Type     | Required | Description            |
+| -------- | -------- | -------- | ---------------------- |
+| `raw`    | `string` | Yes      | Raw MDX content string |
+
+### Returns
+
+Returns an array of `TocItem` objects.
+
+---
+
+## Example: Fetching from an API
+
+```tsx
+import { parseMdxRemote } from "@ariadocs/react";
+
+async function getDocsFromAPI(slug: string) {
+  const response = await fetch(`https://api.example.com/docs/${slug}`);
+  const mdxContent = await response.text();
+
+  return parseMdxRemote({
+    raw: mdxContent,
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings],
+  });
+}
+
+export default async function DocPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const { MDX, frontmatter, toc } = await getDocsFromAPI(params.slug);
+
+  return (
+    <article>
+      <h1>{frontmatter.title}</h1>
+      {MDX}
+    </article>
+  );
+}
+```
+
+## Example: Loading from GitHub
+
+```tsx
+import { parseMdxRemote } from "@ariadocs/react";
+
+async function getDocsFromGitHub(owner: string, repo: string, path: string) {
+  const response = await fetch(
+    `https://raw.githubusercontent.com/${owner}/${repo}/main/${path}`,
+  );
+  const mdxContent = await response.text();
+
+  return parseMdxRemote({ raw: mdxContent });
+}
+```
+
+## Related
+
+- [parseMdx](/docs/api-reference/parse-mdx) - Parse local MDX files
+- [serializeMdx](/docs/api-reference/serialize-mdx) - Serialize local MDX files
+- [MdxServer](/docs/api-reference/components#mdxserver) - Server component for rendering

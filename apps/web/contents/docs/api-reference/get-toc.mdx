@@ -1,0 +1,107 @@
+# `getToc(options)`
+
+Get only the table of contents from an MDX file. This is useful for building navigation sidebars or TOC components.
+
+## Usage
+
+```tsx
+import { getToc } from "@ariadocs/react";
+
+const toc = await getToc({
+  contentDir: "contents/docs",
+  slug: "getting-started",
+});
+```
+
+## Parameters
+
+### `options`
+
+| Property     | Type     | Required | Description                        |
+| ------------ | -------- | -------- | ---------------------------------- |
+| `contentDir` | `string` | Yes      | Path to the content directory      |
+| `slug`       | `string` | Yes      | File path without `.mdx` extension |
+
+## Returns
+
+Returns an array of `TocItem` objects:
+
+| Property | Type        | Description                   |
+| -------- | ----------- | ----------------------------- |
+| `id`     | `string`    | Heading ID (for anchor links) |
+| `value`  | `string`    | Heading text content          |
+| `depth`  | `number`    | Heading level (1-6)           |
+| `items`  | `TocItem[]` | Nested child items (optional) |
+
+## Example
+
+```tsx
+import { getToc } from "@ariadocs/react";
+
+export default async function TableOfContents({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const toc = await getToc({
+    contentDir: "contents/docs",
+    slug: params.slug,
+  });
+
+  return (
+    <nav>
+      <h2>On this page</h2>
+      <ul>
+        {toc.map((item) => (
+          <li key={item.id}>
+            <a href={`#${item.id}`}>{item.value}</a>
+            {item.items && item.items.length > 0 && (
+              <ul>
+                {item.items.map((child) => (
+                  <li key={child.id}>
+                    <a href={`#${child.id}`}>{child.value}</a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+}
+```
+
+## Recursive TOC Component
+
+For deeply nested headings, use a recursive component:
+
+```tsx
+function TocList({ items }: { items: TocItem[] }) {
+  return (
+    <ul>
+      {items.map((item) => (
+        <li key={item.id}>
+          <a href={`#${item.id}`}>{item.value}</a>
+          {item.items && item.items.length > 0 && (
+            <TocList items={item.items} />
+          )}
+        </li>
+      ))}
+    </ul>
+  );
+}
+```
+
+## Use Cases
+
+- Building table of contents sidebars
+- Creating "on this page" navigation
+- Generating outline views
+- Building scroll spy navigation
+
+## Related
+
+- [parseMdx](/docs/api-reference/parse-mdx) - Parse full MDX content
+- [getFrontmatter](/docs/api-reference/get-frontmatter) - Get frontmatter only
+- [getNavItems](/docs/api-reference/navigation#getnavitems) - Build navigation sidebar

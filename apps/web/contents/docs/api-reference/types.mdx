@@ -1,0 +1,381 @@
+# Types
+
+All types are exported from the main entry point for TypeScript support.
+
+## Import Types
+
+```tsx
+import type {
+  // Core types
+  BaseFrontmatter,
+  DocsConfig,
+  RemoteDocsConfig,
+  ParseResult,
+  SerializeResult,
+  DocsInstance,
+  ParseSlugOptions,
+  LocalOptions,
+  RemoteOptions,
+  // Navigation types
+  NavItem,
+  MetaItem,
+  // Plugin types
+  RemarkPlugins,
+  RehypePlugins,
+  // Component types
+  MdxServerProps,
+  MdxClientProps,
+  // Re-exports from external libs
+  MDXComponents,
+  TocItem,
+} from "@ariadocs/react";
+```
+
+---
+
+## Core Types
+
+### `BaseFrontmatter`
+
+Default frontmatter structure for MDX files.
+
+```tsx
+interface BaseFrontmatter {
+  title?: string;
+  description?: string;
+}
+```
+
+### `DocsConfig`
+
+Configuration for local docs operations.
+
+```tsx
+interface DocsConfig {
+  /** Path to the content directory */
+  contentDir: string;
+  /** Remark plugins for MDX processing */
+  remarkPlugins?: RemarkPlugins;
+  /** Rehype plugins for MDX processing */
+  rehypePlugins?: RehypePlugins;
+  /** Custom MDX components */
+  mdxComponents?: MDXComponents;
+}
+```
+
+### `RemoteDocsConfig`
+
+Configuration for remote MDX operations.
+
+```tsx
+interface RemoteDocsConfig {
+  /** Raw MDX content string */
+  raw: string;
+  /** Remark plugins for MDX processing */
+  remarkPlugins?: RemarkPlugins;
+  /** Rehype plugins for MDX processing */
+  rehypePlugins?: RehypePlugins;
+  /** Custom MDX components */
+  mdxComponents?: MDXComponents;
+}
+```
+
+### `ParseResult<T>`
+
+Result from `parseMdx` and `parseMdxRemote`.
+
+```tsx
+interface ParseResult<T = BaseFrontmatter> {
+  /** Raw MDX content */
+  raw: string;
+  /** MDX content without frontmatter */
+  content: string;
+  /** Parsed frontmatter */
+  frontmatter: T;
+  /** Table of contents */
+  toc: TocItem[];
+  /** Rendered MDX component */
+  MDX: ReactNode;
+}
+```
+
+### `SerializeResult<T>`
+
+Result from `serializeMdx` and `serializeMdxRemote`.
+
+```tsx
+interface SerializeResult<T = BaseFrontmatter> {
+  /** Serialized MDX for client */
+  serialized: string;
+  /** Parsed frontmatter */
+  frontmatter: T;
+  /** Table of contents */
+  toc: TocItem[];
+}
+```
+
+### `DocsInstance<T>`
+
+Instance returned by `createDocs`.
+
+```tsx
+interface DocsInstance<T = BaseFrontmatter> {
+  /** Parse MDX for server-side rendering */
+  parse: (options: ParseSlugOptions) => Promise<ParseResult<T>>;
+  /** Serialize MDX for client-side rendering */
+  serialize: (options: ParseSlugOptions) => Promise<SerializeResult<T>>;
+  /** Get frontmatter only */
+  getFrontmatter: (options: ParseSlugOptions) => Promise<T>;
+  /** Get table of contents only */
+  getToc: (options: ParseSlugOptions) => Promise<TocItem[]>;
+  /** Read raw MDX content */
+  readMdx: (options: ParseSlugOptions) => Promise<string>;
+  /** Get navigation items */
+  getNavItems: () => Promise<NavItem[]>;
+  /** Get all page paths */
+  getPagePaths: () => Promise<string[]>;
+  /** Readonly access to config */
+  config: Readonly<DocsConfig>;
+}
+```
+
+---
+
+## Navigation Types
+
+### `NavItem`
+
+Navigation item structure.
+
+```tsx
+interface NavItem {
+  /** Display title */
+  title: string;
+  /** URL path */
+  href: string;
+  /** File/folder slug */
+  slug: string;
+  /** Whether to show in navigation */
+  nav: boolean;
+  /** Nested child items */
+  items: NavItem[];
+  /** Custom properties from _meta.json */
+  props: Record<string, string>;
+}
+```
+
+### `MetaItem`
+
+Structure for `_meta.json` items.
+
+```tsx
+interface MetaItem {
+  /** File/folder slug (without extension) */
+  slug: string;
+  /** Display title (optional, defaults to slugToTitle) */
+  title?: string;
+  /** Whether to show in navigation */
+  nav?: boolean;
+  /** Custom properties for rendering */
+  props?: Record<string, string>;
+}
+```
+
+---
+
+## Plugin Types
+
+### `RemarkPlugins`
+
+Type for remark plugin arrays.
+
+```tsx
+type RemarkPlugins = PluggableList;
+```
+
+### `RehypePlugins`
+
+Type for rehype plugin arrays.
+
+```tsx
+type RehypePlugins = PluggableList;
+```
+
+---
+
+## Component Types
+
+### `MdxServerProps`
+
+Props for `MdxServer` component.
+
+```tsx
+interface MdxServerProps {
+  /** Raw MDX content string */
+  raw: string;
+  /** Plugin configuration */
+  options?: DocsConfig;
+  /** Custom MDX components */
+  components?: MDXComponents;
+}
+```
+
+### `MdxClientProps`
+
+Props for `MdxClient` component.
+
+```tsx
+interface MdxClientProps {
+  /** Serialized MDX from serializeMdx */
+  serialized: string;
+  /** Custom MDX components */
+  mdxComponents?: MDXComponents;
+}
+```
+
+---
+
+## Option Types
+
+### `ParseSlugOptions`
+
+Options for parsing with slug.
+
+```tsx
+interface ParseSlugOptions {
+  /** File path without .mdx extension */
+  slug: string;
+  /** Override remark plugins */
+  remarkPlugins?: RemarkPlugins;
+  /** Override rehype plugins */
+  rehypePlugins?: RehypePlugins;
+  /** Override MDX components */
+  mdxComponents?: MDXComponents;
+}
+```
+
+### `LocalOptions`
+
+Options for local file operations.
+
+```tsx
+interface LocalOptions {
+  /** Path to content directory */
+  contentDir: string;
+  /** File path without .mdx extension */
+  slug: string;
+}
+```
+
+### `RemoteOptions`
+
+Options for remote content operations.
+
+```tsx
+interface RemoteOptions {
+  /** Raw MDX content string */
+  raw: string;
+}
+```
+
+---
+
+## External Types
+
+Types re-exported from external libraries:
+
+### `MDXComponents`
+
+From `mdx/types`. Used for providing custom components to MDX.
+
+```tsx
+type MDXComponents = Record<string, React.ComponentType<any>>;
+```
+
+### `TocItem`
+
+Table of contents item structure.
+
+```tsx
+interface TocItem {
+  /** Heading ID */
+  id: string;
+  /** Heading text */
+  value: string;
+  /** Heading depth (1-6) */
+  depth: number;
+  /** Nested items */
+  items?: TocItem[];
+}
+```
+
+---
+
+## Sub-path Exports
+
+Types can also be imported from dedicated sub-paths:
+
+| Export                  | Description              |
+| ----------------------- | ------------------------ |
+| `@ariadocs/react`       | All types                |
+| `@ariadocs/react/types` | Types only (tree-shaken) |
+
+## Related
+
+- [createDocs](/docs/api-reference/create-docs) - Create a typed docs instance
+- [parseMdx](/docs/api-reference/parse-mdx) - Parse with typed frontmatter
+- [Components](/docs/api-reference/components) - Component propsOptions for remote content operations.
+
+```tsx
+interface RemoteOptions {
+  /** Raw MDX content string */
+  raw: string;
+}
+```
+
+---
+
+## External Types
+
+Types re-exported from external libraries:
+
+### `MDXComponents`
+
+From `mdx/types`. Used for providing custom components to MDX.
+
+```tsx
+type MDXComponents = Record<string, React.ComponentType<any>>;
+```
+
+### `TocItem`
+
+Table of contents item structure.
+
+```tsx
+interface TocItem {
+  /** Heading ID */
+  id: string;
+  /** Heading text */
+  value: string;
+  /** Heading depth (1-6) */
+  depth: number;
+  /** Nested items */
+  items?: TocItem[];
+}
+```
+
+---
+
+## Sub-path Exports
+
+Types can also be imported from dedicated sub-paths:
+
+| Export                  | Description              |
+| ----------------------- | ------------------------ |
+| `@ariadocs/react`       | All types                |
+| `@ariadocs/react/types` | Types only (tree-shaken) |
+
+## Related
+
+- [createDocs](/docs/api-reference/create-docs) - Create a typed docs instance
+- [parseMdx](/docs/api-reference/parse-mdx) - Parse with typed frontmatter

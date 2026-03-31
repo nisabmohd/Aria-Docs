@@ -1,0 +1,100 @@
+# `parseMdx(options)`
+
+Parse a local MDX file for server-side rendering. This is a standalone function for one-off operations without creating a docs instance.
+
+## Usage
+
+```tsx
+import { parseMdx } from "@ariadocs/react";
+
+const { raw, content, frontmatter, toc, MDX } = await parseMdx({
+  contentDir: "contents/docs",
+  slug: "getting-started",
+});
+```
+
+## Parameters
+
+### `options`
+
+| Property        | Type            | Required | Description                         |
+| --------------- | --------------- | -------- | ----------------------------------- |
+| `contentDir`    | `string`        | Yes      | Path to the content directory       |
+| `slug`          | `string`        | Yes      | File path without `.mdx` extension  |
+| `remarkPlugins` | `RemarkPlugins` | No       | Array of remark plugins             |
+| `rehypePlugins` | `RehypePlugins` | No       | Array of rehype plugins             |
+| `mdxComponents` | `MDXComponents` | No       | Custom MDX components for rendering |
+
+## Returns
+
+Returns a `ParseResult` object:
+
+| Property      | Type        | Description                               |
+| ------------- | ----------- | ----------------------------------------- |
+| `raw`         | `string`    | Raw MDX content                           |
+| `content`     | `string`    | MDX content without frontmatter           |
+| `frontmatter` | `object`    | Parsed frontmatter data                   |
+| `toc`         | `TocItem[]` | Table of contents extracted from headings |
+| `MDX`         | `ReactNode` | Rendered MDX component                    |
+
+## Example
+
+```tsx
+import { parseMdx } from "@ariadocs/react";
+import {
+  remarkGfm,
+  rehypePrism,
+  rehypeSlug,
+  rehypeAutolinkHeadings,
+} from "@ariadocs/react/plugins";
+
+export default async function DocPage() {
+  const { MDX, frontmatter, toc } = await parseMdx({
+    contentDir: "contents/docs",
+    slug: "getting-started",
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings, rehypePrism],
+  });
+
+  return (
+    <article>
+      <h1>{frontmatter.title}</h1>
+      <nav>
+        {toc.map((item) => (
+          <a key={item.id} href={`#${item.id}`}>
+            {item.value}
+          </a>
+        ))}
+      </nav>
+      {MDX}
+    </article>
+  );
+}
+```
+
+## Custom Frontmatter
+
+You can type the frontmatter with a generic:
+
+```tsx
+interface MyFrontmatter {
+  title: string;
+  description: string;
+  author: string;
+  tags: string[];
+}
+
+const { frontmatter } = await parseMdx<MyFrontmatter>({
+  contentDir: "contents/docs",
+  slug: "article",
+});
+
+// frontmatter.title, frontmatter.author, etc. are typed!
+```
+
+## Related
+
+- [createDocs](/docs/api-reference/create-docs) - Create a docs instance (recommended)
+- [serializeMdx](/docs/api-reference/serialize-mdx) - Serialize MDX for client-side rendering
+- [getFrontmatter](/docs/api-reference/get-frontmatter) - Get frontmatter only
+- [getToc](/docs/api-reference/get-toc) - Get table of contents only

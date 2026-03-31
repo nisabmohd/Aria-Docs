@@ -1,0 +1,14 @@
+[
+  { "slug": "create-docs", "title": "createDocs", "nav": true },
+  { "slug": "parse-mdx", "title": "parseMdx", "nav": true },
+  { "slug": "serialize-mdx", "title": "serializeMdx", "nav": true },
+  { "slug": "read-mdx", "title": "readMdx", "nav": true },
+  { "slug": "get-frontmatter", "title": "getFrontmatter", "nav": true },
+  { "slug": "get-toc", "title": "getToc", "nav": true },
+  { "slug": "remote-mdx", "title": "Remote MDX", "nav": true },
+  { "slug": "navigation", "title": "Navigation", "nav": true },
+  { "slug": "components", "title": "Components", "nav": true },
+  { "slug": "plugins", "title": "Plugins", "nav": true },
+  { "slug": "types", "title": "Types", "nav": true },
+  { "slug": "meta-json", "title": "_meta.json", "nav": true }
+]

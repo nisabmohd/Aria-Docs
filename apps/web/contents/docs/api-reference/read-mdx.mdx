@@ -1,0 +1,59 @@
+# `readMdx(options)`
+
+Read raw MDX file content. This is useful when you need the raw content without parsing or rendering.
+
+## Usage
+
+```tsx
+import { readMdx } from "@ariadocs/react";
+
+const raw = await readMdx({
+  contentDir: "contents/docs",
+  slug: "getting-started",
+});
+```
+
+## Parameters
+
+### `options`
+
+| Property     | Type     | Required | Description                        |
+| ------------ | -------- | -------- | ---------------------------------- |
+| `contentDir` | `string` | Yes      | Path to the content directory      |
+| `slug`       | `string` | Yes      | File path without `.mdx` extension |
+
+## Returns
+
+Returns a `string` containing the raw MDX content including frontmatter.
+
+## Example
+
+```tsx
+import { readMdx } from "@ariadocs/react";
+
+export default async function RawContentPage() {
+  const raw = await readMdx({
+    contentDir: "contents/docs",
+    slug: "getting-started",
+  });
+
+  return (
+    <pre>
+      <code>{raw}</code>
+    </pre>
+  );
+}
+```
+
+## Use Cases
+
+- Displaying raw MDX source code
+- Processing MDX content with custom logic
+- Building edit pages that show the original content
+- Debugging MDX files
+
+## Related
+
+- [parseMdx](/docs/api-reference/parse-mdx) - Parse MDX for server-side rendering
+- [getFrontmatter](/docs/api-reference/get-frontmatter) - Get frontmatter only
+- [getToc](/docs/api-reference/get-toc) - Get table of contents only

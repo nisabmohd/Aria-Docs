@@ -1,0 +1,100 @@
+# `serializeMdx(options)`
+
+Serialize MDX for client-side rendering with `MdxClient`. This is useful when you need to render MDX in a client component.
+
+## Usage
+
+```tsx
+import { serializeMdx } from "@ariadocs/react";
+
+const { serialized, frontmatter, toc } = await serializeMdx({
+  contentDir: "contents/docs",
+  slug: "getting-started",
+});
+```
+
+## Parameters
+
+### `options`
+
+| Property        | Type            | Required | Description                        |
+| --------------- | --------------- | -------- | ---------------------------------- |
+| `contentDir`    | `string`        | Yes      | Path to the content directory      |
+| `slug`          | `string`        | Yes      | File path without `.mdx` extension |
+| `remarkPlugins` | `RemarkPlugins` | No       | Array of remark plugins            |
+| `rehypePlugins` | `RehypePlugins` | No       | Array of rehype plugins            |
+
+## Returns
+
+Returns a `SerializeResult` object:
+
+| Property      | Type        | Description                               |
+| ------------- | ----------- | ----------------------------------------- |
+| `serialized`  | `string`    | Serialized MDX content for client         |
+| `frontmatter` | `object`    | Parsed frontmatter data                   |
+| `toc`         | `TocItem[]` | Table of contents extracted from headings |
+
+## Example
+
+### Server Component
+
+```tsx
+// app/docs/[...slug]/page.tsx
+import { serializeMdx } from "@ariadocs/react";
+import DocClient from "./DocClient";
+
+export default async function DocPage({
+  params,
+}: {
+  params: { slug: string[] };
+}) {
+  const { serialized, frontmatter, toc } = await serializeMdx({
+    contentDir: "contents/docs",
+    slug: params.slug.join("/"),
+  });
+
+  return (
+    <DocClient serialized={serialized} frontmatter={frontmatter} toc={toc} />
+  );
+}
+```
+
+### Client Component
+
+```tsx
+// app/docs/[...slug]/DocClient.tsx
+"use client";
+import { MdxClient } from "@ariadocs/react";
+
+export default function DocClient({ serialized, frontmatter, toc }) {
+  return (
+    <article>
+      <h1>{frontmatter.title}</h1>
+      <nav>
+        {toc.map((item) => (
+          <a key={item.id} href={`#${item.id}`}>
+            {item.value}
+          </a>
+        ))}
+      </nav>
+      <MdxClient serialized={serialized} />
+    </article>
+  );
+}
+```
+
+## When to Use
+
+Use `serializeMdx` when:
+
+- You need to render MDX in a client component
+- You're building interactive documentation with client-side features
+- You want to separate data fetching from rendering
+
+For most cases, `parseMdx` or `createDocs` with server components is recommended for better performance.
+
+## Related
+
+- [parseMdx](/docs/api-reference/parse-mdx) - Parse MDX for server-side rendering
+- [MdxClient](/docs/api-reference/components#mdxclient) - Client component for rendering serialized MDX
+- [createDocs](/docs/api-reference/create-docs) - Create a docs instance (recommended)

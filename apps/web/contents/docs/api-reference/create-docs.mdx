@@ -1,0 +1,129 @@
+# `createDocs(config)`
+
+Create a docs instance with pre-configured options. This is the recommended way to use AriaDocs as it eliminates repetitive configuration across your application.
+
+## Usage
+
+```tsx
+import { createDocs } from "@ariadocs/react";
+import {
+  remarkGfm,
+  rehypePrism,
+  rehypeSlug,
+  rehypeAutolinkHeadings,
+  rehypeCodeTitles,
+} from "@ariadocs/react/plugins";
+
+const docs = createDocs({
+  contentDir: "contents/docs",
+  remarkPlugins: [remarkGfm],
+  rehypePlugins: [
+    rehypeSlug,
+    rehypeAutolinkHeadings,
+    rehypeCodeTitles,
+    rehypePrism,
+  ],
+  mdxComponents: {}, // Optional
+});
+```
+
+## Parameters
+
+### `config`
+
+The configuration object for the docs instance.
+
+| Property        | Type            | Required | Description                         |
+| --------------- | --------------- | -------- | ----------------------------------- |
+| `contentDir`    | `string`        | Yes      | Path to the content directory       |
+| `remarkPlugins` | `RemarkPlugins` | No       | Array of remark plugins             |
+| `rehypePlugins` | `RehypePlugins` | No       | Array of rehype plugins             |
+| `mdxComponents` | `MDXComponents` | No       | Custom MDX components for rendering |
+
+## Returns
+
+Returns a `DocsInstance` object with the following methods:
+
+### Instance Methods
+
+| Method                          | Description                              |
+| ------------------------------- | ---------------------------------------- |
+| `docs.parse({ slug })`          | Parse MDX for server-side rendering      |
+| `docs.serialize({ slug })`      | Serialize MDX for client-side rendering  |
+| `docs.getFrontmatter({ slug })` | Get frontmatter only                     |
+| `docs.getToc({ slug })`         | Get table of contents only               |
+| `docs.readMdx({ slug })`        | Read raw MDX content                     |
+| `docs.getNavItems()`            | Get navigation tree                      |
+| `docs.getPagePaths()`           | Get all page paths for static generation |
+| `docs.config`                   | Access the original config (readonly)    |
+
+## Override Options Per-Call
+
+You can override the configured options for specific calls:
+
+```tsx
+const docs = createDocs({
+  contentDir: "contents/docs",
+  rehypePlugins: defaultPlugins,
+});
+
+// Override plugins for a specific call
+await docs.parse({
+  slug: "special",
+  rehypePlugins: customPlugins, // Uses customPlugins instead
+});
+```
+
+## Example
+
+```tsx
+// lib/docs.ts - Create docs instance once
+import { createDocs } from "@ariadocs/react";
+import {
+  remarkGfm,
+  rehypePrism,
+  rehypeSlug,
+  rehypeAutolinkHeadings,
+  rehypeCodeTitles,
+} from "@ariadocs/react/plugins";
+
+export const docs = createDocs({
+  contentDir: "contents/docs",
+  remarkPlugins: [remarkGfm],
+  rehypePlugins: [
+    rehypeSlug,
+    rehypeAutolinkHeadings,
+    rehypeCodeTitles,
+    rehypePrism,
+  ],
+});
+```
+
+Then use it in your pages:
+
+```tsx
+// app/docs/[[...path]]/page.tsx
+import { docs } from "@/lib/docs";
+
+export default async function DocPage({
+  params,
+}: {
+  params: { path?: string[] };
+}) {
+  const slug = params.path?.join("/") ?? "index";
+  const { MDX, frontmatter, toc } = await docs.parse({ slug });
+
+  return (
+    <article>
+      <h1>{frontmatter.title}</h1>
+      {MDX}
+    </article>
+  );
+}
+```
+
+## Related
+
+- [parseMdx](/docs/api-reference/parse-mdx) - Parse MDX without creating an instance
+- [serializeMdx](/docs/api-reference/serialize-mdx) - Serialize MDX for client-side rendering
+- [Types](/docs/api-reference/types) - Type definitions

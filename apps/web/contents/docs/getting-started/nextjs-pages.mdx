@@ -13,36 +13,20 @@ Use a catch-all route inside `pages/docs/[[...path]].tsx`:
 ```tsx
 // pages/docs/[[...path]].tsx
 import { docs } from "@/ariadocs";
+import { MdxClient } from "@ariadocs/react";
 
-export default function Docs({
-  MDX,
-  frontmatter,
-}: {
-  MDX: React.ReactNode;
-  frontmatter: { title: string };
-}) {
+export default function Docs({ serialized }) {
   return (
     <section>
-      <title>{frontmatter.title}</title>
-      {MDX}
+      <MdxClient serialized={serialized} />
     </section>
   );
 }
 
-export const getStaticPaths = async () => {
-  const rawPaths = await docs.pagePaths();
-  return {
-    paths: rawPaths.map((str) => ({
-      params: { path: str.split("/").slice(1) },
-    })),
-    fallback: false,
-  };
-};
-
-export const getStaticProps = async ({ params }) => {
+export const getServerSideProps = async ({ params }) => {
   const slug = (params?.path as string[]).join("/");
-  const { MDX, frontmatter } = await docs.parse({ slug });
-  return { props: { MDX, frontmatter } };
+  const { serialized } = await docs.serialize({ slug });
+  return { props: { serialized } };
 };
 ```
 

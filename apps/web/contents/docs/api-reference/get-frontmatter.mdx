@@ -1,0 +1,83 @@
+# `getFrontmatter(options)`
+
+Get only the frontmatter from an MDX file. This is useful when you need metadata without parsing the full content.
+
+## Usage
+
+```tsx
+import { getFrontmatter } from "@ariadocs/react";
+
+const frontmatter = await getFrontmatter({
+  contentDir: "contents/docs",
+  slug: "getting-started",
+});
+```
+
+## Parameters
+
+### `options`
+
+| Property     | Type     | Required | Description                        |
+| ------------ | -------- | -------- | ---------------------------------- |
+| `contentDir` | `string` | Yes      | Path to the content directory      |
+| `slug`       | `string` | Yes      | File path without `.mdx` extension |
+
+## Returns
+
+Returns the parsed frontmatter object. The type defaults to `BaseFrontmatter` but can be extended with generics.
+
+## Example
+
+```tsx
+import { getFrontmatter } from "@ariadocs/react";
+
+interface MyFrontmatter {
+  title: string;
+  description: string;
+  author: string;
+  date: string;
+}
+
+export default async function PageHeader({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const frontmatter = await getFrontmatter<MyFrontmatter>({
+    contentDir: "contents/docs",
+    slug: params.slug,
+  });
+
+  return (
+    <header>
+      <h1>{frontmatter.title}</h1>
+      <p>{frontmatter.description}</p>
+      <span>By {frontmatter.author}</span>
+    </header>
+  );
+}
+```
+
+## Base Frontmatter Type
+
+The default `BaseFrontmatter` type includes:
+
+```tsx
+interface BaseFrontmatter {
+  title?: string;
+  description?: string;
+}
+```
+
+## Use Cases
+
+- Building page headers with metadata
+- Generating SEO tags
+- Creating card grids with page previews
+- Listing pages with titles and descriptions
+
+## Related
+
+- [parseMdx](/docs/api-reference/parse-mdx) - Parse full MDX content
+- [getToc](/docs/api-reference/get-toc) - Get table of contents only
+- [readMdx](/docs/api-reference/read-mdx) - Read raw MDX content
