@@ -38,7 +38,7 @@ export default async function Docs({
     });
     return (
       <>
-        <section className="prose max-w-8xl dark:prose-invert prose-p:leading-5 text-[15px] prose-p:text-muted-foreground prose-code:font-mono prose-headings:mb-3 prose-headings:prose-lg prose-headings:mt-6 prose-p:my-2 prose-li:my-1 prose-ul:my-2 prose-ol:my-2 prose-pre:my-3 py-6">
+        <section className="prose max-w-8xl dark:prose-invert prose-p:leading-5 text-[15px] prose-p:text-muted-foreground prose-code:font-mono prose-headings:mb-3 prose-headings:prose-lg prose-headings:mt-6 prose-p:my-2 prose-li:my-1 prose-ul:my-2 prose-ol:my-2 prose-pre:my-3 md:py-6">
           <h2>{frontmatter.title}</h2>
           <title>{frontmatter.title}</title>
           {MDX}
