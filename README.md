@@ -1,31 +1,69 @@
-# shadcn/ui monorepo template
+# Aria-Docs
 
-This template is for creating a monorepo with shadcn/ui.
+A **documentation-building library** for React and Next.js. Render MDX content, organize docs with `_meta.json`, and build modern documentation sites with minimal setup.
 
-## Usage
+## Packages
+
+| Package                               | Description                          |
+| ------------------------------------- | ------------------------------------ |
+| [@ariadocs/react](./packages/library) | Core library for building docs sites |
+
+## Quick Links
+
+- **[Documentation & API Reference](./packages/library/README.md)** - Full usage guide, API reference, and examples
+- **[Installation](./packages/library/README.md#installation)** - Get started with `@ariadocs/react`
+
+## Features
+
+- 📝 **MDX Support** - Write documentation in MDX with full React component support
+- 🗂️ **Navigation** - Auto-generate navigation from `_meta.json` files
+- 🎨 **Syntax Highlighting** - Built-in Prism.js integration for code blocks
+- ⚡ **Server Components** - Full support for React Server Components
+- 🔌 **Plugin System** - Extensible with remark/rehype plugins
+
+## Quick Start
 
 ```bash
-pnpm dlx shadcn@latest init
+pnpm add @ariadocs/react
 ```
-
-## Adding components
-
-To add components to your app, run the following command at the root of your `web` app:
-
-```bash
-pnpm dlx shadcn@latest add button -c apps/web
-```
-
-This will place the ui components in the `packages/ui/src/components` directory.
-
-## Tailwind
-
-Your `tailwind.config.ts` and `globals.css` are already set up to use the components from the `ui` package.
-
-## Using components
-
-To use the components in your app, import them from the `ui` package.
 
 ```tsx
-import { Button } from "@workspace/ui/components/button"
+import { createDocs } from "@ariadocs/react";
+import {
+  remarkGfm,
+  rehypePrism,
+  rehypeSlug,
+  rehypeAutolinkHeadings,
+  rehypeCodeTitles,
+} from "@ariadocs/react/plugins";
+
+export const docs = createDocs({
+  contentDir: "contents/docs",
+  remarkPlugins: [remarkGfm],
+  rehypePlugins: [
+    rehypeSlug,
+    rehypeAutolinkHeadings,
+    rehypeCodeTitles,
+    rehypePrism,
+  ],
+});
 ```
+
+👉 **[See full documentation](./packages/library/README.md)** for complete API reference, examples, and guides.
+
+## Development
+
+```bash
+# Install dependencies
+pnpm install
+
+# Build the library
+pnpm --filter @ariadocs/react build
+
+# Run the docs site
+pnpm --filter web dev
+```
+
+## License
+
+MIT © [Nisab Mohd](https://github.com/nisabmohd)

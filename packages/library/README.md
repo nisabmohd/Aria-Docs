@@ -26,12 +26,25 @@ import "@ariadocs/react/syntax.css";
 Use `createDocs()` to avoid repeating configuration:
 
 ```tsx
-import { createDocs, recommendedRehypePlugins } from "@ariadocs/react";
+import { createDocs } from "@ariadocs/react";
+import {
+  remarkGfm,
+  rehypePrism,
+  rehypeSlug,
+  rehypeAutolinkHeadings,
+  rehypeCodeTitles,
+} from "@ariadocs/react/plugins";
 
 // Create once, use everywhere
 export const docs = createDocs({
   contentDir: "contents/docs",
-  rehypePlugins: recommendedRehypePlugins,
+  rehypePlugins: [
+    rehypeSlug,
+    rehypeAutolinkHeadings,
+    rehypeCodeTitles,
+    rehypePrism,
+  ],
+  remarkPlugins: [remarkGfm],
 });
 ```
 
@@ -100,12 +113,24 @@ function NavList({ items }: { items: NavItem[] }) {
 Create a docs instance with pre-configured options. Eliminates repetitive configuration.
 
 ```tsx
-import { createDocs, recommendedRehypePlugins } from "@ariadocs/react";
+import { createDocs } from "@ariadocs/react";
+import {
+  remarkGfm,
+  rehypePrism,
+  rehypeSlug,
+  rehypeAutolinkHeadings,
+  rehypeCodeTitles,
+} from "@ariadocs/react/plugins";
 
 const docs = createDocs({
   contentDir: "contents/docs",
-  remarkPlugins: [], // Optional
-  rehypePlugins: recommendedRehypePlugins, // Optional
+  remarkPlugins: [remarkGfm],
+  rehypePlugins: [
+    rehypeSlug,
+    rehypeAutolinkHeadings,
+    rehypeCodeTitles,
+    rehypePrism,
+  ],
   mdxComponents: {}, // Optional
 });
 
@@ -117,6 +142,7 @@ await docs.getToc({ slug: "intro" }); // Get TOC only
 await docs.readMdx({ slug: "intro" }); // Read raw content
 await docs.getNavItems(); // Get navigation tree
 await docs.getPagePaths(); // Get all page paths
+docs.config; // Access the original config (readonly)
 ```
 
 #### Override Options Per-Call
@@ -149,7 +175,7 @@ const { raw, content, frontmatter, toc, MDX } = await parseMdx({
   contentDir: "contents/docs", // Required: path to content directory
   slug: "getting-started", // Required: file path without .mdx
   remarkPlugins: [], // Optional: remark plugins
-  rehypePlugins: recommendedRehypePlugins, // Optional: rehype plugins
+  rehypePlugins: [], // Optional: rehype plugins
   mdxComponents: {}, // Optional: custom MDX components
 });
 ```
@@ -163,11 +189,22 @@ Serialize MDX for client-side rendering with `MdxClient`.
 const { serialized, frontmatter, toc } = await serializeMdx({
   contentDir: "contents/docs",
   slug: "getting-started",
-  rehypePlugins: recommendedRehypePlugins,
+  rehypePlugins: [],
 });
 
 // Pass to client component
 <DocClient serialized={serialized} />;
+```
+
+#### `readMdx(options)`
+
+Read raw MDX file content.
+
+```tsx
+const raw = await readMdx({
+  contentDir: "contents/docs",
+  slug: "getting-started",
+});
 ```
 
 #### `getFrontmatter(options)`
@@ -197,18 +234,29 @@ const toc = await getToc({
 For MDX content from APIs, CMS, or GitHub:
 
 ```tsx
-import { parseMdxRemote, serializeMdxRemote } from "@ariadocs/react";
+import {
+  parseMdxRemote,
+  serializeMdxRemote,
+  getFrontmatterRemote,
+  getTocRemote,
+} from "@ariadocs/react";
+
+// Get frontmatter from remote content
+const frontmatter = await getFrontmatterRemote({ raw: mdxContentString });
+
+// Get TOC from remote content
+const toc = await getTocRemote({ raw: mdxContentString });
 
 // Parse remote MDX
 const { MDX, frontmatter, toc } = await parseMdxRemote({
   raw: mdxContentString,
-  rehypePlugins: recommendedRehypePlugins,
+  rehypePlugins: [],
 });
 
 // Serialize for client
 const { serialized } = await serializeMdxRemote({
   raw: mdxContentString,
-  rehypePlugins: recommendedRehypePlugins,
+  rehypePlugins: [],
 });
 ```
 
@@ -235,6 +283,15 @@ export async function generateStaticParams() {
 }
 ```
 
+#### `slugToTitle(slug)`
+
+Convert a slug string to a title.
+
+```tsx
+slugToTitle("getting-started"); // "Getting Started"
+slugToTitle("api-reference"); // "Api Reference"
+```
+
 ### Components
 
 #### `<MdxServer />`
@@ -242,12 +299,15 @@ export async function generateStaticParams() {
 Server component for rendering MDX.
 
 ```tsx
-import { MdxServer, recommendedRehypePlugins } from "@ariadocs/react";
+import { MdxServer } from "@ariadocs/react";
+// or
+import { MdxServer } from "@ariadocs/react/server";
 
 <MdxServer
   raw={mdxContent}
   options={{
-    rehypePlugins: recommendedRehypePlugins,
+    remarkPlugins: [],
+    rehypePlugins: [],
   }}
   components={
     {
@@ -264,27 +324,105 @@ Client component for rendering serialized MDX.
 ```tsx
 "use client";
 import { MdxClient } from "@ariadocs/react";
+// or
+import { MdxClient } from "@ariadocs/react/client";
 
 <MdxClient serialized={serializedResult} mdxComponents={{}} />;
 ```
 
 ### Plugins
 
+Import individual plugins from the sub-path export:
+
 ```tsx
 import {
-  recommendedRemarkPlugins,
-  recommendedRehypePlugins,
-  // Individual plugins
   remarkGfm,
   rehypePrism,
   rehypeAutolinkHeadings,
   rehypeSlug,
   rehypeCodeTitles,
-} from "@ariadocs/react";
+  rehypeCodeRaw,
+} from "@ariadocs/react/plugins";
 ```
 
-- `recommendedRemarkPlugins`: `[remarkGfm]` - GitHub Flavored Markdown
-- `recommendedRehypePlugins`: Code highlighting, slugs, autolink headings
+| Plugin                   | Description                                     |
+| ------------------------ | ----------------------------------------------- |
+| `remarkGfm`              | GitHub Flavored Markdown support                |
+| `rehypePrism`            | Syntax highlighting with Prism.js               |
+| `rehypeSlug`             | Add IDs to headings                             |
+| `rehypeAutolinkHeadings` | Add anchor links to headings                    |
+| `rehypeCodeTitles`       | Add titles to code blocks                       |
+| `rehypeCodeRaw`          | Inject raw code string into `<pre>` for copying |
+
+#### Recommended Setup
+
+```tsx
+import { createDocs } from "@ariadocs/react";
+import {
+  remarkGfm,
+  rehypePrism,
+  rehypeSlug,
+  rehypeAutolinkHeadings,
+  rehypeCodeTitles,
+} from "@ariadocs/react/plugins";
+
+const docs = createDocs({
+  contentDir: "contents/docs",
+  remarkPlugins: [remarkGfm],
+  rehypePlugins: [
+    rehypeSlug,
+    rehypeAutolinkHeadings,
+    rehypeCodeTitles,
+    rehypePrism,
+  ],
+});
+```
+
+## Sub-path Exports
+
+The package provides multiple entry points for tree-shaking:
+
+| Export                       | Description                   |
+| ---------------------------- | ----------------------------- |
+| `@ariadocs/react`            | Main entry (all exports)      |
+| `@ariadocs/react/client`     | `MdxClient` component         |
+| `@ariadocs/react/server`     | `MdxServer` component         |
+| `@ariadocs/react/plugins`    | All rehype/remark plugins     |
+| `@ariadocs/react/nav`        | Navigation functions          |
+| `@ariadocs/react/parse`      | Parse/serialize functions     |
+| `@ariadocs/react/types`      | Type definitions only         |
+| `@ariadocs/react/syntax.css` | Prism syntax highlighting CSS |
+
+## Types
+
+All types are exported from the main entry:
+
+```tsx
+import type {
+  // Core types
+  BaseFrontmatter,
+  DocsConfig,
+  RemoteDocsConfig,
+  ParseResult,
+  SerializeResult,
+  DocsInstance,
+  ParseSlugOptions,
+  LocalOptions,
+  RemoteOptions,
+  // Navigation types
+  NavItem,
+  MetaItem,
+  // Plugin types
+  RemarkPlugins,
+  RehypePlugins,
+  // Component types
+  MdxServerProps,
+  MdxClientProps,
+  // Re-exports from external libs
+  MDXComponents,
+  TocItem,
+} from "@ariadocs/react";
+```
 
 ## Organizing Content with `_meta.json`
 
@@ -351,11 +489,24 @@ const { frontmatter } = await parseMdx<MyFrontmatter>({
 
 ```tsx
 // lib/docs.ts - Create docs instance once
-import { createDocs, recommendedRehypePlugins } from "@ariadocs/react";
+import { createDocs } from "@ariadocs/react";
+import {
+  remarkGfm,
+  rehypePrism,
+  rehypeSlug,
+  rehypeAutolinkHeadings,
+  rehypeCodeTitles,
+} from "@ariadocs/react/plugins";
 
 export const docs = createDocs({
   contentDir: "contents/docs",
-  rehypePlugins: recommendedRehypePlugins,
+  remarkPlugins: [remarkGfm],
+  rehypePlugins: [
+    rehypeSlug,
+    rehypeAutolinkHeadings,
+    rehypeCodeTitles,
+    rehypePrism,
+  ],
 });
 ```
 
