@@ -7,7 +7,7 @@ export function TableOfContents({ toc }: { toc: TocItem[] }) {
     <aside className="not-prose fixed right-20 top-14 hidden w-48 xl:block">
       <nav className="text-sm">
         <p className="mb-2 font-semibold">On this page</p>
-        <ul className="space-y-1">
+        <ul className="space-y-2">
           {toc.map((item) => (
             <li key={item.href} style={{ paddingLeft: (item.depth - 1) * 12 }}>
               <Link

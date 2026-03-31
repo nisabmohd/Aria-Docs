@@ -11,6 +11,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@workspace/ui/components/sheet";
+import { useState } from "react";
 
 function SidebarContent({
   items,
@@ -23,7 +24,7 @@ function SidebarContent({
 
   return (
     <nav className="text-sm">
-      <ul className="space-y-2">
+      <ul className="md:space-y-2 space-y-3">
         {visibleItems.map((item) => (
           <li key={item.href}>
             {item.items.length > 0 ? (
@@ -38,7 +39,7 @@ function SidebarContent({
               </Link>
             )}
             {item.items.length > 0 && (
-              <ul className="ml-3 mt-1 space-y-1 border-l pl-3">
+              <ul className="ml-3 mt-1 space-y-2 border-l pl-3">
                 {item.items
                   .filter((child) => child.nav)
                   .map((child) => (
@@ -62,25 +63,29 @@ function SidebarContent({
 }
 
 export function Sidebar({ items }: { items: NavItem[] }) {
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
   return (
     <>
       {/* Mobile Sidebar with Sheet */}
-      <Sheet>
+      <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
         <SheetTrigger asChild>
           <Button
             variant="ghost"
-            className="lg:hidden -ml-2.5 sticky top-8"
+            className="lg:hidden -ml-2.5 "
             aria-label="Open menu"
           >
             <Menu className="size-4" />
             Menu
           </Button>
         </SheetTrigger>
-        <SheetContent side="left" className="w-64 p-6 pt-16">
+        <SheetContent side="left" className="w-screen border-none p-6 pt-16">
           <SheetHeader className="sr-only">
             <SheetTitle>Navigation Menu</SheetTitle>
           </SheetHeader>
-          <SidebarContent items={items} />
+          <SidebarContent
+            items={items}
+            onLinkClick={() => setIsSheetOpen(false)}
+          />
         </SheetContent>
       </Sheet>
 

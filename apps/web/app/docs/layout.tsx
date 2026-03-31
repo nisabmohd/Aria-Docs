@@ -9,7 +9,7 @@ export default async function DocsLayout({
   const navItems = await docs.getNavItems();
 
   return (
-    <div className="relative mx-auto">
+    <div className="mx-auto">
       <Sidebar items={navItems} />
       <div className="mx-auto max-w-3xl">{children}</div>
     </div>
