@@ -83,7 +83,7 @@ export function Sidebar({ items }: { items: NavItem[] }) {
         <SidebarContent items={items} onLinkClick={() => setIsOpen(false)} />
       </aside>
 
-      <aside className="not-prose fixed left-20 top-20 hidden w-56 lg:block">
+      <aside className="not-prose fixed left-20 top-14 hidden w-56 lg:block">
         <SidebarContent items={items} />
       </aside>
     </>
