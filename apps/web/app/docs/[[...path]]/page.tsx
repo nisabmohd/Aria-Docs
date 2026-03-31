@@ -1,6 +1,7 @@
 import { docs } from "@/ariadocs";
 import type { TocItem } from "@ariadocs/react/types";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 function TableOfContents({ toc }: { toc: TocItem[] }) {
   if (!toc.length) return null;
@@ -31,20 +32,23 @@ export default async function Docs({
   params: Promise<{ path: string[] }>;
 }) {
   const slug = (await params).path?.join("/") ?? "index";
-  const { MDX, frontmatter, toc } = await docs.parse({
-    slug,
-  });
-
-  return (
-    <>
-      <section className="prose max-w-8xl dark:prose-invert prose-p:leading-5 text-[15px] prose-p:text-muted-foreground prose-code:font-mono prose-headings:mb-3 prose-headings:prose-lg prose-headings:mt-6 prose-p:my-2 prose-li:my-1 prose-ul:my-2 prose-ol:my-2 prose-pre:my-3 py-6">
-        <h2>{frontmatter.title}</h2>
-        <title>{frontmatter.title}</title>
-        {MDX}
-      </section>
-      <TableOfContents toc={toc} />
-    </>
-  );
+  try {
+    const { MDX, frontmatter, toc } = await docs.parse({
+      slug,
+    });
+    return (
+      <>
+        <section className="prose max-w-8xl dark:prose-invert prose-p:leading-5 text-[15px] prose-p:text-muted-foreground prose-code:font-mono prose-headings:mb-3 prose-headings:prose-lg prose-headings:mt-6 prose-p:my-2 prose-li:my-1 prose-ul:my-2 prose-ol:my-2 prose-pre:my-3 py-6">
+          <h2>{frontmatter.title}</h2>
+          <title>{frontmatter.title}</title>
+          {MDX}
+        </section>
+        <TableOfContents toc={toc} />
+      </>
+    );
+  } catch {
+    return notFound();
+  }
 }
 
 export async function generateStaticParams() {
