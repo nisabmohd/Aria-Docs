@@ -23,7 +23,7 @@ function SidebarContent({
   const visibleItems = items.filter((item) => item.nav);
 
   return (
-    <nav className="text-sm">
+    <nav className="text-sm overflow-y-auto">
       <ul className="md:space-y-2 space-y-3">
         {visibleItems.map((item) => (
           <li key={item.href}>
