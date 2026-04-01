@@ -8,6 +8,11 @@ export default async function Page() {
         Open Source
       </div>
 
+      <div className="mb-6 inline-flex items-center gap-2 rounded-lg border bg-muted/50 px-4 py-2 font-mono text-sm">
+        <span className="text-muted-foreground">$</span>
+        <span>npx create-ariadocs-app my-docs</span>
+      </div>
+
       <h1 className="mb-4 text-4xl font-bold tracking-tight sm:text-5xl">
         Free Documentation
         <br />

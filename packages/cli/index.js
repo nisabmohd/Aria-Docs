@@ -10,8 +10,8 @@ import chalk from "chalk";
 const templateOptions = [
   { name: chalk.blue("Next app dir"), value: "next-app" },
   { name: chalk.green("Next pages dir"), value: "next-pages" },
-  { name: chalk.green("React router v7"), value: "react-router-v7" },
-  { name: chalk.green("Tanstack start"), value: "tanstack" },
+  { name: chalk.red("React router v7"), value: "react-router-v7" },
+  { name: chalk.yellow("Tanstack start"), value: "tanstack" },
 ];
 
 program

@@ -1,4 +1,5 @@
 [
+  { "slug": "quick-start", "title": "Quick Start", "nav": true },
   { "slug": "installation", "title": "Installation", "nav": true },
   { "slug": "nextjs-app", "title": "Next.js App Router", "nav": true },
   { "slug": "nextjs-pages", "title": "Next.js Pages Router", "nav": true },
