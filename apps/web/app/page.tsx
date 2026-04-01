@@ -40,6 +40,15 @@ export default async function Page() {
           GitHub
         </Link>
       </div>
+
+      <Link
+        href="https://github.com/sponsors/nisabmohd"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+      >
+        ❤️ Sponsor me on GitHub
+      </Link>
     </section>
   );
 }
