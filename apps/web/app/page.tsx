@@ -26,7 +26,7 @@ export default async function Page() {
 
       <div className="flex flex-col gap-3 sm:flex-row">
         <Link
-          href="/docs/getting-started/nextjs-app"
+          href="/docs/getting-started/quick-start"
           className="inline-flex items-center justify-center rounded-lg bg-foreground px-6 py-3 font-medium text-background transition-colors hover:bg-foreground/80"
         >
           Get Started
