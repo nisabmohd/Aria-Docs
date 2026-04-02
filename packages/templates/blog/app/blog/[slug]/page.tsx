@@ -14,3 +14,8 @@ export default async function BlogPage({ params }: BlogPagePropType) {
     </>
   );
 }
+
+export async function generateStaticParams() {
+  const paths = await docs.getPagePaths();
+  return paths.map((it) => ({ slug: it.split("/").filter(Boolean).join("") }));
+}
