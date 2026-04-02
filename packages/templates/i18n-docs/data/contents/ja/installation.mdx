@@ -1,0 +1,55 @@
+---
+title: インストール
+---
+
+## インストール
+
+Ariadocsをプロジェクトに導入するには、以下の手順に従ってください。
+
+## 前提条件
+
+始める前に、以下がインストールされていることを確認してください：
+
+- Node.js (最新バージョン推奨)
+- npm または yarn
+
+## セットアップ
+
+まず、パッケージをインストールします：
+
+```bash
+npm install ariadocs
+```
+
+または
+
+```bash
+yarn add ariadocs
+```
+
+## 基本的な使い方
+
+インストール後、必要なコンポーネントをインポートして使用できます：
+
+```tsx
+import { DocsProvider } from "ariadocs";
+
+export default function App() {
+  return (
+    <DocsProvider>
+      <div>こんにちは、Ariadocs！</div>
+    </DocsProvider>
+  );
+}
+```
+
+## 補足
+
+- 設定ファイルを適切に構成してください
+- カスタムテーマもサポートされています
+
+## まとめ
+
+これでAriadocsのインストールが完了しました。次のステップでは、より詳細な設定について学びましょう。
+
+<Counter />

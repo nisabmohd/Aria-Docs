@@ -1,0 +1,13 @@
+{
+  "home": {
+    "title": "AriaDocs - ドキュメントライブラリ",
+    "description": "モダンなReactのための包括的なドキュメントライブラリ"
+  },
+  "nav": {
+    "toc": "このページ"
+  },
+  "error": {
+    "something_went_wrong": "問題が発生しました",
+    "sub_text": "後でもう一度お試しください"
+  }
+}

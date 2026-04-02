@@ -1,0 +1,13 @@
+{
+  "home": {
+    "title": "AriaDocs - docs library",
+    "description": "This comprehensive docs library for modern react"
+  },
+  "nav": {
+    "toc": "on this page"
+  },
+  "error": {
+    "something_went_wrong": "something went wrong",
+    "sub_text": "please try later"
+  }
+}
