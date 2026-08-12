@@ -8,12 +8,12 @@ A **documentation-building library** for React and Next.js. Render MDX content, 
 
 | Package                               | Description                          |
 | ------------------------------------- | ------------------------------------ |
-| [@ariadocs/react](./packages/library) | Core library for building docs sites |
+| [@ariadocs/react](./packages/lib-react) | Core library for building docs sites |
 
 ## Quick Links
 
-- **[Documentation & API Reference](./packages/library/README.md)** - Full usage guide, API reference, and examples
-- **[Installation](./packages/library/README.md#installation)** - Get started with `@ariadocs/react`
+- **[Documentation & API Reference](./packages/lib-react/README.md)** - Full usage guide, API reference, and examples
+- **[Installation](./packages/lib-react/README.md#installation)** - Get started with `@ariadocs/react`
 
 ## Features
 
@@ -51,7 +51,7 @@ export const docs = createDocs({
 });
 ```
 
-👉 **[See full documentation](./packages/library/README.md)** for complete API reference, examples, and guides.
+👉 **[See full documentation](./packages/lib-react/README.md)** for complete API reference, examples, and guides.
 
 ## Development
 
