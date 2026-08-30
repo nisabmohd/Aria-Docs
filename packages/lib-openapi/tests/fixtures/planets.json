@@ -1,0 +1,187 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Planets API",
+    "version": "1.0.0",
+    "description": "A small API for exploring planets.",
+    "license": { "name": "MIT" }
+  },
+  "servers": [
+    {
+      "url": "https://api.example.com/v1",
+      "description": "Production",
+      "variables": {
+        "version": { "default": "v1", "enum": ["v1", "v2"] }
+      }
+    }
+  ],
+  "tags": [
+    { "name": "planets", "description": "Everything about planets" },
+    { "name": "moons", "description": "Everything about moons" }
+  ],
+  "security": [{ "ApiKeyAuth": [] }],
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": { "type": "apiKey", "in": "header", "name": "X-API-Key" },
+      "BearerAuth": { "type": "http", "scheme": "bearer", "bearerFormat": "JWT" },
+      "OAuth": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://example.com/oauth/authorize",
+            "tokenUrl": "https://example.com/oauth/token",
+            "scopes": { "read:planets": "Read planets" }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Planet": {
+        "type": "object",
+        "required": ["id", "name"],
+        "properties": {
+          "id": { "type": "integer", "format": "int64", "readOnly": true },
+          "name": { "type": "string", "description": "Planet name" },
+          "gravity": { "type": "number", "nullable": true },
+          "tags": { "type": "array", "items": { "type": "string" } },
+          "status": { "enum": ["active", "inactive"] }
+        }
+      },
+      "Planets": {
+        "type": "array",
+        "items": { "$ref": "#/components/schemas/Planet" }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "friend": { "$ref": "#/components/schemas/User" }
+        }
+      },
+      "CreatePlanetInput": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "gravity": { "type": "number" }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/planets": {
+      "parameters": [
+        {
+          "name": "X-Request-Id",
+          "in": "header",
+          "required": false,
+          "schema": { "type": "string" }
+        }
+      ],
+      "get": {
+        "operationId": "listPlanets",
+        "summary": "List all planets",
+        "tags": ["planets"],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Max planets to return",
+            "schema": { "type": "integer", "default": 10 }
+          },
+          {
+            "name": "X-Request-Id",
+            "in": "header",
+            "required": false,
+            "schema": { "type": "string", "format": "uuid" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of planets",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Planets" }
+              }
+            }
+          },
+          "404": { "description": "Not found" },
+          "default": { "description": "Unexpected error" }
+        }
+      },
+      "post": {
+        "summary": "Create a planet",
+        "tags": ["planets"],
+        "security": [{ "BearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreatePlanetInput" },
+              "example": { "name": "Mars" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Planet" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/planets/{id}": {
+      "get": {
+        "summary": "Get a planet by id",
+        "tags": ["planets"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The planet",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Planet" }
+              }
+            }
+          },
+          "404": { "description": "Planet not found" }
+        }
+      }
+    },
+    "/moons": {
+      "get": {
+        "summary": "List moons",
+        "tags": ["moons"],
+        "responses": {
+          "200": { "description": "Moons" }
+        }
+      }
+    }
+  },
+  "webhooks": {
+    "newPlanet": {
+      "post": {
+        "summary": "A new planet was discovered",
+        "responses": {
+          "200": { "description": "Webhook processed" }
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "url": "https://docs.example.com",
+    "description": "More docs"
+  }
+}

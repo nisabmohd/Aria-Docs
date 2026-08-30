@@ -1,0 +1,23 @@
+openapi: 3.0.3
+info:
+  title: Moons API
+  version: 2.0.0
+paths:
+  /moons:
+    get:
+      summary: List moons
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+components:
+  schemas:
+    Moon:
+      type: object
+      properties:
+        name:
+          type: string

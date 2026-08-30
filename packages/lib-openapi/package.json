@@ -1,0 +1,65 @@
+{
+  "name": "@ariadocs/openapi",
+  "version": "0.1.0",
+  "type": "module",
+  "author": {
+    "name": "Nisab Mohd",
+    "email": "nisabmohd@gmail.com"
+  },
+  "license": "MIT",
+  "description": "Headless OpenAPI parser for Ariadocs. Parses OpenAPI documents (JSON/YAML) into a clean, typed, composable documentation model. No React, no UI.",
+  "keywords": [
+    "openapi",
+    "swagger",
+    "documentation",
+    "parser",
+    "api",
+    "headless",
+    "ariadocs"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "build": "tsc",
+    "test": "vitest run",
+    "check-types": "tsc --noEmit"
+  },
+  "packageManager": "pnpm@10.4.1",
+  "dependencies": {
+    "yaml": "^2.9.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@workspace/eslint-config": "workspace:*",
+    "@workspace/typescript-config": "workspace:*",
+    "typescript": "^5.9.2",
+    "vitest": "^5.0.3",
+    "eslint": "^9.32.0"
+  },
+  "files": [
+    "dist",
+    "package.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nisabmohd/Aria-Docs.git",
+    "directory": "packages/lib-openapi"
+  },
+  "bugs": {
+    "url": "https://github.com/nisabmohd/Aria-Docs/issues"
+  },
+  "homepage": "https://github.com/nisabmohd/Aria-Docs#readme"
+}
