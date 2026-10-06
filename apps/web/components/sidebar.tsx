@@ -25,6 +25,15 @@ function SidebarContent({
   return (
     <nav className="text-sm overflow-y-auto">
       <ul className="md:space-y-2 space-y-3">
+        <li>
+          <Link
+            href="/api-docs"
+            className="font-medium hover:text-foreground"
+            onClick={onLinkClick}
+          >
+            API Reference
+          </Link>
+        </li>
         {visibleItems.map((item) => (
           <li key={item.href}>
             {item.items.length > 0 ? (

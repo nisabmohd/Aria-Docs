@@ -1,0 +1,473 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Aria-Docs API",
+    "version": "1.0.0",
+    "description": "Manage documentation sites, pages and search with the Aria-Docs API. This is a demo API rendered with `@ariadocs/openapi` and `@ariadocs/components`.",
+    "termsOfService": "https://ariadocs.vercel.app/terms",
+    "contact": {
+      "name": "Aria-Docs Support",
+      "url": "https://github.com/nisabmohd/Aria-Docs/issues",
+      "email": "nisabmohd@gmail.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.ariadocs.dev/v1",
+      "description": "Production"
+    },
+    {
+      "url": "http://localhost:3000/v1",
+      "description": "Local development"
+    }
+  ],
+  "tags": [
+    {
+      "name": "pages",
+      "description": "Read and manage documentation pages"
+    },
+    {
+      "name": "search",
+      "description": "Full-text search across documentation"
+    },
+    {
+      "name": "webhooks",
+      "description": "Subscribe to documentation events"
+    }
+  ],
+  "security": [{ "ApiKeyAuth": [] }],
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key",
+        "description": "API key authentication for project-scoped access"
+      },
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "JWT bearer token for user-scoped access"
+      },
+      "OAuth2": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://ariadocs.dev/oauth/authorize",
+            "tokenUrl": "https://ariadocs.dev/oauth/token",
+            "scopes": {
+              "pages:read": "Read documentation pages",
+              "pages:write": "Create and update documentation pages"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Page": {
+        "type": "object",
+        "title": "Page",
+        "description": "A documentation page written in MDX",
+        "required": ["id", "slug", "title"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true,
+            "description": "Unique page identifier"
+          },
+          "slug": {
+            "type": "string",
+            "pattern": "^[a-z0-9-/]+$",
+            "description": "URL-friendly identifier"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "description": "Page title"
+          },
+          "description": {
+            "type": ["string", "null"],
+            "description": "Optional page description"
+          },
+          "status": {
+            "enum": ["draft", "published", "archived"],
+            "default": "draft",
+            "description": "Publication status"
+          },
+          "tags": {
+            "type": "array",
+            "items": { "type": "string" },
+            "uniqueItems": true,
+            "description": "Page tags"
+          },
+          "wordCount": {
+            "type": "integer",
+            "minimum": 0,
+            "readOnly": true,
+            "description": "Number of words in the page body"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          }
+        }
+      },
+      "CreatePageInput": {
+        "type": "object",
+        "required": ["slug", "title"],
+        "properties": {
+          "slug": { "type": "string", "pattern": "^[a-z0-9-/]+$" },
+          "title": { "type": "string", "minLength": 1 },
+          "description": { "type": ["string", "null"] },
+          "status": { "enum": ["draft", "published"], "default": "draft" },
+          "content": {
+            "type": "string",
+            "contentEncoding": "base64",
+            "description": "MDX content, base64 encoded"
+          }
+        }
+      },
+      "SearchResult": {
+        "type": "object",
+        "required": ["page", "title", "snippet"],
+        "properties": {
+          "page": { "type": "string", "description": "Page slug the result belongs to" },
+          "title": { "type": "string" },
+          "snippet": { "type": "string", "description": "Matched excerpt" },
+          "heading": { "type": ["string", "null"], "description": "Section heading the match is under" },
+          "score": { "type": "number", "minimum": 0, "maximum": 1 }
+        }
+      },
+      "Comment": {
+        "type": "object",
+        "description": "A review comment. Comments can nest via `replies`.",
+        "required": ["id", "author", "body"],
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "author": { "type": "string" },
+          "body": { "type": "string" },
+          "replies": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Comment" },
+            "description": "Nested replies (recursive)"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": ["code", "message"],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "description": "HTTP status code"
+          },
+          "message": { "type": "string" },
+          "docs": {
+            "type": "string",
+            "format": "uri",
+            "description": "Link to troubleshooting docs"
+          }
+        }
+      }
+    },
+    "parameters": {
+      "PageLimit": {
+        "name": "limit",
+        "in": "query",
+        "required": false,
+        "description": "Maximum number of items to return",
+        "schema": { "type": "integer", "minimum": 1, "maximum": 100, "default": 20 }
+      },
+      "PageCursor": {
+        "name": "cursor",
+        "in": "query",
+        "required": false,
+        "description": "Pagination cursor from the previous response",
+        "schema": { "type": "string" }
+      }
+    }
+  },
+  "paths": {
+    "/pages": {
+      "get": {
+        "operationId": "listPages",
+        "summary": "List documentation pages",
+        "description": "Returns all documentation pages for the authenticated project, paginated with a cursor.",
+        "tags": ["pages"],
+        "parameters": [
+          { "$ref": "#/components/parameters/PageLimit" },
+          { "$ref": "#/components/parameters/PageCursor" },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Filter pages by publication status",
+            "schema": { "enum": ["draft", "published", "archived"] }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A paginated list of pages",
+            "headers": {
+              "X-RateLimit-Remaining": {
+                "description": "Requests remaining in the current window",
+                "schema": { "type": "integer" }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["data", "nextCursor"],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/Page" }
+                    },
+                    "nextCursor": { "type": ["string", "null"] }
+                  }
+                },
+                "example": {
+                  "data": [
+                    {
+                      "id": "9f8c2d44-2f31-4a20-8f0e-8e1c1e69c111",
+                      "slug": "getting-started/quick-start",
+                      "title": "Quick Start",
+                      "status": "published",
+                      "tags": ["intro"],
+                      "wordCount": 412,
+                      "createdAt": "2025-01-04T10:00:00Z",
+                      "updatedAt": "2025-03-12T08:30:00Z"
+                    }
+                  ],
+                  "nextCursor": "eyJvZmZzZXQiOjIwfQ"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid API key",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createPage",
+        "summary": "Create a documentation page",
+        "tags": ["pages"],
+        "security": [{ "BearerAuth": [] }, { "OAuth2": ["pages:write"] }],
+        "requestBody": {
+          "required": true,
+          "description": "The page to create",
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreatePageInput" },
+              "example": {
+                "slug": "guides/deployment",
+                "title": "Deployment",
+                "status": "draft",
+                "content": "IyBEZXBsb3ltZW50CgpMZWFybiBob3cgdG8gZGVwbG95Li4u"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Page created",
+            "headers": {
+              "Location": {
+                "description": "URL of the created page",
+                "schema": { "type": "string", "format": "uri" }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Page" }
+              }
+            }
+          },
+          "409": {
+            "description": "A page with this slug already exists",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pages/{slug}": {
+      "get": {
+        "operationId": "getPage",
+        "summary": "Get a page by slug",
+        "tags": ["pages"],
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "description": "The page slug, e.g. `getting-started/quick-start`",
+            "schema": { "type": "string", "pattern": "^[a-z0-9-/]+$" },
+            "examples": {
+              "quickStart": { "value": "getting-started/quick-start" },
+              "deployment": { "value": "guides/deployment" }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested page",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Page" }
+              }
+            }
+          },
+          "404": {
+            "description": "Page not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" },
+                "example": {
+                  "code": 404,
+                  "message": "Page 'guides/deployment' not found",
+                  "docs": "https://ariadocs.vercel.app/docs/errors#404"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "deletePage",
+        "summary": "Archive a page",
+        "description": "Soft-deletes a page by moving it to the `archived` status.",
+        "tags": ["pages"],
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "204": { "description": "Page archived" },
+          "404": {
+            "description": "Page not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/search": {
+      "get": {
+        "operationId": "searchDocs",
+        "summary": "Search documentation",
+        "description": "Full-text search across all published pages of the project.",
+        "tags": ["search"],
+        "security": [],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "description": "Search query",
+            "schema": { "type": "string", "minLength": 2 },
+            "example": "openapi"
+          },
+          { "$ref": "#/components/parameters/PageLimit" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search results ordered by relevance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/SearchResult" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pages/{slug}/comments": {
+      "get": {
+        "operationId": "listComments",
+        "summary": "List page review comments",
+        "description": "Review comments are threaded — `Comment.replies` nests recursively.",
+        "tags": ["pages"],
+        "deprecated": true,
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Threaded comments",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Comment" }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "webhooks": {
+    "page.published": {
+      "post": {
+        "summary": "A page was published",
+        "description": "Fires whenever a page transitions to the `published` status.",
+        "tags": ["webhooks"],
+        "responses": {
+          "200": { "description": "Webhook processed" }
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "url": "https://ariadocs.vercel.app/docs",
+    "description": "Aria-Docs documentation"
+  }
+}

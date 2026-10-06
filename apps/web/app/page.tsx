@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default async function Page() {
   return (
-    <section className="not-prose flex min-h-[70vh] flex-col items-center justify-center text-center">
+    <section className="not-prose mx-auto flex min-h-[70vh] max-w-2xl flex-col items-center justify-center text-center">
       <div className="mb-6 inline-flex items-center rounded-full border px-3 py-1 text-sm">
         <span className="mr-2 inline-block h-2 w-2 rounded-full bg-green-500"></span>
         Open Source
