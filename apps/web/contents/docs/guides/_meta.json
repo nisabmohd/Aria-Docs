@@ -2,5 +2,6 @@
   { "slug": "server-and-client", "title": "Server and client rendering" },
   { "slug": "themes", "title": "Syntax themes" },
   { "slug": "component-override", "title": "Custom MDX components" },
+  { "slug": "i18n", "title": "Internationalization" },
   { "slug": "migration", "title": "Migrating from @ariadocs/react" }
 ]

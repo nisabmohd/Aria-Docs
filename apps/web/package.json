@@ -4,6 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
+    "predev": "turbo run build --filter=web^...",
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",

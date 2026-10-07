@@ -1,0 +1,200 @@
+---
+title: Internationalization
+description: Serve your docs in more than one language with a Next.js [locale] segment.
+---
+
+Give each language its own content folder and its own `createDocs` instance. Pages, navigation and static paths then stay separate per locale, and you don't have to filter anything.
+
+This example uses Next.js App Router with English and Japanese. The same setup works in any framework that has a locale route parameter.
+
+## Content layout
+
+Put the same files in each locale folder. Each folder has its own `_meta.json`, so sidebar titles can be translated too.
+
+```txt
+content/
+  en/
+    _meta.json
+    index.mdx
+    installation.mdx
+  ja/
+    _meta.json
+    index.mdx
+    installation.mdx
+```
+
+```json title="content/ja/_meta.json"
+[
+  { "slug": "index", "title": "はじめに" },
+  { "slug": "installation", "title": "インストール" }
+]
+```
+
+## One instance per locale
+
+```ts title="lib/i18n.ts"
+import { createDocs, type DocsInstance } from "@ariadocs/mdx";
+import { rehypePrism, rehypeSlug, remarkGfm } from "@ariadocs/mdx/plugins";
+
+export const locales = ["en", "ja"] as const;
+export type Locale = (typeof locales)[number];
+export const defaultLocale: Locale = "en";
+
+export function isLocale(value: string): value is Locale {
+  return (locales as readonly string[]).includes(value);
+}
+
+export const docs = Object.fromEntries(
+  locales.map((locale) => [
+    locale,
+    createDocs({
+      contentDir: `content/${locale}`,
+      remarkPlugins: [remarkGfm],
+      rehypePlugins: [rehypePrism, rehypeSlug],
+    }),
+  ]),
+) as Record<Locale, DocsInstance>;
+```
+
+## Redirect to a locale
+
+A request without a locale, such as `/docs/installation`, is redirected to `/en/docs/installation`. In Next.js 16 this goes in `proxy.ts`. Older versions call the file `middleware.ts`.
+
+```ts title="proxy.ts"
+import { NextResponse, type NextRequest } from "next/server";
+import { defaultLocale, isLocale } from "@/lib/i18n";
+
+export function proxy(request: NextRequest) {
+  const [first] = request.nextUrl.pathname.split("/").filter(Boolean);
+  if (first && isLocale(first)) return;
+
+  request.nextUrl.pathname = `/${defaultLocale}${request.nextUrl.pathname}`;
+  return NextResponse.redirect(request.nextUrl);
+}
+
+export const config = {
+  matcher: ["/((?!_next|api|favicon.ico).*)"],
+};
+```
+
+## Layout and sidebar
+
+Load the navigation for the current locale. Its links are relative, so pass the locale prefix as `baseHref`.
+
+```tsx title="app/[locale]/docs/layout.tsx"
+import { notFound } from "next/navigation";
+import { Docs } from "@ariadocs/components";
+import { Sidebar } from "@/components/sidebar";
+import { docs, isLocale, locales } from "@/lib/i18n";
+
+type Props = { children: React.ReactNode; params: Promise<{ locale: string }> };
+
+export default async function Layout({ children, params }: Props) {
+  const { locale } = await params;
+  if (!isLocale(locale)) notFound();
+
+  const items = await docs[locale].getNavigation();
+  return (
+    <Docs.Layout>
+      <Docs.Sidebar>
+        <Sidebar items={items} baseHref={`/${locale}/docs`} />
+      </Docs.Sidebar>
+      <Docs.Content>{children}</Docs.Content>
+    </Docs.Layout>
+  );
+}
+
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
+```
+
+```tsx title="components/sidebar.tsx"
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Docs } from "@ariadocs/components";
+import type { NavItem } from "@ariadocs/core";
+
+export function Sidebar({ items, baseHref }: { items: NavItem[]; baseHref: string }) {
+  return <Docs.Nav items={items} baseHref={baseHref} activeHref={usePathname()} linkAs={Link} />;
+}
+```
+
+## Docs page
+
+```tsx title="app/[locale]/docs/[[...slug]]/page.tsx"
+import { notFound } from "next/navigation";
+import { isMdxNotFound } from "@ariadocs/mdx";
+import { Docs } from "@ariadocs/components";
+import { docs, isLocale, locales } from "@/lib/i18n";
+
+type Props = { params: Promise<{ locale: string; slug?: string[] }> };
+
+export default async function Page({ params }: Props) {
+  const { locale, slug } = await params;
+  if (!isLocale(locale)) notFound();
+
+  try {
+    const { MDX, frontmatter, toc } = await docs[locale].parse<{ title: string }>({
+      slug: slug?.join("/") ?? "",
+    });
+    return (
+      <Docs.Page>
+        <Docs.Page.Title>{frontmatter.title}</Docs.Page.Title>
+        <Docs.Page.Content>{MDX}</Docs.Page.Content>
+        <Docs.Toc items={toc} />
+      </Docs.Page>
+    );
+  } catch (error) {
+    if (isMdxNotFound(error)) notFound();
+    throw error;
+  }
+}
+
+export async function generateStaticParams() {
+  const all = await Promise.all(
+    locales.map(async (locale) => {
+      const paths = await docs[locale].getPagePaths();
+      return paths.map((path) => ({ locale, slug: path.split("/").filter(Boolean) }));
+    }),
+  );
+  return all.flat();
+}
+```
+
+If a page hasn't been translated yet, `parse` throws a not-found error. To fall back to the default language instead of returning a 404, catch the error and parse the same slug with `docs[defaultLocale]`.
+
+## Language switcher
+
+Replace the first path segment and keep the rest of the URL:
+
+```tsx title="components/language-switcher.tsx"
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+const languages = [
+  { code: "en", label: "English" },
+  { code: "ja", label: "日本語" },
+];
+
+export function LanguageSwitcher() {
+  const [, , ...rest] = usePathname().split("/");
+  return (
+    <nav className="flex gap-3">
+      {languages.map(({ code, label }) => (
+        <Link key={code} href={`/${[code, ...rest].join("/")}`}>
+          {label}
+        </Link>
+      ))}
+    </nav>
+  );
+}
+```
+
+## UI strings
+
+Text outside your MDX, such as navbar labels and button text, should come from a dictionary per locale, for example `dict/en.json` and `dict/ja.json`. Load it in the `[locale]` layout and pass it down. Ariadocs doesn't handle these strings, so any i18n library works here, including `next-intl`.
