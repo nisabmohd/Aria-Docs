@@ -2,10 +2,55 @@ import remarkGfm from "remark-gfm"
 import rehypePrism from "rehype-prism-plus"
 import rehypeAutolinkHeadings from "rehype-autolink-headings"
 import rehypeSlug from "rehype-slug"
-import rehypeCodeTitles from "rehype-code-titles"
 import { SKIP, visit } from "unist-util-visit"
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+const TITLE_META = /(?:^|\s)title=(?:"([^"]*)"|'([^']*)')/
+
+/**
+ * Rehype plugin: shows a code block's file name above it, as
+ * `<div class="rehype-code-title">`. Write ` ```ts title="lib/docs.ts" `,
+ * or the shorter ` ```ts:lib/docs.ts `.
+ */
+export function rehypeCodeTitles() {
+  return (tree: any) => {
+    visit(tree, "element", (node: any, index: number | undefined, parent: any) => {
+      if (node.tagName !== "pre" || parent === undefined || index === undefined) return undefined
+      const [code] = node.children ?? []
+      if (code?.tagName !== "code") return undefined
+
+      let title: string | undefined
+      const meta = code.data?.meta
+      if (typeof meta === "string") {
+        const match = TITLE_META.exec(meta)
+        if (match) title = match[1] ?? match[2]
+      }
+
+      // `language-ts:lib/docs.ts` → class `language-ts`, title `lib/docs.ts`.
+      const classNames: unknown[] = Array.isArray(code.properties?.className) ? code.properties.className : []
+      code.properties = {
+        ...code.properties,
+        className: classNames.map((name) => {
+          if (typeof name !== "string" || !name.startsWith("language-")) return name
+          const separator = name.indexOf(":")
+          if (separator === -1) return name
+          title ??= name.slice(separator + 1)
+          return name.slice(0, separator)
+        }),
+      }
+
+      if (!title) return undefined
+      parent.children.splice(index, 0, {
+        type: "element",
+        tagName: "div",
+        properties: { className: ["rehype-code-title"] },
+        children: [{ type: "text", value: title }],
+      })
+      return [SKIP, index + 2]
+    })
+  }
+}
 
 /**
  * Rehype plugin: copies a code block's raw text onto its `<pre>` as a `raw`
@@ -58,4 +103,4 @@ export function remarkBlockJs() {
   }
 }
 
-export { remarkGfm, rehypePrism, rehypeAutolinkHeadings, rehypeSlug, rehypeCodeTitles }
+export { remarkGfm, rehypePrism, rehypeAutolinkHeadings, rehypeSlug }

@@ -1,3 +1,4 @@
+import type { JsonObject } from "@ariadocs/core"
 import type { APIOperation, ExternalDocs } from "./operation.js"
 import type { APISecurityRequirement, APISecurityScheme } from "./security.js"
 import type { APISchema } from "./schema.js"
@@ -90,7 +91,7 @@ export interface APISpec {
   /** Non-fatal problems found while parsing, e.g. unresolved references. */
   warnings: string[]
   /** The raw document, when parsed with `includeRaw: true`. */
-  raw?: OpenAPIDocument
+  raw?: JsonObject
 }
 
 export type APISearchResultType = "operation" | "schema" | "tag"

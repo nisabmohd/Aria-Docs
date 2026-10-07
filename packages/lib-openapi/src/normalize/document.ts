@@ -27,6 +27,7 @@ import {
   normalizeExternalDocs,
   normalizeResponses,
 } from "./parameters.js"
+import { asJsonObject } from "./json.js"
 import { normalizeSchema } from "./schema.js"
 import { normalizeSecurityRequirements, normalizeSecuritySchemes } from "./security.js"
 import { DEFAULT_SERVERS, normalizeServers } from "./servers.js"
@@ -125,7 +126,7 @@ export function normalizeOpenAPI(document: OpenAPIDocument, options: NormalizeOp
   }
 
   if (options.includeRaw) {
-    api.raw = document
+    api.raw = asJsonObject(document)
   }
 
   return api
@@ -175,7 +176,7 @@ function normalizePathItem(
     }
 
     if (context.options.includeRaw) {
-      normalized.raw = operation
+      normalized.raw = asJsonObject(operation)
     }
 
     operations.push(normalized)

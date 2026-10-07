@@ -1,7 +1,17 @@
 import type { ReactNode } from "react"
 import type { NavItem, TocItem } from "@ariadocs/core"
 import type { MDXComponents } from "next-mdx-remote-client/rsc"
-import type { SerializeResult } from "next-mdx-remote-client/serialize"
+import type { SerializeResult as CompileResult } from "next-mdx-remote-client/serialize"
+
+/**
+ * Compiled MDX from `serializeMdx()`, for `<MdxClient />`. Plain JSON, so it
+ * can be returned from any loader or `getStaticProps`.
+ */
+export interface SerializeResult {
+  compiledSource: string
+  frontmatter: Record<string, never>
+  scope: Record<string, never>
+}
 
 // ---------- Plugins ----------
 
@@ -92,11 +102,11 @@ export interface MdxServerProps extends MdxRenderOptions {
 
 export interface MdxClientProps {
   /** The `serialized` value from `serializeMdx()`. */
-  serialized: SerializeResult
+  serialized: SerializeResult | CompileResult
   /** Components used to render MDX elements. */
   components?: MDXComponents
 }
 
 // ---------- Re-exports ----------
 
-export type { MDXComponents, NavItem, TocItem, SerializeResult }
+export type { MDXComponents, NavItem, TocItem }

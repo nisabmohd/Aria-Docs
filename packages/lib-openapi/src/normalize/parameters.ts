@@ -10,6 +10,7 @@ import type {
   HTTPMethod,
   ParameterLocation,
 } from "../types/index.js"
+import { asJson, asJsonObject } from "./json.js"
 import { normalizeSchema } from "./schema.js"
 import { normalizeServers } from "./servers.js"
 
@@ -40,7 +41,7 @@ export function normalizeExamples(input: unknown): APIExample[] {
         name,
         summary: optionalString(record.summary),
         description: optionalString(record.description),
-        value: record.value,
+        value: asJson(record.value),
         externalValue: sanitizeUrl(record.externalValue),
       }
     })
@@ -53,9 +54,9 @@ export function normalizeContent(input: unknown): APIContent[] {
     return {
       mediaType,
       schema: record.schema !== undefined ? normalizeSchema(record.schema) : undefined,
-      example: record.example,
+      example: asJson(record.example),
       examples: normalizeExamples(record.examples),
-      encoding: isRecord(record.encoding) ? record.encoding : undefined,
+      encoding: isRecord(record.encoding) ? asJsonObject(record.encoding) : undefined,
     }
   })
 }
@@ -87,7 +88,7 @@ export function normalizeParameter(input: unknown): APIParameter | undefined {
     schema: input.schema !== undefined ? normalizeSchema(input.schema) : undefined,
     content: input.content !== undefined ? normalizeContent(input.content) : undefined,
     examples: normalizeExamples(input.examples),
-    example: input.example,
+    example: asJson(input.example),
   }
 }
 
@@ -154,8 +155,8 @@ export function normalizeLinks(input: unknown): APILink[] {
         operationId: optionalString(record.operationId),
         operationRef: optionalString(record.operationRef),
         description: optionalString(record.description),
-        parameters: isRecord(record.parameters) ? record.parameters : undefined,
-        requestBody: record.requestBody,
+        parameters: isRecord(record.parameters) ? asJsonObject(record.parameters) : undefined,
+        requestBody: asJson(record.requestBody),
         server: normalizeServers([record.server])?.[0],
       }
     })

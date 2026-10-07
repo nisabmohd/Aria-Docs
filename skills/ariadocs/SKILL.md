@@ -1,6 +1,6 @@
 ---
 name: ariadocs
-description: Add documentation pages (MDX) and API references (OpenAPI) to a React app with the Ariadocs packages @ariadocs/mdx, @ariadocs/openapi and @ariadocs/components. Use when the user wants to set up docs, a docs sidebar or table of contents, render MDX files, render an OpenAPI/Swagger spec, build an API reference, or migrate from @ariadocs/react. Covers Next.js (App and Pages Router), React Router v7 and TanStack Start.
+description: Add documentation pages (MDX) and API references (OpenAPI) to a React app with the Ariadocs packages @ariadocs/mdx, @ariadocs/openapi and @ariadocs/components. Use when the user wants to set up docs, a docs sidebar or table of contents, render MDX files, render an OpenAPI/Swagger spec, build an API reference, or migrate from @ariadocs/react. Covers Next.js (App and Pages Router), React Router (v7 and v8) and TanStack Start.
 ---
 
 # Ariadocs
@@ -136,7 +136,8 @@ Full component and API list: [references/api.md](references/api.md).
 
 ## Rules and gotchas
 
-- **404s**: `docs.parse`/`serialize` throw for missing pages and for slugs outside `contentDir`. Catch the error and check `isMdxNotFound(error)`, then return the framework's 404. Rethrow anything else.
+- **404s**: `docs.parse`/`serialize` throw for missing pages and for slugs outside `contentDir`. Catch the error and check `isMdxNotFound(error)`, then return the framework's 404. Rethrow anything else, such as `MDX_COMPILE_ERROR` for broken MDX, so the build fails.
+- **Loader payloads**: from a loader, server function or `getStaticProps`, return `{ serialized, frontmatter, toc }`, not the whole `serialize()` result. `source` and `content` hold the raw MDX and would double the payload. Both `serialized` and `APISpec` are plain JSON.
 - **Never import `@ariadocs/mdx` (main entry) in client code.** It reads files. Client code imports `MdxClient` from `@ariadocs/mdx/client`. `MdxServer` is also available from `@ariadocs/mdx/server`.
 - **Functions can't cross the server/client boundary.** `Docs.Nav` with `linkAs={Link}` and `activeHref={usePathname()}` goes in a small `"use client"` wrapper. `OpenAPI.Root` takes a string `operationBaseHref` instead of a callback.
 - **Endpoint pages**: `openapi.getPagePaths()` returns `["/emails-send", ...]`, so strip the leading `/` for a `[operation]` param. For sidebar links to endpoint pages, use `openapi.getNavigation({ getOperationHref: (op) => \`/reference/${op.id}\` })`, or `OpenAPI.Sidebar` inside a `Root` with `operationBaseHref`.

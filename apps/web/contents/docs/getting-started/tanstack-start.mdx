@@ -18,7 +18,8 @@ const getPage = createServerFn({ method: "GET" })
   .inputValidator((slug: string) => slug)
   .handler(async ({ data: slug }) => {
     try {
-      return await docs.serialize<{ title: string }>({ slug });
+      const { serialized, frontmatter } = await docs.serialize<{ title: string }>({ slug });
+      return { serialized, frontmatter };
     } catch (error) {
       if (isMdxNotFound(error)) throw notFound();
       throw error;

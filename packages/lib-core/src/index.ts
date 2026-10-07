@@ -1,4 +1,4 @@
-export type { NavItem, TocItem } from "./types.js"
+export type { NavItem, TocItem, JsonValue, JsonObject } from "./types.js"
 export {
   isRecord,
   hasOwn,

@@ -37,7 +37,7 @@
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
-    "build": "tsc",
+    "build": "rm -rf dist && tsc",
     "test": "vitest run",
     "check-types": "tsc --noEmit"
   },
@@ -47,7 +47,6 @@
     "gray-matter": "^4.0.3",
     "next-mdx-remote-client": "^2.1.3",
     "rehype-autolink-headings": "^7.1.0",
-    "rehype-code-titles": "^1.2.0",
     "rehype-prism-plus": "^2.0.1",
     "rehype-slug": "^6.0.0",
     "remark": "^15.0.1",
@@ -81,13 +80,26 @@
   ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "server": [
+        "./dist/components/server.d.ts"
+      ],
+      "client": [
+        "./dist/components/client.d.ts"
+      ],
+      "plugins": [
+        "./dist/plugins.d.ts"
+      ]
+    }
+  },
   "sideEffects": false,
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/nisabmohd/Aria-Docs.git",
+    "url": "git+https://github.com/nisabmohd/Aria-Docs.git",
     "directory": "packages/lib-mdx"
   },
   "bugs": {

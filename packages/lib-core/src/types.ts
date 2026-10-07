@@ -29,3 +29,13 @@ export interface TocItem {
   /** Heading depth (1–6). */
   depth: number
 }
+
+/**
+ * A value that survives a JSON round trip. Parsed specs and serialized pages
+ * use it instead of `unknown`, so frameworks that check loader data for
+ * serializability (TanStack Start, Next.js Pages Router) accept them.
+ */
+export type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue }
+
+/** A JSON object. */
+export type JsonObject = { [key: string]: JsonValue }

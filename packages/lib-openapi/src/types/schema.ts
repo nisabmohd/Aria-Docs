@@ -1,3 +1,5 @@
+import type { JsonObject, JsonValue } from "@ariadocs/core";
+
 /**
  * JSON-Schema-flavored schema model used across the Ariadocs OpenAPI pipeline.
  *
@@ -13,11 +15,11 @@ export interface APISchema {
   format?: string;
   /** OpenAPI 3.0 style nullability. 3.1 uses `type: ["null", ...]` instead. */
   nullable?: boolean;
-  default?: unknown;
-  example?: unknown;
-  examples?: unknown[];
-  enum?: unknown[];
-  const?: unknown;
+  default?: JsonValue;
+  example?: JsonValue;
+  examples?: JsonValue[];
+  enum?: JsonValue[];
+  const?: JsonValue;
 
   // Numbers
   minimum?: number;
@@ -61,7 +63,7 @@ export interface APISchema {
   /** Unresolved reference (present when a `$ref` could not be resolved, e.g. external refs). */
   "$ref"?: string;
   /** The original schema object, when parsed with `includeRaw: true`. */
-  raw?: unknown;
+  raw?: JsonObject;
 }
 
 export interface APISchemaDiscriminator {

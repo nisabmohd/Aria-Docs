@@ -1,5 +1,6 @@
 import { serialize } from "next-mdx-remote-client/serialize"
 import { MdxServer } from "./components/server.js"
+import { MdxError } from "./errors.js"
 import { remarkPluginsFor } from "./options.js"
 import { loadSource, readMdxFile, splitFrontmatter } from "./source.js"
 import { extractToc } from "./toc.js"
@@ -9,6 +10,7 @@ import type {
   MdxOptions,
   ParseMdxResult,
   SerializeMdxResult,
+  SerializeResult,
   TocItem,
 } from "./types.js"
 
@@ -63,7 +65,7 @@ export async function serializeMdx<T = BaseFrontmatter>(options: MdxOptions): Pr
   const { frontmatter, content } = splitFrontmatter<T>(source)
   const toc = await extractToc(content)
 
-  const serialized = await serialize({
+  const result = await serialize({
     source: content,
     options: {
       disableImports: true,
@@ -76,5 +78,12 @@ export async function serializeMdx<T = BaseFrontmatter>(options: MdxOptions): Pr
     },
   })
 
+  // Fail here, on the server, instead of shipping the error to the browser.
+  if ("error" in result) {
+    throw new MdxError(`MDX failed to compile: ${result.error.message}`, "MDX_COMPILE_ERROR", { cause: result.error })
+  }
+
+  // Frontmatter is parsed separately and no scope is passed, so both are empty.
+  const serialized: SerializeResult = { compiledSource: result.compiledSource, frontmatter: {}, scope: {} }
   return { source, content, frontmatter, toc, serialized }
 }

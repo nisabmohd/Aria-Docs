@@ -69,7 +69,10 @@ interface NavContext {
 
 function resolveHref(href: string, baseHref: string): string {
   if (isExternalUrl(href) || href.startsWith("#") || baseHref === "") return href
-  return `${baseHref.replace(/\/+$/, "")}${href.startsWith("/") ? href : `/${href}`}`
+  const base = baseHref.replace(/\/+$/, "")
+  // The index page ("/") links to the base itself: "/docs", not "/docs/".
+  if (href === "/" || href === "") return base || "/"
+  return `${base}${href.startsWith("/") ? href : `/${href}`}`
 }
 
 function isActive(item: NavItem, context: NavContext): boolean {

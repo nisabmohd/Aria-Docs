@@ -30,7 +30,8 @@ import { docs } from "../docs";
 
 export async function loader({ params }: Route.LoaderArgs) {
   try {
-    return await docs.serialize<{ title: string }>({ slug: params["*"] ?? "" });
+    const { serialized, frontmatter } = await docs.serialize<{ title: string }>({ slug: params["*"] ?? "" });
+    return { serialized, frontmatter };
   } catch (error) {
     if (isMdxNotFound(error)) throw new Response("Not found", { status: 404 });
     throw error;

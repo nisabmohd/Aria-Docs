@@ -208,9 +208,6 @@ importers:
       rehype-autolink-headings:
         specifier: ^7.1.0
         version: 7.1.0
-      rehype-code-titles:
-        specifier: ^1.2.0
-        version: 1.2.1
       rehype-prism-plus:
         specifier: ^2.0.1
         version: 2.0.2
@@ -3177,10 +3174,6 @@ packages:
   rehype-autolink-headings@7.1.0:
     resolution: {integrity: sha512-rItO/pSdvnvsP4QRB1pmPiNHUskikqtPojZKJPPPAVx9Hj8i8TwMBhofrrAYRhYOOBZH9tgmG5lPqDLuIWPWmw==}
 
-  rehype-code-titles@1.2.1:
-    resolution: {integrity: sha512-MhDkbRT4SKepZKDBGr9aSUBQyzK6N7NUzj05CzraxCxPSDkeP9ETb+X89JNYOntPC4VE7IvqSD5j1IKTJjAsEA==}
-    engines: {node: '>=16'}
-
   rehype-parse@9.0.1:
     resolution: {integrity: sha512-ksCzCD0Fgfh7trPDxr2rSylbwq9iYDkSn8TCDmEJ49ljEUBxDVCzCHv7QNzZOfODanX4+bWQ4WZqLCRWYLfhag==}
 
@@ -3553,9 +3546,6 @@ packages:
 
   unist-util-visit-parents@6.0.2:
     resolution: {integrity: sha512-goh1s1TBrqSqukSc8wrjwWhL0hiJxgA8m4kFxGlQ+8FYQ3C/m11FcTs4YYem7V664AhHVvgoQLk890Ssdsr2IQ==}
-
-  unist-util-visit@5.0.0:
-    resolution: {integrity: sha512-MR04uvD+07cwl/yhVuVWAtw+3GOR/knlL55Nd/wAdblk27GCVt3lqpTivy/tkJcZoNPzTwS1Y+KMojlLDhoTzg==}
 
   unist-util-visit@5.1.0:
     resolution: {integrity: sha512-m+vIdyeCOpdr/QeQCu2EzxX/ohgS8KbnPDgFni4dQsfSCtpz8UqDyY5GjRru8PDKuYn7Fq19j1CQ+nJSsGKOzg==}
@@ -7064,10 +7054,6 @@ snapshots:
       unified: 11.0.5
       unist-util-visit: 5.1.0
 
-  rehype-code-titles@1.2.1:
-    dependencies:
-      unist-util-visit: 5.0.0
-
   rehype-parse@9.0.1:
     dependencies:
       '@types/hast': 3.0.4
@@ -7598,12 +7584,6 @@ snapshots:
     dependencies:
       '@types/unist': 3.0.3
       unist-util-is: 6.0.1
-
-  unist-util-visit@5.0.0:
-    dependencies:
-      '@types/unist': 3.0.3
-      unist-util-is: 6.0.1
-      unist-util-visit-parents: 6.0.2
 
   unist-util-visit@5.1.0:
     dependencies:

@@ -138,6 +138,8 @@ There are no Server Components, so serialize in `getStaticProps` and render with
 
 ```tsx title="pages/docs/[[...slug]].tsx"
 import type { GetStaticPaths, GetStaticProps } from "next";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { isMdxNotFound, type NavItem, type SerializeResult, type TocItem } from "@ariadocs/mdx";
 import { MdxClient } from "@ariadocs/mdx/client";
 import { Docs } from "@ariadocs/components";
@@ -146,10 +148,11 @@ import { docs } from "@/lib/docs";
 type Props = { serialized: SerializeResult; title: string; toc: TocItem[]; nav: NavItem[] };
 
 export default function Page({ serialized, title, toc, nav }: Props) {
+  const { asPath } = useRouter();
   return (
     <Docs.Layout>
       <Docs.Sidebar>
-        <Docs.Nav items={nav} baseHref="/docs" />
+        <Docs.Nav items={nav} baseHref="/docs" activeHref={asPath.split(/[?#]/)[0]} linkAs={Link} />
       </Docs.Sidebar>
       <Docs.Content>
         <Docs.Page>
@@ -223,7 +226,7 @@ For large specs, pass only the operation (`await openapi.getOperation(id)`) and 
 
 The global CSS import (`@ariadocs/components/styles.css`) goes in `pages/_app.tsx`.
 
-## React Router v7 (framework mode)
+## React Router v7 and v8 (framework mode)
 
 ```ts title="app/routes.ts"
 import { type RouteConfig, index, route } from "@react-router/dev/routes";
@@ -245,11 +248,12 @@ import { docs } from "../docs";
 
 export async function loader({ params }: Route.LoaderArgs) {
   try {
-    const [page, nav] = await Promise.all([
+    const [{ serialized, frontmatter, toc }, nav] = await Promise.all([
       docs.serialize<{ title: string }>({ slug: params["*"] ?? "" }),
       docs.getNavigation(),
     ]);
-    return { ...page, nav };
+    // Return only what the page renders: `source` and `content` would send the raw MDX too.
+    return { serialized, frontmatter, toc, nav };
   } catch (error) {
     if (isMdxNotFound(error)) throw new Response("Not found", { status: 404 });
     throw error;
@@ -329,19 +333,23 @@ The CSS import goes in `app/root.tsx` (or `app/app.css` via `@import`).
 Loaders also run in the browser during client navigation, so anything that reads files goes through `createServerFn`.
 
 ```tsx title="src/routes/docs/$.tsx"
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { Link, createFileRoute, notFound, useLocation } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { isMdxNotFound } from "@ariadocs/mdx";
 import { MdxClient } from "@ariadocs/mdx/client";
-import { Docs } from "@ariadocs/components";
+import { Docs, type LinkComponentProps } from "@ariadocs/components";
 import { docs } from "../../docs";
 
 const getPage = createServerFn({ method: "GET" })
   .inputValidator((slug: string) => slug)
   .handler(async ({ data: slug }) => {
     try {
-      const [page, nav] = await Promise.all([docs.serialize<{ title: string }>({ slug }), docs.getNavigation()]);
-      return { ...page, nav };
+      const [{ serialized, frontmatter, toc }, nav] = await Promise.all([
+        docs.serialize<{ title: string }>({ slug }),
+        docs.getNavigation(),
+      ]);
+      // Return only what the page renders: `source` and `content` would send the raw MDX too.
+      return { serialized, frontmatter, toc, nav };
     } catch (error) {
       if (isMdxNotFound(error)) throw notFound();
       throw error;
@@ -355,10 +363,11 @@ export const Route = createFileRoute("/docs/$")({
 
 function DocsPage() {
   const { serialized, frontmatter, toc, nav } = Route.useLoaderData();
+  const { pathname } = useLocation();
   return (
     <Docs.Layout>
       <Docs.Sidebar>
-        <Docs.Nav items={nav} baseHref="/docs" />
+        <Docs.Nav items={nav} baseHref="/docs" activeHref={pathname} linkAs={DocLink} />
       </Docs.Sidebar>
       <Docs.Content>
         <Docs.Page>
@@ -373,6 +382,11 @@ function DocsPage() {
       </Docs.Aside>
     </Docs.Layout>
   );
+}
+
+function DocLink({ href, ...props }: LinkComponentProps) {
+  // exact: otherwise TanStack also marks parent pages like /docs as current.
+  return <Link to={href} activeOptions={{ exact: true }} {...props} />;
 }
 ```
 

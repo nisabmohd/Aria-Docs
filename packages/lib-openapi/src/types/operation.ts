@@ -1,3 +1,4 @@
+import type { JsonObject, JsonValue } from "@ariadocs/core"
 import type { APIServer } from "./api.js"
 import type { APISecurityRequirement } from "./security.js"
 import type { APISchema } from "./schema.js"
@@ -24,7 +25,7 @@ export interface APIExample {
   name: string
   summary?: string
   description?: string
-  value?: unknown
+  value?: JsonValue
   externalValue?: string
 }
 
@@ -32,9 +33,9 @@ export interface APIExample {
 export interface APIContent {
   mediaType: string
   schema?: APISchema
-  example?: unknown
+  example?: JsonValue
   examples: APIExample[]
-  encoding?: Record<string, unknown>
+  encoding?: Record<string, JsonValue>
 }
 
 export interface APIParameter {
@@ -54,7 +55,7 @@ export interface APIParameter {
   schema?: APISchema
   content?: APIContent[]
   examples: APIExample[]
-  example?: unknown
+  example?: JsonValue
 }
 
 export interface APIRequestBody {
@@ -78,8 +79,8 @@ export interface APILink {
   operationId?: string
   operationRef?: string
   description?: string
-  parameters?: Record<string, unknown>
-  requestBody?: unknown
+  parameters?: Record<string, JsonValue>
+  requestBody?: JsonValue
   server?: { url: string; description?: string }
 }
 
@@ -133,5 +134,5 @@ export interface APIOperation {
   callbacks: APICallback[]
   externalDocs?: ExternalDocs
   /** The original operation object, when parsed with `includeRaw: true`. */
-  raw?: unknown
+  raw?: JsonObject
 }

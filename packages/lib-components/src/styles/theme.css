@@ -52,3 +52,39 @@
   --aria-method-options: oklch(0.7 0.03 260);
   --aria-method-trace: oklch(0.7 0.03 260);
 }
+
+/* Code block layout, shared by every syntax theme. */
+
+/* rehype-prism-plus line highlighting */
+.code-highlight {
+  float: left;
+  min-width: 100%;
+}
+.code-line.highlight-line {
+  background-color: color-mix(in oklab, var(--foreground) 6%, transparent);
+}
+.line-number::before {
+  content: attr(line);
+  display: inline-block;
+  width: 1.5rem;
+  margin-right: 1rem;
+  text-align: right;
+  color: var(--muted-foreground);
+}
+
+/* rehype-code-titles */
+.rehype-code-title {
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+  border: 1px solid var(--border);
+  border-bottom: 0;
+  border-radius: 0.75rem 0.75rem 0 0;
+  padding: 0.5rem 1rem;
+  background: var(--aria-code-background);
+}
+.rehype-code-title + [data-slot="pre"] pre,
+.rehype-code-title + pre {
+  margin-top: 0 !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+}

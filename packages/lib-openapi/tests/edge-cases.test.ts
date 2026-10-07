@@ -75,3 +75,13 @@ describe("edge-case fixture", () => {
     }
   })
 })
+
+describe("serializable output", () => {
+  // Loaders in TanStack Start, React Router and the Next.js Pages Router send
+  // the parsed spec to the browser, so it must survive a JSON round trip.
+  it("round-trips through JSON unchanged, raw documents included", async () => {
+    const api = await parseOpenAPI({ source, includeRaw: true })
+    expect(JSON.parse(JSON.stringify(api))).toEqual(api)
+    expect(structuredClone(api)).toEqual(api)
+  })
+})

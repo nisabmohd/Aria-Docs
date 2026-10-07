@@ -21,7 +21,7 @@
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
-    "build": "tsc",
+    "build": "rm -rf dist && tsc",
     "test": "vitest run",
     "check-types": "tsc --noEmit"
   },
@@ -47,7 +47,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/nisabmohd/Aria-Docs.git",
+    "url": "git+https://github.com/nisabmohd/Aria-Docs.git",
     "directory": "packages/lib-core"
   },
   "bugs": {

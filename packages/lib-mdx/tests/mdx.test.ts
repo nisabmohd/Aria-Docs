@@ -12,7 +12,7 @@ import {
   readMdx,
   serializeMdx,
 } from "../src/index.js"
-import { remarkBlockJs } from "../src/plugins.js"
+import { rehypeCodeTitles, rehypePrism, remarkBlockJs } from "../src/plugins.js"
 
 const contentDir = fileURLToPath(new URL("./fixtures/content", import.meta.url))
 
@@ -114,5 +114,45 @@ describe("navigation", () => {
     const { frontmatter, toc } = await docs.parse({ slug: "intro" })
     expect(frontmatter).toEqual({ title: "Intro" })
     expect(toc).toHaveLength(1)
+  })
+})
+
+describe("plugins", () => {
+  const compiledWith = async (source: string) => {
+    const { serialized } = await serializeMdx({ source, rehypePlugins: [rehypeCodeTitles, rehypePrism] })
+    if (!("compiledSource" in serialized)) throw serialized.error
+    return serialized.compiledSource
+  }
+
+  it("rehypeCodeTitles reads title=\"...\" and the lang:title shorthand", async () => {
+    for (const fence of ['```ts title="lib/docs.ts"', "```ts title='lib/docs.ts'", "```ts:lib/docs.ts"]) {
+      const compiled = await compiledWith(`${fence}\nconst a = 1\n\`\`\``)
+      expect(compiled, fence).toContain('"rehype-code-title"')
+      expect(compiled, fence).toContain('"lib/docs.ts"')
+      expect(compiled, fence).toContain("language-ts")
+      expect(compiled, fence).not.toContain("language-ts:")
+      expect(compiled, fence).toContain("token")
+    }
+  })
+
+  it("rehypeCodeTitles leaves untitled code blocks alone", async () => {
+    const compiled = await compiledWith("```ts\nconst a = 1\n```\n\n```\nplain\n```")
+    expect(compiled).not.toContain("rehype-code-title")
+  })
+})
+
+describe("serializeMdx output", () => {
+  it("is plain JSON", async () => {
+    const result = await serializeMdx({ source: "---\ntitle: Hi\n---\n# Hi" })
+    expect(result.serialized.frontmatter).toEqual({})
+    expect(result.serialized.scope).toEqual({})
+    expect(JSON.parse(JSON.stringify(result))).toEqual(result)
+  })
+
+  it("throws MDX_COMPILE_ERROR instead of returning the error", async () => {
+    const error = await serializeMdx({ source: "<div>unclosed" }).catch((e: unknown) => e)
+    expect(error).toBeInstanceOf(MdxError)
+    expect((error as MdxError).code).toBe("MDX_COMPILE_ERROR")
+    expect(isMdxNotFound(error)).toBe(false)
   })
 })

@@ -12,7 +12,7 @@ Full docs: https://ariadocs.vercel.app/docs
 | `readMdx`, `getFrontmatter`, `getToc` | Same options as `parseMdx` |
 | `getNavigation({ contentDir })` | `NavItem[]` built from folders and `_meta.json` |
 | `getPagePaths({ contentDir })` | `["/", "/intro", "/guides/setup"]` |
-| `MdxError`, `isMdxNotFound(error)` | Error for missing pages or invalid slugs |
+| `MdxError`, `isMdxNotFound(error)` | Codes: `MDX_NOT_FOUND`, `MDX_INVALID_SLUG` (both 404), `MDX_INVALID_META`, `MDX_COMPILE_ERROR` |
 | `slugToTitle(slug)` | `"getting-started"` becomes `"Getting Started"` |
 | `MdxServer` | `<MdxServer source remarkPlugins rehypePlugins components blockJs />`, also at `@ariadocs/mdx/server` |
 | `MdxClient` | `<MdxClient serialized components />`. Import from `@ariadocs/mdx/client` in client code. |
