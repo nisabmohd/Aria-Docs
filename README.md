@@ -52,6 +52,17 @@ Both `docs.getNavigation()` and `openapi.getNavigation()` return the same format
 
 The [framework guides](https://ariadocs.vercel.app/docs/getting-started/nextjs-app) cover the Next.js App Router, the Pages Router, React Router and TanStack Start.
 
+
+## AI agents
+
+The [`skills/ariadocs`](./skills/ariadocs) folder is an agent skill that teaches AI coding agents to set up Ariadocs in any supported framework. Install it with:
+
+```bash
+npx skills add nisabmohd/Aria-Docs
+```
+
+Or copy the folder into `.claude/skills/` (Claude Code) or your agent's skills directory.
+
 ## Working on this repo
 
 ```bash
