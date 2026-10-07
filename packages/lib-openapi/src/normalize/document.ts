@@ -1,88 +1,106 @@
+import {
+  createIdGenerator,
+  isRecord,
+  optionalString,
+  sanitizeUrl,
+  setOwn,
+  slugify,
+} from "@ariadocs/core"
+import { OpenAPIError } from "../errors.js"
 import type {
   APICallback,
   APIOperation,
   APIRequestBody,
   APISecurityRequirement,
+  APIServer,
+  APISpec,
   APITag,
   APIWebhook,
-  AriadocsOpenAPI,
   OpenAPIDocument,
 } from "../types/index.js"
 import { createOperationId } from "../utils/operation-id.js"
 import {
-  bucketParametersByLocation,
-  HTTP_METHODS,
+  groupParametersByLocation,
   isHttpMethod,
   mergeParameters,
   normalizeContent,
   normalizeExternalDocs,
-  normalizeLinks,
   normalizeResponses,
 } from "./parameters.js"
 import { normalizeSchema } from "./schema.js"
 import { normalizeSecurityRequirements, normalizeSecuritySchemes } from "./security.js"
-import { normalizeServers, isRecord, optionalString } from "./servers.js"
+import { DEFAULT_SERVERS, normalizeServers } from "./servers.js"
 
 export interface NormalizeOptions {
+  /** Keep the raw document on `api.raw` and raw operations on `operation.raw`. */
   includeRaw?: boolean
+  /** Warnings collected earlier (e.g. while resolving refs) to carry into `api.warnings`. */
+  warnings?: string[]
+}
+
+/** Name of the tag that collects operations without tags. */
+export const DEFAULT_TAG = "default"
+
+interface Context {
+  options: NormalizeOptions
+  uniqueId: (id: string) => string
+  /** Security inherited by operations that don't declare their own. */
+  security: APISecurityRequirement[]
 }
 
 /**
- * Normalize a (ref-resolved) OpenAPI document into the `AriadocsOpenAPI`
- * model: flattened operations, grouped navigation, typed schemas and
- * security schemes.
+ * Normalize an OpenAPI document (refs already resolved) into the `APISpec`
+ * model. Invalid parts are skipped rather than guessed, so the model never
+ * shows data the document doesn't contain.
  */
-export function normalizeDocument(
-  document: OpenAPIDocument,
-  options: NormalizeOptions = {}
-): AriadocsOpenAPI {
+export function normalizeOpenAPI(document: OpenAPIDocument, options: NormalizeOptions = {}): APISpec {
+  if (!isRecord(document)) {
+    throw new OpenAPIError("OpenAPI document must be an object.", "OPENAPI_INVALID", {
+      issues: [{ path: "", message: "Document must be an object." }],
+    })
+  }
+
   const info = isRecord(document.info) ? document.info : {}
   const components = isRecord(document.components) ? document.components : {}
+  const servers = normalizeServers(document.servers) ?? DEFAULT_SERVERS
+  const security = normalizeSecurityRequirements(document.security)
+  const uniqueId = createIdGenerator()
 
   const paths: Record<string, APIOperation[]> = {}
   const operations: APIOperation[] = []
 
   if (isRecord(document.paths)) {
-    for (const [path, pathItemValue] of Object.entries(document.paths)) {
-      if (!isRecord(pathItemValue)) continue
-
-      const pathOperations = normalizePathItem(
-        path,
-        pathItemValue,
-        document,
-        options
-      )
+    const context: Context = { options, uniqueId, security }
+    for (const [path, pathItem] of Object.entries(document.paths)) {
+      if (!isRecord(pathItem)) continue
+      const pathOperations = normalizePathItem(path, pathItem, servers, context)
       if (pathOperations.length > 0) {
-        paths[path] = pathOperations
+        setOwn(paths, path, pathOperations)
         operations.push(...pathOperations)
       }
     }
   }
 
-  const groups = buildGroups(operations, document.tags)
-  const tags = buildTags(operations, document.tags, groups)
-
-  const schemas: AriadocsOpenAPI["schemas"] = {}
+  const schemas: APISpec["schemas"] = {}
   if (isRecord(components.schemas)) {
     for (const [name, schema] of Object.entries(components.schemas)) {
-      schemas[name] = normalizeSchema(schema)
+      setOwn(schemas, name, normalizeSchema(schema))
     }
   }
 
-  const webhooks = normalizeWebhooks(document, options)
-
-  const api: AriadocsOpenAPI = {
+  const api: APISpec = {
     type: "openapi",
     version: typeof document.openapi === "string" ? document.openapi : "3.1.0",
     info: {
-      title: typeof info.title === "string" ? info.title : "Untitled API",
-      version: typeof info.version === "string" ? info.version : "0.0.0",
+      title: nonEmptyString(info.title) ?? "Untitled API",
+      version: scalarString(info.version) ?? "0.0.0",
+      summary: optionalString(info.summary),
       description: optionalString(info.description),
-      termsOfService: optionalString(info.termsOfService),
+      termsOfService: sanitizeUrl(info.termsOfService),
       contact: isRecord(info.contact)
         ? {
             name: optionalString(info.contact.name),
-            url: optionalString(info.contact.url),
+            url: sanitizeUrl(info.contact.url),
             email: optionalString(info.contact.email),
           }
         : undefined,
@@ -90,20 +108,20 @@ export function normalizeDocument(
         ? {
             name: optionalString(info.license.name),
             identifier: optionalString(info.license.identifier),
-            url: optionalString(info.license.url),
+            url: sanitizeUrl(info.license.url),
           }
         : undefined,
     },
-    servers: normalizeServers(document.servers),
-    tags,
+    servers,
+    tags: buildTags(operations, document.tags),
     paths,
     operations,
-    groups,
     schemas,
     securitySchemes: normalizeSecuritySchemes(components.securitySchemes),
-    webhooks,
-    security: normalizeSecurityRequirements(document.security),
+    webhooks: normalizeWebhooks(document.webhooks, servers, { options, uniqueId, security: [] }),
+    security,
     externalDocs: normalizeExternalDocs(document.externalDocs),
+    warnings: [...(options.warnings ?? [])],
   }
 
   if (options.includeRaw) {
@@ -116,74 +134,60 @@ export function normalizeDocument(
 function normalizePathItem(
   path: string,
   pathItem: Record<string, unknown>,
-  document: OpenAPIDocument,
-  options: NormalizeOptions
+  inheritedServers: APIServer[],
+  context: Context
 ): APIOperation[] {
   const operations: APIOperation[] = []
-  const docSecurity = normalizeSecurityRequirements(document.security)
+  const pathServers = normalizeServers(pathItem.servers) ?? inheritedServers
 
   for (const key of Object.keys(pathItem)) {
     if (!isHttpMethod(key)) continue
 
-    const operationValue = pathItem[key]
-    if (!isRecord(operationValue)) continue
+    const operation = pathItem[key]
+    if (!isRecord(operation)) continue
 
     const method = key.toUpperCase() as APIOperation["method"]
-    const operationId = optionalString(operationValue.operationId)
-    const id = createOperationId({ method, path, operationId })
+    const operationId = nonEmptyString(operation.operationId)
+    const parameters = mergeParameters(pathItem.parameters, operation.parameters)
 
-    const security: APISecurityRequirement[] = Array.isArray(operationValue.security)
-      ? normalizeSecurityRequirements(operationValue.security)
-      : docSecurity
-
-    const parameters = mergeParameters(pathItem.parameters, operationValue.parameters)
-
-    const operation: APIOperation = {
-      id,
+    const normalized: APIOperation = {
+      id: context.uniqueId(createOperationId({ method, path, operationId })),
       operationId,
       method,
       path,
-      summary: optionalString(operationValue.summary),
-      description: optionalString(operationValue.description),
-      tags: Array.isArray(operationValue.tags)
-        ? operationValue.tags.filter((tag): tag is string => typeof tag === "string")
+      summary: optionalString(operation.summary) ?? optionalString(pathItem.summary),
+      description: optionalString(operation.description) ?? optionalString(pathItem.description),
+      tags: Array.isArray(operation.tags)
+        ? [...new Set(operation.tags.filter((tag): tag is string => typeof tag === "string"))]
         : [],
       parameters,
-      parametersByLocation: bucketParametersByLocation(parameters),
-      requestBody: normalizeRequestBody(operationValue.requestBody),
-      responses: normalizeResponses(operationValue.responses),
-      security,
-      servers: normalizeOperationServers(operationValue.servers),
-      deprecated: operationValue.deprecated === true,
-      callbacks: normalizeCallbacks(operationValue.callbacks, options),
-      externalDocs: normalizeExternalDocs(operationValue.externalDocs),
+      parametersByLocation: groupParametersByLocation(parameters),
+      requestBody: normalizeRequestBody(operation.requestBody),
+      responses: normalizeResponses(operation.responses),
+      // `security: []` explicitly removes inherited security.
+      security: Array.isArray(operation.security)
+        ? normalizeSecurityRequirements(operation.security)
+        : context.security,
+      servers: normalizeServers(operation.servers) ?? pathServers,
+      deprecated: operation.deprecated === true,
+      callbacks: normalizeCallbacks(operation.callbacks, pathServers, context),
+      externalDocs: normalizeExternalDocs(operation.externalDocs),
     }
 
-    if (options.includeRaw) {
-      operation.raw = operationValue
+    if (context.options.includeRaw) {
+      normalized.raw = operation
     }
 
-    operations.push(operation)
+    operations.push(normalized)
   }
 
   return operations
 }
 
-function normalizeOperationServers(input: unknown): APIOperation["servers"] {
-  if (!Array.isArray(input)) return []
-  return input
-    .filter((server): server is Record<string, unknown> => isRecord(server))
-    .map((server) => ({
-      url: typeof server.url === "string" ? server.url : "/",
-      description: optionalString(server.description),
-    }))
-}
-
 export function normalizeRequestBody(input: unknown): APIRequestBody | undefined {
-  if (!isRecord(input)) return undefined
+  if (!isRecord(input) || typeof input.$ref === "string") return undefined
 
   const content = normalizeContent(input.content)
-
   return {
     description: optionalString(input.description),
     required: input.required === true,
@@ -193,32 +197,26 @@ export function normalizeRequestBody(input: unknown): APIRequestBody | undefined
 }
 
 function preferContentType(content: APIRequestBody["content"]): string | undefined {
-  if (content.length === 0) return undefined
-  const json = content.find((item) => item.mediaType.includes("json"))
+  const json = content.find((item) => /[/+]json\b/i.test(item.mediaType))
   return (json ?? content[0])?.mediaType
 }
 
-function normalizeCallbacks(input: unknown, options: NormalizeOptions): APICallback[] {
+function normalizeCallbacks(input: unknown, servers: APIServer[], context: Context): APICallback[] {
   if (!isRecord(input)) return []
 
   const callbacks: APICallback[] = []
   for (const [name, value] of Object.entries(input)) {
     if (!isRecord(value)) continue
 
-    for (const [expression, pathItemValue] of Object.entries(value)) {
-      if (!isRecord(pathItemValue)) continue
-      // Callback path items use `{$request.body#/...}` style expressions as keys.
-      const operations = normalizePathItem(
-        expression,
-        pathItemValue,
-        { ...emptyDocument },
-        options
-      )
+    for (const [expression, pathItem] of Object.entries(value)) {
+      if (!isRecord(pathItem)) continue
+      // Callback keys are runtime expressions such as `{$request.body#/url}`.
+      const operations = normalizePathItem(expression, pathItem, servers, { ...context, security: [] })
       if (operations.length > 0) {
         callbacks.push({
           name,
           expression,
-          description: optionalString(pathItemValue.description),
+          description: optionalString(pathItem.description),
           operations,
         })
       }
@@ -228,24 +226,22 @@ function normalizeCallbacks(input: unknown, options: NormalizeOptions): APICallb
   return callbacks
 }
 
-const emptyDocument: OpenAPIDocument = { openapi: "3.1.0", info: { title: "", version: "" } }
+function normalizeWebhooks(input: unknown, servers: APIServer[], context: Context): APIWebhook[] {
+  if (!isRecord(input)) return []
 
-function normalizeWebhooks(document: OpenAPIDocument, options: NormalizeOptions): APIWebhook[] {
-  if (!isRecord(document.webhooks)) return []
-
+  const webhookId = createIdGenerator()
   const webhooks: APIWebhook[] = []
-  for (const [name, value] of Object.entries(document.webhooks)) {
+  for (const [name, value] of Object.entries(input)) {
     if (!isRecord(value)) continue
 
-    const operations = normalizePathItem(name, value, emptyDocument, options)
+    const operations = normalizePathItem(name, value, servers, context)
     if (operations.length === 0) continue
 
     webhooks.push({
-      id: name.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+      id: webhookId(slugify(name, "webhook")),
       name,
       description: optionalString(value.description),
       operations,
-      servers: normalizeOperationServers(value.servers),
     })
   }
 
@@ -253,18 +249,19 @@ function normalizeWebhooks(document: OpenAPIDocument, options: NormalizeOptions)
 }
 
 interface TagDefinition {
-  name: string
+  title?: string
   description?: string
-  externalDocs?: { url: string; description?: string }
+  externalDocs?: APITag["externalDocs"]
 }
 
-function buildGroups(operations: APIOperation[], rawTags: unknown): AriadocsOpenAPI["groups"] {
+/** Group operations by tag: declared tags first (in order), then undeclared ones, then `default`. */
+function buildTags(operations: APIOperation[], rawTags: unknown): APITag[] {
   const definitions = new Map<string, TagDefinition>()
   if (Array.isArray(rawTags)) {
     for (const tag of rawTags) {
-      if (!isRecord(tag) || typeof tag.name !== "string") continue
+      if (!isRecord(tag) || typeof tag.name !== "string" || definitions.has(tag.name)) continue
       definitions.set(tag.name, {
-        name: tag.name,
+        title: nonEmptyString(tag["x-displayName"]),
         description: optionalString(tag.description),
         externalDocs: normalizeExternalDocs(tag.externalDocs),
       })
@@ -272,67 +269,45 @@ function buildGroups(operations: APIOperation[], rawTags: unknown): AriadocsOpen
   }
 
   const buckets = new Map<string, APIOperation[]>()
-  const order: string[] = []
-
-  // Preserve declared tag order first.
-  for (const name of definitions.keys()) {
-    order.push(name)
-    buckets.set(name, [])
-  }
+  for (const name of definitions.keys()) buckets.set(name, [])
 
   for (const operation of operations) {
-    if (operation.tags.length === 0) {
-      operation.tags = ["default"]
+    const names = operation.tags.length > 0 ? operation.tags : [DEFAULT_TAG]
+    for (const name of names) {
+      const bucket = buckets.get(name) ?? []
+      bucket.push(operation)
+      buckets.set(name, bucket)
     }
-    for (const tag of operation.tags) {
-      if (!buckets.has(tag)) {
-        buckets.set(tag, [])
-        order.push(tag)
+  }
+
+  // Untagged operations go last, unless "default" is a declared tag.
+  const defaultBucket = buckets.get(DEFAULT_TAG)
+  if (defaultBucket !== undefined && !definitions.has(DEFAULT_TAG)) {
+    buckets.delete(DEFAULT_TAG)
+    buckets.set(DEFAULT_TAG, defaultBucket)
+  }
+
+  const uniqueId = createIdGenerator()
+  return [...buckets.entries()]
+    .filter(([, bucket]) => bucket.length > 0)
+    .map(([name, bucket]) => {
+      const definition = definitions.get(name)
+      return {
+        id: uniqueId(slugify(name, "tag")),
+        name,
+        title: definition?.title ?? (name === DEFAULT_TAG && definition === undefined ? "Default" : name),
+        description: definition?.description,
+        operations: bucket,
+        externalDocs: definition?.externalDocs,
       }
-      buckets.get(tag)?.push(operation)
-    }
-  }
-
-  return order
-    .filter((name) => (buckets.get(name)?.length ?? 0) > 0)
-    .map((name) => ({
-      id: slug(name),
-      name: name === "default" ? "Default" : definitions.get(name)?.name ?? name,
-      description: definitions.get(name)?.description,
-      operations: buckets.get(name) ?? [],
-    }))
+    })
 }
 
-function buildTags(
-  operations: APIOperation[],
-  rawTags: unknown,
-  groups: AriadocsOpenAPI["groups"]
-): APITag[] {
-  const definitions = new Map<string, TagDefinition>()
-  if (Array.isArray(rawTags)) {
-    for (const tag of rawTags) {
-      if (!isRecord(tag) || typeof tag.name !== "string") continue
-      definitions.set(tag.name, {
-        name: tag.name,
-        description: optionalString(tag.description),
-        externalDocs: normalizeExternalDocs(tag.externalDocs),
-      })
-    }
-  }
-
-  return groups.map((group) => ({
-    name: group.name,
-    description: group.description,
-    operations: group.operations,
-    externalDocs: definitions.get(group.name)?.externalDocs,
-  }))
+function nonEmptyString(value: unknown): string | undefined {
+  return typeof value === "string" && value.trim() !== "" ? value : undefined
 }
 
-function slug(value: string): string {
-  return value
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
+function scalarString(value: unknown): string | undefined {
+  if (typeof value === "number") return String(value)
+  return nonEmptyString(value)
 }
-
-export { HTTP_METHODS }

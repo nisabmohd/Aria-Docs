@@ -1,0 +1,36 @@
+---
+title: Code samples
+description: Generate request code for an endpoint in eight languages.
+---
+
+```ts
+import { createRequestSample, createCodeSample } from "@ariadocs/openapi";
+
+const sample = createRequestSample(operation, { securitySchemes: api.securitySchemes });
+
+createCodeSample(sample, "curl");
+createCodeSample(sample, "go");
+```
+
+| Language | `id` | Client |
+| --- | --- | --- |
+| cURL | `curl` | cURL |
+| JavaScript | `javascript` | `fetch` |
+| Python | `python` | `requests` |
+| Go | `go` | `net/http` |
+| Rust | `rust` | `reqwest` (blocking) |
+| Java | `java` | `java.net.http`, Java 15 or later |
+| Kotlin | `kotlin` | OkHttp 4 |
+| C# | `csharp` | `HttpClient`, C# 11 or later |
+
+The sample fills in parameters from the spec's examples, or makes up values from the schema. It adds a placeholder for auth, such as `Authorization: Bearer <TOKEN>`, and builds the body from the request example.
+
+Here's the result for Resend's `POST /emails`:
+
+<ApiPreview>
+  <OpenAPI.Operation id="emails-send">
+    <OpenAPI.Operation.RequestExample />
+  </OpenAPI.Operation>
+</ApiPreview>
+
+The values come from the spec, and people paste these snippets into a terminal or an editor. So every value is escaped for its language. A quote in a cURL argument can't end the string early, a `$` can't start a Kotlin string template, and a line break in a header value can't start a new header. Request bodies use each language's multi-line raw string where that's safe, so they stay readable.

@@ -1,0 +1,44 @@
+---
+title: Components
+description: Components for docs pages and API references.
+---
+
+<Install packages="@ariadocs/components" />
+
+There are two groups. `Docs.*` lays out MDX pages: the sidebar, the table of contents and the page itself. `OpenAPI.*` renders endpoints from a parsed spec.
+
+Each component works on its own. You can also pass children to choose which parts it shows. Here's Resend's "List emails" endpoint with only its header and parameters:
+
+<ApiPreview>
+  <OpenAPI.Operation id="emails-list">
+    <OpenAPI.Operation.Header />
+    <OpenAPI.Operation.Parameters className="mt-6" />
+  </OpenAPI.Operation>
+</ApiPreview>
+
+```tsx
+<OpenAPI.Root api={api}>
+  <OpenAPI.Operation id="emails-list">
+    <OpenAPI.Operation.Header />
+    <OpenAPI.Operation.Parameters />
+  </OpenAPI.Operation>
+</OpenAPI.Root>
+```
+
+Leave out the children and you get the full endpoint page.
+
+## Setup
+
+The components use Tailwind CSS v4. Let Tailwind scan the package, then import the styles once:
+
+```css title="app/globals.css"
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@source "../node_modules/@ariadocs/components/dist";
+```
+
+```ts title="app/layout.tsx"
+import "@ariadocs/components/styles.css";
+```
+
+If you use shadcn/ui, the components use your colors. You can render them from Server or Client Components.

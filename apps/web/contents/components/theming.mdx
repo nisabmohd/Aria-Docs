@@ -1,0 +1,53 @@
+---
+title: Theming
+description: Fonts, text sizes, colors and code themes.
+---
+
+The components set no fonts and no colors of their own. Text uses your Tailwind `font-sans` and `font-mono`, so whatever fonts your app loads are the fonts you get. Colors come from your shadcn/ui tokens: `--background`, `--foreground`, `--muted`, `--border`, `--primary` and `--destructive`.
+
+A few variables control the parts shadcn has no token for. Override them in your CSS:
+
+```css
+:root {
+  --aria-accent: var(--primary); /* active sidebar item and TOC entry */
+  --aria-required: var(--destructive); /* "required" labels */
+  --aria-code-background: color-mix(in oklab, var(--muted) 45%, var(--background));
+  --aria-method-get: oklch(0.6 0.15 155);
+  --aria-method-post: oklch(0.58 0.17 255);
+  --aria-method-delete: oklch(0.6 0.2 25);
+}
+```
+
+The HTTP method colors are the only colors the package defines itself.
+
+## Text sizes
+
+Every component uses one step of a small type scale, so the same kind of text has the same size everywhere. Change a step to resize that kind of text across all components:
+
+```css
+:root {
+  --aria-text-xs: 0.75rem; /* labels: types, "required", limits, method badges */
+  --aria-text-sm: 0.875rem; /* interface text: sidebar, TOC, tabs, descriptions */
+  --aria-text-code: 0.8125rem; /* code blocks and field names */
+  --aria-text-base: 1rem; /* lead text */
+  --aria-text-lg: 1.125rem; /* section titles */
+  --aria-text-xl: 1.5rem; /* headings */
+  --aria-text-2xl: 2rem; /* page titles */
+}
+```
+
+You can still pass `className` to any component to change one instance.
+
+<Preview>
+  <div className="flex flex-wrap gap-2">
+    <MethodBadge method="GET" />
+    <MethodBadge method="POST" />
+    <MethodBadge method="PUT" />
+    <MethodBadge method="PATCH" />
+    <MethodBadge method="DELETE" />
+  </div>
+</Preview>
+
+Dark colors apply under a `.dark` class, which `next-themes` adds when you set `attribute="class"`.
+
+To change how code is colored, see [syntax themes](/docs/guides/themes).

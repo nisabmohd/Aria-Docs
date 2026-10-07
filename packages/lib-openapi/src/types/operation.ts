@@ -1,4 +1,5 @@
-import type { APISecurityRequirement, APISecurityScheme } from "./security.js"
+import type { APIServer } from "./api.js"
+import type { APISecurityRequirement } from "./security.js"
 import type { APISchema } from "./schema.js"
 
 export type HTTPMethod =
@@ -14,6 +15,7 @@ export type HTTPMethod =
 export type ParameterLocation = "path" | "query" | "header" | "cookie"
 
 export interface ExternalDocs {
+  /** Sanitized URL. */
   url: string
   description?: string
 }
@@ -40,12 +42,15 @@ export interface APIParameter {
   /** Where the parameter is sent: path, query, header or cookie (OpenAPI's `in`). */
   in: ParameterLocation
   description?: string
+  /** Always `true` for path parameters. */
   required: boolean
   deprecated: boolean
   allowEmptyValue?: boolean
   allowReserved?: boolean
-  style?: string
-  explode?: boolean
+  /** Serialization style, defaulted per location (`form` for query/cookie, `simple` for path/header). */
+  style: string
+  /** Defaults to `true` for `form` style, `false` otherwise. */
+  explode: boolean
   schema?: APISchema
   content?: APIContent[]
   examples: APIExample[]
@@ -79,9 +84,9 @@ export interface APILink {
 }
 
 export interface APIResponse {
-  /** Status as written in the document: "200", "404" or "default". */
+  /** Status as written in the document: `"200"`, `"4XX"` or `"default"`. */
   status: string
-  /** Numeric status code, when the key parses as a number. */
+  /** Numeric status code for exact codes like `"200"`; `undefined` for ranges and `default`. */
   statusCode?: number
   description?: string
   headers: APIHeader[]
@@ -91,6 +96,8 @@ export interface APIResponse {
   isError: boolean
   isRedirect: boolean
   isDefault: boolean
+  /** True for range keys such as `"2XX"`. */
+  isRange: boolean
 }
 
 export interface APICallback {
@@ -101,7 +108,10 @@ export interface APICallback {
 }
 
 export interface APIOperation {
-  /** Stable id: `operationId` when present, otherwise generated from method + path. */
+  /**
+   * Unique, URL-safe id: the `operationId` (unsafe characters replaced) or one
+   * generated from method + path. Duplicates get a `-2`, `-3` suffix.
+   */
   id: string
   /** The `operationId` exactly as written in the document, when present. */
   operationId?: string
@@ -117,7 +127,8 @@ export interface APIOperation {
   requestBody?: APIRequestBody
   responses: APIResponse[]
   security: APISecurityRequirement[]
-  servers: { url: string; description?: string }[]
+  /** Effective servers: operation → path item → document servers. */
+  servers: APIServer[]
   deprecated: boolean
   callbacks: APICallback[]
   externalDocs?: ExternalDocs

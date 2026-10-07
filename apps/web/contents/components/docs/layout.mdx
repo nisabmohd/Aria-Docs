@@ -1,0 +1,28 @@
+---
+title: Docs.Layout
+description: Columns for the sidebar, the page and the table of contents.
+---
+
+```tsx
+import { Docs } from "@ariadocs/components";
+
+<Docs.Layout>
+  <Docs.Sidebar>
+    <Docs.Nav items={sidebar} />
+  </Docs.Sidebar>
+  <Docs.Content>
+    <Docs.Page>
+      <Docs.Page.Title>{frontmatter.title}</Docs.Page.Title>
+      <Docs.Page.Description>{frontmatter.description}</Docs.Page.Description>
+      <Docs.Page.Content>{MDX}</Docs.Page.Content>
+    </Docs.Page>
+  </Docs.Content>
+  <Docs.Aside>
+    <Docs.Toc items={toc} />
+  </Docs.Aside>
+</Docs.Layout>
+```
+
+`Docs.Sidebar` shows from the `lg` breakpoint and `Docs.Aside` from `xl`. On smaller screens, show the sidebar in a drawer. `Docs.Page.Content` styles the rendered MDX.
+
+These components have no client code, so they add no JavaScript to the page. If your site has a sticky header, set `--aria-header-height` to its height so the sticky columns sit below it.

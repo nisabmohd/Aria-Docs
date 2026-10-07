@@ -1,0 +1,6 @@
+[
+  { "slug": "intro", "title": "Introduction" },
+  { "slug": "guides", "title": "Guides" },
+  { "slug": "missing", "title": "Typo in meta" },
+  { "slug": "hidden", "nav": false }
+]

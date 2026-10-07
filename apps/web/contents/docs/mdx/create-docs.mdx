@@ -1,0 +1,44 @@
+---
+title: createDocs
+description: Set your options once, then load pages by slug.
+---
+
+```ts
+import { createDocs } from "@ariadocs/mdx";
+
+export const docs = createDocs({
+  contentDir: "content/docs", // relative to the project root, or absolute
+  remarkPlugins: [],
+  rehypePlugins: [],
+  components: {}, // components available inside MDX
+});
+```
+
+## Methods
+
+| Method | Returns |
+| --- | --- |
+| `docs.parse({ slug })` | The rendered page as `MDX`, plus `frontmatter`, `toc` and the raw `source` |
+| `docs.serialize({ slug })` | Compiled MDX for `MdxClient`, plus `frontmatter` and `toc` |
+| `docs.read({ slug })` | The raw file contents |
+| `docs.getFrontmatter({ slug })` | Only the frontmatter |
+| `docs.getToc({ slug })` | Only the headings |
+| `docs.getNavigation()` | The sidebar |
+| `docs.getPagePaths()` | Every page path, for static builds |
+
+You can override any option for a single call:
+
+```ts
+await docs.parse({ slug: "changelog", components: { h2: MyHeading } });
+```
+
+## Slugs
+
+A slug is the file path inside `contentDir` without `.mdx`. An empty slug reads `index.mdx`. The slug `guides` reads `guides.mdx`, or `guides/index.mdx` if that file doesn't exist.
+
+## Typed frontmatter
+
+```ts
+const { frontmatter } = await docs.parse<{ title: string; description?: string }>({ slug: "intro" });
+frontmatter.title; // string
+```

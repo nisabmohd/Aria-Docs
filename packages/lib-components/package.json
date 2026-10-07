@@ -7,7 +7,7 @@
     "email": "nisabmohd@gmail.com"
   },
   "license": "MIT",
-  "description": "shadcn-style compound components for Ariadocs. Renders the models produced by @ariadocs/react and @ariadocs/openapi through composable OpenAPI.* and Docs.* component trees.",
+  "description": "shadcn-style compound components for Ariadocs. Renders @ariadocs/mdx pages and @ariadocs/openapi references with composable Docs.* and OpenAPI.* trees. Works in Server and Client Components.",
   "keywords": [
     "react",
     "shadcn",
@@ -22,9 +22,8 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
-    "./styles/openapi.css": {
-      "default": "./dist/styles/openapi.css"
-    }
+    "./styles.css": "./dist/styles/index.css",
+    "./styles/*": "./dist/styles/*"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
@@ -33,6 +32,7 @@
   },
   "packageManager": "pnpm@10.4.1",
   "dependencies": {
+    "@ariadocs/core": "workspace:*",
     "@ariadocs/openapi": "workspace:*",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

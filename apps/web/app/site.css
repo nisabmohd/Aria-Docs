@@ -1,0 +1,68 @@
+/* Site theme: neutral zinc, dark-first. Fonts are set in app/layout.tsx. */
+
+:root {
+  --background: #ffffff;
+  --foreground: #0b0b0c;
+  --card: #fafafa;
+  --card-foreground: #0b0b0c;
+  --popover: #ffffff;
+  --popover-foreground: #0b0b0c;
+  --primary: #0b0b0c;
+  --primary-foreground: #fafafa;
+  --secondary: #f4f4f5;
+  --secondary-foreground: #0b0b0c;
+  --muted: #f4f4f5;
+  --muted-foreground: #5f5f67;
+  --accent: #f4f4f5;
+  --accent-foreground: #0b0b0c;
+  --border: #e6e6e9;
+  --input: #e6e6e9;
+  --ring: #a1a1aa;
+  --radius: 0.625rem;
+
+  --aria-code-background: #fafafa;
+  --aria-accent: oklch(0.55 0.16 258);
+  --aria-required: oklch(0.6 0.17 30);
+  --aria-header-height: 0px;
+}
+
+.dark {
+  --background: #0b0b0c;
+  --foreground: #ededed;
+  --card: #111113;
+  --card-foreground: #ededed;
+  --popover: #111113;
+  --popover-foreground: #ededed;
+  --primary: #ededed;
+  --primary-foreground: #0b0b0c;
+  --secondary: #161618;
+  --secondary-foreground: #ededed;
+  --muted: #161618;
+  --muted-foreground: #9a9aa2;
+  --accent: #1a1a1d;
+  --accent-foreground: #ededed;
+  --border: #212125;
+  --input: #2a2a2e;
+  --ring: #52525b;
+
+  --aria-code-background: #111113;
+  --aria-accent: oklch(0.78 0.11 258);
+  --aria-required: oklch(0.78 0.11 35);
+}
+
+html {
+  scroll-padding-top: 5rem;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--aria-accent) 30%, transparent);
+}
+
+/* Code everywhere uses the app's mono font (set on <html> in app/layout.tsx). */
+code,
+kbd,
+samp,
+pre,
+.rehype-code-title {
+  font-family: var(--font-mono);
+}

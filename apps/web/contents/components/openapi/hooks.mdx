@@ -1,0 +1,34 @@
+---
+title: Hooks
+description: Read the current spec, endpoint or schema in your own components.
+---
+
+Each OpenAPI component shares its data through React context. Hooks let your own components read it, so they fit between the built-in parts.
+
+| Hook | Returns | Use inside |
+| --- | --- | --- |
+| `useOpenAPI()` | The spec, plus `getOperation` and `getSchema` | `OpenAPI.Root` |
+| `useOperation()` | The endpoint | `OpenAPI.Operation` |
+| `useParameter()` | The parameter | `OpenAPI.Parameter` |
+| `useResponse()` | The response | `OpenAPI.Response` |
+| `useSchema()` | The schema and its name | `OpenAPI.Schema` |
+
+A hook used outside its component throws an error that says where it belongs.
+
+```tsx
+"use client";
+
+import { useOperation } from "@ariadocs/components";
+
+export function Tags() {
+  const operation = useOperation();
+  return <p>Tags: {operation.tags.join(", ")}</p>;
+}
+```
+
+```tsx
+<OpenAPI.Operation id="emails-list">
+  <OpenAPI.Operation.Header />
+  <Tags />
+</OpenAPI.Operation>
+```

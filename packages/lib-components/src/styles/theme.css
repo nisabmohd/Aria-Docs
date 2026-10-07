@@ -1,0 +1,54 @@
+/*
+ * Theme tokens for @ariadocs/components.
+ *
+ * The components set no fonts and no colors of their own: text uses your
+ * Tailwind `font-sans` / `font-mono`, and colors come from your shadcn tokens
+ * (--background, --foreground, --muted, --border, --primary, --destructive).
+ * The only built-in values are the type scale and the HTTP method and
+ * status colors below. Override any --aria-* variable.
+ */
+
+:root {
+  /* Type scale. Every component picks one of these, so changing a step
+     resizes that kind of text everywhere. */
+  --aria-text-xs: 0.75rem; /* labels: types, "required", limits, method badges */
+  --aria-text-sm: 0.875rem; /* interface text: nav, TOC, tabs, descriptions */
+  --aria-text-code: 0.8125rem; /* code blocks and field names */
+  --aria-text-base: 1rem; /* lead text */
+  --aria-text-lg: 1.125rem; /* section titles */
+  --aria-text-xl: 1.5rem; /* headings */
+  --aria-text-2xl: 2rem; /* page titles */
+
+  --aria-code-background: color-mix(in oklab, var(--muted) 45%, var(--background));
+  --aria-required: var(--destructive);
+  /* Active navigation item and current TOC entry */
+  --aria-accent: var(--primary);
+
+  /* HTTP methods */
+  --aria-method-get: oklch(0.6 0.15 155);
+  --aria-method-post: oklch(0.58 0.17 255);
+  --aria-method-put: oklch(0.65 0.15 60);
+  --aria-method-patch: oklch(0.65 0.15 85);
+  --aria-method-delete: oklch(0.6 0.2 25);
+  --aria-method-head: oklch(0.55 0.03 260);
+  --aria-method-options: oklch(0.55 0.03 260);
+  --aria-method-trace: oklch(0.55 0.03 260);
+
+  /* Response status families */
+  --aria-status-2: var(--aria-method-get);
+  --aria-status-3: var(--aria-method-post);
+  --aria-status-4: var(--aria-method-put);
+  --aria-status-5: var(--aria-method-delete);
+  --aria-status-default: var(--aria-method-head);
+}
+
+.dark {
+  --aria-method-get: oklch(0.75 0.15 155);
+  --aria-method-post: oklch(0.72 0.15 255);
+  --aria-method-put: oklch(0.78 0.14 65);
+  --aria-method-patch: oklch(0.8 0.13 90);
+  --aria-method-delete: oklch(0.7 0.18 25);
+  --aria-method-head: oklch(0.7 0.03 260);
+  --aria-method-options: oklch(0.7 0.03 260);
+  --aria-method-trace: oklch(0.7 0.03 260);
+}

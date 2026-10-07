@@ -1,0 +1,46 @@
+---
+title: parseOpenAPI
+description: Load, validate and normalize a spec in one call.
+---
+
+```ts
+import { parseOpenAPI } from "@ariadocs/openapi";
+
+const api = await parseOpenAPI({ source: "./openapi.yaml" });
+```
+
+## The source
+
+`source` can be:
+
+- a spec object you already have,
+- JSON or YAML text,
+- an `http(s)` URL, which is fetched,
+- a file path or `file:` URL, which is read from disk.
+
+A file path that doesn't exist throws a "file not found" error.
+
+## Options
+
+| Option | Default | What it does |
+| --- | --- | --- |
+| `validate` | `true` | Throw an `OpenAPIError` if the spec is missing required parts |
+| `resolveRefs` | `true` | Replace `$ref`s with their targets. Each resolved schema keeps its origin in `ref`. |
+| `strict` | `false` | Throw if a `$ref` can't be resolved, instead of adding a warning |
+| `allowFiles` | `true` | Allow file paths |
+| `allowRemote` | `true` | Allow URLs |
+| `fetch` | global `fetch` | Your own fetch, for auth headers or tests |
+| `timeout` | `30000` | Request timeout in milliseconds |
+| `maxSize` | 20 MB | Largest spec it will read |
+
+If the source comes from a user, read [untrusted specs](/docs/openapi/security) first.
+
+## In the browser
+
+Pass the text or the object. File paths don't work in the browser.
+
+```ts
+const api = await parseOpenAPI({ source: text, allowFiles: false, allowRemote: false });
+```
+
+You can try this on the [client rendering demo](/components/openapi/client-rendering).

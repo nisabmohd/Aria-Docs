@@ -1,32 +1,32 @@
-import { Host_Grotesk, JetBrains_Mono } from "next/font/google";
-import { Providers } from "@/components/providers";
-import "@workspace/ui/globals.css";
-import "@ariadocs/react/styles/minimal.css";
+import type { Metadata } from "next"
+import { IBM_Plex_Mono, Space_Grotesk } from "next/font/google"
+import { Providers } from "@/components/providers"
+import { SearchProvider } from "@/components/search"
+import { getSearchIndex } from "@/lib/search-index"
+import { site } from "@/lib/site"
+import "@workspace/ui/globals.css"
+import "@ariadocs/components/styles.css"
+import "./site.css"
 
-const sans = Host_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  weight: "400",
-});
+// Fonts live in the app. @ariadocs/components only uses `font-sans` and `font-mono`.
+const sans = Space_Grotesk({ subsets: ["latin"], variable: "--font-sans" })
+const mono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-mono" })
 
-const mono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-  weight: "400",
-});
+export const metadata: Metadata = {
+  title: { default: `${site.name}: the documentation toolkit for React`, template: `%s · ${site.name}` },
+  description: site.description,
+}
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const searchIndex = await getSearchIndex()
+
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${sans.variable} ${mono.variable} font-sans antialiased mx-auto max-w-6xl px-4 py-10`}
-      >
-        <Providers>{children}</Providers>
+    <html lang="en" suppressHydrationWarning className={`${sans.variable} ${mono.variable}`}>
+      <body className="bg-background text-foreground min-h-dvh font-sans antialiased">
+        <Providers>
+          <SearchProvider entries={searchIndex}>{children}</SearchProvider>
+        </Providers>
       </body>
     </html>
-  );
+  )
 }

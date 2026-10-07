@@ -1,9 +1,7 @@
 [
-  { "slug": "quick-start", "title": "Quick Start", "nav": true },
-  { "slug": "installation", "title": "Installation", "nav": true },
-  { "slug": "nextjs-app", "title": "Next.js App Router", "nav": true },
-  { "slug": "nextjs-pages", "title": "Next.js Pages Router", "nav": true },
-  { "slug": "react-router", "title": "React Router", "nav": true },
-  { "slug": "tanstack-start", "title": "TanStack Start", "nav": true },
-  { "slug": "whats-next", "title": "What's Next", "nav": true }
+  { "slug": "installation", "title": "Installation" },
+  { "slug": "nextjs-app", "title": "Next.js App Router" },
+  { "slug": "nextjs-pages", "title": "Next.js Pages Router" },
+  { "slug": "react-router", "title": "React Router" },
+  { "slug": "tanstack-start", "title": "TanStack Start" }
 ]

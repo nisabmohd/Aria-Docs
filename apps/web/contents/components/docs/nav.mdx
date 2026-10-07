@@ -1,0 +1,53 @@
+---
+title: Docs.Nav
+description: The sidebar.
+---
+
+`Docs.Nav` renders the sidebar from `docs.getNavigation()`, `openapi.getNavigation()` or both. The sidebar on this site is one `Docs.Nav`.
+
+<Preview>
+  <div className="max-w-64">
+    <Docs.Nav
+      activeHref="/docs/intro"
+      items={[
+        { title: "Introduction", href: "/docs/intro", nav: true, props: {}, items: [] },
+        {
+          title: "Emails",
+          href: "#emails",
+          nav: true,
+          props: {},
+          items: [
+            { title: "Send an email", href: "#send", nav: true, props: {}, items: [], badge: "POST" },
+            { title: "Retrieve a list of emails", href: "#list", nav: true, props: {}, items: [], badge: "GET" },
+            { title: "Retrieve a single email", href: "#get", nav: true, props: {}, items: [], badge: "GET" },
+          ],
+        },
+      ]}
+    />
+  </div>
+</Preview>
+
+Top-level groups become headings. Nested groups collapse, and the one holding the current page opens. Items with a `badge` show it before the title.
+
+| Prop | What it does |
+| --- | --- |
+| `items` | The sidebar data |
+| `activeHref` | The current path, to highlight the current page |
+| `baseHref` | A prefix for relative links, like `"/docs"` |
+| `linkAs` | Your link component, such as Next's `Link` |
+| `onNavigate` | Called on click, for example to close a drawer |
+
+In Next.js, pass `Link` and the current path from a Client Component:
+
+```tsx
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Docs } from "@ariadocs/components";
+import type { NavItem } from "@ariadocs/core";
+
+export function Sidebar({ items }: { items: NavItem[] }) {
+  return <Docs.Nav items={items} activeHref={usePathname()} linkAs={Link} />;
+}
+```

@@ -1,0 +1,59 @@
+---
+title: Introduction
+description: Build documentation sites and API references in React.
+---
+
+Ariadocs turns two kinds of source into web pages: MDX files for your guides, and an OpenAPI spec for your API reference. You render both with the same set of components.
+
+## Packages
+
+- [`@ariadocs/mdx`](/docs/mdx) reads MDX files. You get the rendered page, its frontmatter, its table of contents, and a sidebar built from your folders.
+- [`@ariadocs/openapi`](/docs/openapi) reads an OpenAPI 3.x spec and gives you every endpoint as typed data.
+- [`@ariadocs/components`](/components) renders both. Use a component as it is, or build your own layout from its parts.
+
+You can install one package on its own. They also share a sidebar format, so one sidebar can list your guides and your endpoints together. This site works that way.
+
+## Installation
+
+<Install packages="@ariadocs/mdx @ariadocs/openapi @ariadocs/components" />
+
+## Example
+
+Both packages follow the same pattern: configure once, then call methods.
+
+<Tabs items={["MDX", "OpenAPI"]}>
+<Tab value="MDX">
+
+```ts title="lib/docs.ts"
+import { createDocs } from "@ariadocs/mdx";
+
+export const docs = createDocs({ contentDir: "content/docs" });
+
+const { MDX, frontmatter, toc } = await docs.parse({ slug: "intro" });
+const sidebar = await docs.getNavigation();
+```
+
+</Tab>
+<Tab value="OpenAPI">
+
+```ts title="lib/openapi.ts"
+import { createOpenAPI } from "@ariadocs/openapi";
+
+export const openapi = createOpenAPI({ source: "./openapi.yaml" });
+
+const api = await openapi.parse();
+const sidebar = await openapi.getNavigation();
+```
+
+</Tab>
+</Tabs>
+
+<Callout>
+  Pages render as React Server Components by default. If your framework renders on the client, use `serializeMdx` with `MdxClient` instead. The [framework guides](/docs/getting-started/nextjs-app) show both.
+</Callout>
+
+## Requirements
+
+- React 19
+- Tailwind CSS v4, for `@ariadocs/components`
+- Node.js 20 or later, Bun or Deno to read files. The OpenAPI parser also runs in the browser.

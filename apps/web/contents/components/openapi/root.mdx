@@ -1,0 +1,24 @@
+---
+title: OpenAPI.Root
+description: Gives the parsed spec to every OpenAPI component inside it.
+---
+
+```tsx
+import { parseOpenAPI } from "@ariadocs/openapi";
+import { OpenAPI } from "@ariadocs/components";
+
+const api = await parseOpenAPI({ source: "./openapi.yaml" });
+
+<OpenAPI.Root api={api} operationBaseHref="/reference">
+  <OpenAPI.Operation id="emails-send" />
+</OpenAPI.Root>;
+```
+
+| Prop | What it does |
+| --- | --- |
+| `api` | The parsed spec |
+| `operationBaseHref` | Where endpoint pages live. With `"/reference"`, links go to `/reference/emails-send`. Without it, links go to `#emails-send` on the same page. |
+
+`Root` renders nothing itself. Put it in a layout so the sidebar and every page share the same spec.
+
+Some components also work without `Root` if you pass the data yourself, such as `<OpenAPI.Schema schema={schema} />`. Looking up an endpoint by `id` and showing authorization need `Root`.

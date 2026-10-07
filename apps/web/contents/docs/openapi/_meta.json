@@ -1,0 +1,10 @@
+[
+  { "slug": "index", "title": "Overview" },
+  { "slug": "parse-openapi", "title": "parseOpenAPI" },
+  { "slug": "create-openapi", "title": "createOpenAPI" },
+  { "slug": "model", "title": "The parsed spec" },
+  { "slug": "helpers", "title": "Helpers" },
+  { "slug": "code-samples", "title": "Code samples" },
+  { "slug": "security", "title": "Untrusted specs" },
+  { "slug": "api", "title": "API reference" }
+]

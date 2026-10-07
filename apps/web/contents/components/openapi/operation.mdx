@@ -1,0 +1,57 @@
+---
+title: OpenAPI.Operation
+description: One endpoint.
+---
+
+With only an `id`, you get the full page: the title, the method and URL, the description, then authorization, parameters, body and responses, with request and response examples beside them. This is Resend's `POST /emails`:
+
+<ApiPreview>
+  <OpenAPI.Operation id="emails-send" />
+</ApiPreview>
+
+```tsx
+<OpenAPI.Root api={api}>
+  <OpenAPI.Operation id="emails-send" />
+</OpenAPI.Root>
+```
+
+## Choosing the parts
+
+Pass children to show only some parts, in your own order. Each part reads the endpoint from the `Operation` around it.
+
+<ApiPreview>
+  <OpenAPI.Operation id="emails-get">
+    <OpenAPI.Operation.Title level={3} />
+    <OpenAPI.Operation.Header className="mt-3" />
+    <OpenAPI.Operation.Parameters className="mt-6" />
+  </OpenAPI.Operation>
+</ApiPreview>
+
+```tsx
+<OpenAPI.Operation id="emails-get">
+  <OpenAPI.Operation.Title level={3} />
+  <OpenAPI.Operation.Header />
+  <OpenAPI.Operation.Parameters />
+</OpenAPI.Operation>
+```
+
+| Part | Shows |
+| --- | --- |
+| `.Tag` | The endpoint's tag, above the title |
+| `.Title` | The summary as a heading |
+| `.Header` | The method, the full URL and a copy button |
+| `.Description` | The description |
+| `.Security` | How to authenticate |
+| `.Parameters` | Path, query, header and cookie parameters |
+| `.RequestBody` | The request body fields |
+| `.Responses` | One row per status code |
+| `.RequestExample` | Code samples in cURL, JavaScript and Python |
+| `.ResponseExample` | An example response for each status code |
+
+## Props
+
+| Prop | What it does |
+| --- | --- |
+| `id` | The endpoint to show, by `id` or `operationId` |
+| `operation` | The endpoint object, if you already have it |
+| `headingLevel` | `1`, `2` or `3`. Use `1` when the endpoint is the whole page. |

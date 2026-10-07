@@ -1,0 +1,26 @@
+---
+title: OpenAPI.Info and OpenAPI.Sidebar
+description: The API overview and its sidebar.
+---
+
+## Info
+
+<ApiPreview>
+  <OpenAPI.Info />
+</ApiPreview>
+
+`OpenAPI.Info` shows the API's title, version, description, base URL and authentication. The [API Reference overview](/reference) uses it.
+
+## Sidebar
+
+<ApiPreview>
+  <div className="max-w-64">
+    <OpenAPI.Sidebar />
+  </div>
+</ApiPreview>
+
+`OpenAPI.Sidebar` is a `Docs.Nav` filled with the spec's tags and endpoints. Links go to endpoint pages if `Root` has `operationBaseHref`, and to `#id` anchors otherwise.
+
+```tsx
+<OpenAPI.Sidebar activeHref={pathname} linkAs={Link} />
+```

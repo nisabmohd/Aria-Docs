@@ -1,0 +1,20 @@
+---
+title: OpenAPI.RequestBody
+description: The fields of a request body.
+---
+
+<ApiPreview>
+  <OpenAPI.Operation id="emails-send">
+    <OpenAPI.RequestBody />
+  </OpenAPI.Operation>
+</ApiPreview>
+
+```tsx
+<OpenAPI.Operation id="emails-send">
+  <OpenAPI.RequestBody />
+</OpenAPI.Operation>
+```
+
+Fields that hold objects or lists can be expanded. If the body accepts more than one content type, a menu switches between them. Read-only fields are hidden, since clients don't send them.
+
+You can also pass a body directly: `<OpenAPI.RequestBody requestBody={operation.requestBody} />`.

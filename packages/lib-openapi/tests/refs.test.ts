@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest"
-import { dereference, openapi, resolveRefs } from "../src/index.js"
+import { dereference, parseOpenAPI, resolveRefs } from "../src/index.js"
 import {
   generateSchemaExample,
   getSchemaProperties,
@@ -117,7 +117,7 @@ describe("ref resolution", () => {
       },
     }
 
-    await expect(openapi.parse(spec, { strict: true })).rejects.toThrow(/Strict mode/)
+    await expect(parseOpenAPI({ source: spec, strict: true })).rejects.toThrow(/Strict mode/)
   })
 })
 
@@ -158,7 +158,7 @@ describe("schema utilities", () => {
   })
 
   it("resolves a schema's ref marker into the schemas record", async () => {
-    const api = await openapi.parse(planets)
+    const api = await parseOpenAPI({ source: planets })
     const listPlanets = api.operations.find((op) => op.id === "listPlanets")
     const response = listPlanets?.responses.find((r) => r.status === "200")
     const content = response?.content[0]
@@ -174,7 +174,7 @@ describe("schema utilities", () => {
 
 describe("response helpers", () => {
   it("picks the primary, success and error responses", async () => {
-    const api = await openapi.parse(planets)
+    const api = await parseOpenAPI({ source: planets })
     const listPlanets = api.operations.find((op) => op.id === "listPlanets")
     if (listPlanets === undefined) throw new Error("missing operation")
 

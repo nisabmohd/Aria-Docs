@@ -1,0 +1,23 @@
+---
+title: "@ariadocs/core"
+description: Types and helpers the other packages share.
+---
+
+<Install packages="@ariadocs/core" />
+
+You don't usually install this yourself. The other packages depend on it and re-export the parts you need.
+
+It defines the two formats the packages share. `NavItem` is a sidebar entry, returned by both `docs.getNavigation()` and `openapi.getNavigation()` and rendered by `<Docs.Nav>`. `TocItem` is a heading, returned by `getToc()` and rendered by `<Docs.Toc>`.
+
+```ts
+import type { NavItem, TocItem } from "@ariadocs/core";
+```
+
+It also has a few helpers that are useful in your own components:
+
+| Export | What it does |
+| --- | --- |
+| `sanitizeUrl(url)` | Returns the URL if it's safe for a link, otherwise `undefined`. Blocks `javascript:` and `data:` URLs. |
+| `isExternalUrl(href)` | `true` for links to another site |
+| `slugify(text)` | `"Pets & Owners"` becomes `"pets-owners"` |
+| `slugToTitle(slug)` | `"getting-started"` becomes `"Getting Started"` |

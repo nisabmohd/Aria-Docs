@@ -1,0 +1,11 @@
+{
+  "extends": "@workspace/typescript-config/base.json",
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "module": "nodenext",
+    "lib": ["es2022", "DOM"]
+  },
+  "include": ["./src"],
+  "exclude": ["node_modules", "dist", "tests"]
+}

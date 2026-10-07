@@ -1,0 +1,37 @@
+---
+title: Client rendering
+description: Parse and render a spec in the browser.
+---
+
+Edit the YAML below. Your browser parses it with `@ariadocs/openapi` and renders it with `@ariadocs/components`. No server is involved.
+
+<ClientParseDemo />
+
+```tsx
+"use client";
+
+import { useEffect, useState } from "react";
+import { parseOpenAPI, type APISpec } from "@ariadocs/openapi";
+import { OpenAPI } from "@ariadocs/components";
+
+export function Playground({ text }: { text: string }) {
+  const [api, setApi] = useState<APISpec>();
+
+  useEffect(() => {
+    // The text comes from the user, so don't read files or fetch URLs.
+    parseOpenAPI({ source: text, allowFiles: false, allowRemote: false }).then(setApi);
+  }, [text]);
+
+  if (!api) return null;
+
+  return (
+    <OpenAPI.Root api={api}>
+      {api.operations.map((operation) => (
+        <OpenAPI.Operation key={operation.id} operation={operation} />
+      ))}
+    </OpenAPI.Root>
+  );
+}
+```
+
+On the server, `@ariadocs/openapi` can read files. In the browser, bundlers use a build without file system code, so your client bundle stays small.

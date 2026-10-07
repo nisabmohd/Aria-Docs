@@ -1,88 +1,93 @@
 ---
-title: React Router Framework Setup
+title: React Router
+description: Docs pages and an API reference with loaders.
 ---
 
-Getting started with Ariadocs in a **React Router framework** project is simple.
+These examples use React Router's framework mode.
 
-> **Prerequisites**: Complete the [Installation & Configuration](/docs/getting-started/installation) first.
+## Routes
 
-## Define Routes
-
-Inside `app/routes.ts`:
-
-```ts
-// app/routes.ts
+```ts title="app/routes.ts"
 import { type RouteConfig, index, route } from "@react-router/dev/routes";
 
 export default [
-  index("app/routes/home.tsx"),
-  route("docs/*", "app/routes/docs.tsx"),
+  index("routes/home.tsx"),
+  route("docs/*", "routes/docs.tsx"),
+  route("reference/:operation", "routes/reference.tsx"),
 ] satisfies RouteConfig;
 ```
 
-## Create Docs Route
+## Docs pages
 
-Catch all docs pages inside `app/routes/docs.tsx`:
+The loader compiles the page on the server. `MdxClient` renders it.
 
-```tsx
-// app/routes/docs.tsx
+```tsx title="app/routes/docs.tsx"
 import { useLoaderData } from "react-router";
-import { MdxClient } from "@ariadocs/react/client";
+import { isMdxNotFound } from "@ariadocs/mdx";
+import { MdxClient } from "@ariadocs/mdx/client";
 import type { Route } from "./+types/docs";
-import { docs } from "../ariadocs";
+import { docs } from "../docs";
 
 export async function loader({ params }: Route.LoaderArgs) {
-  const slug = params["*"];
-  return docs.serialize({ slug });
+  try {
+    return await docs.serialize<{ title: string }>({ slug: params["*"] ?? "" });
+  } catch (error) {
+    if (isMdxNotFound(error)) throw new Response("Not found", { status: 404 });
+    throw error;
+  }
 }
 
-export default function Docs() {
+export default function DocsPage() {
   const { serialized, frontmatter } = useLoaderData<typeof loader>();
   return (
-    <section>
-      <title>{frontmatter.title}</title>
+    <article>
+      <h1>{frontmatter.title}</h1>
       <MdxClient serialized={serialized} />
-    </section>
+    </article>
   );
 }
 ```
 
-## Pre-render Docs
+## API reference
 
-Add `react-router.config.ts` to prerender all docs:
+```tsx title="app/routes/reference.tsx"
+import { useLoaderData } from "react-router";
+import { OpenAPI } from "@ariadocs/components";
+import type { Route } from "./+types/reference";
+import { openapi } from "../openapi";
 
-```ts
-// react-router.config.ts
+export async function loader({ params }: Route.LoaderArgs) {
+  return { api: await openapi.parse(), operation: params.operation };
+}
+
+export default function ReferencePage() {
+  const { api, operation } = useLoaderData<typeof loader>();
+  return (
+    <OpenAPI.Root api={api} operationBaseHref="/reference">
+      <OpenAPI.Operation id={operation} headingLevel={1} />
+    </OpenAPI.Root>
+  );
+}
+```
+
+## Prerendering
+
+List every page so they're built ahead of time:
+
+```ts title="react-router.config.ts"
 import type { Config } from "@react-router/dev/config";
-import { docs } from "./app/ariadocs";
+import { docs } from "./app/docs";
+import { openapi } from "./app/openapi";
 
 export default {
   ssr: true,
   async prerender() {
-    const raw = await docs.pagePaths();
-    return raw.map((slug) => `/docs/${slug}`);
+    const docPaths = await docs.getPagePaths();
+    const apiPaths = await openapi.getPagePaths();
+    return [
+      ...docPaths.map((path) => `/docs${path === "/" ? "" : path}`),
+      ...apiPaths.map((path) => `/reference${path}`),
+    ];
   },
 } satisfies Config;
 ```
-
-## Create Your First Doc
-
-`contents/docs/hello-world.mdx`
-
-```md
----
-title: Hello World
----
-
-# Hello World
-
-This is your **first Ariadocs page**.
-```
-
-## Run the App
-
-```bash
-pnpm dev
-```
-
-Open [`http://localhost:5173/docs/hello-world`](http://localhost:5173/docs/hello-world)

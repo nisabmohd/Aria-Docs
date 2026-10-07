@@ -1,0 +1,122 @@
+/* Default syntax theme (Prism token classes), light + dark. */
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #6e7781;
+  font-style: italic;
+}
+.token.keyword,
+.token.atrule,
+.token.selector,
+.token.important {
+  color: #cf222e;
+}
+.token.string,
+.token.char,
+.token.attr-value,
+.token.regex,
+.token.inserted {
+  color: #0a3069;
+}
+.token.number,
+.token.boolean,
+.token.constant,
+.token.symbol {
+  color: #0550ae;
+}
+.token.function,
+.token.class-name {
+  color: #8250df;
+}
+.token.property,
+.token.tag,
+.token.attr-name,
+.token.builtin {
+  color: #116329;
+}
+.token.operator,
+.token.punctuation {
+  color: #57606a;
+}
+.token.deleted {
+  color: #82071e;
+}
+
+.dark .token.comment,
+.dark .token.prolog,
+.dark .token.doctype,
+.dark .token.cdata {
+  color: #8b949e;
+}
+.dark .token.keyword,
+.dark .token.atrule,
+.dark .token.selector,
+.dark .token.important {
+  color: #ff7b72;
+}
+.dark .token.string,
+.dark .token.char,
+.dark .token.attr-value,
+.dark .token.regex,
+.dark .token.inserted {
+  color: #a5d6ff;
+}
+.dark .token.number,
+.dark .token.boolean,
+.dark .token.constant,
+.dark .token.symbol {
+  color: #79c0ff;
+}
+.dark .token.function,
+.dark .token.class-name {
+  color: #d2a8ff;
+}
+.dark .token.property,
+.dark .token.tag,
+.dark .token.attr-name,
+.dark .token.builtin {
+  color: #7ee787;
+}
+.dark .token.operator,
+.dark .token.punctuation {
+  color: #8b949e;
+}
+.dark .token.deleted {
+  color: #ffa198;
+}
+
+/* rehype-prism-plus line highlighting */
+.code-highlight {
+  float: left;
+  min-width: 100%;
+}
+.code-line.highlight-line {
+  background-color: color-mix(in oklab, var(--foreground) 6%, transparent);
+}
+.line-number::before {
+  content: attr(line);
+  display: inline-block;
+  width: 1.5rem;
+  margin-right: 1rem;
+  text-align: right;
+  color: var(--muted-foreground);
+}
+
+/* rehype-code-titles */
+.rehype-code-title {
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+  border: 1px solid var(--border);
+  border-bottom: 0;
+  border-radius: 0.75rem 0.75rem 0 0;
+  padding: 0.5rem 1rem;
+  background: var(--aria-code-background);
+}
+.rehype-code-title + [data-slot="pre"] pre,
+.rehype-code-title + pre {
+  margin-top: 0 !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+}

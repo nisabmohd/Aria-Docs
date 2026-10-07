@@ -7,7 +7,9 @@
     "build:web": "turbo run build --filter=web",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "test": "turbo test",
+    "check-types": "turbo check-types"
   },
   "devDependencies": {
     "@workspace/eslint-config": "workspace:*",

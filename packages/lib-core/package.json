@@ -1,0 +1,57 @@
+{
+  "name": "@ariadocs/core",
+  "version": "1.0.0",
+  "type": "module",
+  "author": {
+    "name": "Nisab Mohd",
+    "email": "nisabmohd@gmail.com"
+  },
+  "license": "MIT",
+  "description": "Shared, runtime-agnostic primitives for Ariadocs: navigation and TOC types, slug helpers, URL sanitizing and safe object utilities. No React, no Node APIs.",
+  "keywords": [
+    "ariadocs",
+    "documentation",
+    "core"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "build": "tsc",
+    "test": "vitest run",
+    "check-types": "tsc --noEmit"
+  },
+  "packageManager": "pnpm@10.4.1",
+  "devDependencies": {
+    "@workspace/eslint-config": "workspace:*",
+    "@workspace/typescript-config": "workspace:*",
+    "eslint": "^9.32.0",
+    "typescript": "^5.9.2",
+    "vitest": "^5.0.3"
+  },
+  "files": [
+    "dist",
+    "package.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nisabmohd/Aria-Docs.git",
+    "directory": "packages/lib-core"
+  },
+  "bugs": {
+    "url": "https://github.com/nisabmohd/Aria-Docs/issues"
+  },
+  "homepage": "https://github.com/nisabmohd/Aria-Docs#readme"
+}

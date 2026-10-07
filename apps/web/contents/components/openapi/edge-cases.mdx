@@ -1,0 +1,46 @@
+---
+title: Edge cases
+description: One endpoint that uses every part of OpenAPI the components render.
+---
+
+This page renders a test spec, [`edge-cases.yaml`](https://github.com/nisabmohd/Aria-Docs/blob/master/apps/web/contents/openapi/edge-cases.yaml). It isn't a real API. Its one endpoint puts every case in one place, so you can check how the components handle each one:
+
+- parameters in the path, query, header and cookie, with enums, limits, defaults, a deprecated parameter and an array sent as `a,b`,
+- three ways to authenticate (a bearer token, an API key plus OAuth scopes, or none),
+- a body in JSON, multipart and URL-encoded form,
+- `allOf`, `oneOf` with a discriminator, `anyOf` with `null`, a schema that contains itself, maps, read-only, write-only and deprecated fields,
+- 2xx, 3xx, 4xx, a `5XX` range and a `default` response, some with headers,
+- Markdown in the description, including a `javascript:` link that has to render as plain text,
+- a server URL with variables.
+
+## The endpoint
+
+<EdgeCasePreview>
+  <OpenAPI.Operation id="items-create" />
+</EdgeCasePreview>
+
+## Schemas
+
+The request body:
+
+<EdgeCasePreview>
+  <OpenAPI.Schema name="CreateItem">
+    <OpenAPI.Schema.Title className="mb-2" />
+    <OpenAPI.Schema.Properties mode="request" />
+  </OpenAPI.Schema>
+</EdgeCasePreview>
+
+The error format:
+
+<EdgeCasePreview>
+  <OpenAPI.Schema name="Problem">
+    <OpenAPI.Schema.Title className="mb-2" />
+    <OpenAPI.Schema.Properties />
+  </OpenAPI.Schema>
+</EdgeCasePreview>
+
+## The API overview
+
+<EdgeCasePreview>
+  <OpenAPI.Info />
+</EdgeCasePreview>

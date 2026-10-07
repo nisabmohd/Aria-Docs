@@ -1,0 +1,78 @@
+/* Github syntax theme (Prism token classes). Import instead of syntax/default.css. */
+
+.token.keyword {
+  color: #d73a49; /* GitHub Red */
+}
+
+.token.function {
+  color: #6f42c1; /* GitHub Purple */
+}
+
+.token.punctuation,
+.token.operator {
+  color: #24292e; /* GitHub Black */
+}
+
+.token.comment {
+  color: #6a737d; /* GitHub Muted Gray */
+}
+
+.token.string,
+.token.constant,
+.token.annotation,
+.token.boolean,
+.token.number {
+  color: #005cc5; /* GitHub Blue */
+}
+
+.token.tag,
+.token.property {
+  color: #22863a; /* GitHub Green */
+}
+
+.token.attr-name {
+  color: #6f42c1; /* GitHub Purple */
+}
+
+.token.attr-value {
+  color: #e36209; /* GitHub Orange */
+}
+
+/* Dark Mode */
+.dark .token.keyword {
+  color: #f97583; /* GitHub Light Red */
+}
+
+.dark .token.function {
+  color: #d2a8ff; /* GitHub Light Purple */
+}
+
+.dark .token.punctuation,
+.dark .token.operator {
+  color: #c9d1d9; /* GitHub Light Gray */
+}
+
+.dark .token.comment {
+  color: #8b949e; /* GitHub Muted Gray */
+}
+
+.dark .token.string,
+.dark .token.constant,
+.dark .token.annotation,
+.dark .token.boolean,
+.dark .token.number {
+  color: #79c0ff; /* GitHub Light Blue */
+}
+
+.dark .token.tag,
+.dark .token.property {
+  color: #a5d6ff; /* GitHub Cyan */
+}
+
+.dark .token.attr-name {
+  color: #d2a8ff; /* GitHub Light Purple */
+}
+
+.dark .token.attr-value {
+  color: #ffa657; /* GitHub Light Orange */
+}

@@ -1,0 +1,11 @@
+[
+  { "slug": "index", "title": "Overview" },
+  { "slug": "create-docs", "title": "createDocs" },
+  { "slug": "parse-mdx", "title": "parseMdx" },
+  { "slug": "client-rendering", "title": "Client rendering" },
+  { "slug": "frontmatter-and-toc", "title": "Frontmatter and TOC" },
+  { "slug": "navigation", "title": "Navigation" },
+  { "slug": "plugins", "title": "Plugins" },
+  { "slug": "security", "title": "Untrusted content" },
+  { "slug": "api", "title": "API reference" }
+]

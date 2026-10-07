@@ -1,0 +1,78 @@
+/* Minimal syntax theme (Prism token classes). Import instead of syntax/default.css. */
+
+.token.keyword {
+  color: #4a5568; /* Gray 700 */
+}
+
+.token.function {
+  color: #2d3748; /* Gray 800 */
+}
+
+.token.punctuation,
+.token.operator {
+  color: #718096; /* Gray 500 */
+}
+
+.token.comment {
+  color: #a0aec0; /* Gray 400 */
+}
+
+.token.string,
+.token.constant,
+.token.annotation,
+.token.boolean,
+.token.number {
+  color: #5a67d8; /* Indigo 500 */
+}
+
+.token.tag,
+.token.property {
+  color: #319795; /* Teal 600 */
+}
+
+.token.attr-name {
+  color: #805ad5; /* Purple 500 */
+}
+
+.token.attr-value {
+  color: #d69e2e; /* Yellow 600 */
+}
+
+/* Dark Mode */
+.dark .token.keyword {
+  color: #a0aec0; /* Gray 400 */
+}
+
+.dark .token.function {
+  color: #e2e8f0; /* Gray 200 */
+}
+
+.dark .token.punctuation,
+.dark .token.operator {
+  color: #718096; /* Gray 500 */
+}
+
+.dark .token.comment {
+  color: #4a5568; /* Gray 700 */
+}
+
+.dark .token.string,
+.dark .token.constant,
+.dark .token.annotation,
+.dark .token.boolean,
+.dark .token.number {
+  color: #a3bffa; /* Indigo 300 */
+}
+
+.dark .token.tag,
+.dark .token.property {
+  color: #4fd1c5; /* Teal 300 */
+}
+
+.dark .token.attr-name {
+  color: #b794f4; /* Purple 300 */
+}
+
+.dark .token.attr-value {
+  color: #faf089; /* Yellow 200 */
+}

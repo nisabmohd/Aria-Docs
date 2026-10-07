@@ -1,15 +1,11 @@
 export type {
   OpenAPIDocument,
-  AriadocsOpenAPI,
+  APISpec,
   APIInfo,
   APIServer,
   APIServerVariable,
   APITag,
-  APIOperationGroup,
   APIWebhook,
-  APINavigation,
-  APINavigationGroup,
-  APINavigationItem,
   APISearchResult,
   APISearchResultType,
 } from "./api.js"

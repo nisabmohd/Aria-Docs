@@ -1,0 +1,6 @@
+[
+  { "slug": "index", "title": "Overview" },
+  { "slug": "theming", "title": "Theming" },
+  { "slug": "docs", "title": "Docs" },
+  { "slug": "openapi", "title": "OpenAPI" }
+]

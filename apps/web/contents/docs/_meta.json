@@ -1,6 +1,8 @@
 [
-  { "slug": "getting-started", "title": "Getting Started", "nav": true },
-  { "slug": "guides", "title": "Guides", "nav": true },
-  { "slug": "api-reference", "title": "API Reference", "nav": true },
-  { "slug": "examples", "title": "Examples", "nav": true }
+  { "slug": "index", "title": "Introduction" },
+  { "slug": "getting-started", "title": "Getting started" },
+  { "slug": "mdx", "title": "@ariadocs/mdx" },
+  { "slug": "openapi", "title": "@ariadocs/openapi" },
+  { "slug": "core", "title": "@ariadocs/core" },
+  { "slug": "guides", "title": "Guides" }
 ]

@@ -1,0 +1,39 @@
+---
+title: parseMdx
+description: Render MDX in a Server Component.
+---
+
+`parseMdx` is what `docs.parse` calls. Use it directly when you don't need a `docs` object, or when the MDX is a string.
+
+```tsx
+import { parseMdx } from "@ariadocs/mdx";
+
+export default async function Page() {
+  const { MDX, frontmatter } = await parseMdx({ contentDir: "content/docs", slug: "intro" });
+
+  return (
+    <article>
+      <h1>{frontmatter.title}</h1>
+      {MDX}
+    </article>
+  );
+}
+```
+
+It returns:
+
+| Field | Contents |
+| --- | --- |
+| `MDX` | The rendered page |
+| `frontmatter` | The parsed frontmatter |
+| `toc` | Headings as `{ value, href, depth }` |
+| `content` | The MDX without frontmatter |
+| `source` | The original file contents |
+
+If you already have the MDX body, render it with `MdxServer`:
+
+```tsx
+import { MdxServer } from "@ariadocs/mdx/server";
+
+<MdxServer source={body} rehypePlugins={[rehypeSlug]} components={{ Callout }} />;
+```

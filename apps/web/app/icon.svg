@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="6 6 36 36">
+  <style>
+    .a { fill: #0b0b0c; }
+    .b { fill: #5f5f67; }
+    @media (prefers-color-scheme: dark) {
+      .a { fill: #ededed; }
+      .b { fill: #9a9aa2; }
+    }
+  </style>
+  <path class="a" d="M8 40 L20 8 H27 L15 40 Z"/>
+  <path class="b" d="M21 40 L28 21 L40 40 Z"/>
+</svg>

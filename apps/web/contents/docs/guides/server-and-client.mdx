@@ -1,0 +1,36 @@
+---
+title: Server and client rendering
+description: Where each package can run.
+---
+
+| Package | Server Components | Client Components |
+| --- | --- | --- |
+| `@ariadocs/mdx` | `docs.parse()` | `MdxClient`, after `docs.serialize()` on the server |
+| `@ariadocs/openapi` | Yes | Yes, except reading local files |
+| `@ariadocs/components` | Yes | Yes |
+
+## MDX
+
+With Server Components, `docs.parse()` gives you the rendered page. Without them, compile with `docs.serialize()` on the server and render with `MdxClient`. [This page](/docs/mdx/client-rendering) is rendered on the client.
+
+## OpenAPI
+
+The usual setup parses the spec on the server and passes it to `OpenAPI.Root`:
+
+```tsx
+const api = await openapi.parse();
+
+return (
+  <OpenAPI.Root api={api}>
+    <OpenAPI.Operation id="emails-send" />
+  </OpenAPI.Root>
+);
+```
+
+The `OpenAPI.*` components are Client Components, because they have tabs, copy buttons and expandable fields. You can still use them from a Server Component, including nested names like `OpenAPI.Operation.Header`.
+
+You can also parse in the browser. Bundlers pick a browser build that has no file system code. See the [live demo](/components/openapi/client-rendering).
+
+## Passing functions
+
+A Server Component can't pass a function to a Client Component. That's why `OpenAPI.Root` takes a string (`operationBaseHref="/reference"`) instead of a callback. It's also why `Docs.Nav` needs a small Client Component wrapper when you pass it Next's `Link`.

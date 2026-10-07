@@ -1,0 +1,78 @@
+/* Nord syntax theme (Prism token classes). Import instead of syntax/default.css. */
+
+.token.keyword {
+  color: #81a1c1; /* Nord Frost - Blue */
+}
+
+.token.function {
+  color: #88c0d0; /* Nord Snow Storm - Light Blue */
+}
+
+.token.punctuation,
+.token.operator {
+  color: #eceff4; /* Nord Snow Storm - White */
+}
+
+.token.comment {
+  color: #616e88; /* Nord Polar Night - Muted */
+}
+
+.token.string,
+.token.constant,
+.token.annotation,
+.token.boolean,
+.token.number {
+  color: #a3be8c; /* Nord Frost - Green */
+}
+
+.token.tag,
+.token.property {
+  color: #81a1c1; /* Nord Frost - Blue */
+}
+
+.token.attr-name {
+  color: #8fbcbb; /* Nord Frost - Cyan */
+}
+
+.token.attr-value {
+  color: #bf616a; /* Nord Aurora - Red */
+}
+
+/* Dark Mode */
+.dark .token.keyword {
+  color: #81a1c1; /* Nord Frost - Blue */
+}
+
+.dark .token.function {
+  color: #88c0d0; /* Nord Snow Storm - Light Blue */
+}
+
+.dark .token.punctuation,
+.dark .token.operator {
+  color: #d8dee9; /* Nord Snow Storm - Light Gray */
+}
+
+.dark .token.comment {
+  color: #616e88; /* Nord Polar Night - Muted */
+}
+
+.dark .token.string,
+.dark .token.constant,
+.dark .token.annotation,
+.dark .token.boolean,
+.dark .token.number {
+  color: #a3be8c; /* Nord Frost - Green */
+}
+
+.dark .token.tag,
+.dark .token.property {
+  color: #81a1c1; /* Nord Frost - Blue */
+}
+
+.dark .token.attr-name {
+  color: #8fbcbb; /* Nord Frost - Cyan */
+}
+
+.dark .token.attr-value {
+  color: #bf616a; /* Nord Aurora - Red */
+}

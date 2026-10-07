@@ -1,0 +1,58 @@
+---
+title: Migrating from @ariadocs/react
+description: "@ariadocs/react is now @ariadocs/mdx."
+---
+
+```bash
+pnpm remove @ariadocs/react
+pnpm add @ariadocs/mdx @ariadocs/components
+```
+
+## Renamed
+
+| Before | After |
+| --- | --- |
+| `@ariadocs/react` | `@ariadocs/mdx` |
+| `@ariadocs/react/client`, `/server`, `/plugins` | `@ariadocs/mdx/client`, `/server`, `/plugins` |
+| `@ariadocs/react/styles/*.css` | `@ariadocs/components/styles/syntax/*.css` |
+| `mdxComponents` option | `components` |
+| `docs.readMdx()` | `docs.read()` |
+| `docs.getNavItems()` | `docs.getNavigation()` |
+| `parseMdxRemote({ raw })` | `parseMdx({ source })` |
+| `serializeMdxRemote({ raw })` | `serializeMdx({ source })` |
+| `getFrontmatterRemote`, `getTocRemote` | `getFrontmatter({ source })`, `getToc({ source })` |
+| result field `raw` | `source` |
+| `<MdxServer raw options={{ ... }} />` | `<MdxServer source remarkPlugins rehypePlugins />` |
+| `<MdxClient mdxComponents />` | `<MdxClient components />` |
+| `ParseResult`, `SerializeResult` | `ParseMdxResult`, `SerializeMdxResult` |
+
+## Changed behavior
+
+- `index.mdx` maps to its folder. `getPagePaths()` returns `"/"` and `"/guides"` instead of `"/index"` and `"/guides/index"`.
+- Sidebar entries for missing files are skipped. An invalid `_meta.json` now throws.
+- Files and folders starting with `_` are hidden.
+- TOC items are `{ value, href, depth }`.
+- A missing page throws an `MdxError`. Check it with `isMdxNotFound(error)`.
+- JavaScript frontmatter is refused, and MDX `import`/`export` are switched off.
+- Syntax theme rules now only match `.token` elements, so they no longer restyle other classes in your app.
+
+## @ariadocs/openapi
+
+| Before | After |
+| --- | --- |
+| `openapi.parse(input, options)` | `parseOpenAPI({ source, ...options })` |
+| `openapi.validate(input)` | `validateOpenAPI(document)` |
+| `openapi.navigation(api)` | `getNavigation(api)` |
+| `openapi.search(api, query)` | `search(api, query)` |
+| `AriadocsOpenAPI` | `APISpec` |
+| `api.groups` | `api.tags` |
+| `OpenAPIParseError` | `OpenAPIError` |
+
+## @ariadocs/components
+
+| Before | After |
+| --- | --- |
+| `useOpenAPIContext()` | `useOpenAPI()` |
+| `useOperationContext().operation` | `useOperation()` |
+| `Docs.Root` | `Docs.Layout` |
+| `styles/openapi.css` | `styles.css` |

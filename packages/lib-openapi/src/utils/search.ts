@@ -1,45 +1,40 @@
-import type {
-  APISearchResult,
-  AriadocsOpenAPI,
-  APIOperation,
-} from "../types/index.js"
+import type { APIOperation, APISearchResult, APISpec } from "../types/index.js"
+import { getOperationTitle } from "./navigation.js"
 
-const MAX_RESULTS = 50
+export interface SearchOptions {
+  /** Maximum number of results (default `50`). */
+  limit?: number
+}
 
-/** Search operations, schemas and tags by query (case-insensitive substring). */
-export function search(api: AriadocsOpenAPI, query: string): APISearchResult[] {
+/** Case-insensitive search across operations, schemas and tags. Every word must match. */
+export function search(api: APISpec, query: string, options: SearchOptions = {}): APISearchResult[] {
   return [
     ...searchOperations(api, query),
     ...searchSchemas(api, query),
     ...searchTags(api, query),
-  ].slice(0, MAX_RESULTS)
+  ].slice(0, options.limit ?? 50)
 }
 
-export function searchOperations(api: AriadocsOpenAPI, query: string): APISearchResult[] {
-  const terms = normalize(query)
-  if (terms === "") return []
+export function searchOperations(api: APISpec, query: string): APISearchResult[] {
+  const terms = tokenize(query)
+  if (terms.length === 0) return []
 
   return api.operations
-    .filter((operation) => matchesOperation(operation, terms))
+    .filter((operation) => matches(operationHaystack(operation), terms))
     .map((operation) => ({
       type: "operation" as const,
       id: operation.id,
-      title: operation.summary ?? `${operation.method} ${operation.path}`,
+      title: getOperationTitle(operation),
       subtitle: `${operation.method} ${operation.path}`,
     }))
 }
 
-export function searchSchemas(api: AriadocsOpenAPI, query: string): APISearchResult[] {
-  const terms = normalize(query)
-  if (terms === "") return []
+export function searchSchemas(api: APISpec, query: string): APISearchResult[] {
+  const terms = tokenize(query)
+  if (terms.length === 0) return []
 
   return Object.entries(api.schemas)
-    .filter(([name, schema]) => {
-      if (name.toLowerCase().includes(terms)) return true
-      if (schema.title !== undefined && schema.title.toLowerCase().includes(terms)) return true
-      if (schema.description !== undefined && schema.description.toLowerCase().includes(terms)) return true
-      return false
-    })
+    .filter(([name, schema]) => matches([name, schema.title, schema.description], terms))
     .map(([name, schema]) => ({
       type: "schema" as const,
       id: name,
@@ -48,39 +43,36 @@ export function searchSchemas(api: AriadocsOpenAPI, query: string): APISearchRes
     }))
 }
 
-export function searchTags(api: AriadocsOpenAPI, query: string): APISearchResult[] {
-  const terms = normalize(query)
-  if (terms === "") return []
+export function searchTags(api: APISpec, query: string): APISearchResult[] {
+  const terms = tokenize(query)
+  if (terms.length === 0) return []
 
   return api.tags
-    .filter((tag) => {
-      if (tag.name.toLowerCase().includes(terms)) return true
-      if (tag.description !== undefined && tag.description.toLowerCase().includes(terms)) return true
-      return false
-    })
+    .filter((tag) => matches([tag.name, tag.title, tag.description], terms))
     .map((tag) => ({
       type: "tag" as const,
-      id: tag.name,
-      title: tag.name,
+      id: tag.id,
+      title: tag.title,
       subtitle: "Tag",
     }))
 }
 
-function matchesOperation(operation: APIOperation, terms: string): boolean {
-  const haystacks = [
+function operationHaystack(operation: APIOperation): (string | undefined)[] {
+  return [
     operation.summary,
     operation.description,
     operation.operationId,
     operation.id,
     `${operation.method} ${operation.path}`,
-    operation.path,
     ...operation.tags,
   ]
-  return haystacks.some(
-    (value) => typeof value === "string" && value.toLowerCase().includes(terms)
-  )
 }
 
-function normalize(query: string): string {
-  return query.trim().toLowerCase()
+function matches(haystack: (string | undefined)[], terms: string[]): boolean {
+  const text = haystack.filter((value) => typeof value === "string").join(" ").toLowerCase()
+  return terms.every((term) => text.includes(term))
+}
+
+function tokenize(query: string): string[] {
+  return query.trim().toLowerCase().split(/\s+/).filter((term) => term !== "").slice(0, 16)
 }

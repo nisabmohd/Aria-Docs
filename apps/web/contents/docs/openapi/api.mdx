@@ -1,0 +1,36 @@
+---
+title: API reference
+description: Everything @ariadocs/openapi exports.
+---
+
+## Parsing
+
+| Export | Signature |
+| --- | --- |
+| `createOpenAPI` | `(options) => OpenAPIInstance` |
+| `parseOpenAPI` | `(options) => Promise<APISpec>` |
+| `loadOpenAPI` | `(options) => Promise<OpenAPIDocument>`. Loads without validating. |
+| `validateOpenAPI` | `(document) => { valid, errors }` |
+| `resolveRefs` | `(document) => { document, warnings }` |
+| `normalizeOpenAPI` | `(document) => APISpec` |
+
+## Working with the result
+
+| Export | Signature |
+| --- | --- |
+| `getNavigation` | `(api, options?) => NavItem[]` |
+| `getPagePaths` | `(api) => string[]` |
+| `getOperation`, `getSchema` | `(api, name) => item or undefined` |
+| `getOperationTitle` | `(operation) => string` |
+| `search` | `(api, query, { limit? }) => APISearchResult[]` |
+| `getPrimaryResponse` | `(operation) => APIResponse or undefined` |
+| `getServerUrl` | `(server, values?) => string` |
+| `createRequestSample` | `(operation, options?) => APIRequestSample` |
+| `createCodeSample` | `(sample, language) => string`, where `language` is `curl`, `javascript`, `python`, `go`, `rust`, `java`, `kotlin` or `csharp` |
+| `getSchemaProperties` | `(schema) => APISchemaProperty[]` |
+| `getSchemaTypeLabel` | `(schema) => string` |
+| `generateSchemaExample` | `(schema, options?) => unknown` |
+
+## Types
+
+`APISpec`, `APIOperation`, `APIParameter`, `APIRequestBody`, `APIResponse`, `APISchema`, `APITag`, `APIServer`, `APISecurityScheme`, `OpenAPIError` and `NavItem`.

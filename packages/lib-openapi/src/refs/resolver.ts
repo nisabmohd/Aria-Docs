@@ -1,139 +1,164 @@
+import { setOwn } from "@ariadocs/core"
+import { OpenAPIError } from "../errors.js"
+import { DEFAULT_MAX_DEPTH } from "../options.js"
 import type { OpenAPIDocument } from "../types/index.js"
 import { isLocalRef, isRefObject, resolvePointer } from "./pointer.js"
 
 export interface ResolveResult {
   document: OpenAPIDocument
-  /** Non-fatal issues encountered while resolving (e.g. external refs left as-is). */
+  /** Non-fatal issues found while resolving (external or missing refs). */
   warnings: string[]
 }
 
+export interface ResolveOptions {
+  /** Maximum object nesting depth before an `OpenAPIError` is thrown (default `500`). */
+  maxDepth?: number
+}
+
 interface ResolveState {
-  /** The document refs are resolved against. */
   root: OpenAPIDocument
-  /** Pointers currently being resolved on the walk stack — used for cycle detection. */
-  stack: Set<string>
-  warnings: string[]
-  /** Keep the original pointer on every resolved object (`ref` marker). */
   keepRef: boolean
+  maxDepth: number
+  warnings: string[]
+  /** Refs currently being expanded; meeting one again means a cycle. */
+  stack: Set<string>
+  /** Raw objects on the current walk path (catches refs to an enclosing object). */
+  ancestors: Set<object>
+  /**
+   * Each pointer is expanded once and the result reused. Without this, a
+   * document where A uses B twice, B uses C twice, and so on, would take
+   * exponential time and memory.
+   */
+  cache: Map<string, unknown>
+  /** Warn once per pointer, not once per use. */
+  warned: Set<string>
 }
 
 /**
  * Resolve local `$ref` pointers across a document.
  *
- * - Every `{$ref: "#/..."}` is replaced with the resolved target's content.
- * - The resolved object also carries `ref: "#/..."` so consumers always know
- *   the origin (`schema.ref`).
- * - Recursive schemas (e.g. `friend: { $ref: "#/components/schemas/User" }`
- *   inside `User`) are detected and the inner reference is left untouched
- *   instead of expanding into infinite objects.
- * - External refs (`./schemas/user.yaml#/User`) are never followed here; they
- *   are left as-is and reported as warnings.
+ * - Every `{ $ref: "#/..." }` is replaced with the target's content, and the
+ *   result keeps its origin in `ref`.
+ * - Recursive references stay as raw `{ $ref }` objects instead of
+ *   expanding forever.
+ * - External references are left as they are and reported as warnings.
+ * - The input document is never mutated.
  */
-export function resolveRefs(document: OpenAPIDocument): ResolveResult {
-  return run(document, { keepRef: true })
+export function resolveRefs(document: OpenAPIDocument, options: ResolveOptions = {}): ResolveResult {
+  return run(document, true, options)
 }
 
 /**
- * Fully dereference a document: references are replaced with their resolved
- * content and no `ref` marker is kept. Cycles are still protected against —
- * references that would recurse forever are left as raw `{$ref}` objects.
+ * Like `resolveRefs`, but no `ref` markers are kept. Recursive references
+ * are still left as raw `{ $ref }` objects.
  */
-export function dereference(document: OpenAPIDocument): ResolveResult {
-  return run(document, { keepRef: false })
+export function dereference(document: OpenAPIDocument, options: ResolveOptions = {}): ResolveResult {
+  return run(document, false, options)
 }
 
-function run(document: OpenAPIDocument, options: { keepRef: boolean }): ResolveResult {
+function run(document: OpenAPIDocument, keepRef: boolean, options: ResolveOptions): ResolveResult {
   const state: ResolveState = {
     root: document,
-    stack: new Set<string>(),
+    keepRef,
+    maxDepth: options.maxDepth ?? DEFAULT_MAX_DEPTH,
     warnings: [],
-    keepRef: options.keepRef,
+    stack: new Set(),
+    ancestors: new Set(),
+    cache: new Map(),
+    warned: new Set(),
   }
-  const resolved = walk(document, state, new Set())
+  const resolved = walk(document, state, 0)
   return { document: resolved as OpenAPIDocument, warnings: state.warnings }
 }
 
-/**
- * Walk a value, resolving every `{$ref}` encountered.
- *
- * `ancestors` holds the identities of raw objects on the current walk path.
- * A reference whose target is one of those ancestors points back up the tree
- * (a recursive schema) and is kept as a raw `{$ref}` instead of expanding.
- */
-function walk(value: unknown, state: ResolveState, ancestors: Set<object>): unknown {
-  if (Array.isArray(value)) {
-    return value.map((item) => walk(item, state, ancestors))
-  }
-
+function walk(value: unknown, state: ResolveState, depth: number): unknown {
   if (typeof value !== "object" || value === null) {
     return value
   }
 
-  const record = value as Record<string, unknown>
-
-  if (isRefObject(record)) {
-    return resolveRefObject(record, state, ancestors)
+  if (depth > state.maxDepth) {
+    throw new OpenAPIError(
+      `OpenAPI document is nested deeper than ${state.maxDepth} levels (maxDepth).`,
+      "OPENAPI_TOO_DEEP"
+    )
   }
 
-  ancestors.add(record)
+  if (Array.isArray(value)) {
+    return value.map((item) => walk(item, state, depth + 1))
+  }
+
+  if (isRefObject(value)) {
+    return resolveRef(value, state, depth)
+  }
+
+  state.ancestors.add(value)
   const output: Record<string, unknown> = {}
-  for (const [key, child] of Object.entries(record)) {
-    output[key] = walk(child, state, ancestors)
+  for (const [key, child] of Object.entries(value)) {
+    setOwn(output, key, walk(child, state, depth + 1))
   }
-  ancestors.delete(record)
+  state.ancestors.delete(value)
   return output
 }
 
-function resolveRefObject(
-  refObject: Record<string, unknown>,
-  state: ResolveState,
-  ancestors: Set<object>
-): unknown {
+function resolveRef(refObject: Record<string, unknown>, state: ResolveState, depth: number): unknown {
   const ref = refObject.$ref as string
 
   if (!isLocalRef(ref)) {
-    state.warnings.push(
-      `External $ref "${ref}" was not resolved. External refs are not supported yet; the reference was left as-is.`
+    warnOnce(
+      state,
+      ref,
+      `External $ref "${ref}" was not resolved. External refs are not supported; the reference was left as-is.`
     )
     return { ...refObject }
   }
 
   if (state.stack.has(ref)) {
-    // Cycle: leave the raw reference in place so recursive schemas stay finite.
     return { $ref: ref }
   }
 
-  const target = resolvePointer(state.root, ref)
+  let resolved: unknown
+  if (state.cache.has(ref)) {
+    resolved = state.cache.get(ref)
+  } else {
+    const target = resolvePointer(state.root, ref)
 
-  if (target === undefined) {
-    state.warnings.push(`$ref "${ref}" could not be resolved: target not found.`)
-    return { ...refObject }
-  }
-
-  // The target is an object we are currently inside: a recursive schema.
-  if (typeof target === "object" && target !== null && ancestors.has(target)) {
-    return { $ref: ref }
-  }
-
-  state.stack.add(ref)
-  const resolvedTarget = walk(target, state, ancestors)
-  state.stack.delete(ref)
-
-  if (typeof resolvedTarget !== "object" || resolvedTarget === null) {
-    return resolvedTarget
-  }
-
-  // OpenAPI 3.1 allows siblings next to $ref; siblings win over target values.
-  const siblings: Record<string, unknown> = {}
-  for (const [key, val] of Object.entries(refObject)) {
-    if (key !== "$ref") {
-      siblings[key] = val
+    if (target === undefined) {
+      warnOnce(state, ref, `$ref "${ref}" could not be resolved: target not found.`)
+      return { ...refObject }
     }
+
+    // The target encloses this reference: a recursive schema.
+    if (typeof target === "object" && target !== null && state.ancestors.has(target)) {
+      return { $ref: ref }
+    }
+
+    state.stack.add(ref)
+    try {
+      resolved = walk(target, state, depth + 1)
+    } finally {
+      state.stack.delete(ref)
+    }
+    state.cache.set(ref, resolved)
   }
 
-  const merged: Record<string, unknown> = { ...(resolvedTarget as object), ...siblings }
+  if (typeof resolved !== "object" || resolved === null || Array.isArray(resolved)) {
+    return resolved
+  }
+
+  // OpenAPI 3.1 allows keywords next to $ref (e.g. `description`); they win.
+  const merged: Record<string, unknown> = {}
+  for (const [key, val] of Object.entries(resolved)) setOwn(merged, key, val)
+  for (const [key, val] of Object.entries(refObject)) {
+    if (key !== "$ref") setOwn(merged, key, walk(val, state, depth + 1))
+  }
   if (state.keepRef) {
     merged.ref = ref
   }
   return merged
+}
+
+function warnOnce(state: ResolveState, ref: string, message: string): void {
+  if (state.warned.has(ref)) return
+  state.warned.add(ref)
+  state.warnings.push(message)
 }

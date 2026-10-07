@@ -1,0 +1,47 @@
+---
+title: Untrusted specs
+description: Parsing a spec that someone else wrote.
+---
+
+The spec you render may come from a vendor, a user upload or a URL. The parser handles hostile or broken input as follows.
+
+## Limits
+
+- Specs larger than `maxSize` (20 MB) are rejected. Files are checked before reading, and downloads stop once they pass the limit.
+- Requests time out after `timeout` (30 seconds).
+- YAML aliases can only expand a limited number of times.
+- Each `$ref` is resolved once and then reused, so a spec full of nested refs still parses quickly.
+- Specs nested deeper than `maxDepth` (500 levels) are rejected instead of crashing.
+
+## Safe output
+
+- Keys named `__proto__` are stored as normal data and can't change built-in objects.
+- `$ref`s and lookups only follow the spec's own properties, so a ref like `#/constructor` resolves to nothing.
+- Links that use `javascript:` or `data:` are removed.
+- Error messages don't include text from the spec, or passwords and query strings from URLs.
+
+## When the source comes from a user
+
+A user could pass `/etc/passwd` or an internal URL as the source. Turn off file and network access:
+
+```ts
+const api = await parseOpenAPI({
+  source: userInput,
+  allowFiles: false,
+  allowRemote: false,
+  maxSize: 1024 * 1024,
+});
+```
+
+## Errors
+
+Errors are `OpenAPIError` instances with a `code`:
+
+| Code | Meaning |
+| --- | --- |
+| `OPENAPI_LOAD_ERROR` | The source couldn't be read, or reading it isn't allowed |
+| `OPENAPI_SYNTAX_ERROR` | The JSON or YAML is invalid |
+| `OPENAPI_INVALID` | The spec is missing required parts. `error.issues` lists them. |
+| `OPENAPI_UNRESOLVED_REF` | A `$ref` couldn't be resolved and `strict` is on |
+| `OPENAPI_TOO_LARGE` | The spec is larger than `maxSize` |
+| `OPENAPI_TOO_DEEP` | The spec is nested deeper than `maxDepth` |

@@ -1,0 +1,19 @@
+---
+title: OpenAPI.Security and OpenAPI.Server
+description: How to authenticate, and the base URLs.
+---
+
+<ApiPreview>
+  <OpenAPI.Operation id="emails-send">
+    <OpenAPI.Security />
+    <div className="mt-6">
+      <OpenAPI.Server />
+    </div>
+  </OpenAPI.Operation>
+</ApiPreview>
+
+`OpenAPI.Security` shows what to send to authenticate, such as an `Authorization` header with a bearer token, or an API key header. When the spec allows several methods, they're listed with "or" between them.
+
+`OpenAPI.Server` lists the base URLs. Variables in a URL, like `{region}`, are filled with their default values.
+
+Both use the current endpoint's settings. You can pass `security` or `servers` to show something else.

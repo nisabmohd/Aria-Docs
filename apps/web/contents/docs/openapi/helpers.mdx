@@ -1,0 +1,54 @@
+---
+title: Helpers
+description: Small functions that work on the parsed spec.
+---
+
+These are plain functions. They work on the server and in Client Components.
+
+## Finding things
+
+```ts
+import { getOperation, getSchema, getOperationTitle, search } from "@ariadocs/openapi";
+
+getOperation(api, "emails-send"); // by id or by the original operationId
+getSchema(api, "Email");
+getOperationTitle(operation); // the summary, or "GET /emails"
+search(api, "send email"); // endpoints, schemas and tags that match every word
+```
+
+## Navigation
+
+```ts
+import { getNavigation, getPagePaths } from "@ariadocs/openapi";
+
+getNavigation(api, { getOperationHref: (op) => `/reference/${op.id}` });
+getPagePaths(api); // ["/emails-send", "/emails-list", ...]
+```
+
+## Responses
+
+```ts
+import { getPrimaryResponse, getSuccessResponses, getErrorResponses } from "@ariadocs/openapi";
+
+getPrimaryResponse(operation); // the first 2xx response
+```
+
+## Schemas
+
+```ts
+import { getSchemaProperties, getSchemaTypeLabel, generateSchemaExample } from "@ariadocs/openapi";
+
+getSchemaProperties(schema); // fields, including those from allOf
+getSchemaTypeLabel(schema); // "string<email>", "Tag[]", "integer | null"
+generateSchemaExample(schema, { mode: "request" }); // example JSON, without readOnly fields
+```
+
+`generateSchemaExample` stops at a fixed depth and size, so very large or self-referencing schemas stay fast.
+
+## Servers
+
+```ts
+import { getServerUrl } from "@ariadocs/openapi";
+
+getServerUrl(server, { region: "eu" }); // fills in {region} in the server URL
+```

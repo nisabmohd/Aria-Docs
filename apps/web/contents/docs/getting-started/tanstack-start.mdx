@@ -1,60 +1,70 @@
 ---
-title: TanStack Start Setup
+title: TanStack Start
+description: Docs pages and an API reference with server functions.
 ---
 
-Getting started with Ariadocs in a **TanStack Start** project is simple.
+TanStack Start loaders also run in the browser during client navigation. Anything that reads files has to go through a server function.
 
-> **Prerequisites**: Complete the [Installation & Configuration](/docs/getting-started/installation) first.
+## Docs pages
 
-## Create Docs Route
-
-Catch all docs pages inside `src/routes/docs/$.tsx`:
-
-```tsx
-// src/routes/docs/$.tsx
+```tsx title="src/routes/docs/$.tsx"
 import { createFileRoute, notFound } from "@tanstack/react-router";
-import { MdxClient } from "@ariadocs/react/client";
-import { docs } from "@/ariadocs";
+import { createServerFn } from "@tanstack/react-start";
+import { isMdxNotFound } from "@ariadocs/mdx";
+import { MdxClient } from "@ariadocs/mdx/client";
+import { docs } from "../../docs";
+
+const getPage = createServerFn({ method: "GET" })
+  .inputValidator((slug: string) => slug)
+  .handler(async ({ data: slug }) => {
+    try {
+      return await docs.serialize<{ title: string }>({ slug });
+    } catch (error) {
+      if (isMdxNotFound(error)) throw notFound();
+      throw error;
+    }
+  });
 
 export const Route = createFileRoute("/docs/$")({
-  loader: async ({ params }) => {
-    const slug = params._splat;
-    if (!slug) throw notFound();
-    return docs.serialize({ slug });
-  },
-  component: Page,
+  loader: ({ params }) => getPage({ data: params._splat ?? "" }),
+  component: DocsPage,
 });
 
-function Page() {
+function DocsPage() {
   const { serialized, frontmatter } = Route.useLoaderData();
-
   return (
-    <section>
-      <title>{frontmatter.title}</title>
+    <article>
+      <h1>{frontmatter.title}</h1>
       <MdxClient serialized={serialized} />
-    </section>
+    </article>
   );
 }
 ```
 
-## Create Your First Doc
+## API reference
 
-`contents/docs/hello-world.mdx`
+```tsx title="src/routes/reference/$operation.tsx"
+import { createFileRoute } from "@tanstack/react-router";
+import { createServerFn } from "@tanstack/react-start";
+import { OpenAPI } from "@ariadocs/components";
+import { openapi } from "../../openapi";
 
-```md
----
-title: Hello World
----
+const getSpec = createServerFn({ method: "GET" }).handler(() => openapi.parse());
 
-# Hello World
+export const Route = createFileRoute("/reference/$operation")({
+  loader: () => getSpec(),
+  component: ReferencePage,
+});
 
-This is your **first Ariadocs page**.
+function ReferencePage() {
+  const api = Route.useLoaderData();
+  const { operation } = Route.useParams();
+  return (
+    <OpenAPI.Root api={api} operationBaseHref="/reference">
+      <OpenAPI.Operation id={operation} headingLevel={1} />
+    </OpenAPI.Root>
+  );
+}
 ```
 
-## Run the App
-
-```bash
-pnpm dev
-```
-
-Open [`http://localhost:3000/docs/hello-world`](http://localhost:3000/docs/hello-world)
+`openapi.parse()` caches its result, so the spec is read once per server process.

@@ -1,0 +1,27 @@
+---
+title: Untrusted content
+description: What's safe to render, and how to handle MDX you didn't write.
+---
+
+MDX can contain JavaScript, and that code runs when the page renders. Files in your own repository are fine. MDX from a CMS, a database or your users needs more care.
+
+## Always on
+
+- Slugs can't leave the content folder. Slugs often come from the URL, so `../../etc/passwd` is rejected.
+- JavaScript frontmatter (`---js`) is refused.
+- MDX `import` and `export` statements are switched off.
+- An invalid `_meta.json` throws instead of silently changing the sidebar.
+
+## Blocking JavaScript
+
+For MDX you don't trust, set `blockJs`:
+
+```ts
+const { MDX } = await parseMdx({ source: await cms.getPage(id), blockJs: true });
+```
+
+This removes `{expressions}`, `import`/`export` lines and attributes like `onClick={...}` before compiling. Markdown and JSX tags with plain string attributes still work.
+
+<Callout type="warning">
+  The components you pass in still run. Don't give untrusted MDX a component that renders raw HTML from its props.
+</Callout>

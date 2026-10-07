@@ -1,0 +1,97 @@
+{
+  "name": "@ariadocs/mdx",
+  "version": "3.0.0",
+  "type": "module",
+  "author": {
+    "name": "Nisab Mohd",
+    "email": "nisabmohd@gmail.com"
+  },
+  "license": "MIT",
+  "description": "MDX content layer for Ariadocs: parse and render MDX from files or strings, build navigation from _meta.json, extract frontmatter and table of contents. Works with React Server Components and client rendering.",
+  "keywords": [
+    "mdx",
+    "react",
+    "nextjs",
+    "documentation",
+    "docs",
+    "markdown",
+    "ariadocs"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./server": {
+      "types": "./dist/components/server.d.ts",
+      "default": "./dist/components/server.js"
+    },
+    "./client": {
+      "types": "./dist/components/client.d.ts",
+      "default": "./dist/components/client.js"
+    },
+    "./plugins": {
+      "types": "./dist/plugins.d.ts",
+      "default": "./dist/plugins.js"
+    }
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "build": "tsc",
+    "test": "vitest run",
+    "check-types": "tsc --noEmit"
+  },
+  "packageManager": "pnpm@10.4.1",
+  "dependencies": {
+    "@ariadocs/core": "workspace:*",
+    "gray-matter": "^4.0.3",
+    "next-mdx-remote-client": "^2.1.3",
+    "rehype-autolink-headings": "^7.1.0",
+    "rehype-code-titles": "^1.2.0",
+    "rehype-prism-plus": "^2.0.1",
+    "rehype-slug": "^6.0.0",
+    "remark": "^15.0.1",
+    "remark-flexible-toc": "^1.2.0",
+    "remark-gfm": "^4.0.1",
+    "unist-util-visit": "^5.0.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@mdx-js/mdx": "^3.1.1",
+    "@types/node": "^22.10.0",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@workspace/eslint-config": "workspace:*",
+    "@workspace/typescript-config": "workspace:*",
+    "eslint": "^9.32.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "typescript": "^5.9.2",
+    "vitest": "^5.0.3"
+  },
+  "peerDependencies": {
+    "react": ">=19",
+    "react-dom": ">=19"
+  },
+  "files": [
+    "dist",
+    "package.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nisabmohd/Aria-Docs.git",
+    "directory": "packages/lib-mdx"
+  },
+  "bugs": {
+    "url": "https://github.com/nisabmohd/Aria-Docs/issues"
+  },
+  "homepage": "https://github.com/nisabmohd/Aria-Docs#readme"
+}

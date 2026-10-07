@@ -1,0 +1,30 @@
+---
+title: OpenAPI.Parameter
+description: Parameters, grouped by where they're sent.
+---
+
+<ApiPreview>
+  <OpenAPI.Operation id="emails-list">
+    <OpenAPI.Operation.Parameters />
+  </OpenAPI.Operation>
+</ApiPreview>
+
+`OpenAPI.Operation.Parameters` groups parameters into path, query, header and cookie sections. Each row shows the name, type, whether it's required, the description, the allowed values and an example if the spec has one.
+
+To render one parameter:
+
+```tsx
+<OpenAPI.Parameter parameter={operation.parameters[0]} />
+```
+
+Or choose its parts:
+
+```tsx
+<OpenAPI.Parameter parameter={parameter}>
+  <OpenAPI.Parameter.Name />
+  <OpenAPI.Parameter.Required />
+  <OpenAPI.Parameter.Description />
+</OpenAPI.Parameter>
+```
+
+The parts are `Header`, `Name`, `In`, `Required`, `Description`, `Details`, `Schema` and `Example`.

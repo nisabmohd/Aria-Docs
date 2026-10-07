@@ -1,0 +1,18 @@
+---
+title: Frontmatter and TOC
+description: Read a page's metadata and headings without rendering it.
+---
+
+```ts
+import { getFrontmatter, getToc } from "@ariadocs/mdx";
+
+const frontmatter = await getFrontmatter<{ title: string }>({ contentDir: "content/docs", slug: "intro" });
+const toc = await getToc({ source: "## Install\n\n## Usage" });
+// [{ value: "Install", href: "#install", depth: 2 }, { value: "Usage", href: "#usage", depth: 2 }]
+```
+
+Neither function compiles MDX, so both are fast.
+
+Frontmatter can be YAML (`---`) or JSON (`---json`). JavaScript frontmatter (`---js`) is refused, because the parser underneath would run it as code.
+
+The table of contents skips the `h1`, since that's usually the page title. The `href` values match the ids that `rehypeSlug` gives your headings. Pass `toc` to `<Docs.Toc items={toc} />` to render it.

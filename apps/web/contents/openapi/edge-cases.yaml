@@ -1,0 +1,379 @@
+openapi: 3.1.0
+info:
+  title: Ariadocs edge cases
+  version: 1.0.0
+  summary: A test fixture, not a real API.
+  description: |
+    One endpoint that uses every part of OpenAPI the `@ariadocs/components` package renders.
+    Use it to check how the components handle unusual specs.
+  license:
+    name: MIT
+    identifier: MIT
+servers:
+  - url: https://{region}.api.example.com/{version}
+    description: Regional API
+    variables:
+      region:
+        default: eu
+        enum: [eu, us, ap]
+        description: Data residency region.
+      version:
+        default: v2
+security:
+  - bearerAuth: []
+tags:
+  - name: items
+    x-displayName: Items
+    description: Create and manage items in a project.
+paths:
+  /projects/{project_id}/items:
+    parameters:
+      - $ref: "#/components/parameters/ProjectId"
+    post:
+      operationId: items/create
+      tags: [items]
+      summary: Create an item
+      description: |
+        Creates an item in a project. The request can be JSON, a multipart upload or a URL-encoded form.
+
+        ### Things to know
+
+        - Items are **validated** before they are saved.
+        - A request with the same `Idempotency-Key` returns the first result.
+        - Large uploads return `202` and finish in the background.
+
+        ```json
+        { "kind": "note", "title": "Hello" }
+        ```
+
+        Read the [guide](https://example.com/guide). This [link](javascript:alert(1)) is unsafe and must render as text.
+      externalDocs:
+        url: https://example.com/items
+        description: Items guide
+      security:
+        - bearerAuth: []
+        - apiKey: []
+          oauth: [items:write, items:read]
+        - {}
+      parameters:
+        - name: dry_run
+          in: query
+          description: Validate the request without saving anything.
+          schema:
+            type: boolean
+            default: false
+        - name: fields
+          in: query
+          description: Fields to include in the response.
+          style: form
+          explode: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum: [id, title, tags, owner, children]
+            minItems: 1
+            uniqueItems: true
+          example: [id, title]
+        - name: priority
+          in: query
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 5
+            default: 3
+        - name: legacy_mode
+          in: query
+          deprecated: true
+          description: Old behavior. Will be removed in v3.
+          schema:
+            type: string
+        - name: Idempotency-Key
+          in: header
+          description: A unique key so retries don't create duplicates.
+          schema:
+            type: string
+            format: uuid
+            maxLength: 64
+        - name: session
+          in: cookie
+          schema:
+            type: string
+      requestBody:
+        required: true
+        description: The item to create.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateItem"
+            examples:
+              note:
+                summary: A note
+                value:
+                  kind: note
+                  title: Shopping list
+                  body: Milk, eggs
+                  tags: [home]
+              task:
+                summary: A task with a due date
+                value:
+                  kind: task
+                  title: Ship v2
+                  due: "2026-11-01T09:00:00Z"
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file]
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The file to attach.
+                metadata:
+                  type: string
+                  description: Item fields as JSON.
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                kind:
+                  type: string
+                  enum: [note, task]
+      responses:
+        "201":
+          description: The item was created.
+          headers:
+            Location:
+              description: URL of the new item.
+              schema:
+                type: string
+                format: uri
+            X-Rate-Limit-Remaining:
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+        "202":
+          description: The upload was accepted and is processed in the background.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  job_id:
+                    type: string
+                    format: uuid
+                  status:
+                    const: queued
+        "204":
+          description: Nothing was saved because `dry_run` was true.
+        "303":
+          description: An item with this idempotency key already exists.
+          headers:
+            Location:
+              schema:
+                type: string
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          description: Missing or invalid credentials.
+        "409":
+          description: An item with this title already exists in the project.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+        "422":
+          description: The item failed validation.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Problem"
+                  - type: object
+                    properties:
+                      errors:
+                        type: array
+                        items:
+                          type: object
+                          required: [field, message]
+                          properties:
+                            field:
+                              type: string
+                            message:
+                              type: string
+        "429":
+          description: Too many requests.
+          headers:
+            Retry-After:
+              required: true
+              description: Seconds to wait before retrying.
+              schema:
+                type: integer
+        "5XX":
+          description: Something went wrong on our side.
+        default:
+          $ref: "#/components/responses/Problem"
+components:
+  parameters:
+    ProjectId:
+      name: project_id
+      in: path
+      description: The project to add the item to.
+      schema:
+        type: string
+        pattern: "^prj_[a-z0-9]{12}$"
+      example: prj_8f2k1m9x0a3b
+  responses:
+    Problem:
+      description: A problem with the request.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+    oauth:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://example.com/oauth/authorize
+          tokenUrl: https://example.com/oauth/token
+          scopes:
+            items:read: Read items
+            items:write: Create and change items
+  schemas:
+    BaseItem:
+      type: object
+      required: [title]
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          description: Set by the server.
+        title:
+          type: string
+          minLength: 1
+          maxLength: 200
+        tags:
+          type: array
+          items:
+            type: string
+          maxItems: 10
+          uniqueItems: true
+    Note:
+      type: object
+      title: Note
+      required: [kind]
+      properties:
+        kind:
+          const: note
+        body:
+          type: string
+          description: Markdown text.
+    Task:
+      type: object
+      title: Task
+      required: [kind, due]
+      properties:
+        kind:
+          const: task
+        due:
+          type: string
+          format: date-time
+        done:
+          type: boolean
+          default: false
+    Node:
+      type: object
+      description: A tree node. Children are nodes too.
+      properties:
+        label:
+          type: string
+        children:
+          type: array
+          items:
+            $ref: "#/components/schemas/Node"
+    CreateItem:
+      allOf:
+        - $ref: "#/components/schemas/BaseItem"
+        - type: object
+          properties:
+            content:
+              description: Either a note or a task.
+              oneOf:
+                - $ref: "#/components/schemas/Note"
+                - $ref: "#/components/schemas/Task"
+              discriminator:
+                propertyName: kind
+            owner:
+              description: Who owns the item. `null` means the project.
+              anyOf:
+                - type: object
+                  properties:
+                    user_id:
+                      type: string
+                    email:
+                      type: string
+                      format: email
+                - type: "null"
+            visibility:
+              type: string
+              enum: [private, team, public]
+              default: private
+            score:
+              type: number
+              exclusiveMinimum: 0
+              maximum: 100
+              multipleOf: 0.5
+            metadata:
+              type: object
+              description: Any extra string values.
+              additionalProperties:
+                type: string
+            outline:
+              $ref: "#/components/schemas/Node"
+            secret:
+              type: string
+              format: password
+              writeOnly: true
+              description: Never returned in responses.
+            color:
+              type: string
+              deprecated: true
+              description: Use `visibility` instead.
+    Item:
+      allOf:
+        - $ref: "#/components/schemas/CreateItem"
+        - type: object
+          properties:
+            created_at:
+              type: string
+              format: date-time
+              readOnly: true
+    Problem:
+      type: object
+      required: [type, title]
+      properties:
+        type:
+          type: string
+          format: uri
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: [string, "null"]

@@ -1,18 +1,25 @@
 "use client"
 
 import type { ReactNode } from "react"
-import type { AriadocsOpenAPI } from "@ariadocs/openapi"
+import type { APISpec } from "@ariadocs/openapi"
 import { OpenAPIProvider } from "./context.js"
 
 export interface OpenAPIRootProps {
-  api: AriadocsOpenAPI
+  /** The model from `parseOpenAPI()` / `openapi.parse()`. */
+  api: APISpec
+  /**
+   * Base path for per-operation pages, e.g. `"/api"` → `/api/listPets`.
+   * Without it, operations link to `#id` anchors on the same page.
+   */
+  operationBaseHref?: string
   children?: ReactNode
 }
 
-/**
- * `<OpenAPI.Root>` — provides the parsed API model to every child component
- * through context. No UI of its own.
- */
-export function OpenAPIRoot({ api, children }: OpenAPIRootProps) {
-  return <OpenAPIProvider api={api}>{children}</OpenAPIProvider>
+/** Provides the parsed API to every `OpenAPI.*` component below it. Renders no UI. */
+export function OpenAPIRoot({ api, operationBaseHref, children }: OpenAPIRootProps) {
+  return (
+    <OpenAPIProvider api={api} operationBaseHref={operationBaseHref}>
+      {children}
+    </OpenAPIProvider>
+  )
 }

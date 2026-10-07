@@ -1,0 +1,36 @@
+---
+title: createOpenAPI
+description: Configure a spec once and reuse the parsed result.
+---
+
+```ts title="lib/openapi.ts"
+import { createOpenAPI } from "@ariadocs/openapi";
+
+export const openapi = createOpenAPI({ source: "./openapi.yaml" });
+```
+
+It takes the same options as `parseOpenAPI`. The first `parse()` reads the spec and caches the result, so the rest of your app gets it for free. If parsing fails, nothing is cached and the next call tries again.
+
+| Method | Returns |
+| --- | --- |
+| `openapi.parse()` | The parsed spec |
+| `openapi.getNavigation()` | The sidebar: one group per tag |
+| `openapi.getPagePaths()` | One path per endpoint, like `["/emails-send"]` |
+| `openapi.getOperation(id)` | One endpoint |
+| `openapi.getSchema(name)` | One schema |
+| `openapi.search(query)` | Matching endpoints, schemas and tags |
+| `openapi.reload()` | Clears the cache |
+
+The methods match the ones on `createDocs`, so docs and API pages are set up the same way.
+
+## Sidebar links
+
+By default, sidebar links point to `#id` anchors. For one page per endpoint, set the link format:
+
+```ts
+const sidebar = await openapi.getNavigation({
+  getOperationHref: (operation) => `/reference/${operation.id}`,
+});
+```
+
+The framework guides show complete examples, starting with the [Next.js App Router](/docs/getting-started/nextjs-app#api-reference).

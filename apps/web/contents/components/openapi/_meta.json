@@ -1,0 +1,15 @@
+[
+  { "slug": "root", "title": "Root" },
+  { "slug": "operation", "title": "Operation" },
+  { "slug": "parameter", "title": "Parameter" },
+  { "slug": "request-body", "title": "RequestBody" },
+  { "slug": "response", "title": "Response" },
+  { "slug": "schema", "title": "Schema" },
+  { "slug": "examples", "title": "Examples" },
+  { "slug": "security-and-servers", "title": "Security and Server" },
+  { "slug": "info-and-sidebar", "title": "Info and Sidebar" },
+  { "slug": "docs", "title": "Docs" },
+  { "slug": "hooks", "title": "Hooks" },
+  { "slug": "client-rendering", "title": "Client rendering" },
+  { "slug": "edge-cases", "title": "Edge cases" }
+]

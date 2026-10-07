@@ -1,3 +1,4 @@
+import { slugify } from "@ariadocs/core"
 import type { HTTPMethod } from "../types/index.js"
 
 export interface OperationIdInput {
@@ -7,29 +8,19 @@ export interface OperationIdInput {
 }
 
 /**
- * Generate a stable operation id when the document has no `operationId`.
+ * The id used for an operation's anchor and route.
  *
- * Fallback chain: `operationId` → `method + path` slug, e.g.
- * `GET /planets/{id}` → `"get-planets-id"`.
+ * - With an `operationId`: kept as written, except characters outside
+ *   `A-Z a-z 0-9 . _ ~ -` become `-` (`"get pet/{id}"` → `"get-pet-id"`), so
+ *   the id is always safe in a URL or HTML id.
+ * - Without one: generated from method + path,
+ *   `GET /planets/{id}` → `"get-planets-id"`.
  */
 export function createOperationId(input: OperationIdInput): string {
-  if (input.operationId !== undefined && input.operationId !== "") {
-    return input.operationId
+  if (input.operationId !== undefined) {
+    const safe = input.operationId.replace(/[^A-Za-z0-9._~-]+/g, "-").replace(/^-+|-+$/g, "")
+    if (safe !== "") return safe
   }
-  return `${input.method.toLowerCase()}-${slugifyPath(input.path)}`
-}
-
-function slugifyPath(path: string): string {
-  return path
-    .replace(/^\//, "")
-    .split("/")
-    .map((segment) =>
-      segment
-        .replace(/\{|\}/g, "")
-        .replace(/[^a-zA-Z0-9]+/g, "-")
-        .replace(/^-+|-+$/g, "")
-        .toLowerCase()
-    )
-    .filter((segment) => segment.length > 0)
-    .join("-")
+  const path = slugify(input.path.replace(/[{}]/g, ""), "root")
+  return `${input.method.toLowerCase()}-${path}`
 }

@@ -1,0 +1,34 @@
+---
+title: OpenAPI.Schema
+description: The fields of a schema.
+---
+
+Here's Resend's `Email` schema:
+
+<ApiPreview>
+  <OpenAPI.Schema name="Email" mode="response" />
+</ApiPreview>
+
+```tsx
+<OpenAPI.Schema schema={api.schemas.Email} name="Email" mode="response" />
+```
+
+Each field shows its name, type, whether it's required, its description and its limits. Fields that hold objects or lists of objects can be expanded. When a field can take several shapes (`oneOf` or `anyOf`), tabs switch between them. A schema that contains itself shows a note instead of repeating forever.
+
+| Prop | What it does |
+| --- | --- |
+| `schema` | The schema to show |
+| `name` | The name shown by `OpenAPI.Schema.Title` |
+| `mode` | `"request"` hides read-only fields. `"response"` hides write-only fields. |
+
+To choose the parts:
+
+```tsx
+<OpenAPI.Schema schema={schema} name="Email">
+  <OpenAPI.Schema.Title />
+  <OpenAPI.Schema.Description />
+  <OpenAPI.Schema.Properties mode="response" />
+</OpenAPI.Schema>
+```
+
+The [Schemas page](/reference/schemas) of the API Reference lists every schema this way.

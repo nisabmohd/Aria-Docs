@@ -1,0 +1,3 @@
+/* @ariadocs/components: theme tokens + default syntax theme. */
+@import "./theme.css";
+@import "./syntax/default.css";

@@ -1,0 +1,36 @@
+---
+title: CodeBlock and Pre
+description: Code with highlighting and a copy button.
+---
+
+## CodeBlock
+
+<Preview>
+  <CodeBlock
+    title="email.json"
+    language="json"
+    code={JSON.stringify({ from: "Acme <onboarding@resend.dev>", to: ["delivered@resend.dev"], subject: "Hello", html: "<p>It works</p>" }, null, 2)}
+  />
+</Preview>
+
+```tsx
+import { CodeBlock } from "@ariadocs/components";
+
+<CodeBlock code={code} language="json" title="email.json" />;
+```
+
+JSON, bash, JavaScript and Python are highlighted. Other languages show as plain text. The highlighting uses the same classes as `rehypePrism`, so one [syntax theme](/docs/guides/themes) covers both.
+
+Pass `actions` to put controls such as tabs in the header. `CodeTabs` gives you tabs that match.
+
+## Pre
+
+`Pre` replaces `pre` in MDX. It keeps the highlighting from `rehypePrism` and adds a copy button. Hover any code block on this site to see it.
+
+```tsx
+import { Pre } from "@ariadocs/components";
+
+createDocs({ contentDir: "content", components: { pre: Pre } });
+```
+
+To copy the original code instead of the displayed text, add `rehypeCodeRaw` from `@ariadocs/mdx/plugins`.

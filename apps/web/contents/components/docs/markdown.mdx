@@ -1,0 +1,18 @@
+---
+title: Markdown
+description: Render the Markdown in API descriptions.
+---
+
+<Preview>
+  <Markdown>{"Returns **every** email you have sent. Use `limit` to set the page size.\n\n- Results are paginated\n- See [the docs](/docs/openapi)\n\nThis [link](javascript:alert(1)) is shown as text, because it isn't safe."}</Markdown>
+</Preview>
+
+Descriptions in an OpenAPI spec are Markdown, written by whoever wrote the spec. `Markdown` renders paragraphs, headings, lists, code, bold, italics and links.
+
+It never renders raw HTML. Links are checked first, so a `javascript:` link becomes plain text. Links to other sites open in a new tab.
+
+```tsx
+import { Markdown } from "@ariadocs/components";
+
+<Markdown>{operation.description}</Markdown>;
+```

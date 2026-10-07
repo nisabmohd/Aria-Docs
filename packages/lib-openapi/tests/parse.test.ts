@@ -1,10 +1,16 @@
 import { describe, expect, it } from "vitest"
-import { openapi, OpenAPIParseError } from "../src/index.js"
+import {
+  getNavigation,
+  OpenAPIError,
+  parseOpenAPI,
+  search,
+  validateOpenAPI,
+} from "../src/index.js"
 import planets from "./fixtures/planets.json"
 
-describe("openapi.parse", () => {
+describe("parseOpenAPI", () => {
   it("parses a JSON document into the normalized model", async () => {
-    const api = await openapi.parse(planets)
+    const api = await parseOpenAPI({ source: planets })
 
     expect(api.type).toBe("openapi")
     expect(api.version).toBe("3.1.0")
@@ -15,7 +21,7 @@ describe("openapi.parse", () => {
   })
 
   it("flattens paths into operations", async () => {
-    const api = await openapi.parse(planets)
+    const api = await parseOpenAPI({ source: planets })
 
     expect(api.operations).toHaveLength(4)
     expect(api.paths["/planets"]).toHaveLength(2)
@@ -29,7 +35,7 @@ describe("openapi.parse", () => {
   })
 
   it("generates stable ids when operationId is missing", async () => {
-    const api = await openapi.parse(planets)
+    const api = await parseOpenAPI({ source: planets })
 
     const getPlanet = api.operations.find(
       (op) => op.method === "GET" && op.path === "/planets/{id}"
@@ -43,7 +49,7 @@ describe("openapi.parse", () => {
   })
 
   it("merges path-level and operation-level parameters with operation overrides", async () => {
-    const api = await openapi.parse(planets)
+    const api = await parseOpenAPI({ source: planets })
 
     const listPlanets = api.operations.find((op) => op.id === "listPlanets")
     expect(listPlanets?.parameters).toHaveLength(2)
@@ -59,7 +65,7 @@ describe("openapi.parse", () => {
   })
 
   it("computes response status flags and sorts responses", async () => {
-    const api = await openapi.parse(planets)
+    const api = await parseOpenAPI({ source: planets })
 
     const listPlanets = api.operations.find((op) => op.id === "listPlanets")
     const responses = listPlanets?.responses ?? []
@@ -71,7 +77,7 @@ describe("openapi.parse", () => {
   })
 
   it("normalizes request bodies with a preferred content type", async () => {
-    const api = await openapi.parse(planets)
+    const api = await parseOpenAPI({ source: planets })
 
     const createPlanet = api.operations.find((op) => op.path === "/planets" && op.method === "POST")
     expect(createPlanet?.requestBody?.required).toBe(true)
@@ -80,7 +86,7 @@ describe("openapi.parse", () => {
   })
 
   it("resolves operation security and falls back to global security", async () => {
-    const api = await openapi.parse(planets)
+    const api = await parseOpenAPI({ source: planets })
 
     const listPlanets = api.operations.find((op) => op.id === "listPlanets")
     expect(listPlanets?.security[0]?.schemes[0]?.name).toBe("ApiKeyAuth")
@@ -90,7 +96,7 @@ describe("openapi.parse", () => {
   })
 
   it("normalizes security schemes", async () => {
-    const api = await openapi.parse(planets)
+    const api = await parseOpenAPI({ source: planets })
 
     expect(api.securitySchemes["ApiKeyAuth"]).toMatchObject({
       type: "apiKey",
@@ -107,20 +113,19 @@ describe("openapi.parse", () => {
     ).toBe("Read planets")
   })
 
-  it("groups operations by tag, with untagged operations in a default group", async () => {
-    const api = await openapi.parse(planets)
+  it("groups operations by tag in declared order", async () => {
+    const api = await parseOpenAPI({ source: planets })
 
-    const groupNames = api.groups.map((g) => g.name)
-    expect(groupNames).toEqual(["planets", "moons"])
-    expect(api.groups.find((g) => g.name === "planets")?.operations).toHaveLength(3)
-    expect(api.groups.find((g) => g.name === "moons")?.operations).toHaveLength(1)
+    expect(api.tags.map((t) => t.name)).toEqual(["planets", "moons"])
+    expect(api.tags.find((t) => t.name === "planets")?.operations).toHaveLength(3)
+    expect(api.tags.find((t) => t.name === "moons")?.operations).toHaveLength(1)
     expect(api.tags.find((t) => t.name === "planets")?.description).toBe(
       "Everything about planets"
     )
   })
 
   it("normalizes servers with variables", async () => {
-    const api = await openapi.parse(planets)
+    const api = await parseOpenAPI({ source: planets })
 
     expect(api.servers).toHaveLength(1)
     expect(api.servers[0]?.url).toBe("https://api.example.com/v1")
@@ -129,7 +134,7 @@ describe("openapi.parse", () => {
   })
 
   it("normalizes webhooks (OpenAPI 3.1)", async () => {
-    const api = await openapi.parse(planets)
+    const api = await parseOpenAPI({ source: planets })
 
     expect(api.webhooks).toHaveLength(1)
     expect(api.webhooks[0]?.name).toBe("newPlanet")
@@ -149,64 +154,71 @@ paths:
         "200":
           description: pong
 `
-    const fromText = await openapi.parse(yamlText)
+    const fromText = await parseOpenAPI({ source: yamlText })
     expect(fromText.info.title).toBe("Inline YAML")
     expect(fromText.operations[0]?.id).toBe("get-ping")
 
-    const fromFile = await openapi.parse(new URL("./fixtures/moons.yaml", import.meta.url).pathname)
+    const fromFile = await parseOpenAPI({ source: new URL("./fixtures/moons.yaml", import.meta.url).pathname })
     expect(fromFile.info.title).toBe("Moons API")
     expect(fromFile.schemas["Moon"]?.properties?.name?.type).toBe("string")
   })
 
-  it("throws OpenAPIParseError for invalid documents", async () => {
-    await expect(openapi.parse({ hello: "world" })).rejects.toBeInstanceOf(OpenAPIParseError)
+  it("throws OpenAPIError for invalid documents", async () => {
+    await expect(parseOpenAPI({ source: { hello: "world" } })).rejects.toBeInstanceOf(OpenAPIError)
 
     await expect(
-      openapi.parse({ openapi: "4.0.0", info: { title: "x", version: "1" } })
+      parseOpenAPI({ source: { openapi: "4.0.0", info: { title: "x", version: "1" } } })
     ).rejects.toThrow(/Unsupported OpenAPI version/)
   })
 
   it("skips validation when validate: false", async () => {
-    const api = await openapi.parse({ hello: "world" }, { validate: false })
+    const api = await parseOpenAPI({ source: { hello: "world" }, validate: false })
     expect(api.info.title).toBe("Untitled API")
   })
 
   it("keeps the raw document when includeRaw: true", async () => {
-    const api = await openapi.parse(planets, { includeRaw: true })
+    const api = await parseOpenAPI({ source: planets, includeRaw: true })
     expect(api.raw).toBeDefined()
     expect(api.raw?.openapi).toBe("3.1.0")
   })
 })
 
-describe("openapi.validate / navigation / search", () => {
+describe("validateOpenAPI / getNavigation / search", () => {
   it("validates without parsing", async () => {
-    const result = await openapi.validate(planets)
+    const result = validateOpenAPI(planets)
     expect(result.valid).toBe(true)
     expect(result.errors).toEqual([])
 
-    const invalid = await openapi.validate({ openapi: "3.1.0" })
+    const invalid = validateOpenAPI({ openapi: "3.1.0" })
     expect(invalid.valid).toBe(false)
     expect(invalid.errors.some((e) => e.path === "/info")).toBe(true)
   })
 
-  it("builds navigation from groups", async () => {
-    const api = await openapi.parse(planets)
-    const nav = openapi.navigation(api)
+  it("builds NavItem navigation from tags", async () => {
+    const api = await parseOpenAPI({ source: planets })
+    const nav = getNavigation(api)
 
-    expect(nav.groups.map((g) => g.title)).toEqual(["planets", "moons"])
-    expect(nav.groups[0]?.items[0]).toMatchObject({
-      id: "listPlanets",
-      method: "GET",
-      path: "/planets",
+    expect(nav.map((g) => g.title)).toEqual(["planets", "moons"])
+    expect(nav[0]?.items[0]).toMatchObject({
+      title: "List all planets",
+      href: "#listPlanets",
+      badge: "GET",
+      nav: true,
+      items: [],
     })
+
+    const routed = getNavigation(api, { getOperationHref: (op) => `/api/${op.id}` })
+    expect(routed[0]?.items[0]?.href).toBe("/api/listPlanets")
   })
 
   it("searches operations, schemas and tags", async () => {
-    const api = await openapi.parse(planets)
+    const api = await parseOpenAPI({ source: planets })
 
-    const results = openapi.search(api, "planet")
+    const results = search(api, "planet")
     expect(results.some((r) => r.type === "operation" && r.id === "listPlanets")).toBe(true)
     expect(results.some((r) => r.type === "schema" && r.id === "Planet")).toBe(true)
     expect(results.some((r) => r.type === "tag" && r.id === "planets")).toBe(true)
+    expect(search(api, "list planets").map((r) => r.id)).toContain("listPlanets")
+    expect(search(api, "   ")).toEqual([])
   })
 })

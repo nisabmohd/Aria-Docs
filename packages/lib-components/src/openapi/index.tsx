@@ -1,119 +1,135 @@
-// NOTE: intentionally no "use client" here. This module assembles the
-// `OpenAPI` namespace object on whichever side imports it. The leaf modules
-// it imports are client components, so their exports arrive here as client
-// references — keeping the assembled object usable from React Server
-// Components (a namespace object exported directly from a "use client"
-// module would be an opaque reference on the server).
+// No "use client": this module only assembles the namespace, so it can be
+// imported from Server and Client Components alike. See `compound()`.
 
+import { CodeBlock } from "../code/code-block.js"
+import { compound } from "../lib/compound.js"
+import { Markdown } from "../markdown.js"
 import { OpenAPIDocs } from "./docs.js"
-import { OpenAPIContent, OpenAPILayout } from "./layout.js"
-import { OpenAPIOperation } from "./operation.js"
-import { OpenAPIParameter } from "./parameter.js"
-import { OpenAPIRequestBody } from "./request-body.js"
-import { OpenAPIResponse } from "./response.js"
-import { OpenAPIRoot } from "./root.js"
-import { OpenAPISchema } from "./schema.js"
-import { OpenAPICode, OpenAPIExample } from "./code.js"
-import { OpenAPISecurity } from "./security.js"
-import { OpenAPIServer } from "./server.js"
-import { OpenAPISidebar } from "./sidebar.js"
-
-// Compound parts
+import { RequestExample, ResponseExample } from "./examples.js"
+import { OpenAPIInfo } from "./info.js"
+import { MethodBadge } from "./method.js"
 import {
+  OpenAPIOperation,
   OperationDeprecated,
   OperationDescription,
+  OperationExamples,
   OperationHeader,
   OperationMethod,
-  OperationParameters,
   OperationPath,
-  OperationRequestBody,
-  OperationResponses,
-  OperationServers,
   OperationSummary,
+  OperationTag,
+  OperationTitle,
 } from "./operation.js"
 import {
+  OpenAPIParameter,
+  OperationParameters,
   ParameterDescription,
+  ParameterDetails,
   ParameterExample,
+  ParameterHeader,
   ParameterIn,
   ParameterName,
   ParameterRequired,
   ParameterSchema,
 } from "./parameter.js"
-import { RequestBodyContent, RequestBodyDescription } from "./request-body.js"
+import { OpenAPIRequestBody, RequestBodyContent, RequestBodyDescription } from "./request-body.js"
 import {
+  OpenAPIResponse,
+  OperationResponses,
   ResponseContent,
   ResponseDescription,
   ResponseHeaders,
   ResponseStatus,
 } from "./response.js"
-import {
-  SchemaDescription,
-  SchemaProperties,
-  SchemaTitle,
-} from "./schema.js"
+import { OpenAPIRoot } from "./root.js"
+import { OpenAPISchema, SchemaDescription, SchemaProperties, SchemaTitle } from "./schema.js"
+import { OpenAPISecurity } from "./security.js"
+import { OpenAPIServer } from "./server.js"
+import { OpenAPISidebar } from "./sidebar.js"
 
 /**
- * The `OpenAPI` component namespace for `@ariadocs/components`.
+ * The `OpenAPI` component namespace.
  *
  * ```tsx
+ * // Everything on one page
  * <OpenAPI.Root api={api}>
  *   <OpenAPI.Docs />
+ * </OpenAPI.Root>
+ *
+ * // One page per operation, composed from parts
+ * <OpenAPI.Root api={api} operationBaseHref="/api">
+ *   <OpenAPI.Operation id="listPets">
+ *     <OpenAPI.Operation.Title level={1} />
+ *     <OpenAPI.Operation.Header />
+ *     <OpenAPI.Operation.Parameters />
+ *     <OpenAPI.Operation.Responses />
+ *   </OpenAPI.Operation>
  * </OpenAPI.Root>
  * ```
  */
 export const OpenAPI = {
   Root: OpenAPIRoot,
   Docs: OpenAPIDocs,
-  Layout: OpenAPILayout,
+  Info: OpenAPIInfo,
   Sidebar: OpenAPISidebar,
-  Content: OpenAPIContent,
-  Operation: withCompound(OpenAPIOperation, {
-    Header: OperationHeader,
-    Method: OperationMethod,
-    Path: OperationPath,
-    Deprecated: OperationDeprecated,
-    Summary: OperationSummary,
-    Description: OperationDescription,
-    Parameters: OperationParameters,
-    RequestBody: OperationRequestBody,
-    Responses: OperationResponses,
-    Security: OpenAPISecurity,
-    Servers: OperationServers,
-  }),
-  Parameter: withCompound(OpenAPIParameter, {
-    Name: ParameterName,
-    In: ParameterIn,
-    Required: ParameterRequired,
-    Description: ParameterDescription,
-    Schema: ParameterSchema,
-    Example: ParameterExample,
-  }),
-  RequestBody: withCompound(OpenAPIRequestBody, {
-    Description: RequestBodyDescription,
-    Content: RequestBodyContent,
-  }),
-  Response: withCompound(OpenAPIResponse, {
-    Status: ResponseStatus,
-    Description: ResponseDescription,
-    Headers: ResponseHeaders,
-    Content: ResponseContent,
-  }),
-  Schema: withCompound(OpenAPISchema, {
-    Title: SchemaTitle,
-    Description: SchemaDescription,
-    Properties: SchemaProperties,
-  }),
-  Code: OpenAPICode,
-  Example: OpenAPIExample,
+  Operation: compound(
+    OpenAPIOperation,
+    {
+      Tag: OperationTag,
+      Title: OperationTitle,
+      Header: OperationHeader,
+      Method: OperationMethod,
+      Path: OperationPath,
+      Deprecated: OperationDeprecated,
+      Summary: OperationSummary,
+      Description: OperationDescription,
+      Security: OpenAPISecurity,
+      Parameters: OperationParameters,
+      RequestBody: OpenAPIRequestBody,
+      Responses: OperationResponses,
+      Examples: OperationExamples,
+      RequestExample,
+      ResponseExample,
+    },
+    "OpenAPI.Operation"
+  ),
+  Parameter: compound(
+    OpenAPIParameter,
+    {
+      Header: ParameterHeader,
+      Name: ParameterName,
+      In: ParameterIn,
+      Required: ParameterRequired,
+      Description: ParameterDescription,
+      Details: ParameterDetails,
+      Schema: ParameterSchema,
+      Example: ParameterExample,
+    },
+    "OpenAPI.Parameter"
+  ),
+  RequestBody: compound(
+    OpenAPIRequestBody,
+    { Description: RequestBodyDescription, Content: RequestBodyContent },
+    "OpenAPI.RequestBody"
+  ),
+  Response: compound(
+    OpenAPIResponse,
+    {
+      Status: ResponseStatus,
+      Description: ResponseDescription,
+      Headers: ResponseHeaders,
+      Content: ResponseContent,
+    },
+    "OpenAPI.Response"
+  ),
+  Schema: compound(
+    OpenAPISchema,
+    { Title: SchemaTitle, Description: SchemaDescription, Properties: SchemaProperties },
+    "OpenAPI.Schema"
+  ),
   Security: OpenAPISecurity,
   Server: OpenAPIServer,
-}
-
-type WithCompound<T extends object, P extends Record<string, unknown>> = T & P
-
-function withCompound<T extends object, P extends Record<string, unknown>>(
-  component: T,
-  parts: P
-): WithCompound<T, P> {
-  return Object.assign(component, parts)
+  Method: MethodBadge,
+  Code: CodeBlock,
+  Markdown,
 }

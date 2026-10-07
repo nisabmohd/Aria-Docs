@@ -1,0 +1,51 @@
+---
+title: Navigation
+description: Build the sidebar from your folders and _meta.json.
+---
+
+```ts
+import { getNavigation, getPagePaths } from "@ariadocs/mdx";
+
+const sidebar = await getNavigation({ contentDir: "content/docs" });
+const paths = await getPagePaths({ contentDir: "content/docs" }); // ["/", "/intro", "/guides/setup"]
+```
+
+Each folder becomes a group and each file becomes a link. Render the result with `<Docs.Nav items={sidebar} />`.
+
+## Ordering with _meta.json
+
+Add a `_meta.json` to any folder to set the order, titles and visibility:
+
+```json title="content/docs/_meta.json"
+[
+  { "slug": "index", "title": "Introduction" },
+  { "slug": "getting-started", "title": "Getting started" },
+  { "slug": "changelog", "nav": false }
+]
+```
+
+| Field | Default | Meaning |
+| --- | --- | --- |
+| `slug` | required | File name without `.mdx`, or a folder name |
+| `title` | from the slug | The label in the sidebar |
+| `nav` | `true` | Set `false` to hide the page from the sidebar |
+| `props` | `{}` | Extra strings for your own components |
+
+Files missing from `_meta.json` are added at the end, in alphabetical order. Entries that point to a missing file are skipped. An invalid `_meta.json` throws an error.
+
+`index.mdx` links to its folder, so `guides/index.mdx` becomes `/guides`. Files and folders whose names start with `_` or `.` stay out of the sidebar and out of `getPagePaths()`.
+
+## The item format
+
+```ts
+interface NavItem {
+  title: string;
+  href: string;
+  nav: boolean;
+  props: Record<string, string>;
+  items: NavItem[]; // children of a folder
+  badge?: string; // e.g. "GET" for API endpoints
+}
+```
+
+`@ariadocs/openapi` returns the same format, so you can merge both into one sidebar.

@@ -1,53 +1,83 @@
 ---
-title: Next.js Pages Router Setup
+title: Next.js Pages Router
+description: Docs pages and an API reference with getStaticProps.
 ---
 
-Getting started with Ariadocs in a Next.js **Pages Router** project is simple.
+The Pages Router has no Server Components. You load the data in `getStaticProps` and render it on the page.
 
-> **Prerequisites**: Complete the [Installation & Configuration](/docs/getting-started/installation) first.
+## Docs pages
 
-## Add a Docs Page
+`docs.serialize()` compiles the MDX at build time. `MdxClient` renders it.
 
-Use a catch-all route inside `pages/docs/[[...path]].tsx`:
+```tsx title="pages/docs/[[...slug]].tsx"
+import type { GetStaticPaths, GetStaticProps } from "next";
+import { isMdxNotFound, type SerializeResult } from "@ariadocs/mdx";
+import { MdxClient } from "@ariadocs/mdx/client";
+import { docs } from "@/lib/docs";
 
-```tsx
-// pages/docs/[[...path]].tsx
-import { docs } from "@/ariadocs";
-import { MdxClient } from "@ariadocs/react";
+type Props = { serialized: SerializeResult; title: string };
 
-export default function Docs({ serialized }) {
+export default function Page({ serialized, title }: Props) {
   return (
-    <section>
+    <article>
+      <h1>{title}</h1>
       <MdxClient serialized={serialized} />
-    </section>
+    </article>
   );
 }
 
-export const getServerSideProps = async ({ params }) => {
-  const slug = (params?.path as string[]).join("/");
-  const { serialized } = await docs.serialize({ slug });
-  return { props: { serialized } };
+export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
+  const slug = ((params?.slug as string[] | undefined) ?? []).join("/");
+  try {
+    const { serialized, frontmatter } = await docs.serialize<{ title: string }>({ slug });
+    return { props: { serialized, title: frontmatter.title } };
+  } catch (error) {
+    if (isMdxNotFound(error)) return { notFound: true };
+    throw error;
+  }
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const paths = await docs.getPagePaths();
+  return {
+    paths: paths.map((path) => ({ params: { slug: path.split("/").filter(Boolean) } })),
+    fallback: false,
+  };
 };
 ```
 
-## Create Your First Doc
+Import `MdxClient` from `@ariadocs/mdx/client`. The main entry also contains code that reads files, which can't run in the browser.
 
-`contents/docs/hello-world.mdx`
+## API reference
 
-```md
----
-title: Hello World
----
+The OpenAPI components work on the client too. Pass the parsed spec as a prop.
 
-# Hello World
+```tsx title="pages/reference/[operation].tsx"
+import type { GetStaticPaths, GetStaticProps } from "next";
+import type { APISpec } from "@ariadocs/openapi";
+import { OpenAPI } from "@ariadocs/components";
+import { openapi } from "@/lib/openapi";
 
-This is your **first Ariadocs page**.
+type Props = { api: APISpec; operation: string };
+
+export default function Page({ api, operation }: Props) {
+  return (
+    <OpenAPI.Root api={api} operationBaseHref="/reference">
+      <OpenAPI.Operation id={operation} headingLevel={1} />
+    </OpenAPI.Root>
+  );
+}
+
+export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
+  const api = await openapi.parse();
+  // Next.js props must be plain JSON, so drop the `undefined` fields.
+  return { props: { api: JSON.parse(JSON.stringify(api)), operation: String(params?.operation) } };
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const paths = await openapi.getPagePaths();
+  return { paths: paths.map((path) => ({ params: { operation: path.slice(1) } })), fallback: false };
+};
 ```
 
-## Run the App
-
-```bash
-pnpm dev
-```
-
-Open [`http://localhost:3000/docs/hello-world`](http://localhost:3000/docs/hello-world)
+Every page gets the whole spec. For a large API, pass only the operation instead and render `<OpenAPI.Operation operation={operation} />` without `Root`. You lose the authorization details, which need the full spec.

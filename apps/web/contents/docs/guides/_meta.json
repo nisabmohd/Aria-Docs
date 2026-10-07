@@ -1,7 +1,6 @@
 [
-  { "slug": "plugins", "title": "Plugins", "nav": true },
-  { "slug": "themes", "title": "Themes", "nav": true },
-  { "slug": "remote-docs", "title": "Remote Docs", "nav": true },
-  { "slug": "toc", "title": "Table of Contents", "nav": true },
-  { "slug": "component-override", "title": "Component Override", "nav": true }
+  { "slug": "server-and-client", "title": "Server and client rendering" },
+  { "slug": "themes", "title": "Syntax themes" },
+  { "slug": "component-override", "title": "Custom MDX components" },
+  { "slug": "migration", "title": "Migrating from @ariadocs/react" }
 ]

@@ -1,0 +1,23 @@
+---
+title: Docs.Toc
+description: The "On this page" list.
+---
+
+```tsx
+const { toc } = await docs.parse({ slug });
+
+<Docs.Toc items={toc} />;
+```
+
+<Preview>
+  <Docs.Toc
+    items={[
+      { value: "Installation", href: "#installation", depth: 2 },
+      { value: "Configuration", href: "#configuration", depth: 2 },
+      { value: "Options", href: "#options", depth: 3 },
+      { value: "Usage", href: "#usage", depth: 2 },
+    ]}
+  />
+</Preview>
+
+As you scroll, the heading in view is highlighted. The list on the right of this page is a `Docs.Toc`. Set `title` to change the "On this page" label.

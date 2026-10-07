@@ -1,0 +1,316 @@
+openapi: 3.1.2
+info:
+  title: Resend
+  version: 1.5.1
+  description: Resend is the email platform for developers.
+servers:
+  - url: https://api.resend.com
+security:
+  - bearerAuth: []
+tags:
+  - name: Emails
+    description: Start sending emails through the Resend API.
+paths:
+  /emails:
+    post:
+      operationId: emails/send
+      tags:
+        - Emails
+      summary: Send an email
+      parameters:
+        - in: header
+          name: Idempotency-Key
+          required: false
+          schema:
+            type: string
+            maxLength: 256
+          description: A unique identifier for the request to ensure emails are only sent once. [Learn more](https://resend.com/docs/dashboard/emails/idempotency-keys)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SendEmailRequest"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SendEmailResponse"
+    get:
+      operationId: emails/list
+      tags:
+        - Emails
+      summary: Retrieve a list of emails
+      parameters:
+        - $ref: "#/components/parameters/PaginationLimit"
+        - $ref: "#/components/parameters/PaginationAfter"
+        - $ref: "#/components/parameters/PaginationBefore"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListEmailsResponse"
+  /emails/{email_id}:
+    get:
+      operationId: emails/get
+      tags:
+        - Emails
+      summary: Retrieve a single email
+      parameters:
+        - name: email_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the email.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Email"
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  parameters:
+    PaginationLimit:
+      in: query
+      name: limit
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+      description: Number of items to return.
+    PaginationAfter:
+      in: query
+      name: after
+      required: false
+      schema:
+        type: string
+      description: Return items after this cursor.
+    PaginationBefore:
+      in: query
+      name: before
+      required: false
+      schema:
+        type: string
+      description: Return items before this cursor.
+  schemas:
+    SendEmailRequest:
+      type: object
+      required:
+        - from
+        - to
+        - subject
+      properties:
+        from:
+          type: string
+          description: Sender email address. To include a friendly name, use the format "Your Name <sender@domain.com>".
+        to:
+          description: Recipient email address. For multiple addresses, send as an array of strings. Max 50.
+          oneOf:
+            - type: string
+            - type: array
+              items:
+                type: string
+              minItems: 1
+              maxItems: 50
+        subject:
+          type: string
+          description: Email subject.
+        bcc:
+          description: Bcc recipient email address. For multiple addresses, send as an array of strings.
+          oneOf:
+            - type: string
+            - type: array
+              items:
+                type: string
+        cc:
+          description: Cc recipient email address. For multiple addresses, send as an array of strings.
+          oneOf:
+            - type: string
+            - type: array
+              items:
+                type: string
+        reply_to:
+          description: Reply-to email address. For multiple addresses, send as an array of strings.
+          oneOf:
+            - type: string
+            - type: array
+              items:
+                type: string
+        html:
+          type: string
+          description: The HTML version of the message.
+        text:
+          type: string
+          description: The plain text version of the message.
+        template:
+          allOf:
+            - $ref: "#/components/schemas/EmailTemplateInput"
+            - description: Use a published template to send the email. If provided, do not include html or text.
+        headers:
+          type: object
+          description: Custom headers to add to the email.
+        scheduled_at:
+          type: string
+          description: Schedule email to be sent later. The date should be in ISO 8601 format.
+        attachments:
+          type: array
+          items:
+            $ref: "#/components/schemas/Attachment"
+        tags:
+          type: array
+          items:
+            $ref: "#/components/schemas/Tag"
+        topic_id:
+          type: string
+          description: The topic ID to scope the email to. If the recipient is a contact and opted-in to the topic, the email is sent. If opted-out, the email is not sent. If the recipient is not a contact, the email is sent if the topic's default subscription is opt_in.
+    Attachment:
+      type: object
+      properties:
+        content:
+          type: string
+          format: binary
+          description: Content of an attached file.
+        filename:
+          type: string
+          description: Name of attached file.
+        path:
+          type: string
+          description: Path where the attachment file is hosted
+        content_type:
+          type: string
+          description: Optional content type for the attachment, if not set it will be derived from the filename property
+        content_id:
+          type: string
+          description: Content ID for embedding inline images using cid references (e.g., cid:image001).
+    Tag:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the email tag. It can only contain ASCII letters (a–z, A–Z), numbers (0–9), underscores (_), or dashes (-). It can contain no more than 256 characters.
+        value:
+          type: string
+          description: The value of the email tag.It can only contain ASCII letters (a–z, A–Z), numbers (0–9), underscores (_), or dashes (-). It can contain no more than 256 characters.
+    EmailTemplateInput:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The id of the published email template.
+        variables:
+          type: object
+          additionalProperties:
+            oneOf:
+              - type: string
+              - type: number
+          description: Template variables object with key/value pairs.
+          example:
+            variableName: Sign up now
+            variableName2: 123
+      required:
+        - id
+    SendEmailResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the sent email.
+    Email:
+      type: object
+      properties:
+        object:
+          type: string
+          description: The type of object.
+          example: email
+        id:
+          type: string
+          description: The ID of the email.
+          example: 4ef9a417-02e9-4d39-ad75-9611e0fcc33c
+        message_id:
+          type: string
+          description: The Message-ID header value of the email.
+          example: <202301010000.4ef9a417@email.example.com>
+        to:
+          type: array
+          items:
+            type: string
+            description: The email addresses of the recipients.
+          example:
+            - delivered@resend.dev
+        from:
+          type: string
+          description: The email address of the sender.
+          example: Acme <onboarding@resend.dev>
+        created_at:
+          type: string
+          description: The date and time the email was created.
+          example: 2023-04-03 22:13:42.674981+00
+        subject:
+          type: string
+          description: The subject line of the email.
+          example: Hello World
+        html:
+          type: string
+          description: The HTML body of the email.
+          example: Congrats on sending your <strong>first email</strong>!
+        text:
+          type: string
+          description: The plain text body of the email.
+        bcc:
+          type: array
+          items:
+            type: string
+          description: The email addresses of the blind carbon copy recipients.
+        cc:
+          type: array
+          items:
+            type: string
+          description: The email addresses of the carbon copy recipients.
+        reply_to:
+          type: array
+          items:
+            type: string
+          description: The email addresses to which replies should be sent.
+        last_event:
+          type: string
+          description: The status of the email.
+          enum:
+            - bounced
+            - canceled
+            - clicked
+            - complained
+            - delivered
+            - delivery_delayed
+            - failed
+            - opened
+            - queued
+            - scheduled
+            - sent
+            - suppressed
+          example: delivered
+    ListEmailsResponse:
+      type: object
+      properties:
+        object:
+          type: string
+          description: Type of the response object.
+          example: list
+        has_more:
+          type: boolean
+          description: Indicates if there are more results available.
+          example: false
+        data:
+          type: array
+          description: Array containing email information.
+          items:
+            $ref: "#/components/schemas/Email"

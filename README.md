@@ -1,70 +1,69 @@
-# Aria-Docs
+<p>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/logo-mark-dark.svg">
+    <img alt="Ariadocs" src="./assets/logo-mark-light.svg" width="56">
+  </picture>
+</p>
 
-A **documentation-building library** for React and Next.js. Render MDX content, organize docs with `_meta.json`, and build modern documentation sites with minimal setup.
+# Ariadocs
 
-**🌐 Website: [ariadocs.vercel.app](https://ariadocs.vercel.app/)**
+Build documentation sites and API references in React.
+
+Write your guides in MDX, bring your OpenAPI spec, and render both with the same components. Pages work as React Server Components, and on the client when you need it.
+
+[Website](https://ariadocs.vercel.app) · [Docs](https://ariadocs.vercel.app/docs) · [Components](https://ariadocs.vercel.app/components) · [Example API reference](https://ariadocs.vercel.app/reference)
 
 ## Packages
 
-| Package                               | Description                          |
-| ------------------------------------- | ------------------------------------ |
-| [@ariadocs/react](./packages/lib-react) | Core library for building docs sites |
+| Package | What it does |
+| --- | --- |
+| [`@ariadocs/mdx`](./packages/lib-mdx) | Reads MDX files into pages, a table of contents and a sidebar. Replaces `@ariadocs/react`. |
+| [`@ariadocs/openapi`](./packages/lib-openapi) | Reads an OpenAPI 3.x spec into typed data for every endpoint. |
+| [`@ariadocs/components`](./packages/lib-components) | React components for docs pages and API references. |
+| [`@ariadocs/core`](./packages/lib-core) | Types and helpers the other packages share. |
 
-## Quick Links
+## Quick start
 
-- **[Documentation & API Reference](./packages/lib-react/README.md)** - Full usage guide, API reference, and examples
-- **[Installation](./packages/lib-react/README.md#installation)** - Get started with `@ariadocs/react`
-
-## Features
-
-- 📝 **MDX Support** - Write documentation in MDX with full React component support
-- 🗂️ **Navigation** - Auto-generate navigation from `_meta.json` files
-- 🎨 **Syntax Highlighting** - Built-in Prism.js integration for code blocks
-- ⚡ **Server Components** - Full support for React Server Components
-- 🔌 **Plugin System** - Extensible with remark/rehype plugins
-
-## Quick Start
+Add the packages to your app:
 
 ```bash
-pnpm add @ariadocs/react
+pnpm add @ariadocs/mdx @ariadocs/openapi @ariadocs/components
 ```
 
 ```tsx
-import { createDocs } from "@ariadocs/react";
-import {
-  remarkGfm,
-  rehypePrism,
-  rehypeSlug,
-  rehypeAutolinkHeadings,
-  rehypeCodeTitles,
-} from "@ariadocs/react/plugins";
+import { createDocs } from "@ariadocs/mdx";
+import { createOpenAPI } from "@ariadocs/openapi";
+import { OpenAPI } from "@ariadocs/components";
 
-export const docs = createDocs({
-  contentDir: "contents/docs",
-  remarkPlugins: [remarkGfm],
-  rehypePlugins: [
-    rehypeSlug,
-    rehypeAutolinkHeadings,
-    rehypeCodeTitles,
-    rehypePrism,
-  ],
-});
+const docs = createDocs({ contentDir: "content/docs" });
+const openapi = createOpenAPI({ source: "./openapi.yaml" });
+
+// A docs page
+const { MDX, frontmatter } = await docs.parse({ slug: "intro" });
+
+// An API endpoint
+const api = await openapi.parse();
+<OpenAPI.Root api={api}>
+  <OpenAPI.Operation id="emails-send" />
+</OpenAPI.Root>;
 ```
 
-👉 **[See full documentation](./packages/lib-react/README.md)** for complete API reference, examples, and guides.
+Both `docs.getNavigation()` and `openapi.getNavigation()` return the same format, so one sidebar can list your guides and your endpoints.
 
-## Development
+The [framework guides](https://ariadocs.vercel.app/docs/getting-started/nextjs-app) cover the Next.js App Router, the Pages Router, React Router and TanStack Start.
+
+## Working on this repo
 
 ```bash
-# Install dependencies
 pnpm install
-
-# Build the library
-pnpm --filter @ariadocs/react build
-
-# Run the docs site
+pnpm build          # packages and the docs site
+pnpm test
 pnpm --filter web dev
 ```
+
+The docs site lives in `apps/web`. Its API Reference renders three endpoints from [Resend's public OpenAPI spec](https://github.com/resend/resend-openapi) (MIT).
+
+To release the packages, follow [PUBLISH.md](./PUBLISH.md).
 
 ## License
 

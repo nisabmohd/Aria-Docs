@@ -1,0 +1,32 @@
+---
+title: Plugins
+description: The remark and rehype plugins most docs sites need.
+---
+
+```ts
+import {
+  remarkGfm,
+  rehypeSlug,
+  rehypeAutolinkHeadings,
+  rehypeCodeTitles,
+  rehypePrism,
+  rehypeCodeRaw,
+} from "@ariadocs/mdx/plugins";
+```
+
+| Plugin | What it does |
+| --- | --- |
+| `remarkGfm` | Tables, task lists and strikethrough |
+| `rehypeSlug` | Adds ids to headings, so TOC links work |
+| `rehypeAutolinkHeadings` | Makes headings clickable |
+| `rehypeCodeTitles` | Shows the `title="file.ts"` of a code block above it |
+| `rehypePrism` | Syntax highlighting |
+| `rehypeCodeRaw` | Lets the `Pre` component copy the original code |
+
+Put `rehypeCodeRaw` after `rehypePrism`:
+
+```ts
+rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings, rehypeCodeTitles, rehypePrism, rehypeCodeRaw];
+```
+
+The color themes for highlighted code are in `@ariadocs/components`. See [syntax themes](/docs/guides/themes).

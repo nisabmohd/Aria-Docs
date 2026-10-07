@@ -1,0 +1,30 @@
+---
+title: "@ariadocs/openapi"
+description: Read an OpenAPI spec into data your UI can render.
+---
+
+<Install packages="@ariadocs/openapi" />
+
+Give it an OpenAPI 3.0, 3.1 or 3.2 spec in JSON or YAML. You get back every endpoint as typed data, grouped by tag, with `$ref`s resolved.
+
+```ts
+import { parseOpenAPI } from "@ariadocs/openapi";
+
+const api = await parseOpenAPI({ source: "./openapi.yaml" });
+
+api.operations; // every endpoint
+api.tags; // endpoints grouped by tag, in the spec's order
+api.schemas; // components.schemas
+```
+
+The package has no UI code. It runs on Node.js, Bun, Deno, edge runtimes and in the browser. Only reading a local file needs a server.
+
+To render the result, use [`@ariadocs/components`](/components):
+
+```tsx
+<OpenAPI.Root api={api}>
+  <OpenAPI.Operation id="emails-send" />
+</OpenAPI.Root>
+```
+
+This site's [API Reference](/reference) renders Resend's public spec this way.

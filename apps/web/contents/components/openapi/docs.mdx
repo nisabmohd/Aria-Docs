@@ -1,0 +1,19 @@
+---
+title: OpenAPI.Docs
+description: A whole API reference on one page.
+---
+
+```tsx
+<OpenAPI.Root api={api}>
+  <OpenAPI.Docs />
+</OpenAPI.Root>
+```
+
+`OpenAPI.Docs` renders a sidebar, the API overview, every endpoint grouped by tag, and every schema. It needs no other setup, which suits small APIs.
+
+For a larger API, give each endpoint its own page instead. This site's [API Reference](/reference) does that, with one page per endpoint. See [createOpenAPI](/docs/openapi/create-openapi).
+
+| Prop | Default | What it does |
+| --- | --- | --- |
+| `showSidebar` | `true` | Show the sidebar |
+| `showSchemas` | `true` | Show the schemas section |

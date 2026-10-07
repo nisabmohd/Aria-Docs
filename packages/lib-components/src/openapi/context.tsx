@@ -2,191 +2,114 @@
 
 import { createContext, useContext, useMemo, type ReactNode } from "react"
 import {
-  getNavigation,
-  search,
+  getOperation,
+  getSchema,
   type APIOperation,
   type APIParameter,
-  type APISchema,
-  type APISearchResult,
-  type APINavigation,
   type APIResponse,
-  type AriadocsOpenAPI,
+  type APISchema,
+  type APISpec,
 } from "@ariadocs/openapi"
 
-export interface OpenAPIRootContextValue {
-  api: AriadocsOpenAPI
+// ---------------------------------------------------------------------------
+// Root
+// ---------------------------------------------------------------------------
+
+export interface OpenAPIContextValue {
+  api: APISpec
+  /** Link to an operation: `${operationBaseHref}/${id}`, or `#${id}` when no base is set. */
+  getOperationHref: (operation: APIOperation) => string
   getOperation: (id: string) => APIOperation | undefined
   getSchema: (name: string) => APISchema | undefined
-  navigation: APINavigation
-  search: (query: string) => APISearchResult[]
 }
 
-const OpenAPIContext = createContext<OpenAPIRootContextValue | null>(null)
+const OpenAPIContext = createContext<OpenAPIContextValue | null>(null)
 
 export function OpenAPIProvider({
   api,
+  operationBaseHref,
   children,
 }: {
-  api: AriadocsOpenAPI
+  api: APISpec
+  operationBaseHref?: string
   children?: ReactNode
 }) {
-  const value = useMemo<OpenAPIRootContextValue>(
+  const value = useMemo<OpenAPIContextValue>(
     () => ({
       api,
-      getOperation: (id: string) => api.operations.find((operation) => operation.id === id),
-      getSchema: (name: string) => api.schemas[name],
-      navigation: getNavigation(api),
-      search: (query: string) => search(api, query),
+      getOperationHref: (operation) =>
+        operationBaseHref === undefined
+          ? `#${operation.id}`
+          : `${operationBaseHref.replace(/\/+$/, "")}/${encodeURIComponent(operation.id)}`,
+      getOperation: (id) => getOperation(api, id),
+      getSchema: (name) => getSchema(api, name),
     }),
-    [api]
+    [api, operationBaseHref]
   )
-
   return <OpenAPIContext.Provider value={value}>{children}</OpenAPIContext.Provider>
 }
 
-export function useOpenAPIContext(): OpenAPIRootContextValue {
+/** The parsed API from the nearest `<OpenAPI.Root>`. Throws outside of it. */
+export function useOpenAPI(): OpenAPIContextValue {
   const context = useContext(OpenAPIContext)
   if (context === null) {
-    throw new Error("OpenAPI components must be rendered inside <OpenAPI.Root>.")
+    throw new Error("useOpenAPI() and OpenAPI.* components must be used inside <OpenAPI.Root api={api}>.")
   }
   return context
 }
 
-// ---------------------------------------------------------------------------
-// Operation
-// ---------------------------------------------------------------------------
-
-export interface OperationContextValue {
-  operation: APIOperation
+/** Like `useOpenAPI`, but returns `null` outside `<OpenAPI.Root>`. */
+export function useOptionalOpenAPI(): OpenAPIContextValue | null {
+  return useContext(OpenAPIContext)
 }
 
-const OperationContext = createContext<OperationContextValue | null>(null)
+// ---------------------------------------------------------------------------
+// Scoped contexts: Operation, Parameter, Response, Schema
+// ---------------------------------------------------------------------------
 
-export function OperationProvider({
-  operation,
-  children,
-}: {
-  operation: APIOperation
-  children?: ReactNode
-}) {
-  const value = useMemo<OperationContextValue>(() => ({ operation }), [operation])
-  return <OperationContext.Provider value={value}>{children}</OperationContext.Provider>
-}
+function createScope<T>(component: string, hook: string) {
+  const Context = createContext<T | null>(null)
 
-export function useOperationContext(): OperationContextValue {
-  const context = useContext(OperationContext)
-  if (context === null) {
-    throw new Error("Operation components must be rendered inside <OpenAPI.Operation>.")
+  function Provider({ value, children }: { value: T; children?: ReactNode }) {
+    return <Context.Provider value={value}>{children}</Context.Provider>
   }
-  return context
-}
 
-/** Like `useOperationContext`, but returns `null` instead of throwing when absent. */
-export function useOptionalOperationContext(): OperationContextValue | null {
-  return useContext(OperationContext)
-}
-
-// ---------------------------------------------------------------------------
-// Parameter
-// ---------------------------------------------------------------------------
-
-export interface ParameterContextValue {
-  parameter: APIParameter
-}
-
-const ParameterContext = createContext<ParameterContextValue | null>(null)
-
-export function ParameterProvider({
-  parameter,
-  children,
-}: {
-  parameter: APIParameter
-  children?: ReactNode
-}) {
-  const value = useMemo<ParameterContextValue>(() => ({ parameter }), [parameter])
-  return <ParameterContext.Provider value={value}>{children}</ParameterContext.Provider>
-}
-
-export function useParameterContext(): ParameterContextValue {
-  const context = useContext(ParameterContext)
-  if (context === null) {
-    throw new Error("Parameter components must be rendered inside <OpenAPI.Parameter>.")
+  function useRequired(): T {
+    const value = useContext(Context)
+    if (value === null) {
+      throw new Error(`${hook}() and its parts must be used inside <${component}>.`)
+    }
+    return value
   }
-  return context
-}
 
-/** Like `useParameterContext`, but returns `null` instead of throwing when absent. */
-export function useOptionalParameterContext(): ParameterContextValue | null {
-  return useContext(ParameterContext)
-}
-
-// ---------------------------------------------------------------------------
-// Response
-// ---------------------------------------------------------------------------
-
-export interface ResponseContextValue {
-  response: APIResponse
-}
-
-const ResponseContext = createContext<ResponseContextValue | null>(null)
-
-export function ResponseProvider({
-  response,
-  children,
-}: {
-  response: APIResponse
-  children?: ReactNode
-}) {
-  const value = useMemo<ResponseContextValue>(() => ({ response }), [response])
-  return <ResponseContext.Provider value={value}>{children}</ResponseContext.Provider>
-}
-
-export function useResponseContext(): ResponseContextValue {
-  const context = useContext(ResponseContext)
-  if (context === null) {
-    throw new Error("Response components must be rendered inside <OpenAPI.Response>.")
+  function useOptional(): T | null {
+    return useContext(Context)
   }
-  return context
+
+  return { Provider, useRequired, useOptional }
 }
 
-/** Like `useResponseContext`, but returns `null` instead of throwing when absent. */
-export function useOptionalResponseContext(): ResponseContextValue | null {
-  return useContext(ResponseContext)
-}
+const operationScope = createScope<APIOperation>("OpenAPI.Operation", "useOperation")
+const parameterScope = createScope<APIParameter>("OpenAPI.Parameter", "useParameter")
+const responseScope = createScope<APIResponse>("OpenAPI.Response", "useResponse")
+const schemaScope = createScope<{ schema: APISchema; name?: string }>("OpenAPI.Schema", "useSchema")
 
-// ---------------------------------------------------------------------------
-// Schema
-// ---------------------------------------------------------------------------
+export const OperationProvider = operationScope.Provider
+/** The operation from the nearest `<OpenAPI.Operation>`. */
+export const useOperation = operationScope.useRequired
+export const useOptionalOperation = operationScope.useOptional
 
-export interface SchemaContextValue {
-  schema: APISchema
-  name?: string
-}
+export const ParameterProvider = parameterScope.Provider
+/** The parameter from the nearest `<OpenAPI.Parameter>`. */
+export const useParameter = parameterScope.useRequired
+export const useOptionalParameter = parameterScope.useOptional
 
-const SchemaContext = createContext<SchemaContextValue | null>(null)
+export const ResponseProvider = responseScope.Provider
+/** The response from the nearest `<OpenAPI.Response>`. */
+export const useResponse = responseScope.useRequired
+export const useOptionalResponse = responseScope.useOptional
 
-export function SchemaProvider({
-  schema,
-  name,
-  children,
-}: {
-  schema: APISchema
-  name?: string
-  children?: ReactNode
-}) {
-  const value = useMemo<SchemaContextValue>(() => ({ schema, name }), [schema, name])
-  return <SchemaContext.Provider value={value}>{children}</SchemaContext.Provider>
-}
-
-export function useSchemaContext(): SchemaContextValue {
-  const context = useContext(SchemaContext)
-  if (context === null) {
-    throw new Error("Schema components must be rendered inside <OpenAPI.Schema>.")
-  }
-  return context
-}
-
-/** Like `useSchemaContext`, but returns `null` instead of throwing when absent. */
-export function useOptionalSchemaContext(): SchemaContextValue | null {
-  return useContext(SchemaContext)
-}
+export const SchemaProvider = schemaScope.Provider
+/** The schema (and its name) from the nearest `<OpenAPI.Schema>`. */
+export const useSchema = schemaScope.useRequired
+export const useOptionalSchema = schemaScope.useOptional

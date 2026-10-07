@@ -1,0 +1,28 @@
+---
+title: OpenAPI.Response
+description: The responses an endpoint can return.
+---
+
+<ApiPreview>
+  <OpenAPI.Operation id="emails-send">
+    <OpenAPI.Operation.Responses />
+  </OpenAPI.Operation>
+</ApiPreview>
+
+```tsx
+<OpenAPI.Operation id="emails-send">
+  <OpenAPI.Operation.Responses />
+</OpenAPI.Operation>
+```
+
+Each status code gets a row, colored by type: success, redirect, client error or server error. Open a row to see the response headers and body fields. Write-only fields are hidden, since the server doesn't return them.
+
+To render a single response with your own layout:
+
+```tsx
+<OpenAPI.Response response={operation.responses[0]}>
+  <OpenAPI.Response.Status />
+  <OpenAPI.Response.Description />
+  <OpenAPI.Response.Content />
+</OpenAPI.Response>
+```

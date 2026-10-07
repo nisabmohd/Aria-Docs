@@ -1,0 +1,53 @@
+---
+title: The parsed spec
+description: What parseOpenAPI returns.
+---
+
+```ts
+interface APISpec {
+  version: string; // "3.1.0"
+  info: APIInfo; // title, version, description, contact, license
+  servers: APIServer[];
+  tags: APITag[]; // { id, name, title, description, operations }
+  operations: APIOperation[];
+  paths: Record<string, APIOperation[]>;
+  schemas: Record<string, APISchema>;
+  securitySchemes: Record<string, APISecurityScheme>;
+  security: APISecurityRequirement[];
+  webhooks: APIWebhook[];
+  warnings: string[]; // for example, $refs that couldn't be resolved
+}
+```
+
+Each endpoint looks like this:
+
+```ts
+interface APIOperation {
+  id: string; // unique and safe to use in a URL
+  operationId?: string; // as written in the spec
+  method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "HEAD" | "OPTIONS" | "TRACE";
+  path: string;
+  summary?: string;
+  description?: string;
+  tags: string[];
+  parameters: APIParameter[];
+  parametersByLocation: Record<"path" | "query" | "header" | "cookie", APIParameter[]>;
+  requestBody?: APIRequestBody;
+  responses: APIResponse[];
+  security: APISecurityRequirement[];
+  servers: APIServer[];
+  deprecated: boolean;
+}
+```
+
+## Cleanup during parsing
+
+The parser fixes or drops the parts of a spec that would break a UI:
+
+- Every endpoint gets a unique `id`. Resend's `emails/send` becomes `emails-send`. Endpoints without an `operationId` get one from the method and path, such as `get-pets-id`. Duplicates get `-2`, `-3`.
+- Path parameters are always required. Missing `style` and `explode` values get the defaults from the spec.
+- An endpoint with `security: []` has no auth, even if the spec sets a default.
+- Parameters without a name, unknown status codes and unknown auth types are dropped.
+- `2XX`-style status ranges count as success responses.
+- Links in descriptions, contact info and licenses that use `javascript:` or `data:` are removed.
+- A schema that refers to itself stays as a `$ref`, so it can't expand forever.

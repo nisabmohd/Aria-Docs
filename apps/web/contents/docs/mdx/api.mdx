@@ -1,0 +1,38 @@
+---
+title: API reference
+description: Everything @ariadocs/mdx exports.
+---
+
+## Functions
+
+| Export | Signature |
+| --- | --- |
+| `createDocs` | `(config) => DocsInstance` |
+| `parseMdx` | `(options) => Promise<ParseMdxResult>` |
+| `serializeMdx` | `(options) => Promise<SerializeMdxResult>` |
+| `readMdx` | `({ contentDir, slug }) => Promise<string>` |
+| `getFrontmatter` | `(options) => Promise<T>` |
+| `getToc` | `(options) => Promise<TocItem[]>` |
+| `getNavigation` | `({ contentDir }) => Promise<NavItem[]>` |
+| `getPagePaths` | `({ contentDir }) => Promise<string[]>` |
+| `slugToTitle` | `(slug) => string` |
+| `isMdxNotFound` | `(error) => boolean` |
+
+`options` is either `{ contentDir, slug }` or `{ source }`, plus `remarkPlugins`, `rehypePlugins`, `components` and `blockJs`.
+
+## Components
+
+| Export | Props |
+| --- | --- |
+| `MdxServer` | `source`, `remarkPlugins`, `rehypePlugins`, `components`, `blockJs` |
+| `MdxClient` | `serialized`, `components` |
+
+## Errors
+
+Errors are `MdxError` instances with a `code`:
+
+| Code | Meaning |
+| --- | --- |
+| `MDX_NOT_FOUND` | The page doesn't exist |
+| `MDX_INVALID_SLUG` | The slug points outside the content folder |
+| `MDX_INVALID_META` | `_meta.json` is invalid, or the frontmatter is JavaScript |

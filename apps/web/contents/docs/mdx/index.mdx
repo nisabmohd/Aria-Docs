@@ -1,0 +1,36 @@
+---
+title: "@ariadocs/mdx"
+description: Turn MDX files into pages, a table of contents and a sidebar.
+---
+
+<Install packages="@ariadocs/mdx" />
+
+Point it at a folder of `.mdx` files. For each page you get the rendered content, the frontmatter and the headings. For the folder you get a sidebar, ordered by optional `_meta.json` files.
+
+```ts
+import { createDocs } from "@ariadocs/mdx";
+
+const docs = createDocs({ contentDir: "content/docs" });
+
+const page = await docs.parse({ slug: "guides/setup" }); // reads content/docs/guides/setup.mdx
+const sidebar = await docs.getNavigation();
+```
+
+MDX can also come from a string, for example from a CMS:
+
+```ts
+import { parseMdx } from "@ariadocs/mdx";
+
+const page = await parseMdx({ source: textFromCms, blockJs: true });
+```
+
+## Entry points
+
+| Import | Use it for |
+| --- | --- |
+| `@ariadocs/mdx` | Everything. Server code only. |
+| `@ariadocs/mdx/client` | `MdxClient`, in Client Components |
+| `@ariadocs/mdx/server` | `MdxServer` on its own |
+| `@ariadocs/mdx/plugins` | remark and rehype plugins |
+
+This package replaces `@ariadocs/react`. See the [migration guide](/docs/guides/migration) if you're upgrading.

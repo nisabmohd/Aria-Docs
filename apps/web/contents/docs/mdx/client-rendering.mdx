@@ -1,0 +1,38 @@
+---
+title: Client rendering
+description: Compile MDX on the server and render it in the browser.
+render: client
+---
+
+<Callout title="This page is rendered in the browser">
+  Its frontmatter sets `render: client`, so the site compiles it with `docs.serialize()` and renders it with `MdxClient`. The other pages use Server Components.
+</Callout>
+
+Use client rendering when your framework has no Server Components, such as the Next.js Pages Router, React Router or TanStack Start.
+
+## On the server
+
+```ts
+import { serializeMdx } from "@ariadocs/mdx";
+
+const { serialized, frontmatter, toc } = await serializeMdx({ contentDir: "content/docs", slug: "intro" });
+```
+
+`serialized` is plain data. You can return it from a loader, `getStaticProps` or a server function.
+
+## In the browser
+
+```tsx
+"use client";
+
+import { MdxClient } from "@ariadocs/mdx/client";
+import type { SerializeResult } from "@ariadocs/mdx";
+
+export function DocBody({ serialized }: { serialized: SerializeResult }) {
+  return <MdxClient serialized={serialized} components={{ Callout }} />;
+}
+```
+
+Import `MdxClient` from `@ariadocs/mdx/client`. The main entry reads files and won't bundle for the browser.
+
+Components you pass to `MdxClient` run in the browser, so they can't be async Server Components. If the MDX fails to compile, `MdxClient` throws the error so your error boundary can show it.
