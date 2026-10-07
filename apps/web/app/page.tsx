@@ -172,7 +172,7 @@ export default async function HomePage() {
               </Link>
               <Link
                 href="/components"
-                className="bg-background hover:bg-muted inline-flex h-11 w-full items-center justify-center rounded-lg border px-6 text-[15px] font-medium transition-colors sm:w-auto"
+                className="bg-background text-nowrap hover:bg-muted inline-flex h-11 w-full items-center justify-center rounded-lg border px-6 text-[15px] font-medium transition-colors sm:w-auto"
               >
                 Browse Components
               </Link>
