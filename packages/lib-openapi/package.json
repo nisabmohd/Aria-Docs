@@ -1,6 +1,6 @@
 {
   "name": "@ariadocs/openapi",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "author": {
     "name": "Nisab Mohd",
@@ -27,7 +27,8 @@
     "lint": "eslint . --max-warnings 0",
     "build": "rm -rf dist && tsc",
     "test": "vitest run",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "prepublishOnly": "pnpm run build"
   },
   "packageManager": "pnpm@10.4.1",
   "dependencies": {

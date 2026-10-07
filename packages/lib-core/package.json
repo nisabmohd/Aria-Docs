@@ -23,7 +23,8 @@
     "lint": "eslint . --max-warnings 0",
     "build": "rm -rf dist && tsc",
     "test": "vitest run",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "prepublishOnly": "pnpm run build"
   },
   "packageManager": "pnpm@10.4.1",
   "devDependencies": {

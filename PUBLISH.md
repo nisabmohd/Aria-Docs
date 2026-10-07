@@ -7,9 +7,9 @@ How to release the Ariadocs packages to npm.
 | Package | Folder | Version | Depends on |
 | --- | --- | --- | --- |
 | `@ariadocs/core` | `packages/lib-core` | 1.0.0 | nothing |
-| `@ariadocs/openapi` | `packages/lib-openapi` | 1.0.0 | core |
-| `@ariadocs/mdx` | `packages/lib-mdx` | 3.0.0 | core |
-| `@ariadocs/components` | `packages/lib-components` | 0.2.0 | core, openapi |
+| `@ariadocs/openapi` | `packages/lib-openapi` | 1.0.1 | core |
+| `@ariadocs/mdx` | `packages/lib-mdx` | 3.0.1 | core |
+| `@ariadocs/components` | `packages/lib-components` | 0.2.1 | core, openapi |
 
 `@ariadocs/mdx` replaces `@ariadocs/react`, whose last version on npm is 2.1.0. It starts at 3.0.0 so the version history carries on.
 
