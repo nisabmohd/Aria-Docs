@@ -138,10 +138,24 @@ function OperationPathText({ path }: { path: string }) {
   )
 }
 
+/**
+ * The HTTP method badge. Use inside `<OpenAPI.Operation>`.
+ *
+ * ```tsx
+ * <OpenAPI.Operation.Method />
+ * ```
+ */
 export function OperationMethod({ className }: { className?: string }) {
   return <MethodBadge method={useOperation().method} className={className} />
 }
 
+/**
+ * The path template, e.g. `/pets/{id}`, in monospace.
+ *
+ * ```tsx
+ * <OpenAPI.Operation.Path />
+ * ```
+ */
 export function OperationPath({ className }: { className?: string }) {
   return (
     <code className={cn("font-mono text-(length:--aria-text-sm) break-all", className)}>
@@ -150,6 +164,13 @@ export function OperationPath({ className }: { className?: string }) {
   )
 }
 
+/**
+ * A "Deprecated" marker. Renders nothing for operations that aren't deprecated.
+ *
+ * ```tsx
+ * <OpenAPI.Operation.Deprecated />
+ * ```
+ */
 export function OperationDeprecated({ className }: { className?: string }) {
   if (!useOperation().deprecated) return null
   return (
@@ -159,12 +180,26 @@ export function OperationDeprecated({ className }: { className?: string }) {
   )
 }
 
+/**
+ * The operation `summary` as plain text. Renders nothing when it is missing.
+ *
+ * ```tsx
+ * <OpenAPI.Operation.Summary />
+ * ```
+ */
 export function OperationSummary({ className }: { className?: string }) {
   const { summary } = useOperation()
   if (summary === undefined) return null
   return <p className={cn("text-foreground font-medium", className)}>{summary}</p>
 }
 
+/**
+ * The operation `description`, rendered as Markdown.
+ *
+ * ```tsx
+ * <OpenAPI.Operation.Description />
+ * ```
+ */
 export function OperationDescription({ className }: { className?: string }) {
   return <Markdown className={cn("max-w-2xl text-(length:--aria-text-base)", className)}>{useOperation().description}</Markdown>
 }

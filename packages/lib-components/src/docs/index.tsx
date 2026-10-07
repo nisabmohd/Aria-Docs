@@ -11,11 +11,24 @@ import {
   DocsPageTitle,
   DocsSidebar,
 } from "./layout.js"
+import { DocsMobileNav } from "./mobile-nav.js"
 import { DocsNav } from "./nav.js"
 import { DocsToc } from "./toc.js"
 
 /**
  * The `Docs` component namespace: layout and navigation for MDX pages.
+ *
+ * - `Docs.Layout`: the page grid. Columns follow the slots present.
+ * - `Docs.Sidebar`: sticky left column (from `lg`).
+ * - `Docs.MobileNav`: menu button and drawer for the nav below `lg`.
+ * - `Docs.Content`: main column.
+ * - `Docs.Aside`: sticky right column for the TOC (from `xl`).
+ * - `Docs.Nav`: sidebar links from `getNavigation()`.
+ * - `Docs.Toc`: "On this page" links from `toc`.
+ * - `Docs.Page` with `.Title`, `.Description`, `.Content`: one MDX page.
+ *
+ * Not included: Callout, Tabs, Steps or Cards for MDX. Write your own and
+ * pass them through the `components` option of `createDocs`.
  *
  * ```tsx
  * <Docs.Layout>
@@ -30,12 +43,17 @@ import { DocsToc } from "./toc.js"
  *   <Docs.Aside><Docs.Toc items={toc} /></Docs.Aside>
  * </Docs.Layout>
  * ```
+ *
+ * In Next.js App Router, `Docs.Layout` and `Docs.Sidebar` go in `layout.tsx`,
+ * and `page.tsx` returns `<><Docs.Content /><Docs.Aside /></>` as a fragment
+ * so both stay direct children of the grid.
  */
 export const Docs = {
   Layout: DocsLayout,
   Sidebar: DocsSidebar,
   Content: DocsContent,
   Aside: DocsAside,
+  MobileNav: DocsMobileNav,
   Nav: DocsNav,
   Toc: DocsToc,
   Page: compound(

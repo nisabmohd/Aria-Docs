@@ -1,10 +1,10 @@
-# Framework recipes
+# Framework recipes: MDX docs
 
-Each recipe assumes the shared `docs` and `openapi` instances from SKILL.md. Change the import paths to match the project's alias.
+Each recipe assumes the shared `docs` instance from SKILL.md (`lib/docs.ts`). Change the import paths to match the project's alias. API reference routes are in the `ariadocs-openapi` skill.
 
 ## Next.js App Router
 
-Server Components render `docs.parse()` output directly.
+Server Components render `docs.parse()` output directly. The sidebar lives in `layout.tsx` and the TOC in `page.tsx`. The page returns `Docs.Content` and `Docs.Aside` **as a fragment**, so they stay direct children of the `Docs.Layout` grid. Don't build a custom grid.
 
 ```tsx title="app/docs/[[...slug]]/page.tsx"
 import type { Metadata } from "next";
@@ -64,12 +64,20 @@ import { Sidebar } from "@/components/sidebar";
 export default async function Layout({ children }: { children: React.ReactNode }) {
   const items = await docs.getNavigation();
   return (
-    <Docs.Layout>
-      <Docs.Sidebar>
-        <Sidebar items={items} baseHref="/docs" />
-      </Docs.Sidebar>
-      {children}
-    </Docs.Layout>
+    <>
+      <header className="bg-background sticky top-0 z-40 flex h-14 items-center gap-2 border-b px-4">
+        {/* Below lg, Docs.Sidebar is hidden: the drawer holds the same nav */}
+        <Docs.MobileNav>
+          <Sidebar items={items} baseHref="/docs" />
+        </Docs.MobileNav>
+      </header>
+      <Docs.Layout>
+        <Docs.Sidebar>
+          <Sidebar items={items} baseHref="/docs" />
+        </Docs.Sidebar>
+        {children}
+      </Docs.Layout>
+    </>
   );
 }
 ```
@@ -88,49 +96,6 @@ export function Sidebar({ items, baseHref }: { items: NavItem[]; baseHref?: stri
 ```
 
 `NavItem` is also exported from `@ariadocs/mdx` if `@ariadocs/core` is not a direct dependency.
-
-API reference, one page per endpoint:
-
-```tsx title="app/reference/layout.tsx"
-import { OpenAPI } from "@ariadocs/components";
-import { openapi } from "@/lib/openapi";
-
-export default async function Layout({ children }: { children: React.ReactNode }) {
-  const api = await openapi.parse();
-  return (
-    <OpenAPI.Root api={api} operationBaseHref="/reference">
-      {children}
-    </OpenAPI.Root>
-  );
-}
-```
-
-```tsx title="app/reference/[operation]/page.tsx"
-import { notFound } from "next/navigation";
-import { OpenAPI } from "@ariadocs/components";
-import { openapi } from "@/lib/openapi";
-
-export default async function Page({ params }: { params: Promise<{ operation: string }> }) {
-  const { operation } = await params;
-  if (!(await openapi.getOperation(operation))) notFound();
-  return <OpenAPI.Operation id={operation} headingLevel={1} />;
-}
-
-export async function generateStaticParams() {
-  const paths = await openapi.getPagePaths();
-  return paths.map((path) => ({ operation: path.slice(1) }));
-}
-```
-
-```tsx title="app/reference/page.tsx"
-import { OpenAPI } from "@ariadocs/components";
-
-export default function Page() {
-  return <OpenAPI.Info />;
-}
-```
-
-For a small API on a single page, use `<OpenAPI.Root api={api}><OpenAPI.Docs /></OpenAPI.Root>`.
 
 ## Next.js Pages Router
 
@@ -194,36 +159,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 Only type imports come from the main `@ariadocs/mdx` entry in the component. Next removes the `getStaticProps` code from the client bundle.
 
-```tsx title="pages/reference/[operation].tsx"
-import type { GetStaticPaths, GetStaticProps } from "next";
-import type { APISpec } from "@ariadocs/openapi";
-import { OpenAPI } from "@ariadocs/components";
-import { openapi } from "@/lib/openapi";
-
-type Props = { api: APISpec; operation: string };
-
-export default function Page({ api, operation }: Props) {
-  return (
-    <OpenAPI.Root api={api} operationBaseHref="/reference">
-      <OpenAPI.Operation id={operation} headingLevel={1} />
-    </OpenAPI.Root>
-  );
-}
-
-export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
-  const api = await openapi.parse();
-  // props must be plain JSON: drop undefined fields
-  return { props: { api: JSON.parse(JSON.stringify(api)), operation: String(params?.operation) } };
-};
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = await openapi.getPagePaths();
-  return { paths: paths.map((path) => ({ params: { operation: path.slice(1) } })), fallback: false };
-};
-```
-
-For large specs, pass only the operation (`await openapi.getOperation(id)`) and render `<OpenAPI.Operation operation={operation} />` without `Root`. Authorization details need the full spec, so they are not shown.
-
 The global CSS import (`@ariadocs/components/styles.css`) goes in `pages/_app.tsx`.
 
 ## React Router v7 and v8 (framework mode)
@@ -231,11 +166,7 @@ The global CSS import (`@ariadocs/components/styles.css`) goes in `pages/_app.ts
 ```ts title="app/routes.ts"
 import { type RouteConfig, index, route } from "@react-router/dev/routes";
 
-export default [
-  index("routes/home.tsx"),
-  route("docs/*", "routes/docs.tsx"),
-  route("reference/:operation", "routes/reference.tsx"),
-] satisfies RouteConfig;
+export default [index("routes/home.tsx"), route("docs/*", "routes/docs.tsx")] satisfies RouteConfig;
 ```
 
 ```tsx title="app/routes/docs.tsx"
@@ -288,40 +219,15 @@ function DocLink({ href, ...props }: LinkComponentProps) {
 }
 ```
 
-```tsx title="app/routes/reference.tsx"
-import { useLoaderData } from "react-router";
-import { OpenAPI } from "@ariadocs/components";
-import type { Route } from "./+types/reference";
-import { openapi } from "../openapi";
-
-export async function loader({ params }: Route.LoaderArgs) {
-  return { api: await openapi.parse(), operation: params.operation };
-}
-
-export default function ReferencePage() {
-  const { api, operation } = useLoaderData<typeof loader>();
-  return (
-    <OpenAPI.Root api={api} operationBaseHref="/reference">
-      <OpenAPI.Operation id={operation} headingLevel={1} />
-    </OpenAPI.Root>
-  );
-}
-```
-
 ```ts title="react-router.config.ts"
 import type { Config } from "@react-router/dev/config";
 import { docs } from "./app/docs";
-import { openapi } from "./app/openapi";
 
 export default {
   ssr: true,
   async prerender() {
-    const docPaths = await docs.getPagePaths();
-    const apiPaths = await openapi.getPagePaths();
-    return [
-      ...docPaths.map((path) => `/docs${path === "/" ? "" : path}`),
-      ...apiPaths.map((path) => `/reference${path}`),
-    ];
+    const paths = await docs.getPagePaths();
+    return paths.map((path) => `/docs${path === "/" ? "" : path}`);
   },
 } satisfies Config;
 ```
@@ -390,31 +296,7 @@ function DocLink({ href, ...props }: LinkComponentProps) {
 }
 ```
 
-```tsx title="src/routes/reference/$operation.tsx"
-import { createFileRoute } from "@tanstack/react-router";
-import { createServerFn } from "@tanstack/react-start";
-import { OpenAPI } from "@ariadocs/components";
-import { openapi } from "../../openapi";
-
-const getSpec = createServerFn({ method: "GET" }).handler(() => openapi.parse());
-
-export const Route = createFileRoute("/reference/$operation")({
-  loader: () => getSpec(),
-  component: ReferencePage,
-});
-
-function ReferencePage() {
-  const api = Route.useLoaderData();
-  const { operation } = Route.useParams();
-  return (
-    <OpenAPI.Root api={api} operationBaseHref="/reference">
-      <OpenAPI.Operation id={operation} headingLevel={1} />
-    </OpenAPI.Root>
-  );
-}
-```
-
-`openapi.parse()` caches its result, so the spec is read once per server process. The CSS import goes in `src/routes/__root.tsx`.
+The CSS import goes in `src/routes/__root.tsx`.
 
 ## MDX from a string (CMS, database)
 

@@ -58,6 +58,13 @@ export function OpenAPISchema({ schema: schemaProp, name, mode, children, classN
   )
 }
 
+/**
+ * The schema name as a heading. Use inside `<OpenAPI.Schema>`.
+ *
+ * ```tsx
+ * <OpenAPI.Schema.Title id="schema-pet" />
+ * ```
+ */
 export function SchemaTitle({ id, className }: { /** Anchor id; the title links to it. */ id?: string; className?: string }) {
   const { schema, name } = useSchema()
   const title = name ?? schema.title ?? getSchemaName(schema.ref)
@@ -72,6 +79,13 @@ export function SchemaTitle({ id, className }: { /** Anchor id; the title links 
   )
 }
 
+/**
+ * The schema `description`, rendered as Markdown.
+ *
+ * ```tsx
+ * <OpenAPI.Schema.Description />
+ * ```
+ */
 export function SchemaDescription({ className }: { className?: string }) {
   const { schema } = useSchema()
   return <Markdown className={cn("mb-2", className)}>{schema.description}</Markdown>

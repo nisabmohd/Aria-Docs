@@ -1,8 +1,8 @@
 import { createMdxRoute } from "@/lib/mdx-route"
-import { getDocsNavigation } from "@/lib/navigation"
+import { getSidebar } from "@/lib/navigation"
 import { docs } from "@/lib/source"
 
-const route = createMdxRoute(docs, "/docs", getDocsNavigation)
+const route = createMdxRoute(docs, "/docs", getSidebar)
 
 export default route.Page
 export const generateMetadata = route.generateMetadata

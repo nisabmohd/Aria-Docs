@@ -8,13 +8,45 @@ export interface SlotProps {
   className?: string
 }
 
-/** Three-column docs shell: sidebar · content · table of contents. */
+/**
+ * The docs page grid. Columns appear only for the slots that are present as
+ * direct children: `Docs.Sidebar` (from `lg`), `Docs.Content`, and
+ * `Docs.Aside` (from `xl`, and only when it renders something). A page
+ * without a table of contents gets no empty right column.
+ *
+ * Sizes are CSS variables: `--aria-docs-max-width` (90rem),
+ * `--aria-sidebar-width` (17rem), `--aria-toc-width` (15rem) and
+ * `--aria-header-height` (0px, for a sticky site header).
+ *
+ * In Next.js App Router, put the layout and sidebar in `layout.tsx` and
+ * return `Docs.Content` and `Docs.Aside` from `page.tsx` as a fragment, so
+ * they stay direct children of the grid:
+ *
+ * ```tsx
+ * // app/docs/layout.tsx
+ * <Docs.Layout>
+ *   <Docs.Sidebar><Nav items={nav} /></Docs.Sidebar>
+ *   {children}
+ * </Docs.Layout>
+ *
+ * // app/docs/[[...slug]]/page.tsx
+ * return (
+ *   <>
+ *     <Docs.Content>...</Docs.Content>
+ *     <Docs.Aside><Docs.Toc items={toc} /></Docs.Aside>
+ *   </>
+ * )
+ * ```
+ */
 export function DocsLayout({ children, className }: SlotProps) {
   return (
     <div
       data-slot="docs-layout"
       className={cn(
-        "mx-auto grid w-full max-w-[90rem] grid-cols-[minmax(0,1fr)] lg:grid-cols-[17rem_minmax(0,1fr)] xl:grid-cols-[17rem_minmax(0,1fr)_15rem]",
+        "mx-auto grid w-full max-w-[var(--aria-docs-max-width,90rem)] grid-cols-[minmax(0,1fr)]",
+        "lg:has-[>[data-slot=docs-sidebar]]:grid-cols-[var(--aria-sidebar-width,17rem)_minmax(0,1fr)]",
+        "xl:has-[>[data-slot=docs-aside]:not(:empty)]:grid-cols-[minmax(0,1fr)_var(--aria-toc-width,15rem)]",
+        "xl:has-[>[data-slot=docs-sidebar]]:has-[>[data-slot=docs-aside]:not(:empty)]:grid-cols-[var(--aria-sidebar-width,17rem)_minmax(0,1fr)_var(--aria-toc-width,15rem)]",
         className
       )}
     >
@@ -23,7 +55,16 @@ export function DocsLayout({ children, className }: SlotProps) {
   )
 }
 
-/** Sticky, scrollable sidebar column (hidden below `lg`). */
+/**
+ * Sticky, scrollable sidebar column, shown from `lg`. Below that, put the
+ * same nav in `Docs.MobileNav`.
+ *
+ * ```tsx
+ * <Docs.Sidebar>
+ *   <Docs.Nav items={nav} baseHref="/docs" activeHref={pathname} />
+ * </Docs.Sidebar>
+ * ```
+ */
 export function DocsSidebar({ children, className }: SlotProps) {
   return (
     <aside
@@ -38,7 +79,16 @@ export function DocsSidebar({ children, className }: SlotProps) {
   )
 }
 
-/** Main content column. */
+/**
+ * Main content column (`<main>`). Usually holds a `Docs.Page`, or an
+ * `OpenAPI.Root` for API reference pages.
+ *
+ * ```tsx
+ * <Docs.Content>
+ *   <Docs.Page>...</Docs.Page>
+ * </Docs.Content>
+ * ```
+ */
 export function DocsContent({ children, className }: SlotProps) {
   return (
     <main data-slot="docs-content" className={cn("min-w-0 px-4 pt-8 pb-24 sm:px-8 lg:px-12 lg:pt-12", className)}>
@@ -47,13 +97,22 @@ export function DocsContent({ children, className }: SlotProps) {
   )
 }
 
-/** Sticky right column for the table of contents (hidden below `xl`). */
+/**
+ * Sticky right column for the table of contents, shown from `xl`. Leave it
+ * out (or let `Docs.Toc` render nothing) and `Docs.Layout` drops the column.
+ *
+ * ```tsx
+ * <Docs.Aside>
+ *   <Docs.Toc items={toc} />
+ * </Docs.Aside>
+ * ```
+ */
 export function DocsAside({ children, className }: SlotProps) {
   return (
     <aside
       data-slot="docs-aside"
       className={cn(
-        "sticky top-[var(--aria-header-height,0px)] hidden h-[calc(100dvh-var(--aria-header-height,0px))] overflow-y-auto py-12 pr-6 xl:block",
+        "sticky top-[var(--aria-header-height,0px)] hidden h-[calc(100dvh-var(--aria-header-height,0px))] overflow-y-auto py-12 pr-6 xl:block xl:empty:hidden",
         className
       )}
     >
@@ -62,6 +121,19 @@ export function DocsAside({ children, className }: SlotProps) {
   )
 }
 
+/**
+ * One docs page (`<article>`, max width 3xl). Compose it from
+ * `Docs.Page.Title`, `Docs.Page.Description` and `Docs.Page.Content`, and
+ * add your own parts (breadcrumbs, prev/next links) in between.
+ *
+ * ```tsx
+ * <Docs.Page>
+ *   <Docs.Page.Title>{frontmatter.title}</Docs.Page.Title>
+ *   <Docs.Page.Description>{frontmatter.description}</Docs.Page.Description>
+ *   <Docs.Page.Content>{MDX}</Docs.Page.Content>
+ * </Docs.Page>
+ * ```
+ */
 export function DocsPage({ children, className }: SlotProps) {
   return (
     <article data-slot="docs-page" className={cn("text-foreground mx-auto w-full max-w-3xl", className)}>
@@ -70,6 +142,13 @@ export function DocsPage({ children, className }: SlotProps) {
   )
 }
 
+/**
+ * The page heading (`<h1>`), usually `frontmatter.title`.
+ *
+ * ```tsx
+ * <Docs.Page.Title>{frontmatter.title}</Docs.Page.Title>
+ * ```
+ */
 export function DocsPageTitle({ children, className }: SlotProps) {
   return (
     <h1 data-slot="docs-page-title" className={cn("text-(length:--aria-text-2xl) leading-tight font-semibold tracking-tight", className)}>
@@ -78,6 +157,13 @@ export function DocsPageTitle({ children, className }: SlotProps) {
   )
 }
 
+/**
+ * Muted lead paragraph under the title, usually `frontmatter.description`.
+ *
+ * ```tsx
+ * {frontmatter.description && <Docs.Page.Description>{frontmatter.description}</Docs.Page.Description>}
+ * ```
+ */
 export function DocsPageDescription({ children, className }: SlotProps) {
   return (
     <p data-slot="docs-page-description" className={cn("text-muted-foreground mt-3 text-(length:--aria-text-lg) leading-relaxed", className)}>
@@ -86,7 +172,14 @@ export function DocsPageDescription({ children, className }: SlotProps) {
   )
 }
 
-/** Wraps rendered MDX with Tailwind Typography styles. */
+/**
+ * Wraps rendered MDX with Tailwind Typography (`prose`) styles. Needs the
+ * `@tailwindcss/typography` plugin.
+ *
+ * ```tsx
+ * <Docs.Page.Content>{MDX}</Docs.Page.Content>
+ * ```
+ */
 export function DocsPageContent({ children, className }: SlotProps) {
   return (
     <div

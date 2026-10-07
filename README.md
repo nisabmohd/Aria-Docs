@@ -55,13 +55,19 @@ The [framework guides](https://ariadocs.vercel.app/docs/getting-started/nextjs-a
 
 ## AI agents
 
-The [`skills/ariadocs`](./skills/ariadocs) folder is an agent skill that teaches AI coding agents to set up Ariadocs in any supported framework. Install it with:
+The [`skills`](./skills) folder has one agent skill per package, for AI coding agents:
+
+- [`ariadocs-mdx`](./skills/ariadocs-mdx): MDX docs pages, frontmatter, TOC, sidebar and routes for each framework.
+- [`ariadocs-openapi`](./skills/ariadocs-openapi): API references from an OpenAPI spec, endpoint pages and code samples.
+- [`ariadocs-components`](./skills/ariadocs-components): the UI: layout, mobile nav, theming, composed API pages, and copy-paste Callout, Tabs, Steps and Cards.
+
+Install them with:
 
 ```bash
 npx skills add nisabmohd/Aria-Docs
 ```
 
-Or copy the folder into `.claude/skills/` (Claude Code) or your agent's skills directory.
+Or copy the folders into `.claude/skills/` (Claude Code) or your agent's skills directory.
 
 ## Working on this repo
 

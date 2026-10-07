@@ -36,6 +36,19 @@ export interface DocsNavProps {
  * Sidebar navigation for the shared `NavItem` tree. Top-level folders become
  * section headings; deeper folders collapse. Items with a `badge` (HTTP
  * methods from `@ariadocs/openapi`) show it next to the title.
+ *
+ * `linkAs` and `activeHref={usePathname()}` need a Client Component, so wrap
+ * it in a small `"use client"` file:
+ *
+ * ```tsx
+ * "use client"
+ * import Link from "next/link"
+ * import { usePathname } from "next/navigation"
+ *
+ * export function Nav({ items }: { items: NavItem[] }) {
+ *   return <Docs.Nav items={items} baseHref="/docs" activeHref={usePathname()} linkAs={Link} />
+ * }
+ * ```
  */
 export function DocsNav({ items, activeHref, baseHref = "", linkAs, onNavigate, className }: DocsNavProps) {
   const context: NavContext = { activeHref, baseHref, Link: linkAs ?? DefaultLink, onNavigate }

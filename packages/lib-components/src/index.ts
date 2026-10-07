@@ -16,6 +16,7 @@ export { Markdown, type MarkdownProps } from "./markdown.js"
 export { MethodBadge, type MethodBadgeProps } from "./openapi/method.js"
 export type { DocsNavProps, LinkComponentProps } from "./docs/nav.js"
 export type { DocsTocProps } from "./docs/toc.js"
+export type { DocsMobileNavProps } from "./docs/mobile-nav.js"
 
 // ---------- Hooks ----------
 export {

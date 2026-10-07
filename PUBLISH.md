@@ -9,7 +9,7 @@ How to release the Ariadocs packages to npm.
 | `@ariadocs/core` | `packages/lib-core` | 1.0.0 | nothing |
 | `@ariadocs/openapi` | `packages/lib-openapi` | 1.0.0 | core |
 | `@ariadocs/mdx` | `packages/lib-mdx` | 3.0.0 | core |
-| `@ariadocs/components` | `packages/lib-components` | 0.1.0 | core, openapi |
+| `@ariadocs/components` | `packages/lib-components` | 0.2.0 | core, openapi |
 
 `@ariadocs/mdx` replaces `@ariadocs/react`, whose last version on npm is 2.1.0. It starts at 3.0.0 so the version history carries on.
 
@@ -71,7 +71,7 @@ tar -tzf ariadocs-openapi-*.tgz
 rm ariadocs-openapi-*.tgz
 ```
 
-The tarball should contain only `dist/`, `package.json`, `README.md` and `LICENSE`. Its `package.json` should list `@ariadocs/core` with a real version number such as `1.0.0`, not `workspace:*`.
+The tarball should contain only `dist/`, `package.json`, `README.md` and `LICENSE`, plus `docs/` for `@ariadocs/components`. Its `package.json` should list `@ariadocs/core` with a real version number such as `1.0.0`, not `workspace:*`.
 
 ## Publish
 

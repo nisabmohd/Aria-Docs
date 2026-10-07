@@ -8,11 +8,21 @@ import { cn } from "../lib/utils.js"
 export interface DocsTocProps {
   /** Headings from `docs.parse()` / `getToc()`. */
   items: TocItem[]
+  /** Heading above the list. */
   title?: string
   className?: string
 }
 
-/** "On this page" list that highlights the heading currently in view. */
+/**
+ * "On this page" list that highlights the heading currently in view.
+ * Renders nothing when `items` is empty, and `Docs.Layout` then drops the
+ * right column. Headings need ids (`rehypeSlug`).
+ *
+ * ```tsx
+ * const { MDX, toc } = await docs.parse({ slug })
+ * <Docs.Aside><Docs.Toc items={toc} /></Docs.Aside>
+ * ```
+ */
 export function DocsToc({ items, title = "On this page", className }: DocsTocProps) {
   const active = useActiveHeading(items)
   if (items.length === 0) return null
@@ -58,19 +68,32 @@ function useActiveHeading(items: TocItem[]): string | undefined {
     if (elements.length === 0) return
 
     const visible = new Set<string>()
+    const last = elements[elements.length - 1] as HTMLElement
+
+    function update() {
+      // Headings near the end can't scroll up to the top band, so at the
+      // bottom of the page the last heading wins.
+      const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4
+      const current = atBottom ? last : elements.find((element) => visible.has(element.id))
+      if (current !== undefined) setActive(`#${current.id}`)
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) visible.add(entry.target.id)
           else visible.delete(entry.target.id)
         }
-        const first = elements.find((element) => visible.has(element.id))
-        if (first !== undefined) setActive(`#${first.id}`)
+        update()
       },
       { rootMargin: "0px 0px -70% 0px" }
     )
     for (const element of elements) observer.observe(element)
-    return () => observer.disconnect()
+    window.addEventListener("scroll", update, { passive: true })
+    return () => {
+      observer.disconnect()
+      window.removeEventListener("scroll", update)
+    }
   }, [items])
 
   return active

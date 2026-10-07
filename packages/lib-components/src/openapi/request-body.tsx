@@ -46,12 +46,26 @@ export function OpenAPIRequestBody({ requestBody: bodyProp, children, className 
   )
 }
 
+/**
+ * The request body `description`, rendered as Markdown.
+ *
+ * ```tsx
+ * <OpenAPI.RequestBody.Description />
+ * ```
+ */
 export function RequestBodyDescription({ requestBody, className }: { requestBody?: APIRequestBody; className?: string }) {
   const operation = useOptionalOperation()
   const body = requestBody ?? operation?.requestBody
   return <Markdown className={cn("mb-2", className)}>{body?.description}</Markdown>
 }
 
+/**
+ * The body schema per media type, with a switch when there are several.
+ *
+ * ```tsx
+ * <OpenAPI.RequestBody.Content />
+ * ```
+ */
 export function RequestBodyContent({ requestBody, className }: { requestBody?: APIRequestBody; className?: string }) {
   const operation = useOptionalOperation()
   const body = requestBody ?? operation?.requestBody

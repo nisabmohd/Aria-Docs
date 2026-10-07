@@ -37,6 +37,13 @@ export function OpenAPIParameter({ parameter: parameterProp, children, className
   )
 }
 
+/**
+ * The `name  type  required` row. Use inside `<OpenAPI.Parameter>`.
+ *
+ * ```tsx
+ * <OpenAPI.Parameter.Header />
+ * ```
+ */
 export function ParameterHeader() {
   const parameter = useParameter()
   const operation = useOptionalOperation()
@@ -52,14 +59,35 @@ export function ParameterHeader() {
   )
 }
 
+/**
+ * The parameter name in monospace.
+ *
+ * ```tsx
+ * <OpenAPI.Parameter.Name />
+ * ```
+ */
 export function ParameterName({ className }: { className?: string }) {
   return <code className={cn("text-foreground font-mono text-(length:--aria-text-code) font-semibold", className)}>{useParameter().name}</code>
 }
 
+/**
+ * Where the parameter goes: `path`, `query`, `header` or `cookie`.
+ *
+ * ```tsx
+ * <OpenAPI.Parameter.In />
+ * ```
+ */
 export function ParameterIn({ className }: { className?: string }) {
   return <span className={cn("text-muted-foreground text-(length:--aria-text-xs)", className)}>{useParameter().in}</span>
 }
 
+/**
+ * A "required" label. Renders nothing for optional parameters.
+ *
+ * ```tsx
+ * <OpenAPI.Parameter.Required />
+ * ```
+ */
 export function ParameterRequired({ className }: { className?: string }) {
   const { required } = useParameter()
   return (
@@ -69,6 +97,13 @@ export function ParameterRequired({ className }: { className?: string }) {
   )
 }
 
+/**
+ * The parameter `description`, rendered as Markdown.
+ *
+ * ```tsx
+ * <OpenAPI.Parameter.Description />
+ * ```
+ */
 export function ParameterDescription({ className }: { className?: string }) {
   return <Markdown className={className}>{useParameter().description}</Markdown>
 }
@@ -100,6 +135,13 @@ export function ParameterSchema({ className }: { className?: string }) {
   return <OpenAPISchema schema={schema} className={className} />
 }
 
+/**
+ * The parameter example as a code value. Renders nothing without one.
+ *
+ * ```tsx
+ * <OpenAPI.Parameter.Example />
+ * ```
+ */
 export function ParameterExample({ className }: { className?: string }) {
   const parameter = useParameter()
   const example = parameter.example ?? parameter.examples[0]?.value

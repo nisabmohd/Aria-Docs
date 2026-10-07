@@ -32,7 +32,7 @@ export interface PageLink {
   href: string
 }
 
-/** Previous and next pages around `href` in a section's navigation. */
+/** Previous and next pages around `href`, in sidebar order. */
 export function getNeighbours(items: NavItem[], href: string): { previous?: PageLink; next?: PageLink } {
   const links = flattenLinks(items)
   const index = links.findIndex((link) => link.href === href)
@@ -86,10 +86,14 @@ export async function getSidebar(): Promise<NavItem[]> {
   ])
 
   const isPackage = (item: NavItem) => item.title.startsWith("@ariadocs/")
+  // The components docs live under /components; list them as a package folder.
+  const packages = docsNav.filter(isPackage)
+  const core = packages.findIndex((item) => item.title === "@ariadocs/core")
+  packages.splice(core === -1 ? packages.length : core, 0, section("@ariadocs/components", "/components", componentsNav))
+
   return [
     section("Documentation", "#documentation", docsNav.filter((item) => !isPackage(item))),
-    section("Packages", "#packages", docsNav.filter(isPackage)),
-    section("Components", "#components", componentsNav),
+    section("Packages", "#packages", packages),
     section("API Reference", "#api-reference", referenceNav),
   ]
 }

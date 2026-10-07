@@ -53,14 +53,35 @@ export function StatusCode({ response, className }: { response: APIResponse; cla
   )
 }
 
+/**
+ * The status code with its colored dot. Use inside `<OpenAPI.Response>`.
+ *
+ * ```tsx
+ * <OpenAPI.Response.Status />
+ * ```
+ */
 export function ResponseStatus({ className }: { className?: string }) {
   return <StatusCode response={useResponse()} className={className} />
 }
 
+/**
+ * The response `description`, rendered as Markdown.
+ *
+ * ```tsx
+ * <OpenAPI.Response.Description />
+ * ```
+ */
 export function ResponseDescription({ className }: { className?: string }) {
   return <Markdown className={className}>{useResponse().description}</Markdown>
 }
 
+/**
+ * The response headers as field rows. Renders nothing without headers.
+ *
+ * ```tsx
+ * <OpenAPI.Response.Headers />
+ * ```
+ */
 export function ResponseHeaders({ className }: { className?: string }) {
   const { headers, status } = useResponse()
   const operation = useOptionalOperation()
@@ -86,6 +107,13 @@ export function ResponseHeaders({ className }: { className?: string }) {
   )
 }
 
+/**
+ * The body schema per media type. Renders nothing without a body.
+ *
+ * ```tsx
+ * <OpenAPI.Response.Content />
+ * ```
+ */
 export function ResponseContent({ className }: { className?: string }) {
   const { content } = useResponse()
   if (content.length === 0) return null
